@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="arquivos/css/style.css">
+		<title>Joguinho foda</title>
+	</head>
+	<body>
+		
+		<main id="container">
+			<canvas>O seu navegador não suporta o canvas.</canvas>
+			<div id="screens-container">
+				<section id="start-screen" class="game-screen">
+					<div class="title-container">
+						<h1 class="title">Joguinho brabo</h1>
+					</div>
+
+					<div class="menu-container">
+						<nav class="menu">
+							<button id="playButton" class="defaultBtn">Jogar</button>
+							<button class="defaultBtn disabled">Opções</button>
+							<button class="defaultBtn disabled">Sobre</button>
+						</nav>
+					</div>		
+				</section>
+				<section id="hud-screen" class="game-screen">
+					<div id="hud-container">
+						<div id="hp-container">
+							<div id="hp"></div>
+							<div id="health-bar">
+								<div class="health-point"></div>
+								<div class="health-point"></div>
+								<div class="health-point"></div>
+								<div class="health-point"></div>
+								<div class="health-point"></div>
+								<div class="health-point"></div>
+								<div class="health-point"></div>
+								<div class="health-point"></div>
+								<div class="health-point"></div>
+								<div class="health-point"></div>
+							</div>
+						</div>
+						<div id="wMunition-container">
+							<p id="gunInfo"><span id="munitionAmount">0</span>/<span id="totalMunition">0</span></p>
+						</div>
+					</div>
+					<div id="hotbar">
+						<div class="slot"></div>
+						<div class="slot"></div>
+						<div class="slot"></div>
+					</div>
+				</section>
+				<section id="die-screen" class="game-screen">
+					<div id="die-container" class="screens">
+						<div class="title-container">
+							<h2 class="title">Você morreu</h2>
+						</div>
+
+						<div class="menu-container">
+							<nav class="menu">
+								<button id="restartButton" class="defaultBtn">Reiniciar</button>
+								<button id="backToMenuBtn" class="defaultBtn">Menu</button>
+							</nav>
+						</div>
+					</div>
+				</section>
+				<section id="pause-screen" class="game-screen">
+					<div id="pause-container" class="screens">
+						<div class="title-container">
+							<h2 class="title">Jogo pausado!</h2>
+						</div>
+
+						<div class="menu-container">
+							<nav class="menu">
+								<button id="contiueButton" class="defaultBtn">Continuar</button>
+								<button id="restarbtn2" class="defaultBtn">Reiniciar</button>
+							</nav>
+						</div>
+					</div>
+				</section>
+			</div>
+		</main>
+
+		<script src="arquivos/js/Classes/Entity.js"></script>
+		<script src="arquivos/js/Classes/Player.js"></script>
+		<script src="arquivos/js/Classes/Block.js"></script>
+		<script src="arquivos/js/Classes/Item.js"></script>
+		<script src="arquivos/js/Classes/Weapon.js"></script>
+		<script src="arquivos/js/Classes/Projectile.js"></script>
+		<script src="arquivos/js/Classes/Enemy.js"></script>
+		<script src="arquivos/js/Classes/Camera.js"></script>
+		<script src="arquivos/js/collide.js"></script>
+		<script src="arquivos/js/Utils/collisionUtils.js"></script>
+		<script src="arquivos/js/ui.js"></script>
+		<script src="arquivos/js/keyMap.js"></script>
+		<script src="arquivos/js/main.js"></script>
+	</body>
+</html>
