@@ -109,7 +109,7 @@ class Player extends Entity{
 	}
 
 	updateStats(){
-		document.getElementById("hp").style.width = `${this.health}%`
+		document.getElementById("health").style.width = `${this.health}%`
 	}
 
 	update(){

@@ -78,9 +78,9 @@ const itemCollision = collision => {
 						const slot = collider.inventory[i]
 						if(!slot.item){
 							slot.item = item
-							hotbar_slot[i].innerHTML = `<img class="slot-item-icon" src="${item.imgSrc}">`
 							item.visible = false
 							item.isInInventory = true
+							weapon_icon.src = item.imgSrc
 							return
 						}		
 					}
@@ -90,8 +90,8 @@ const itemCollision = collision => {
 	}
 }
 
-const entityCollision = (entity1, entity2) => {
-	const {side, overlap, collider, target, distance} = collide(entity1, entity2)
+const basicCollision = (entity, block) => {
+	const {side, overlap, collider, target, distance} = collide(entity, block)
 
 	if(side.top){
 		collider.velocity.y = 0
@@ -106,17 +106,12 @@ const entityCollision = (entity1, entity2) => {
 
 	if(side.left){
 		collider.position.x -= overlap.x
-
-		if(collider.entityType == "Enemy"){
-			enemy.willJump = true
-		}
 	}
 
 	if(side.right){
 		collider.position.x += overlap.x
-		
-		if(collider.entityType == "Enemy"){
-			enemy.willJump = true
-		}
 	}
 }
+
+
+

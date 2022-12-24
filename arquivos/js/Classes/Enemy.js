@@ -1,6 +1,6 @@
 
 class Enemy extends Entity {
-	constructor({color, imgSrc, position}){
+	constructor({color, health, imgSrc, position}){
 		super({color, imgSrc, position})
 		
 		this.speed = 3.5
@@ -8,7 +8,7 @@ class Enemy extends Entity {
 		this.isChasingPlayer = false
 		this.direction = null
 		this.attackCountDown = 0
-		this.willJump = false
+		this.health = health
 	}
 
 	draw(){
@@ -25,18 +25,18 @@ class Enemy extends Entity {
 	}
 
 	chasePlayer(){
-		const {side, overlap, collider, target, distance} = collide(this, player)
+		const {side, overlap, collider, target, distance} = collide(player, this)
 
 		if(overlap.x >= overlap.y){
-			if(distance.y < 0){
-				if(Math.abs(distance.y) < 500){
-				}	
+			if(distance.y > 0){
+				if(Math.abs(distance.y) < 0){
+				}
 			}else{
-				if(Math.abs(distance.y) < 500){
+				if(Math.abs(distance.y) < 0){
 				}	
 			}
 		}else{
-			if(distance.x > 0){
+			if(distance.x < 0){
 				if(Math.abs(distance.x) < 500){
 					this.velocity.x = -this.speed
 					this.direction = "LEFT"
@@ -57,6 +57,12 @@ class Enemy extends Entity {
 					this.isChasingPlayer = false
 				}
 			}
+		}
+
+		if(this.direction == "LEFT"){
+			ctx.fillRect(this.position.x - 500 + this.width, this.position.y + 30, 500, 10)
+		}else if(this.direction == "RIGHT"){
+			ctx.fillRect(this.position.x, this.position.y + 30, 500, 10)
 		}
 	}
 

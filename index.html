@@ -26,30 +26,37 @@
 				</section>
 				<section id="hud-screen" class="game-screen">
 					<div id="hud-container">
-						<div id="hp-container">
-							<div id="hp"></div>
-							<div id="health-bar">
-								<div class="health-point"></div>
-								<div class="health-point"></div>
-								<div class="health-point"></div>
-								<div class="health-point"></div>
-								<div class="health-point"></div>
-								<div class="health-point"></div>
-								<div class="health-point"></div>
-								<div class="health-point"></div>
-								<div class="health-point"></div>
-								<div class="health-point"></div>
+						<div id="weapon-icon-container">
+							<div id="weapon-icon">
+								<img id="weapon-icon-img" src="arquivos/assets/null.png">
 							</div>
 						</div>
-						<div id="wMunition-container">
-							<p id="gunInfo"><span id="munitionAmount">0</span>/<span id="totalMunition">0</span></p>
+						<div id="status-container">
+							<div id="health-container" class="bar-container">
+								<div id="health" class="bar-amount"></div>
+								<div id="health-bar" class="bar-point-container">
+									<div class="bar-point"></div>
+									<div class="bar-point"></div>
+									<div class="bar-point"></div>
+									<div class="bar-point"></div>
+									<div class="bar-point"></div>
+									<div class="bar-point"></div>
+									<div class="bar-point"></div>
+									<div class="bar-point"></div>
+									<div class="bar-point"></div>
+									<div class="bar-point"></div>
+								</div>
+							</div>
+							<div id="inventory-status">
+								<p id="weapon-status"><span id="bullets-amount">0</span>/<span id="munition-amount">0</span></p>
+							</div>
 						</div>
 					</div>
-					<div id="hotbar">
+					<!-- <div id="hotbar">
 						<div class="slot"></div>
 						<div class="slot"></div>
 						<div class="slot"></div>
-					</div>
+					</div> -->
 				</section>
 				<section id="die-screen" class="game-screen">
 					<div id="die-container" class="screens">

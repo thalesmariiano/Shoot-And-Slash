@@ -27,18 +27,21 @@ class Weapon extends Item {
 	}
 
 	reload(){
-		setTimeout(() => {
-			this.bulletsFired.length = 0
-
-			if(this.bulletsAmount <= this.gunLimit){
-				if(this.munition){
-					while(this.bulletsAmount < this.gunLimit){
-						this.munition--
-						this.bulletsAmount++
+		if(this.bulletsAmount <= this.gunLimit){
+			if(this.munition){
+				setTimeout(() => {
+					this.bulletsFired.length = 0
+					const currentBullets = Math.abs(this.bulletsAmount - this.gunLimit)
+					if(currentBullets < this.munition){
+						this.bulletsAmount += currentBullets
+						this.munition -= currentBullets
+					}else{
+						this.bulletsAmount += this.munition
+						this.munition = 0
 					}
-				}
+				}, 1500)
 			}
-		}, 1500)
+		}
 	}
 
 	shot(){
