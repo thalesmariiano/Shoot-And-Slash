@@ -110,6 +110,7 @@ const life = new Item({
 
 const ak47 = new Weapon({
 	imgSrc: "arquivos/assets/itens/ak47.png",
+	name: "Ak-47",
 	gunType: "Fuzil",
 	munition: 60,
 	gunLimit: 30,
@@ -122,6 +123,7 @@ ak47.bulletsAmount = 30
 
 const escopeta = new Weapon({
 	imgSrc: "arquivos/assets/itens/escopeta.png",
+	name: "Dôze",
 	gunType: "Espingarda",
 	munition: 20,
 	gunLimit: 10,
@@ -353,12 +355,12 @@ function inventorySlots(){
 				inventory.item.imgSrc = "arquivos/assets/itens/ak47.png"
 				inventory.item.position.x = player.position.x + 55
 				inventory.item.position.y = player.position.y + 50
-			}
-				
-			weapon_icon.src = inventory.item.imgSrc
+			}				
 		}else{
 			digit1 = false
 		}
+
+		switchIcon(inventory.item)
 	}else{
 		const inventory = player.getInventory(0)
 		if(inventory.item){
@@ -375,11 +377,11 @@ function inventorySlots(){
 
 			inventory.item.position.x = player.position.x + 55
 			inventory.item.position.y = player.position.y + 50
-
-			weapon_icon.src = inventory.item.imgSrc
 		}else{
 			digit2 = false
 		}
+
+		switchIcon(inventory.item)
 	}else{
 		const inventory = player.getInventory(1)
 		if(inventory.item){
@@ -396,11 +398,11 @@ function inventorySlots(){
 		if(inventory.item){
 			inventory.item.visible = true
 			inventory.isHolding = true
-
-			weapon_icon.src = inventory.item.imgSrc
 		}else{
 			digit3 = false
 		}
+
+		switchIcon(inventory.item)
 	}else{
 		const inventory = player.getInventory(2)
 		if(inventory.item){

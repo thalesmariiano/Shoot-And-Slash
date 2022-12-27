@@ -1,6 +1,6 @@
 
 class Weapon extends Item {
-	constructor({imgSrc, gunType, munition, gunLimit, itemType, position}){
+	constructor({imgSrc, gunType, name, munition, gunLimit, itemType, position}){
 		super({imgSrc, itemType, position})
 
 		this.shotCount = 0
@@ -14,6 +14,7 @@ class Weapon extends Item {
 		this.reloadTimer = 2500
 		this.lockShot = false
 		this.gunType = gunType
+		this.name = name
 		this.type = "Weapon"
 	}
 
