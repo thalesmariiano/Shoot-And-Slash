@@ -24,7 +24,7 @@ class Camera {
 
 	update(){
 		if(player.position.x < this.leftEdge()){
-		this.x = player.position.x - (this.width * 0.25)
+			this.x = player.position.x - (this.width * 0.25)
 		}
 
 		if(player.position.x + player.width > this.rightEdge()){

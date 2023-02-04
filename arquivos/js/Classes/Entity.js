@@ -46,11 +46,12 @@ class Entity {
 			ctx.drawImage(this.sprite, this.imgX, this.imgY, this.frameSizeX, this.frameSizeY, this.position.x - this.offest.x, this.position.y - this.offest.y, 400, 400)
 			this.sprite.src = this.imgSrc
 
-			// ctx.strokeStyle = "black"
-			// ctx.strokeRect(this.position.x, this.position.y, this.width, this.height)
+			if(developerMode){
+				ctx.strokeStyle = "black"
+				ctx.strokeRect(this.position.x, this.position.y, this.width, this.height)
+			}
+			
 		}else{
-			console.log("Nenhum sprite encontrado")
-
 			ctx.fillStyle = this.color
 			ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
 		}

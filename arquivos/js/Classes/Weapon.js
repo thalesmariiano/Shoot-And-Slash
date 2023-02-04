@@ -85,5 +85,6 @@ class Weapon extends Item {
 		if(this.gunType == "Espingarda"){
 			this.shotTime = 350
 		}
+
 	}
 }

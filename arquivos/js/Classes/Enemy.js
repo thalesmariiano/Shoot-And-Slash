@@ -9,6 +9,8 @@ class Enemy extends Entity {
 		this.direction = null
 		this.attackCountDown = 0
 		this.health = health
+		this.will_jump = false
+
 	}
 
 	draw(){
@@ -59,21 +61,60 @@ class Enemy extends Entity {
 			}
 		}
 
-		if(this.direction == "LEFT"){
-			ctx.fillRect(this.position.x - 500 + this.width, this.position.y + 30, 500, 10)
-		}else if(this.direction == "RIGHT"){
-			ctx.fillRect(this.position.x, this.position.y + 30, 500, 10)
+		if(developerMode){
+			if(this.direction == "LEFT"){
+				ctx.fillRect(this.position.x - 500 + this.width, this.position.y + 30, 500, 10)
+			}else if(this.direction == "RIGHT"){
+				ctx.fillRect(this.position.x, this.position.y + 30, 500, 10)
+			}
 		}
+			
 	}
 
 	attack(){
 		const {side, overlap, collider, target, distance} = collide(player, this)
 
-		if(side.top || side.bottom || side.left || side.right){
-			this.attackCountDown++
-			if(this.attackCountDown == 10){
-				collider.takeHit(8)
-				this.attackCountDown = 0
+		if(overlap.x >= overlap.y){
+			if(distance.y > 0){
+				if(Math.abs(distance.y) < 0){
+				}
+			}else{
+				if(Math.abs(distance.y) < 0){
+				}	
+			}
+		}else{
+			if(distance.x < 0){
+				if(Math.abs(distance.x) < 100){
+					this.attackCountDown++
+					if(this.attackCountDown == 18){
+						player.takeHit(8)
+						this.attackCountDown = 0
+
+						if(developerMode){
+							ctx.fillStyle = "green"
+							ctx.fillRect(this.position.x - 100 + this.width, this.position.y + 30, 100, 10)
+						}
+						
+					}
+				}else{
+					this.attackCountDown = 0
+				}
+			}else{
+				if(Math.abs(distance.x) < 100){
+					this.attackCountDown++
+					if(this.attackCountDown == 18){
+						player.takeHit(8)
+						this.attackCountDown = 0
+
+						if(developerMode){
+							ctx.fillStyle = "green"
+							ctx.fillRect(this.position.x, this.position.y + 30, 100, 10)
+						}
+							
+					}
+				}else{
+					this.attackCountDown = 0
+				}
 			}
 		}
 	}
@@ -97,4 +138,5 @@ class Enemy extends Entity {
 			this.visible = false
 		}
 	}
+
 }

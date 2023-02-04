@@ -3,12 +3,13 @@ class Player extends Entity{
 	constructor({color, imgSrc, position}){
 		super({color, imgSrc, position})
 		
+		this.animateFinished = false
 		this.coinNumbers = 0
+		this.sprr = null
 		this.inventory = [
 			{
 				item: null,
-				isHolding: false,
-				slotNumber: 1
+				isHolding: false
 			},
 			{
 				item: null,
@@ -26,11 +27,17 @@ class Player extends Entity{
 	}
 
 	animate(){
+		if(this.animateFinished) return
+
 		this.framesElapsed++
 		if(this.framesElapsed % this.framesHold === 0){
 			this.currentFrames++
 			if(this.currentFrames >= this.spriteFrames){
 				this.currentFrames = 0
+
+				if(this.sprr && !this.sprr.infinite){
+					this.animateFinished = true
+				}
 			}
 		}
 		this.imgX = this.frameSizeX*this.currentFrames
@@ -80,6 +87,7 @@ class Player extends Entity{
 				this.currentFrames = 0
 				break
 			case "death":
+				this.sprr = spr
 				this.imgSrc = spr.img
 				this.spriteFrames = spr.frames
 				this.framesHold = 7

@@ -81,6 +81,10 @@ const itemCollision = collision => {
 							item.visible = false
 							item.isInInventory = true
 							weapon_icon.src = item.imgSrc
+
+							// Update gun HUD Stats
+							bullets_amount.innerHTML = `${item.bulletsAmount}`
+							munition_amount.innerHTML = `${item.munition}`
 							return
 						}		
 					}
@@ -106,10 +110,18 @@ const basicCollision = (entity, block) => {
 
 	if(side.left){
 		collider.position.x -= overlap.x
+
+		if(collider.entityType == "Enemy"){
+			collider.will_jump = true			
+		}
 	}
 
 	if(side.right){
 		collider.position.x += overlap.x
+		
+		if(collider.entityType == "Enemy"){
+			collider.will_jump = true			
+		}
 	}
 }
 
