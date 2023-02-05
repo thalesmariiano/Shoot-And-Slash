@@ -123,6 +123,7 @@ const basicCollision = (entity, block) => {
 			collider.will_jump = true			
 		}
 	}
+
 }
 
 

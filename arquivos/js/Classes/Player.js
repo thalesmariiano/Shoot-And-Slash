@@ -5,7 +5,7 @@ class Player extends Entity{
 		
 		this.animateFinished = false
 		this.coinNumbers = 0
-		this.sprr = null
+		this.sprite_info = null
 		this.inventory = [
 			{
 				item: null,
@@ -33,17 +33,19 @@ class Player extends Entity{
 		if(this.framesElapsed % this.framesHold === 0){
 			this.currentFrames++
 			if(this.currentFrames >= this.spriteFrames){
-				this.currentFrames = 0
-
-				if(this.sprr && !this.sprr.infinite){
+				if(this.sprite_info.name == "death"){
 					this.animateFinished = true
+					this.isDead = true
+					return
 				}
+				this.currentFrames = 0
 			}
 		}
 		this.imgX = this.frameSizeX*this.currentFrames
 	}
 
 	switchSprite(spr){
+		this.sprite_info = spr
 		switch(spr.name){
 			case "idle":
 				this.imgSrc = spr.img
@@ -87,10 +89,9 @@ class Player extends Entity{
 				this.currentFrames = 0
 				break
 			case "death":
-				this.sprr = spr
 				this.imgSrc = spr.img
 				this.spriteFrames = spr.frames
-				this.framesHold = 7
+				this.framesHold = 8
 				break
 		}
 	}

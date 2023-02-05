@@ -51,57 +51,48 @@ const playerSprites = {
 	idle: {
 		name: "idle",
 		img: "arquivos/assets/player/idle.png",
-		frames: 8,
-		inifite: true
+		frames: 8
 	},
 	idle_left: {
 		name: "idle_left",
 		img: "arquivos/assets/player/idle_left.png",
-		frames: 8,
-		inifite: true
+		frames: 8
 	},
 	run: {
 		name: "run",
 		img: "arquivos/assets/player/run.png",
-		frames: 8,
-		inifite: true
+		frames: 8
 		
 	},
 	run_left: {
 		name: "run_left",
 		img: "arquivos/assets/player/run_left.png",
-		frames: 8,
-		inifite: true
+		frames: 8
 	},
 	jump: {
 		name: "jump",
 		img: "arquivos/assets/player/jump.png",
-		frames: 2,
-		inifite: true
+		frames: 2
 	},
 	jump_left: {
 		name: "jump_left",
 		img: "arquivos/assets/player/jump_left.png",
-		frames: 2,
-		inifite: true
+		frames: 2
 	},
 	fall: {
 		name: "fall",
 		img: "arquivos/assets/player/fall.png",
-		frames: 2,
-		inifite: true
+		frames: 2
 	},
 	fall_left: {
 		name: "fall_left",
 		img: "arquivos/assets/player/fall_left.png",
-		frames: 2,
-		inifite: true
+		frames: 2
 	},
 	death: {
 		name: "death",
 		img: "arquivos/assets/player/death.png",
-		frames: 6,
-		inifite: false
+		frames: 6
 	}
 }
 
@@ -109,8 +100,8 @@ const player = new Player({imgSrc: playerSprites.idle.img, position: {x: 127, y:
 const camera = new Camera(canvas.width, canvas.height)
 const mapBlocks = [[],[]]
 const enemys    = [
-	new Enemy({color: "red", health: 100, position: {x: 1600, y: 400}}), 
-	new Enemy({color: "red", health: 100, position: {x: 1700, y: 400}})
+	new Enemy({color: "red", health: 100, position: {x: 1900, y: 400}}), 
+	new Enemy({color: "red", health: 100, position: {x: 2000, y: 400}})
 ]
 
 const life = new Item({
@@ -272,6 +263,15 @@ function generateTerrain(){
 }
 
 function playerActions(){
+	if(player.isDead){
+		player.velocity.x = 0
+		gameIsPaused = true
+
+		setTimeout(() => {
+			gameScreen(die_screen, hud_screen)
+		}, 500)
+		return
+	}
 
 	// Player parado
 	if(!keyUp && !keyLeft && !keyRight && !player.isFalling){
@@ -445,6 +445,7 @@ function update(){
 	camera.update()
 }
 
+
 function render(){
 	const skyGradient = ctx.createLinearGradient(0, 0, 0, 150)
 	skyGradient.addColorStop(0, "#4287f5")
@@ -479,14 +480,6 @@ function render(){
 					basicCollision(enemy, block)		
 				}
 			})
-
-			if(enemy.will_jump){
-				if(!enemy.isFalling){
-					enemy.velocity.y = enemy.jump
-					enemy.isFalling = true
-					enemy.will_jump = false
-				}
-			}
 
 		}else{
 			enemys.splice(index, 1)

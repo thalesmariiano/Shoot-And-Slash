@@ -31,10 +31,13 @@ class Enemy extends Entity {
 
 		if(overlap.x >= overlap.y){
 			if(distance.y > 0){
-				if(Math.abs(distance.y) < 0){
+				if(Math.abs(distance.y) < 500){
+					if(!this.isFalling){
+						this.velocity.y = this.jump
+					}
 				}
 			}else{
-				if(Math.abs(distance.y) < 0){
+				if(Math.abs(distance.y) < 50){
 				}	
 			}
 		}else{
