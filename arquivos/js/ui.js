@@ -10,3 +10,15 @@ contiueButton.addEventListener("click", () => {
 	gameIsPaused = false
 	init()
 })
+
+// Popup
+
+const popup = document.querySelector("#popup-container")
+
+document.querySelector("#aboutButton").addEventListener("click", () => {
+	popup.style.display = "flex"
+})
+
+document.querySelector("#closePopupBtn").addEventListener("click", () => {
+	popup.style.display = "none"
+})
