@@ -10,7 +10,6 @@ class Enemy extends Entity {
 		this.attackCountDown = 0
 		this.health = health
 		this.will_jump = false
-
 	}
 
 	draw(){
@@ -23,46 +22,68 @@ class Enemy extends Entity {
 	}
 
 	takeHit(dmg){
+
+		if(!this.isFalling){
+			this.velocity.y = this.jump
+			this.velocity.x = this.speed
+			this.isFalling = true
+		}
+
 		this.health += -dmg
 	}
 
 	chasePlayer(){
-		const {side, overlap, collider, target, distance} = collide(player, this)
+		const radar = detectInArea(this, player, 500)
 
-		if(overlap.x >= overlap.y){
-			if(distance.y > 0){
-				if(Math.abs(distance.y) < 500){
-					if(!this.isFalling){
-						this.velocity.y = this.jump
-					}
-				}
-			}else{
-				if(Math.abs(distance.y) < 50){
-				}	
-			}
+		if(radar.left){
+			this.velocity.x = -this.speed
+			this.direction = "LEFT"
+			this.isChasingPlayer = true
+		}else if(radar.right){
+			this.velocity.x = this.speed
+			this.direction = "RIGHT"
+			this.isChasingPlayer = true
 		}else{
-			if(distance.x < 0){
-				if(Math.abs(distance.x) < 500){
-					this.velocity.x = -this.speed
-					this.direction = "LEFT"
-					this.isChasingPlayer = true
-				}else{
-					this.velocity.x = 0
-					this.direction = null
-					this.isChasingPlayer = false
-				}
-			}else{
-				if(Math.abs(distance.x) < 500){
-					this.velocity.x = this.speed
-					this.direction = "RIGHT"
-					this.isChasingPlayer = true
-				}else{
-					this.velocity.x = 0
-					this.direction = null
-					this.isChasingPlayer = false
-				}
-			}
+			this.velocity.x = 0
+			this.direction = null
+			this.isChasingPlayer = false
 		}
+
+		
+
+		// const {side, overlap, collider, target, distance} = collide(player, this)
+
+		// if(overlap.x >= overlap.y){
+		// 	if(distance.y > 0){
+		// 		if(Math.abs(distance.y) < 500){
+		// 		}
+		// 	}else{
+		// 		if(Math.abs(distance.y) < 50){
+		// 		}	
+		// 	}
+		// }else{
+		// 	if(distance.x < 0){
+		// 		if(Math.abs(distance.x) < 500){
+		// 			this.velocity.x = -this.speed
+		// 			this.direction = "LEFT"
+		// 			this.isChasingPlayer = true
+		// 		}else{
+		// 			this.velocity.x = 0
+		// 			this.direction = null
+		// 			this.isChasingPlayer = false
+		// 		}
+		// 	}else{
+		// 		if(Math.abs(distance.x) < 500){
+		// 			this.velocity.x = this.speed
+		// 			this.direction = "RIGHT"
+		// 			this.isChasingPlayer = true
+		// 		}else{
+		// 			this.velocity.x = 0
+		// 			this.direction = null
+		// 			this.isChasingPlayer = false
+		// 		}
+		// 	}
+		// }
 
 		if(developerMode){
 			if(this.direction == "LEFT"){

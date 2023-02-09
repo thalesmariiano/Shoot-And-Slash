@@ -14,12 +14,10 @@ class Player extends Entity{
 			{
 				item: null,
 				isHolding: false,
-				slotNumber: 2
 			},
 			{
 				item: null,
 				isHolding: false,
-				slotNumber: 3
 			}
 		]
 		//
@@ -113,6 +111,12 @@ class Player extends Entity{
 	}
 
 	takeHit(dmg){
+		lockPlayerControls = true
+		if(!this.isFalling){
+			this.velocity.y = this.jump
+			this.velocity.x -= this.speed
+		}
+
 		this.health += -dmg
 		this.updateStats()
 	}

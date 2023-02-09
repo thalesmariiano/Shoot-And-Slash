@@ -1,7 +1,8 @@
 
 class Item  {
-	constructor({imgSrc, itemType, position}){
+	constructor({imgSrc, item_sprites, itemType, position}){
 		this.imgSrc = imgSrc
+		this.item_sprites = item_sprites
 		this.sprite = new Image()
 		this.itemType = itemType
 		this.position = position

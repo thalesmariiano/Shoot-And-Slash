@@ -101,6 +101,10 @@ const basicCollision = (entity, block) => {
 		collider.velocity.y = 0
 		collider.position.y -= parseInt(overlap.y)
 		collider.isFalling = false
+
+		if(collider.entityType === "Player"){
+			lockPlayerControls = false
+		}
 	}
 
 	if(side.bottom){
