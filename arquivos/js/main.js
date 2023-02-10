@@ -392,7 +392,7 @@ function inventorySlots(){
 			digit1 = false
 		}
 
-		switchIcon(inventory.item)
+		updateUI("icon", inventory.item)
 	}else{
 		const inventory = player.getInventory(0)
 		if(inventory.item){
@@ -410,7 +410,7 @@ function inventorySlots(){
 			digit2 = false
 		}
 
-		switchIcon(inventory.item)
+		updateUI("icon", inventory.item)
 	}else{
 		const inventory = player.getInventory(1)
 		if(inventory.item){
@@ -428,7 +428,7 @@ function inventorySlots(){
 			digit3 = false
 		}
 
-		switchIcon(inventory.item)
+		updateUI("icon", inventory.item)
 	}else{
 		const inventory = player.getInventory(2)
 		if(inventory.item){
@@ -438,7 +438,7 @@ function inventorySlots(){
 	}
 
 	const item = player.getHoldingItem()
-	
+
 	if(item && item.type == "Weapon"){
 		bullets_amount.innerHTML = `${item.bulletsAmount}`
 		munition_amount.innerHTML = `${item.munition}`
@@ -478,7 +478,6 @@ function update(){
 
 	camera.update()
 }
-
 
 function render(){
 	const skyGradient = ctx.createLinearGradient(0, 0, 0, 150)

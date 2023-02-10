@@ -4,19 +4,15 @@ const gameScreen = (screen1, screen2) => {
 	screen2.style.display = "none"
 }
 
-function switchIcon(item){
-	if(!item){
-		weapon_icon.src = "arquivos/assets/null.png"
-		return
-	}
-	
-	const name = item.name
-	switch(name){
-		case "Ak-47":
-			weapon_icon.src = "arquivos/assets/itens/ak47.png"
+function updateUI(ui, value) {
+	switch(ui){
+		case "healthbar":
+			const health_bar = document.getElementById("health")
+			health_bar.style.width = `${value}%`
 			break
-		case "Dôze":
-			weapon_icon.src = "arquivos/assets/itens/escopeta.png"
+		case "icon":
+			const img = value ? value.item_sprites.img : "arquivos/assets/null.png"
+			weapon_icon.src = img
 			break
 	}
 }

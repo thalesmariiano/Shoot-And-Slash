@@ -107,7 +107,7 @@ class Player extends Entity{
 
 	receiveLife(life){
 		this.health += life
-		this.updateStats()
+		updateUI("healthbar", this.health)
 	}
 
 	takeHit(dmg){
@@ -118,11 +118,7 @@ class Player extends Entity{
 		}
 
 		this.health += -dmg
-		this.updateStats()
-	}
-
-	updateStats(){
-		document.getElementById("health").style.width = `${this.health}%`
+		updateUI("healthbar", this.health)
 	}
 
 	update(){
