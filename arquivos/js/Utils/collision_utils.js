@@ -80,7 +80,7 @@ const itemCollision = collision => {
 							slot.item = item
 							item.visible = false
 							item.isInInventory = true
-							weapon_icon.src = item.imgSrc
+							switchIcon(item)
 
 							// Update gun HUD Stats
 							bullets_amount.innerHTML = `${item.bulletsAmount}`
