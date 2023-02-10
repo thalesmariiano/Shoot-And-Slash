@@ -105,11 +105,27 @@ const player_sprites = {
 const itens_sprites = {
 	ak47: {
 		img: "arquivos/assets/itens/ak47.png",
-		img_invert: "arquivos/assets/itens/ak47_left.png"
+		img_invert: "arquivos/assets/itens/ak47_left.png",
+		holding_position: {
+			x: 55,
+			y: 50
+		},
+		holding_position_left: {
+			x: 30,
+			y: 50
+		}
 	},
 	escopeta: {
 		img: "arquivos/assets/itens/escopeta.png",
-		img_invert: "arquivos/assets/itens/escopeta_left.png"
+		img_invert: "arquivos/assets/itens/escopeta_left.png",
+		holding_position: {
+			x: 55,
+			y: 50
+		},
+		holding_position_left: {
+			x: 30,
+			y: 50
+		}
 	}
 }
 
@@ -366,21 +382,12 @@ function playerActions(){
 }
 
 function inventorySlots(){
+
 	if(digit1){
 		const inventory = player.getInventory(0)
 		if(inventory.item){
 			inventory.item.visible = true
-			inventory.isHolding = true
-
-			if(lastKeyPressed == "keyLeft"){
-				inventory.item.imgSrc = inventory.item.item_sprites.img_invert
-				inventory.item.position.x = player.position.x - 30
-				inventory.item.position.y = player.position.y + 50
-			}else if(lastKeyPressed == "keyRight"){
-				inventory.item.imgSrc = inventory.item.item_sprites.img
-				inventory.item.position.x = player.position.x + 55
-				inventory.item.position.y = player.position.y + 50
-			}				
+			inventory.isHolding = true			
 		}else{
 			digit1 = false
 		}
@@ -399,16 +406,6 @@ function inventorySlots(){
 		if(inventory.item){
 			inventory.item.visible = true
 			inventory.isHolding = true
-
-			if(lastKeyPressed == "keyLeft"){
-				inventory.item.imgSrc = inventory.item.item_sprites.img_invert
-				inventory.item.position.x = player.position.x - 30
-				inventory.item.position.y = player.position.y + 50
-			}else if(lastKeyPressed == "keyRight"){
-				inventory.item.imgSrc = inventory.item.item_sprites.img
-				inventory.item.position.x = player.position.x + 55
-				inventory.item.position.y = player.position.y + 50
-			}
 		}else{
 			digit2 = false
 		}
@@ -419,9 +416,6 @@ function inventorySlots(){
 		if(inventory.item){
 			inventory.item.visible = false
 			inventory.isHolding = false
-
-			inventory.item.position.x = player.position.x + 55
-			inventory.item.position.y = player.position.y + 50
 		}
 	}
 
@@ -430,16 +424,6 @@ function inventorySlots(){
 		if(inventory.item){
 			inventory.item.visible = true
 			inventory.isHolding = true
-
-			if(lastKeyPressed == "keyLeft"){
-				inventory.item.imgSrc = inventory.item.item_sprites.img_invert
-				inventory.item.position.x = player.position.x - 30
-				inventory.item.position.y = player.position.y + 50
-			}else if(lastKeyPressed == "keyRight"){
-				inventory.item.imgSrc = inventory.item.item_sprites.img
-				inventory.item.position.x = player.position.x + 55
-				inventory.item.position.y = player.position.y + 50
-			}
 		}else{
 			digit3 = false
 		}
@@ -454,12 +438,25 @@ function inventorySlots(){
 	}
 
 	const item = player.getHoldingItem()
+	
 	if(item && item.type == "Weapon"){
 		bullets_amount.innerHTML = `${item.bulletsAmount}`
 		munition_amount.innerHTML = `${item.munition}`
 	}else{
 		bullets_amount.innerHTML = '0'
 		munition_amount.innerHTML = '0'
+	}
+
+	if(item){
+		if(lastKeyPressed == "keyLeft"){
+			item.imgSrc     = item.item_sprites.img_invert
+			item.position.x = player.position.x - item.item_sprites.holding_position_left.x
+			item.position.y = player.position.y + item.item_sprites.holding_position_left.y
+		}else if(lastKeyPressed == "keyRight"){
+			item.imgSrc     = item.item_sprites.img
+			item.position.x = player.position.x + item.item_sprites.holding_position.x
+			item.position.y = player.position.y + item.item_sprites.holding_position.y
+		}
 	}
 }
 
