@@ -59,15 +59,18 @@ class Weapon extends Item {
 						x: 0,
 						y: Math.random() * (.5 - -.5) + -.5 
 					}
+					var direction = null
 
 					if(lastKeyPressed == "keyLeft"){
 						velocity.x = -20
+						direction = 'LEFT'
 					}else if(lastKeyPressed == "keyRight"){
 						position.x += 50
 						velocity.x = 20
+						direction = 'RIGHT'
 					}
 
-					this.bulletsFired.push(new Projectile(position, velocity, this))
+					this.bulletsFired.push(new Projectile(position, velocity, this, direction))
 					this.bulletsAmount--
 					this.lockShot = false
 				}, this.shotTime)

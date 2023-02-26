@@ -9,7 +9,6 @@ class Enemy extends Entity {
 		this.direction = null
 		this.attackCountDown = 0
 		this.health = health
-		this.will_jump = false
 	}
 
 	draw(){
@@ -21,11 +20,9 @@ class Enemy extends Entity {
 		ctx.fillText(this.health, this.position.x + 13, this.position.y - 25)
 	}
 
-	takeHit(dmg){
-
+	takeHit(dmg, direction){
 		if(!this.isFalling){
 			this.velocity.y = this.jump
-			this.velocity.x = this.speed
 			this.isFalling = true
 		}
 

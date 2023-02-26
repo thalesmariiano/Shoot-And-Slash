@@ -132,7 +132,7 @@ const itens_sprites = {
 const player = new Player({imgSrc: player_sprites.idle.img, position: {x: 127, y: 400}})
 const camera = new Camera(canvas.width, canvas.height)
 const enemys    = [
-	// new Enemy({color: "red", health: 100, position: {x: 1900, y: 400}}), 
+	new Enemy({color: "red", health: 100, position: {x: 1900, y: 400}}), 
 	// new Enemy({color: "red", health: 100, position: {x: 2000, y: 400}})
 ]
 
@@ -232,9 +232,6 @@ function generateTerrain(mapArray, outputArray, colorPallet){
 				position: {
 					x: column*tileSize,
 					y: row*tileSize
-				},
-				atributtes: {
-					isMovable: false
 				},
 				type: "Block",
 				visible: false,
@@ -496,17 +493,10 @@ function render(){
 	ctx.fillRect(0, -2500/2, mapSize, 2500)
 
 	scenarioMapBlocks.forEach(block => {
-		const detectBlockIn = detectInArea(player, block, 500)
-		const blockIsInArea = detectBlockIn.top || detectBlockIn.bottom ||
-						      detectBlockIn.right || detectBlockIn.left
+		const { top, bottom, left, right } = detectInArea(player, block, 300)
+		const blockInArea = top || bottom || right || left
 
-		if(blockIsInArea){
-			block.visible = true
-		}else{
-			block.visible = false
-		}
-
-		if(block.visible){
+		if(blockInArea){
 			block.draw()
 		}
 	})
@@ -528,17 +518,10 @@ function render(){
 	})
 
 	playebleMapBlocks.forEach(block => {
-		const detectBlockIn = detectInArea(player, block, 500)
-		const blockIsInArea = detectBlockIn.top || detectBlockIn.bottom ||
-						      detectBlockIn.right || detectBlockIn.left
+		const {top, bottom, left, right} = detectInArea(player, block, 300)
+		const blockInArea = top || bottom || right || left
 
-		if(blockIsInArea){
-			block.visible = true
-		}else{
-			block.visible = false
-		}
-
-		if(block.visible){
+		if(blockInArea){
 			block.draw()
 			basicCollision(player, block)
 		}
@@ -551,26 +534,26 @@ function render(){
 			if(!item.isInInventory){
 				itemCollision(collide(player, item))
 			}
-		}
 
-		if(item.type == "Weapon"){
-			item.bulletsFired.forEach(bullet => {
-				if(bullet.visible){
-					bullet.update()
+			if(item.type == "Weapon"){
+				item.bulletsFired.forEach(bullet => {
+					if(bullet.visible){
+						bullet.update()
 
-					enemys.forEach(enemy => {
-						if(enemy.visible){
-							projectileCollision(collide(bullet, enemy))
-						}
-					})
+						enemys.forEach(enemy => {
+							if(enemy.visible){
+								projectileCollision(collide(bullet, enemy))
+							}
+						})
 
-					playebleMapBlocks.forEach(block => {
-						if(block.visible){
-							projectileCollision(collide(bullet, block))
-						}
-					})
-				}
-			})
+						playebleMapBlocks.forEach(block => {
+							if(block.visible){
+								projectileCollision(collide(bullet, block))
+							}
+						})
+					}
+				})
+			}
 		}
 	})
 

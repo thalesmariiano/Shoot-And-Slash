@@ -49,7 +49,6 @@ const collide = (rect1, rect2) => {
 			}
 		}
 	}
-
 	return collision
 }
 

@@ -1,7 +1,7 @@
 
 
 class Projectile {
-	constructor(position, velocity, weapon){
+	constructor(position, velocity, weapon, direction){
 		this.color = "black"
 		this.position = position
 		this.width = 4
@@ -9,6 +9,7 @@ class Projectile {
 		this.velocity = velocity
 		this.dmg = 0
 		this.weapon = weapon
+		this.direction = direction
 		//
 		this.visible = true
 		this.type = "Projectile"

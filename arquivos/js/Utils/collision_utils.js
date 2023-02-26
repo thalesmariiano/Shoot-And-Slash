@@ -73,21 +73,17 @@ const itemCollision = collision => {
 				item.visible = false
 				break
 			default:
-				if(item.type == "Weapon"){
-					for(i = 0; i < collider.inventory.length; i++){
-						const slot = collider.inventory[i]
-						if(!slot.item){
-							slot.item = item
-							item.visible = false
-							item.isInInventory = true
-							updateUI("icon", item)
+				if(item.type != "Weapon") return
 
-							// Update gun HUD Stats
-							bullets_amount.innerHTML = `${item.bulletsAmount}`
-							munition_amount.innerHTML = `${item.munition}`
-							return
-						}		
-					}
+				for(i = 0; i < collider.inventory.length; i++){
+					const slot = collider.inventory[i]
+					if(!slot.item){
+						slot.item = item
+						item.visible = false
+						item.isInInventory = true
+						updateUI("icon", item)
+						return
+					}		
 				}
 				break
 		}
