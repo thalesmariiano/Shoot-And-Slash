@@ -24,7 +24,7 @@ class Player extends Entity {
 	}
 
 	animate(){
-		if(this.animateFinished) return
+		this.configAnimation()
 
 		this.framesElapsed++
 		if(this.framesElapsed % this.framesHold === 0){
@@ -32,13 +32,16 @@ class Player extends Entity {
 			if(this.currentFrames >= this.spriteFrames){
 				if(this.sprInfo.name == "death"){
 					this.animateFinished = true
-					this.isDead = true
 					return
 				}
 				this.currentFrames = 0
 			}
 		}
 		this.imgX = this.frameSizeX*this.currentFrames
+	}
+
+	configAnimation(){
+		if(this.sprInfo && this.sprInfo.name == "death") this.framesHold = 8
 	}
 
 	// switchSprite(spr){
@@ -120,7 +123,9 @@ class Player extends Entity {
 
 	update(){
 		this.draw()
-		this.animate()
+		if(!this.animateFinished){
+			this.animate()
+		}
 
 		this.position.x += this.velocity.x
 		this.position.y += this.velocity.y

@@ -21,30 +21,28 @@ class Enemy extends Entity {
 	}
 
 	takeHit(dmg, direction){
-		if(!this.isFalling){
-			this.velocity.y = this.jump
-			this.isFalling = true
-		}
-
 		this.health += -dmg
 	}
 
 	chasePlayer(){
 		const radar = detectInArea(this, player, 500)
 
-		if(radar.left){
-			this.velocity.x = -this.speed
-			this.direction = "LEFT"
-			this.isChasingPlayer = true
-		}else if(radar.right){
-			this.velocity.x = this.speed
-			this.direction = "RIGHT"
-			this.isChasingPlayer = true
-		}else{
-			this.velocity.x = 0
-			this.direction = null
-			this.isChasingPlayer = false
+		if(!player.isDead){
+			if(radar.left){
+				this.velocity.x = -this.speed
+				this.direction = "LEFT"
+				this.isChasingPlayer = true
+			}else if(radar.right){
+				this.velocity.x = this.speed
+				this.direction = "RIGHT"
+				this.isChasingPlayer = true
+			}else{
+				this.velocity.x = 0
+				this.direction = null
+				this.isChasingPlayer = false
+			}
 		}
+		
 
 		
 

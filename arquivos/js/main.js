@@ -380,7 +380,17 @@ function playerActions(){
 	}
 
 	if(player.health <= 0){
+		player.isDead = true
+	}
+
+	if(player.isDead){	
 		player.switchSprite("death")
+		player.velocity.x = 0
+
+		setTimeout(() => {
+			gameIsPaused = true
+			gameScreen(die_screen, hud_screen)
+		}, 2000)
 	}
 }
 
@@ -466,17 +476,8 @@ function inventorySlots(){
 function update(){
 	inventorySlots()
 
-	if(player.isDead){
-		player.velocity.x = 0
-		gameIsPaused = true
-
-		setTimeout(() => {
-			gameScreen(die_screen, hud_screen)
-		}, 500)
-	}else if(lockPlayerControls){
-		player.switchSprite(player_sprites.take_hit)	
-	}else{
-		playerActions()
+	if(!player.isDead){
+		playerActions()	
 	}
 
 	camera.update()
@@ -499,12 +500,12 @@ function render(){
 	ctx.fillRect(0, -2500/2, mapSize, 2500)
 
 	scenarioMapBlocks.forEach(block => {
-		const { top, bottom, left, right } = detectInArea(player, block, 300)
-		const blockInArea = top || bottom || right || left
+		// const { top, bottom, left, right } = detectInArea(player, block, 300)
+		// const blockInArea = top || bottom || right || left
 
-		if(blockInArea){
+		// if(blockInArea){
 			block.draw()
-		}
+		// }
 	})
 
 	player.update()
@@ -524,13 +525,13 @@ function render(){
 	})
 
 	playebleMapBlocks.forEach(block => {
-		const {top, bottom, left, right} = detectInArea(player, block, 300)
-		const blockInArea = top || bottom || right || left
+		// const {top, bottom, left, right} = detectInArea(player, block, 300)
+		// const blockInArea = top || bottom || right || left
 
-		if(blockInArea){
+		// if(blockInArea){
 			block.draw()
 			basicCollision(player, block)
-		}
+		// }
 	})
 
 	itensArray.forEach(item => {

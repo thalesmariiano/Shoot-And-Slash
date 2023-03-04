@@ -6,6 +6,7 @@ class Entity {
 		this.position = position
 		this.width = 55
 		this.height = 100
+		this.imageLoaded = false
 		this.velocity = {
 			x: 0, 
 			y: 0
@@ -49,13 +50,20 @@ class Entity {
 
 	switchSprite(name){
 		const spr = this.sprites.find(sprite => sprite.name == name)
+		if(spr != this.sprInfo) this.imageLoaded = false
 		this.sprInfo = spr
 		this.sprite.src = spr.image
-		this.sprite.addEventListener("load", () => {
-			this.spriteFrames = spr.frames
-			this.frameSizeX = this.sprite.width/this.spriteFrames
-			this.frameSizeY = this.sprite.height
-		})
+
+		if(!this.imageLoaded){
+			this.sprite.addEventListener("load", () => {
+				this.spriteFrames = spr.frames
+				this.frameSizeX = this.sprite.width/this.spriteFrames
+				this.frameSizeY = this.sprite.height
+				this.imageLoaded = true
+			})
+			this.currentFrames = 0
+		}
+
 	}
 
 	draw(){
