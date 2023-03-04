@@ -1,4 +1,5 @@
 
+
 const collide = (rect1, rect2) => {
 	const distX = (rect1.position.x + rect1.width/2) - (rect2.position.x + rect2.width/2)
 	const distY = (rect1.position.y + rect1.height/2) - (rect2.position.y + rect2.height/2)

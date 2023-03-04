@@ -1,7 +1,7 @@
 
 class Entity {
-	constructor({color, imgSrc, position}){
-		this.imgSrc = imgSrc
+	constructor({color, position}){
+		this.sprite = new Image()
 		this.color = color
 		this.position = position
 		this.width = 55
@@ -10,11 +10,12 @@ class Entity {
 			x: 0, 
 			y: 0
 		}
-		this.sprite = new Image()
+		this.sprites = null
+		this.sprInfo = null
 		this.imgX = 0
 		this.imgY = 0
-		this.frameSizeX = 200
-		this.frameSizeY = 200
+		this.frameSizeX = 0
+		this.frameSizeY = 0
 		this.currentFrames = 0
 		this.spriteFrames = 8
 		this.framesElapsed = 0
@@ -42,20 +43,31 @@ class Entity {
 		this.entityType = null
 	}
 
-	draw(){
-		if(this.imgSrc){
-			ctx.drawImage(this.sprite, this.imgX, this.imgY, this.frameSizeX, this.frameSizeY, this.position.x - this.offest.x, this.position.y - this.offest.y, 400, 400)
-			this.sprite.src = this.imgSrc
+	setSprites(sprArray){
+		this.sprites = sprArray
+	}
 
-			if(developerMode){
-				ctx.strokeStyle = "black"
-				ctx.strokeRect(this.position.x, this.position.y, this.width, this.height)
-			}
-			
-		}else{
-			ctx.fillStyle = this.color
-			ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
+	switchSprite(name){
+		const spr = this.sprites.find(sprite => sprite.name == name)
+		this.sprInfo = spr
+		this.sprite.src = spr.image
+		this.sprite.addEventListener("load", () => {
+			this.spriteFrames = spr.frames
+			this.frameSizeX = this.sprite.width/this.spriteFrames
+			this.frameSizeY = this.sprite.height
+		})
+	}
+
+	draw(){
+		ctx.drawImage(this.sprite, this.imgX, this.imgY, this.frameSizeX, this.frameSizeY, this.position.x - this.offest.x, this.position.y - this.offest.y, 400, 400)
+
+		if(developerMode){
+			ctx.strokeStyle = "black"
+			ctx.strokeRect(this.position.x, this.position.y, this.width, this.height)
 		}
+			
+		// ctx.fillStyle = this.color
+		// ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
 	}
 
 	update(){

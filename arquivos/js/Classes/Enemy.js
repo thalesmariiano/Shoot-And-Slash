@@ -1,7 +1,7 @@
 
 class Enemy extends Entity {
-	constructor({color, health, imgSrc, position}){
-		super({color, imgSrc, position})
+	constructor({color, health, position}){
+		super({color, position})
 		
 		this.speed = 3.5
 		this.entityType = "Enemy"

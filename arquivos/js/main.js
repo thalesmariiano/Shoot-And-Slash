@@ -48,59 +48,64 @@ const continueButton = document.getElementById("continueButton")
 const munition_amount = document.getElementById("munition-amount")
 const bullets_amount  = document.getElementById("bullets-amount")
 
-const player_sprites = {
-	idle: {
+const player_sprites = [
+	{
 		name: "idle",
-		img: "arquivos/assets/player/idle.png",
+		image: "arquivos/assets/player/idle.png",
 		frames: 8
 	},
-	idle_left: {
+	{
 		name: "idle_left",
-		img: "arquivos/assets/player/idle_left.png",
+		image: "arquivos/assets/player/idle_left.png",
 		frames: 8
 	},
-	run: {
+	{
 		name: "run",
-		img: "arquivos/assets/player/run.png",
+		image: "arquivos/assets/player/run.png",
 		frames: 8
 		
 	},
-	run_left: {
+	{
 		name: "run_left",
-		img: "arquivos/assets/player/run_left.png",
+		image: "arquivos/assets/player/run_left.png",
 		frames: 8
 	},
-	jump: {
+	{
 		name: "jump",
-		img: "arquivos/assets/player/jump.png",
+		image: "arquivos/assets/player/jump.png",
 		frames: 2
 	},
-	jump_left: {
+	{
 		name: "jump_left",
-		img: "arquivos/assets/player/jump_left.png",
+		image: "arquivos/assets/player/jump_left.png",
 		frames: 2
 	},
-	fall: {
+	{
 		name: "fall",
-		img: "arquivos/assets/player/fall.png",
+		image: "arquivos/assets/player/fall.png",
 		frames: 2
 	},
-	fall_left: {
+	{
 		name: "fall_left",
-		img: "arquivos/assets/player/fall_left.png",
+		image: "arquivos/assets/player/fall_left.png",
 		frames: 2
 	},
-	take_hit: {
+	{
 		name: "take-hit",
-		img: "arquivos/assets/player/take-hit1.png",
+		image: "arquivos/assets/player/take-hit1.png",
 		frames: 4
 	},
-	death: {
+	{
+		name: "attack1",
+		image: "arquivos/assets/player/attack1.png",
+		frames: 6
+	},
+	{
 		name: "death",
-		img: "arquivos/assets/player/death.png",
+		image: "arquivos/assets/player/death.png",
 		frames: 6
 	}
-}
+]
 
 const itens_sprites = {
 	ak47: {
@@ -129,7 +134,8 @@ const itens_sprites = {
 	}
 }
 
-const player = new Player({imgSrc: player_sprites.idle.img, position: {x: 127, y: 400}})
+const player = new Player({position: {x: 127, y: 400}})
+player.setSprites(player_sprites)
 const camera = new Camera(canvas.width, canvas.height)
 const enemys    = [
 	new Enemy({color: "red", health: 100, position: {x: 1900, y: 400}}), 
@@ -301,9 +307,9 @@ function playerActions(){
 	// Player parado
 	if(!keyUp && !keyLeft && !keyRight && !player.isFalling){
 		if(lastKeyPressed == "keyRight" || !lastKeyPressed[0]){
-			player.switchSprite(player_sprites.idle)			
+			player.switchSprite("idle")			
 		}else if(lastKeyPressed == "keyLeft"){
-			player.switchSprite(player_sprites.idle_left)
+			player.switchSprite("idle_left")
 		}
 		player.isIdle = true
 	}else{
@@ -313,9 +319,9 @@ function playerActions(){
 	// Player caindo
 	if(player.velocity.y > 0){
 		if(lastKeyPressed == "keyRight" || !lastKeyPressed[0]){
-			player.switchSprite(player_sprites.fall)
+			player.switchSprite("fall")
 		}else if(lastKeyPressed == "keyLeft"){
-			player.switchSprite(player_sprites.fall_left)
+			player.switchSprite("fall_left")
 		}	
 		player.isFalling = true
 	}
@@ -324,9 +330,9 @@ function playerActions(){
 	if(keyUp){
 		if(!player.isFalling){
 			if(lastKeyPressed == "keyRight" || !lastKeyPressed[0]){
-				player.switchSprite(player_sprites.jump)
+				player.switchSprite("jump")
 			}else if(lastKeyPressed == "keyLeft"){
-				player.switchSprite(player_sprites.jump_left)
+				player.switchSprite("jump_left")
 			}
 			player.velocity.y = player.jump
 			player.isFalling = true
@@ -340,7 +346,7 @@ function playerActions(){
 			lastKeyPressed = "keyLeft"
 			lockRight = true
 			if(!player.isFalling){
-				player.switchSprite(player_sprites.run_left)	
+				player.switchSprite("run_left")	
 			}
 		}
 		if(keyRight && !lockRight){
@@ -348,7 +354,7 @@ function playerActions(){
 			lastKeyPressed = "keyRight"
 			lockLeft = true
 			if(!player.isFalling){
-				player.switchSprite(player_sprites.run)	
+				player.switchSprite("run")	
 			}
 		}
 		player.isRunning = true
@@ -374,7 +380,7 @@ function playerActions(){
 	}
 
 	if(player.health <= 0){
-		player.switchSprite(player_sprites.death)
+		player.switchSprite("death")
 	}
 }
 
