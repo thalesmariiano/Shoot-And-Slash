@@ -17,7 +17,7 @@ class Entity {
 		this.frameSizeX = 0
 		this.frameSizeY = 0
 		this.currentFrames = 0
-		this.spriteFrames = 8
+		this.spriteFrames = 0
 		this.framesElapsed = 0
 		this.framesHold = 5
 		this.offest = {
