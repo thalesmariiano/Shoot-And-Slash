@@ -123,6 +123,7 @@ class Player extends Entity {
 
 	update(){
 		this.draw()
+		
 		if(!this.animateFinished){
 			this.animate()
 		}

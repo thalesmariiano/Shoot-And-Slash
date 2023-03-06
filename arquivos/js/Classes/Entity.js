@@ -6,12 +6,11 @@ class Entity {
 		this.position = position
 		this.width = 55
 		this.height = 100
-		this.imageLoaded = false
 		this.velocity = {
 			x: 0, 
 			y: 0
 		}
-		this.sprites = null
+		this.entitySprites = null
 		this.sprInfo = null
 		this.imgX = 0
 		this.imgY = 0
@@ -45,25 +44,19 @@ class Entity {
 	}
 
 	setSprites(sprArray){
-		this.sprites = sprArray
+		this.entitySprites = sprArray
 	}
 
 	switchSprite(name){
-		const spr = this.sprites.find(sprite => sprite.name == name)
-		if(spr != this.sprInfo) this.imageLoaded = false
+		const spr = this.entitySprites.find(sprite => sprite.name == name)
+
+		this.sprite = spr.image
+		this.spriteFrames = spr.frames
+		this.frameSizeX = this.sprite.width/this.spriteFrames
+		this.frameSizeY = this.sprite.height
+
+		if(spr != this.sprInfo) this.currentFrames = 0
 		this.sprInfo = spr
-		this.sprite.src = spr.image
-
-		if(!this.imageLoaded){
-			this.sprite.addEventListener("load", () => {
-				this.spriteFrames = spr.frames
-				this.frameSizeX = this.sprite.width/this.spriteFrames
-				this.frameSizeY = this.sprite.height
-				this.imageLoaded = true
-			})
-			this.currentFrames = 0
-		}
-
 	}
 
 	draw(){
