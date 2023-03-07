@@ -491,21 +491,42 @@ function update(){
 	camera.update()
 }
 
+class Terrain {
+	constructor(ctx){
+		this.ctx = ctx
+	}
+
+	layer1({code}){
+		code()
+	}
+}
+
+const skyGradient = ctx.createLinearGradient(0, 0, 0, 150)
+      skyGradient.addColorStop(0, "#4287f5")
+	  skyGradient.addColorStop(1, "#7bc6d1")
+
 function render(){
-	const skyGradient = ctx.createLinearGradient(0, 0, 0, 150)
-	skyGradient.addColorStop(0, "#4287f5")
-	skyGradient.addColorStop(1, "#7bc6d1")
 
 	ctx.save()
 	ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+	ctx.fillStyle = skyGradient
+	ctx.fillRect(0, -2500/2, mapSize, 2500)
+
+	ctx.fillStyle = "#4b4d4b"
+	ctx.fillRect(350 + Math.floor(-camera.x)/6, 300 + Math.floor(-camera.y), 200, 500)
+
+	ctx.fillStyle = "#6b6b6b"
+	ctx.fillRect(600 + Math.floor(-camera.x)/4, 350 + Math.floor(-camera.y), 500, 400)
+	
+	ctx.fillStyle = "#282928"
+	ctx.fillRect(200 + Math.floor(-camera.x)/2, 450 + Math.floor(-camera.y), 400, 300)
+	
 
 	ctx.translate(
 		Math.floor(-camera.x),
 		Math.floor(-camera.y)
 	)
-
-	ctx.fillStyle = skyGradient
-	ctx.fillRect(0, -2500/2, mapSize, 2500)
 
 	scenarioMapBlocks.forEach(block => {
 		// const { top, bottom, left, right } = detectInArea(player, block, 300)
