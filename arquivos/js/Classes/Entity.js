@@ -67,8 +67,8 @@ class Entity {
 			ctx.strokeRect(this.position.x, this.position.y, this.width, this.height)
 		}
 			
-		// ctx.fillStyle = this.color
-		// ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
+		ctx.fillStyle = this.color
+		ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
 	}
 
 	update(){

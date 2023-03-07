@@ -21,7 +21,7 @@ class Enemy extends Entity {
 	}
 
 	takeHit(dmg, direction){
-		this.health += -dmg	
+		this.health += -dmg
 	}
 
 	chasePlayer(){
