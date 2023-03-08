@@ -15,12 +15,19 @@
 			<canvas>O seu navegador não suporta o canvas.</canvas>
 			<div id="screens-container">
 				<section id="start-screen" class="game-screen">
-					<h1 id="start-title" class="title">Shoot <br> And Slash</h1>
+					<div id="start-container" class="screen">
+						<div id="logo-container">
+							<img id="logo" src="arquivos/assets/logo.png">
+						</div>
 
-					<nav class="menu">
-						<button id="playButton" class="defaultBtn">Jogar</button>
-						<button id="aboutButton" class="defaultBtn">Sobre</button>
-					</nav>	
+						<nav class="menu">
+							<div class="menu-container">
+								<button id="play-button" class="btn-default">Jogar</button>
+								<button id="options-button" class="btn-default">Opções</button>
+								<button id="about-button" class="btn-default">Sobre</button>
+							</div>
+						</nav>
+					</div>
 				</section>
 				<section id="hud-screen" class="game-screen">
 					<div id="hud-container">
@@ -50,11 +57,6 @@
 							</div>
 						</div>
 					</div>
-					<!-- <div id="hotbar">
-						<div class="slot"></div>
-						<div class="slot"></div>
-						<div class="slot"></div>
-					</div> -->
 				</section>
 				<section id="die-screen" class="game-screen">
 					<div id="die-container" class="screens">
@@ -62,12 +64,12 @@
 							<h2 class="title">Você morreu</h2>
 						</div>
 
-						<div class="menu-container">
-							<nav class="menu">
-								<button id="restartButton" class="defaultBtn">Reiniciar</button>
-								<button id="backToMenuBtn" class="defaultBtn">Menu</button>
-							</nav>
-						</div>
+						<nav class="menu">
+							<div class="menu-container">
+								<button id="restart-button" class="btn-default">Reiniciar</button>
+								<button id="backToMenu-button" class="btn-default">Menu</button>
+							</div>
+						</nav>
 					</div>
 				</section>
 				<section id="pause-screen" class="game-screen">
@@ -76,11 +78,11 @@
 							<h2 class="title">Jogo pausado!</h2>
 						</div>
 
-						<div class="menu-container">
-							<nav class="menu">
-								<button id="contiueButton" class="defaultBtn">Continuar</button>
-								<button id="restarbtn2" class="defaultBtn">Reiniciar</button>
-							</nav>
+						<nav class="menu">
+							<div class="menu-container">
+								<button id="continue-button" class="btn-default">Continuar</button>
+								<button id="restarbtn2" class="btn-default">Reiniciar</button>
+							</div>
 						</div>
 					</div>
 				</section>
@@ -122,8 +124,8 @@
 		<script src="arquivos/js/Utils/ui_utils.js"></script>
 		<script src="arquivos/js/Utils/geral_utils.js"></script>
 
-		<script src="arquivos/js/ui.js"></script>
 		<script src="arquivos/js/keyMap.js"></script>
 		<script src="arquivos/js/main.js"></script>
+		<script src="arquivos/js/ui.js"></script>
 	</body>
 </html>

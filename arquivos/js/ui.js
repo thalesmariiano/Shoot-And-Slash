@@ -1,11 +1,11 @@
 
-playButton.addEventListener("click", () => {
+play_button.addEventListener("click", () => {
 	gameScreen(hud_screen, start_screen)
 	gameIsPaused = false
 	init()
 })
 
-contiueButton.addEventListener("click", () => {
+continue_button.addEventListener("click", () => {
 	gameScreen(hud_screen, pause_screen)
 	gameIsPaused = false
 	init()
@@ -15,7 +15,7 @@ contiueButton.addEventListener("click", () => {
 
 const popup = document.querySelector("#popup-container")
 
-document.querySelector("#aboutButton").addEventListener("click", () => {
+document.querySelector("#about-button").addEventListener("click", () => {
 	popup.style.display = "flex"
 })
 

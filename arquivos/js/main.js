@@ -41,9 +41,8 @@ const pause_screen = document.getElementById("pause-screen")
 const weapon_icon = document.getElementById("weapon-icon-img")
 
 // Botões
-const playButton     = document.getElementById("playButton")
-const pauseButton    = document.getElementById("pauseButton")
-const continueButton = document.getElementById("continueButton")
+const play_button     = document.getElementById("play-button")
+const continue_button = document.getElementById("continue-button")
 
 const munition_amount = document.getElementById("munition-amount")
 const bullets_amount  = document.getElementById("bullets-amount")
@@ -237,7 +236,6 @@ function generateTerrain(mapArray, outputArray){
 
 	const tilemap = new Image()
 	tilemap.src = "arquivos/assets/tilemap.png"
-
 
 	for(let row in mapArray){
 		for(let column in mapArray[row]){
@@ -541,6 +539,9 @@ class Terrain {
 const skyGradient = ctx.createLinearGradient(0, 0, 0, 150)
       skyGradient.addColorStop(0, "#4287f5")
 	  skyGradient.addColorStop(1, "#7bc6d1")
+
+	  ctx.fillStyle = skyGradient
+	ctx.fillRect(0, -2500/2, mapSize, 2500)
 
 function render(){
 
