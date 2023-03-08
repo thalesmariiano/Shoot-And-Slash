@@ -44,61 +44,6 @@ class Player extends Entity {
 		if(this.sprInfo && this.sprInfo.name == "death") this.framesHold = 8
 	}
 
-	// switchSprite(spr){
-	// 	this.sprite_info = spr
-	// 	switch(spr.name){
-	// 		case "idle":
-	// 			this.imgSrc = spr.img
-	// 			this.spriteFrames = spr.frames
-	// 			break
-	// 		case "idle_left":
-	// 			this.imgSrc = spr.img
-	// 			this.spriteFrames = spr.frames
-	// 			break
-	// 		case "run":
-	// 			this.imgSrc = spr.img
-	// 			this.spriteFrames = spr.frames
-	// 			break
-	// 		case "run_left":
-	// 			this.imgSrc = spr.img
-	// 			this.spriteFrames = spr.frames
-	// 			break
-	// 		case "jump":
-	// 			this.imgSrc = spr.img
-	// 			this.spriteFrames = spr.frames
-	// 			this.currentFrames = 0
-	// 			break
-	// 		case "jump_left":
-	// 			this.imgSrc = spr.img
-	// 			this.spriteFrames = spr.frames
-	// 			this.currentFrames = 0
-	// 			break
-	// 		case "fall":
-	// 			this.imgSrc = spr.img
-	// 			this.spriteFrames = spr.frames
-	// 			this.currentFrames = 0
-	// 			break
-	// 		case "fall_left":
-	// 			this.imgSrc = spr.img
-	// 			this.spriteFrames = spr.frames
-	// 			this.currentFrames = 0
-	// 			break
-	// 		case "hit":
-	// 			this.imgSrc = spr.img
-	// 			this.spriteFrames = spr.frames
-	// 			this.currentFrames = 0
-	// 			break
-	// 		case "attack1":
-	// 			this.imgSrc = spr.img
-	// 			this.spriteFrames = spr.frames
-	// 		case "death":
-	// 			this.imgSrc = spr.img
-	// 			this.spriteFrames = spr.frames
-	// 			this.framesHold = 8
-	// 			break
-	// 	}
-	// }
-
 	getInventory(index){
 		return this.inventory[index]
 	}

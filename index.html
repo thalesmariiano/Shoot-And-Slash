@@ -5,31 +5,37 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" type="text/css" href="arquivos/css/style.css">
 
-		<script src="https://kit.fontawesome.com/af21155659.js" crossorigin="anonymous"></script>
+		<script src="https://cdn.tailwindcss.com"></script>
 
 		<title>Shoot And Slash</title>
 	</head>
 	<body>
 		
-		<main id="container">
-			<canvas>O seu navegador não suporta o canvas.</canvas>
-			<div id="screens-container">
-				<section id="start-screen" class="game-screen">
-					<div id="start-container" class="screen">
+		<main id="container" class="flex justify-center items-center relative min-h-screen">
+			<canvas class="border-[1px] border-netrual-50">O seu navegador não suporta o canvas.</canvas>
+			<div id="screens-container" class="absolute">
+				<section id="start-screen" class="game-screen w-full h-full">
+					<div id="start-container" class="screens relative py-20 flex flex-col justify-between items-center w-full h-full">
 						<div id="logo-container">
 							<img id="logo" src="arquivos/assets/logo.png">
 						</div>
 
 						<nav class="menu">
 							<div class="menu-container">
-								<button id="play-button" class="btn-default">Jogar</button>
-								<button id="options-button" class="btn-default">Opções</button>
-								<button id="about-button" class="btn-default">Sobre</button>
+								<button id="play-button" class="btn-default w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl">Jogar</button>
+								<button id="options-button" class="btn-default w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl">Opções</button>
 							</div>
 						</nav>
+
+						<div id="credits-container">
+							<p class="text-center text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+							tempor incididunt ut labore et <br>dolore magna aliqua. Ut enim ad minim veniam,
+							quis nostrud exercitation ullamco laboris nisi ut <br>aliquip ex ea commodo
+							consequat</p>
+						</div>
 					</div>
 				</section>
-				<section id="hud-screen" class="game-screen">
+				<section id="hud-screen" class="game-screen w-full h-full hidden">
 					<div id="hud-container">
 						<div id="weapon-icon-container">
 							<div id="weapon-icon">
@@ -58,30 +64,30 @@
 						</div>
 					</div>
 				</section>
-				<section id="die-screen" class="game-screen">
-					<div id="die-container" class="screens">
+				<section id="die-screen" class="game-screen w-full h-full hidden">
+					<div id="die-container" class="screens relative py-20 flex flex-col justify-center items-center w-full h-full bg-neutral-900/75">
 						<div class="title-container">
 							<h2 class="title">Você morreu</h2>
 						</div>
 
-						<nav class="menu">
+						<nav class="menu mt-10">
 							<div class="menu-container">
-								<button id="restart-button" class="btn-default">Reiniciar</button>
-								<button id="backToMenu-button" class="btn-default">Menu</button>
+								<button id="restart-button" class="btn-default w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl">Reiniciar</button>
+								<button id="backToMenu-button" class="btn-default w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl">Menu</button>
 							</div>
 						</nav>
 					</div>
 				</section>
-				<section id="pause-screen" class="game-screen">
-					<div id="pause-container" class="screens">
+				<section id="pause-screen" class="game-screen w-full h-full hidden">
+					<div id="pause-container" class="screens relative py-20 flex flex-col justify-center items-center w-full h-full bg-neutral-900/75">
 						<div class="title-container">
 							<h2 class="title">Jogo pausado!</h2>
 						</div>
 
-						<nav class="menu">
+						<nav class="menu mt-10">
 							<div class="menu-container">
-								<button id="continue-button" class="btn-default">Continuar</button>
-								<button id="restarbtn2" class="btn-default">Reiniciar</button>
+								<button id="continue-button" class="btn-default  w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl">Continuar</button>
+								<button id="restarbtn2" class="btn-default w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl">Reiniciar</button>
 							</div>
 						</div>
 					</div>
@@ -89,7 +95,7 @@
 			</div>
 		</main>
 
-		<div id="popup-container">
+		<!-- <div id="popup-container">
 			<div id="popup">
 				<div id="popup-content">
 					<h2 id="popup-title">Sobre</h2>
@@ -109,7 +115,7 @@
 					<button id="closePopupBtn">Fechar</button>
 				</div>
 			</div>
-		</div>
+		</div> -->
 
 		<script src="arquivos/js/Classes/Entity.js"></script>
 		<script src="arquivos/js/Classes/Player.js"></script>

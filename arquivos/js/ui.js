@@ -13,12 +13,12 @@ continue_button.addEventListener("click", () => {
 
 // Popup
 
-const popup = document.querySelector("#popup-container")
+// const popup = document.querySelector("#popup-container")
 
-document.querySelector("#about-button").addEventListener("click", () => {
-	popup.style.display = "flex"
-})
+// document.querySelector("#about-button").addEventListener("click", () => {
+// 	popup.style.display = "flex"
+// })
 
-document.querySelector("#closePopupBtn").addEventListener("click", () => {
-	popup.style.display = "none"
-})
+// document.querySelector("#closePopupBtn").addEventListener("click", () => {
+// 	popup.style.display = "none"
+// })

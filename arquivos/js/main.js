@@ -2,8 +2,8 @@
 var developerMode = false
 
 const canvas = document.querySelector("canvas")
-canvas.width = innerWidth - 50
-canvas.height = innerHeight - 70
+canvas.width = 1242
+canvas.height = 600
 
 const screens_container = document.querySelector("#screens-container")
 screens_container.style.width = `${canvas.width}px`
@@ -203,6 +203,7 @@ const playableMapTiles = [
 	[5,5,5,5,5,5,5,5,5,5,5,5,5,5,3,1,1,1,1,1,1,1,1,1,1,1,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
 	[5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,3,1,1,1,1,1,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
 	[5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3.5],
+	[5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
 	[5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
 	[5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5]
 ]
@@ -526,22 +527,9 @@ function update(){
 	camera.update()
 }
 
-class Terrain {
-	constructor(ctx){
-		this.ctx = ctx
-	}
-
-	layer1({code}){
-		code()
-	}
-}
-
 const skyGradient = ctx.createLinearGradient(0, 0, 0, 150)
       skyGradient.addColorStop(0, "#4287f5")
-	  skyGradient.addColorStop(1, "#7bc6d1")
-
-	  ctx.fillStyle = skyGradient
-	ctx.fillRect(0, -2500/2, mapSize, 2500)
+	skyGradient.addColorStop(1, "#7bc6d1")
 
 function render(){
 
@@ -565,14 +553,23 @@ function render(){
 		Math.floor(-camera.y)
 	)
 
-	scenarioMapBlocks.forEach(block => {
+	const camera_position = {
+		position: {
+			x: camera.x + canvas.width/2,
+			y: camera.y + canvas.height/2
+		},
+		width: 50,
+		height: 50
+	}
+
+	// scenarioMapBlocks.forEach(block => {
 		// const { top, bottom, left, right } = detectInArea(player, block, 300)
 		// const blockInArea = top || bottom || right || left
 
 		// if(blockInArea){
-			block.draw()
+	//		block.draw()
 		// }
-	})
+	// })
 
 	player.update()
 
@@ -585,19 +582,20 @@ function render(){
 			})
 
 		}else{
+			console.log("Inimigo eliminado: " + enemy)
 			enemys.splice(index, 1)
-			console.log("Inimigo eliminado: " + enemys[index])
+			
 		}
 	})
 
 	playebleMapBlocks.forEach(block => {
-		// const {top, bottom, left, right} = detectInArea(player, block, 300)
-		// const blockInArea = top || bottom || right || left
+		const {top, bottom, left, right} = detectInArea(camera_position, block, 300, 300, 300, 700, 650)
+		const blockInArea = top || bottom || right || left
 
-		// if(blockInArea){
+		if(blockInArea){
 			block.draw()
-			basicCollision(player, block)
-		// }
+		}
+		basicCollision(player, block)
 	})
 
 	itensArray.forEach(item => {

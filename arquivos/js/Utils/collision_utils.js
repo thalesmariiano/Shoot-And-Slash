@@ -1,34 +1,4 @@
 
-/*
-const blockCollision = collision => {
-	const {side, overlap, collider, target} = collision
-
-	if(side.top){
-	}
-
-	if(side.bottom){
-	}
-
-	if(side.left){
-		collider.position.x -= overlap.x
-		if(collider.atributtes.isHeavy){
-			target.speed = 2
-		}
-	}
-
-	if(side.right){
-		collider.position.x += overlap.x
-		if(collider.atributtes.isHeavy){
-			target.speed = 2					
-		}			
-	}
-
-	if(!side.left && !side.right && collider.atributtes.isHeavy){
-		target.speed = target.defaultSpeed
-	}
-}
-*/
-
 const projectileCollision = collison => {
 	const {side, overlap, collider, target} = collison
 
