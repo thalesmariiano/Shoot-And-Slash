@@ -15,20 +15,21 @@ ctx.imageSmoothingEnabled = false
 const GRAVITY = 0.6
 
 var keyRight,
-	keyLeft,
-	keyUp,
-	keyDown,
-	keyEnter,
-	keyR = false
+    keyLeft,
+    keyUp,
+    keyDown,
+    keyEnter,
+    keyR = false
+
 var digit1,
-	digit2,
-	digit3 = false
+    digit2,
+    digit3 = false
 
 var gameIsPaused = true
 var lockPlayerControls = false
 
 var lockLeft,
-	lockRight = false
+    lockRight = false
 
 var lastKeyPressed = "keyRight";
 
@@ -106,12 +107,6 @@ const player_sprites = [
 	}
 ]
 
-player_sprites.forEach(spr => {
-	const img = new Image()
-	img.src = spr.image
-	spr.image = img
-})
-
 const itens_sprites = {
 	ak47: {
 		img: "arquivos/assets/itens/ak47.png",
@@ -139,12 +134,13 @@ const itens_sprites = {
 	}
 }
 
-const player = new Player({position: {x: 127, y: 400}})
+const player = new Player({position: {x: 127, y: 380}})
 player.setSprites(player_sprites)
+
 const camera = new Camera(canvas.width, canvas.height)
 const enemys    = [
 	new Enemy({color: "red", health: 100, position: {x: 1900, y: 400}}), 
-	// new Enemy({color: "red", health: 100, position: {x: 2000, y: 400}})
+	new Enemy({color: "red", health: 100, position: {x: 2000, y: 400}})
 ]
 
 const life = new Item({
@@ -244,7 +240,6 @@ function generateTerrain(mapArray, outputArray){
 
 			const block = {
 				id: 1,
-				color: "darkgreen",
 				width: tileSize,
 				height: tileSize,
 				position: {
@@ -256,28 +251,23 @@ function generateTerrain(mapArray, outputArray){
 				type: "Block",
 				visible: false,
 				draw: () => {
-					// ctx.fillStyle = block.color
-					// ctx.fillRect(block.position.x, block.position.y, block.width, block.height)
 					ctx.drawImage(tilemap, block.imgX, block.imgY, 32, 32, block.position.x, block.position.y, block.width, block.height)				
 				}
 			}
 
-			if(tile != 0){
+			if(tile){
 				switch(tile){
 					case 1:
-						block.color = "darkgreen"
 						block.imgX = 32
 						block.imgY = 0
 						block.id = 1
 						break
 					case 2:
-						block.color = "#663300"
 						block.imgX = 32*2
 						block.imgY = 0
 						block.id = 2
 						break
 					case 3:
-						block.color = "#919191"
 						block.imgX = 0
 						block.imgY = 32*6
 						block.id = 3
@@ -532,7 +522,6 @@ const skyGradient = ctx.createLinearGradient(0, 0, 0, 150)
 	skyGradient.addColorStop(1, "#7bc6d1")
 
 function render(){
-
 	ctx.save()
 	ctx.clearRect(0, 0, canvas.width, canvas.height)
 
@@ -594,8 +583,8 @@ function render(){
 
 		if(blockInArea){
 			block.draw()
+			basicCollision(player, block)
 		}
-		basicCollision(player, block)
 	})
 
 	itensArray.forEach(item => {
@@ -649,8 +638,6 @@ function loop(){
 }
 
 function init(){
-	generateTerrain(scenarioMapTiles, scenarioMapBlocks)
-	generateTerrain(playableMapTiles, playebleMapBlocks)
 	loop()
 }
 
