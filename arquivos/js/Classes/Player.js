@@ -77,12 +77,6 @@ class Player extends Entity {
 		this.position.y += this.velocity.y
 		this.velocity.y += GRAVITY
 
-		// Caso o player caia da tela, teletransportar para fora
-		if(this.position.y + (this.height - 200) > canvas.height){
-			this.position.x = 10
-			this.position.y = 10
-		}
-
 		// this.position.x = Math.max(1, Math.min(canvas.width - this.width - 2, this.position.x))
 	}
 }

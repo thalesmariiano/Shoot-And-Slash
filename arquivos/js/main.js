@@ -1,16 +1,19 @@
 
 var developerMode = false
 
-const canvas = document.querySelector("canvas")
-canvas.width = 1242
-canvas.height = 600
-
-const screens_container = document.querySelector("#screens-container")
-screens_container.style.width = `${canvas.width}px`
-screens_container.style.height = `${canvas.height}px`
+const canvas  = document.querySelector("canvas")
 
 const ctx = canvas.getContext("2d", {alpha: false})
-ctx.imageSmoothingEnabled = false
+
+const resizeAspectRatio = () => {
+	ctx.canvas.width = window.innerWidth
+	ctx.canvas.height = ctx.canvas.width / 2.031 - 20
+	ctx.imageSmoothingEnabled = false
+}
+resizeAspectRatio()
+window.onresize = () => resizeAspectRatio()
+
+
 
 const GRAVITY = 0.6
 
@@ -137,10 +140,10 @@ const itens_sprites = {
 const player = new Player({position: {x: 127, y: 380}})
 player.setSprites(player_sprites)
 
-const camera = new Camera(canvas.width, canvas.height)
+const camera = new Camera()
 const enemys    = [
-	new Enemy({color: "red", health: 100, position: {x: 1900, y: 400}}), 
-	new Enemy({color: "red", health: 100, position: {x: 2000, y: 400}})
+	// new Enemy({color: "red", health: 100, position: {x: 1900, y: 400}}), 
+	// new Enemy({color: "red", health: 100, position: {x: 2000, y: 400}})
 ]
 
 const life = new Item({
@@ -541,10 +544,10 @@ function render(){
 	ctx.fillRect(0, -2500/2, mapSize, 2500)
 
 	/* PARALLAX */
-	ctx.drawImage(parallax_back, Math.floor(-camera.x)/7, 0, 2000, canvas.height)
+	ctx.drawImage(parallax_back, Math.floor(-camera.x)/7, 0, 2000, 700)
 	// ctx.drawImage(parallaxLight, 0, 0, canvas.width, canvas.height)							
-	ctx.drawImage(parallax_middle, Math.floor(-camera.x)/4, 0, 2000, canvas.height)				
-	ctx.drawImage(parallax_front, Math.floor(-camera.x)/2, 0, 2000, canvas.height)				
+	ctx.drawImage(parallax_middle, Math.floor(-camera.x)/4, 0, 2000, 700)				
+	ctx.drawImage(parallax_front, Math.floor(-camera.x)/2, 0, 2000, 700)				
 
 	ctx.translate(
 		Math.floor(-camera.x),
@@ -587,7 +590,7 @@ function render(){
 	})
 
 	playebleMapBlocks.forEach(block => {
-		const {top, bottom, left, right} = detectInArea(camera_position, block, 300, 300, 300, 700, 650)
+		const {top, bottom, left, right} = detectInArea(camera_position, block, 300, (canvas.height/2), 300, (canvas.width/2) + 50, (canvas.width/2))
 		const blockInArea = top || bottom || right || left
 
 		if(blockInArea){

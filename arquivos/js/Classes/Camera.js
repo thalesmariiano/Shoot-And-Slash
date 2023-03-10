@@ -1,11 +1,11 @@
 
 
 class Camera {
-	constructor(width, height){
+	constructor(){
 		this.x = 0
 		this.y = 0
-		this.width = width
-		this.height = height
+		this.width
+		this.height
 	}
 
 	leftEdge(){
@@ -23,6 +23,9 @@ class Camera {
 	}
 
 	update(){
+		this.width = canvas.width
+		this.height = canvas.height
+
 		if(player.position.x < this.leftEdge()){
 			this.x = player.position.x - (this.width * 0.25)
 		}
