@@ -6,19 +6,41 @@ class Enemy extends Entity {
 		this.speed = 3.5
 		this.entityType = "Enemy"
 		this.isChasingPlayer = false
-		this.direction = null
+		this.direction = "RIGHT"
 		this.attackCountDown = 0
 		this.health = health
+		this.offest = {
+			x: 90,
+			y: 143
+		}
+		this.entitySize = 250
 	}
 
-	draw(){
-		ctx.fillStyle = this.color
-		ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
+	animate(){
+		this.configAnimation()
 
-		ctx.font = "15px Arial"
-		ctx.fillStyle = "black"
-		ctx.fillText(this.health, this.position.x + 13, this.position.y - 25)
+		this.framesElapsed++
+		if(this.framesElapsed % this.framesHold === 0){
+			this.currentFrames++
+			if(this.currentFrames >= this.spriteFrames){
+				this.currentFrames = 0
+			}
+		}
+		this.imgX = this.frameSizeX*this.currentFrames
 	}
+
+	configAnimation(){
+		if(this.sprInfo && this.sprInfo.name == "death") this.framesHold = 8
+	}
+
+	// draw(){
+	// 	// ctx.fillStyle = this.color
+	// 	// ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
+
+	// 	ctx.font = "15px Arial"
+	// 	ctx.fillStyle = "black"
+	// 	ctx.fillText(this.health, this.position.x + 13, this.position.y - 25)
+	// }
 
 	takeHit(dmg, direction){
 		this.health += -dmg
@@ -38,12 +60,9 @@ class Enemy extends Entity {
 				this.isChasingPlayer = true
 			}else{
 				this.velocity.x = 0
-				this.direction = null
 				this.isChasingPlayer = false
 			}
 		}
-		
-
 		
 
 		// const {side, overlap, collider, target, distance} = collide(player, this)
@@ -140,18 +159,30 @@ class Enemy extends Entity {
 
 	update(){
 		this.draw()
+		this.animate()
+
 		this.chasePlayer()
-		this.attack()
+		// this.attack()
+
+
+
+		if(!this.isChasingPlayer){
+			if(this.direction == "RIGHT"){
+				this.switchSprite("idle")	
+			}else if(this.direction == "LEFT"){
+				this.switchSprite("idle_left")	
+			}
+		}else{
+			if(this.direction == "RIGHT"){
+				this.switchSprite("run")
+			}else if(this.direction == "LEFT"){
+				this.switchSprite("run_left")
+			}
+		}
 
 		this.position.x += this.velocity.x
 		this.position.y += this.velocity.y
 		this.velocity.y += GRAVITY
-
-		// Caso caia da tela, teletransportar para fora
-		if(this.position.y + (this.height - 200) > canvas.height){
-			this.position.x = 10
-			this.position.y = 10
-		}
 
 		if(this.health <= 0){
 			this.visible = false

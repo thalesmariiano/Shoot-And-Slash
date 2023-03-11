@@ -19,6 +19,11 @@ class Player extends Entity {
 				isHolding: false,
 			}
 		]
+		this.offest = {
+			x: 170,
+			y: 143
+		}
+		this.entitySize = 400
 		//
 		this.entityType = "Player"
 	}

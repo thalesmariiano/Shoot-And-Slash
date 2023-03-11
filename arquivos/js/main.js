@@ -137,14 +137,54 @@ const itens_sprites = {
 	}
 }
 
+const enemy_sprites = [
+	{
+		name: "idle",
+		image: "arquivos/assets/enemys/skeleton_idle.png",
+		frames: 7
+	},
+	{
+		name: "idle_left",
+		image: "arquivos/assets/enemys/skeleton_idle_left.png",
+		frames: 7
+	},
+	{
+		name: "run",
+		image: "arquivos/assets/enemys/skeleton_run.png",
+		frames: 8
+	},
+	{
+		name: "run_left",
+		image: "arquivos/assets/enemys/skeleton_run_left.png",
+		frames: 8
+	},
+	{
+		name: "walk",
+		image: "arquivos/assets/enemys/skeleton_walk.png",
+		frames: 7
+	},
+	{
+		name: "walk_left",
+		image: "arquivos/assets/enemys/skeleton_walk_left.png",
+		frames: 7
+	}
+]
+
+enemy_sprites.forEach(spr => {
+		const img = new Image()
+		img.src = spr.image
+		spr.image = img
+	})
+
 const player = new Player({position: {x: 127, y: 380}})
 player.setSprites(player_sprites)
 
 const camera = new Camera()
 const enemys    = [
-	// new Enemy({color: "red", health: 100, position: {x: 1900, y: 400}}), 
-	// new Enemy({color: "red", health: 100, position: {x: 2000, y: 400}})
+	new Enemy({color: "red", health: 100, position: {x: 600, y: 450}}),
+	new Enemy({color: "red", health: 100, position: {x: 2000, y: 400}})
 ]
+enemys.forEach(enemy => enemy.setSprites(enemy_sprites))
 
 const life = new Item({
 	imgSrc: "arquivos/assets/itens/life.png",
@@ -581,9 +621,7 @@ function render(){
 			playebleMapBlocks.forEach(block => {
 				basicCollision(enemy, block)
 			})
-
 		}else{
-			console.log("Inimigo eliminado: " + enemy)
 			enemys.splice(index, 1)
 			
 		}

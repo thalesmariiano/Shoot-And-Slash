@@ -39,9 +39,7 @@ class Camera {
 		}
 
 		if(player.position.y + player.height > this.bottomEdge()){
-			if(this.y < 250){
 				this.y = player.position.y + player.height - (this.height * 0.75)
-			}
 		}
 
 		// Limites da câmera

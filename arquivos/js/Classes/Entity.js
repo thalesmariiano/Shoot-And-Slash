@@ -21,9 +21,10 @@ class Entity {
 		this.framesElapsed = 0
 		this.framesHold = 5
 		this.offest = {
-			x: 170,
-			y: 143
+			x: 0,
+			y: 0
 		}
+		this.entitySize = 0
 		//
 		this.isIdle = false
 		this.isFalling = false
@@ -60,7 +61,7 @@ class Entity {
 	}
 
 	draw(){
-		ctx.drawImage(this.sprite, this.imgX, this.imgY, this.frameSizeX, this.frameSizeY, this.position.x - this.offest.x, this.position.y - this.offest.y, 400, 400)
+		ctx.drawImage(this.sprite, this.imgX, this.imgY, this.frameSizeX, this.frameSizeY, this.position.x - this.offest.x, this.position.y - this.offest.y, this.entitySize, this.entitySize)
 
 		if(developerMode){
 			ctx.strokeStyle = "black"
