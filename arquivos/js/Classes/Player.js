@@ -3,7 +3,6 @@ class Player extends Entity {
 	constructor({color, position}){
 		super({color, position})
 		
-		this.animateFinished = false
 		this.coinNumbers = 0
 		this.inventory = [
 			{

@@ -2,6 +2,7 @@
 var developerMode = false
 
 const canvas  = document.querySelector("canvas")
+const screens_container = document.querySelector("#screens-container")
 
 const ctx = canvas.getContext("2d", {alpha: false})
 
@@ -167,6 +168,11 @@ const enemy_sprites = [
 		name: "walk_left",
 		image: "arquivos/assets/enemys/skeleton_walk_left.png",
 		frames: 7
+	},
+		{
+		name: "dead",
+		image: "arquivos/assets/enemys/skeleton_dead.png",
+		frames: 4
 	}
 ]
 
@@ -621,9 +627,13 @@ function render(){
 			playebleMapBlocks.forEach(block => {
 				basicCollision(enemy, block)
 			})
-		}else{
-			enemys.splice(index, 1)
-			
+
+			if(enemy.isDead){
+				setTimeout(() => {
+					enemy.visible = false
+					enemys.splice(index, 1)
+				}, 3000)
+			}
 		}
 	})
 

@@ -11,7 +11,7 @@ class Enemy extends Entity {
 		this.health = health
 		this.offest = {
 			x: 90,
-			y: 143
+			y: 140
 		}
 		this.entitySize = 250
 	}
@@ -23,6 +23,10 @@ class Enemy extends Entity {
 		if(this.framesElapsed % this.framesHold === 0){
 			this.currentFrames++
 			if(this.currentFrames >= this.spriteFrames){
+				if(this.sprInfo.name == "dead"){
+					this.animateFinished = true
+					return
+				}
 				this.currentFrames = 0
 			}
 		}
@@ -30,17 +34,8 @@ class Enemy extends Entity {
 	}
 
 	configAnimation(){
-		if(this.sprInfo && this.sprInfo.name == "death") this.framesHold = 8
+		if(this.sprInfo && this.sprInfo.name == "dead") this.framesHold = 6
 	}
-
-	// draw(){
-	// 	// ctx.fillStyle = this.color
-	// 	// ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
-
-	// 	ctx.font = "15px Arial"
-	// 	ctx.fillStyle = "black"
-	// 	ctx.fillText(this.health, this.position.x + 13, this.position.y - 25)
-	// }
 
 	takeHit(dmg, direction){
 		this.health += -dmg
@@ -63,41 +58,6 @@ class Enemy extends Entity {
 				this.isChasingPlayer = false
 			}
 		}
-		
-
-		// const {side, overlap, collider, target, distance} = collide(player, this)
-
-		// if(overlap.x >= overlap.y){
-		// 	if(distance.y > 0){
-		// 		if(Math.abs(distance.y) < 500){
-		// 		}
-		// 	}else{
-		// 		if(Math.abs(distance.y) < 50){
-		// 		}	
-		// 	}
-		// }else{
-		// 	if(distance.x < 0){
-		// 		if(Math.abs(distance.x) < 500){
-		// 			this.velocity.x = -this.speed
-		// 			this.direction = "LEFT"
-		// 			this.isChasingPlayer = true
-		// 		}else{
-		// 			this.velocity.x = 0
-		// 			this.direction = null
-		// 			this.isChasingPlayer = false
-		// 		}
-		// 	}else{
-		// 		if(Math.abs(distance.x) < 500){
-		// 			this.velocity.x = this.speed
-		// 			this.direction = "RIGHT"
-		// 			this.isChasingPlayer = true
-		// 		}else{
-		// 			this.velocity.x = 0
-		// 			this.direction = null
-		// 			this.isChasingPlayer = false
-		// 		}
-		// 	}
-		// }
 
 		if(developerMode){
 			if(this.direction == "LEFT"){
@@ -159,20 +119,25 @@ class Enemy extends Entity {
 
 	update(){
 		this.draw()
-		this.animate()
+
+		if(!this.animateFinished){
+			this.animate()			
+		}
 
 		this.chasePlayer()
 		// this.attack()
 
 
 
-		if(!this.isChasingPlayer){
+		if(!this.isChasingPlayer && !this.isDead){
 			if(this.direction == "RIGHT"){
 				this.switchSprite("idle")	
 			}else if(this.direction == "LEFT"){
 				this.switchSprite("idle_left")	
 			}
-		}else{
+		}
+
+		if(this.isChasingPlayer && !this.isDead){
 			if(this.direction == "RIGHT"){
 				this.switchSprite("run")
 			}else if(this.direction == "LEFT"){
@@ -180,13 +145,20 @@ class Enemy extends Entity {
 			}
 		}
 
+		if(this.health <= 0){
+			this.isDead = true
+		}
+
+		if(this.isDead){
+			this.isChasingPlayer = false
+			this.velocity.x = 0
+			this.switchSprite("dead")
+		}
+
 		this.position.x += this.velocity.x
 		this.position.y += this.velocity.y
 		this.velocity.y += GRAVITY
 
-		if(this.health <= 0){
-			this.visible = false
-		}
 	}
 
 }

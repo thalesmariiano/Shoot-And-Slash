@@ -20,6 +20,7 @@ class Entity {
 		this.spriteFrames = 0
 		this.framesElapsed = 0
 		this.framesHold = 5
+		this.animateFinished = false
 		this.offest = {
 			x: 0,
 			y: 0
@@ -29,6 +30,7 @@ class Entity {
 		this.isIdle = false
 		this.isFalling = false
 		this.isRunning = false
+		this.isWalking = false
 		this.isAttacking = false
 		this.isDying = false
 		this.isDead = false

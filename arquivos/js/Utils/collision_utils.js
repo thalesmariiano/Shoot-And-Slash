@@ -8,7 +8,7 @@ const projectileCollision = collison => {
 			collider.velocity.y = 0
 		}
 
-		if(target.type == "Entity"){
+		if(target.type == "Entity" && !target.isDead){
 			target.takeHit(Math.floor(Math.random() * (6 - collider.dmg) + 6))
 			collider.visible = false
 		}
