@@ -95,14 +95,19 @@ const player_sprites = [
 		frames: 2
 	},
 	{
-		name: "take-hit",
-		image: "arquivos/assets/player/take-hit1.png",
-		frames: 4
-	},
-	{
 		name: "attack1",
 		image: "arquivos/assets/player/attack1.png",
 		frames: 6
+	},
+	{
+		name: "take-hit",
+		image: "arquivos/assets/player/take-hit.png",
+		frames: 4
+	},
+	{
+		name: "take-hit_left",
+		image: "arquivos/assets/player/take-hit_left.png",
+		frames: 4
 	},
 	{
 		name: "death",
@@ -208,6 +213,11 @@ const enemy_sprites = [
 		name: "attack_3_left",
 		image: "arquivos/assets/enemys/skeleton_attack_3_left.png",
 		frames: 4
+	},
+	{
+		name: "take_hit",
+		image: "arquivos/assets/enemys/skeleton_hit.png",
+		frames: 2
 	},
 	{
 		name: "dead",
@@ -428,7 +438,7 @@ function detectInArea(entity, target, areaTotal, topArea, bottomArea, leftArea, 
 function playerActions(){
 
 	// Player parado
-	if(!keyUp && !keyLeft && !keyRight && !player.isFalling){
+	if(!keyUp && !keyLeft && !keyRight && !player.isAttacking && !player.receiveDamage && !player.isFalling){
 		if(lastKeyPressed == "keyRight" || !lastKeyPressed[0]){
 			player.switchSprite("idle")			
 		}else if(lastKeyPressed == "keyLeft"){
@@ -441,6 +451,7 @@ function playerActions(){
 
 	// Player caindo
 	if(player.velocity.y > 0){
+		player.receiveDamage = false
 		if(lastKeyPressed == "keyRight" || !lastKeyPressed[0]){
 			player.switchSprite("fall")
 		}else if(lastKeyPressed == "keyLeft"){
@@ -464,6 +475,7 @@ function playerActions(){
 
 	// Player andando para esquerda ou direita
 	if(keyLeft || keyRight){
+		player.receiveDamage = false
 		if(keyLeft && !lockLeft){
 			player.velocity.x = -player.speed
 			lastKeyPressed = "keyLeft"
@@ -486,12 +498,25 @@ function playerActions(){
 		player.velocity.x = 0
 	}
 
+	if(player.receiveDamage){
+		if(lastKeyPressed == "keyLeft"){
+			player.switchSprite("take-hit_left")
+		}else if(lastKeyPressed == "keyRight"){
+			player.switchSprite("take-hit")
+		}
+	}
+
 	// Player atacando
 	if(keyEnter){
 		const item = player.getHoldingItem()
 		if(item && item.type === "Weapon"){
 			item.shot()
+		}else{
+			player.switchSprite("attack1")
+			player.isAttacking = true
 		}
+	}else{
+		player.isAttacking = false
 	}
 
 	// Recarregar Arma
@@ -608,7 +633,7 @@ function update(){
 
 const skyGradient = ctx.createLinearGradient(0, 0, 0, 150)
       skyGradient.addColorStop(0, "#4287f5")
-	skyGradient.addColorStop(1, "#7bc6d1")
+	  skyGradient.addColorStop(1, "#7bc6d1")
 
 const parallax_back = new Image()
 parallax_back.src = "arquivos/assets/parallax-forest-back.png"
@@ -670,7 +695,6 @@ function render(){
 
 			if(enemy.isDead){
 				setTimeout(() => {
-					enemy.visible = false
 					enemys.splice(index, 1)
 				}, 3000)
 			}

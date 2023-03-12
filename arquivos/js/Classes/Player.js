@@ -46,6 +46,7 @@ class Player extends Entity {
 
 	configAnimation(){
 		if(this.sprInfo && this.sprInfo.name == "death") this.framesHold = 8
+		if(this.sprInfo && this.sprInfo.name == "take-hit") this.framesHold = 8
 	}
 
 	getInventory(index){
@@ -65,8 +66,8 @@ class Player extends Entity {
 	}
 
 	takeHit(dmg){
-		lockPlayerControls = true
 		this.health += -dmg
+		this.receiveDamage = true
 		updateUI("healthbar", this.health)
 	}
 

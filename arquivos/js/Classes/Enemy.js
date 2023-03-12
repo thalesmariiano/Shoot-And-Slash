@@ -35,6 +35,7 @@ class Enemy extends Entity {
 
 	configAnimation(){
 		if(this.sprInfo && this.sprInfo.name == "dead") this.framesHold = 6
+		if(this.sprInfo && this.sprInfo.name == `attack_1_${this.direction.toLowerCase()}`) this.framesHold = 6
 	}
 
 	takeHit(dmg, direction){
@@ -44,7 +45,6 @@ class Enemy extends Entity {
 	chasePlayer(){
 		const radar = detectInArea(this, player, 500)
 		const closest = detectInArea(this, player, 100)
-		const closest_running = detectInArea(this, player, 200)
 
 		if(!player.isDead){
 
@@ -61,7 +61,7 @@ class Enemy extends Entity {
 				this.isChasingPlayer = false
 			}
 
-			if(closest.left || closest.right || closest_running.right || closest_running.left){
+			if(closest.left || closest.right){
 				this.isAttacking = true
 			}else{
 				this.isAttacking = false
@@ -83,10 +83,32 @@ class Enemy extends Entity {
 	}
 
 	attack(){
-		if(this.isAttacking){
+		if(this.isAttacking && !this.isDead){
 			this.attackCountDown++
-			if(this.attackCountDown >= 20){
-				player.takeHit(8)
+			if(this.attackCountDown >= 25){
+
+				const sword = {
+					width: 25,
+					height: 65,
+					position: {
+						x: 0,
+						y: this.position.y - 20
+					}
+				}
+
+				if(this.direction == "LEFT"){
+					sword.position.x = this.position.x - 70
+				}else if(this.direction == "RIGHT"){
+					sword.position.x = this.position.x + 120
+				}
+
+				const { side } = collide(sword, player)
+				const swordCollide = side.top || side.bottom || side.left || side.right
+
+				if(swordCollide){
+					player.takeHit(8)
+				}
+				
 				this.attackCountDown = 0
 			}
 		}
@@ -113,7 +135,7 @@ class Enemy extends Entity {
 		}
 
 		if(this.isAttacking && !this.isDead){
-			this.switchSprite(`attack_2_${this.direction.toLowerCase()}`)
+			this.switchSprite(`attack_1_${this.direction.toLowerCase()}`)
 		}
 
 		if(this.health <= 0){
