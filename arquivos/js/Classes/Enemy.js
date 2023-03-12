@@ -43,13 +43,14 @@ class Enemy extends Entity {
 
 	chasePlayer(){
 		const radar = detectInArea(this, player, 500)
+		const closest = detectInArea(this, player, 100)
 
 		if(!player.isDead){
-			if(radar.left){
+			if(radar.left && !closest.left){
 				this.velocity.x = -this.speed
 				this.direction = "LEFT"
 				this.isChasingPlayer = true
-			}else if(radar.right){
+			}else if(radar.right && !closest.right){
 				this.velocity.x = this.speed
 				this.direction = "RIGHT"
 				this.isChasingPlayer = true
@@ -70,66 +71,73 @@ class Enemy extends Entity {
 	}
 
 	attack(){
-		const {side, overlap, collider, target, distance} = collide(player, this)
+		const radar = detectInArea(this, player, 100)
 
-		if(overlap.x >= overlap.y){
-			if(distance.y > 0){
-				if(Math.abs(distance.y) < 0){
-				}
-			}else{
-				if(Math.abs(distance.y) < 0){
-				}	
-			}
+		if(radar.right){
+			this.isAttacking = true
+		}else if(radar.left){
+			this.isAttacking = true
 		}else{
-			if(distance.x < 0){
-				if(Math.abs(distance.x) < 100){
-					this.attackCountDown++
-					if(this.attackCountDown == 18){
-						player.takeHit(8)
-						this.attackCountDown = 0
-
-						if(developerMode){
-							ctx.fillStyle = "green"
-							ctx.fillRect(this.position.x - 100 + this.width, this.position.y + 30, 100, 10)
-						}
-						
-					}
-				}else{
-					this.attackCountDown = 0
-				}
-			}else{
-				if(Math.abs(distance.x) < 100){
-					this.attackCountDown++
-					if(this.attackCountDown == 18){
-						player.takeHit(8)
-						this.attackCountDown = 0
-
-						if(developerMode){
-							ctx.fillStyle = "green"
-							ctx.fillRect(this.position.x, this.position.y + 30, 100, 10)
-						}
-							
-					}
-				}else{
-					this.attackCountDown = 0
-				}
-			}
+			this.isAttacking = false
 		}
+		
+
+		// const {side, overlap, collider, target, distance} = collide(player, this)
+
+		// if(overlap.x >= overlap.y){
+		// 	if(distance.y > 0){
+		// 		if(Math.abs(distance.y) < 0){
+		// 		}
+		// 	}else{
+		// 		if(Math.abs(distance.y) < 0){
+		// 		}	
+		// 	}
+		// }else{
+		// 	if(distance.x < 0){
+		// 		if(Math.abs(distance.x) < 100){
+		// 			this.attackCountDown++
+		// 			if(this.attackCountDown == 18){
+		// 				player.takeHit(8)
+		// 				this.attackCountDown = 0
+
+		// 				if(developerMode){
+		// 					ctx.fillStyle = "green"
+		// 					ctx.fillRect(this.position.x - 100 + this.width, this.position.y + 30, 100, 10)
+		// 				}
+						
+		// 			}
+		// 		}else{
+		// 			this.attackCountDown = 0
+		// 		}
+		// 	}else{
+		// 		if(Math.abs(distance.x) < 100){
+		// 			this.attackCountDown++
+		// 			if(this.attackCountDown == 18){
+		// 				player.takeHit(8)
+		// 				this.attackCountDown = 0
+
+		// 				if(developerMode){
+		// 					ctx.fillStyle = "green"
+		// 					ctx.fillRect(this.position.x, this.position.y + 30, 100, 10)
+		// 				}
+							
+		// 			}
+		// 		}else{
+		// 			this.attackCountDown = 0
+		// 		}
+		// 	}
+		// }
 	}
 
 	update(){
 		this.draw()
-
-		if(!this.animateFinished){
-			this.animate()			
-		}
-
+		if(!this.animateFinished) this.animate()
 		this.chasePlayer()
-		// this.attack()
+		this.attack()
 
+		const radar = detectInArea(this, player, 200)
 
-
-		if(!this.isChasingPlayer && !this.isDead){
+		if(!this.isChasingPlayer && !this.isDead && !this.isAttacking){
 			if(this.direction == "RIGHT"){
 				this.switchSprite("idle")	
 			}else if(this.direction == "LEFT"){
@@ -137,11 +145,27 @@ class Enemy extends Entity {
 			}
 		}
 
-		if(this.isChasingPlayer && !this.isDead){
+		if(this.isChasingPlayer && !this.isDead && !this.isAttacking){
 			if(this.direction == "RIGHT"){
-				this.switchSprite("run")
+				if(radar.right && player.isRunning){
+					this.switchSprite("attack_run")					
+				}else{
+					this.switchSprite("run")					
+				}
 			}else if(this.direction == "LEFT"){
-				this.switchSprite("run_left")
+				if(radar.left && player.isRunning){
+					this.switchSprite("attack_run_left")
+				}else{
+					this.switchSprite("run_left")
+				}
+			}
+		}
+
+		if(this.isAttacking){
+			if(this.direction == "RIGHT"){	
+				this.switchSprite("attack_3")
+			}else if(this.direction == "LEFT"){
+				this.switchSprite("attack_3_left")
 			}
 		}
 

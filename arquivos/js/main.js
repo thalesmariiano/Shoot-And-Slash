@@ -169,7 +169,47 @@ const enemy_sprites = [
 		image: "arquivos/assets/enemys/skeleton_walk_left.png",
 		frames: 7
 	},
-		{
+	{
+		name: "attack_run",
+		image: "arquivos/assets/enemys/skeleton_attack_run.png",
+		frames: 7
+	},
+	{
+		name: "attack_run_left",
+		image: "arquivos/assets/enemys/skeleton_attack_run_left.png",
+		frames: 7
+	},
+	{
+		name: "attack_1",
+		image: "arquivos/assets/enemys/skeleton_attack_1.png",
+		frames: 5
+	},
+	{
+		name: "attack_1_left",
+		image: "arquivos/assets/enemys/skeleton_attack_1_left.png",
+		frames: 5
+	},
+	{
+		name: "attack_2",
+		image: "arquivos/assets/enemys/skeleton_attack_2.png",
+		frames: 6
+	},
+	{
+		name: "attack_2_left",
+		image: "arquivos/assets/enemys/skeleton_attack_2_left.png",
+		frames: 6
+	},
+	{
+		name: "attack_3",
+		image: "arquivos/assets/enemys/skeleton_attack_3.png",
+		frames: 4
+	},
+	{
+		name: "attack_3_left",
+		image: "arquivos/assets/enemys/skeleton_attack_3_left.png",
+		frames: 4
+	},
+	{
 		name: "dead",
 		image: "arquivos/assets/enemys/skeleton_dead.png",
 		frames: 4
@@ -177,17 +217,17 @@ const enemy_sprites = [
 ]
 
 enemy_sprites.forEach(spr => {
-		const img = new Image()
-		img.src = spr.image
-		spr.image = img
-	})
+	const img = new Image()
+	img.src = spr.image
+	spr.image = img
+})
 
 const player = new Player({position: {x: 127, y: 380}})
 player.setSprites(player_sprites)
 
 const camera = new Camera()
 const enemys    = [
-	new Enemy({color: "red", health: 100, position: {x: 600, y: 450}}),
+	new Enemy({color: "red", health: 100, position: {x: 1000, y: 450}}),
 	new Enemy({color: "red", health: 100, position: {x: 2000, y: 400}})
 ]
 enemys.forEach(enemy => enemy.setSprites(enemy_sprites))
