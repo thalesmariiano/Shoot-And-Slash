@@ -44,8 +44,10 @@ class Enemy extends Entity {
 	chasePlayer(){
 		const radar = detectInArea(this, player, 500)
 		const closest = detectInArea(this, player, 100)
+		const closest_running = detectInArea(this, player, 200)
 
 		if(!player.isDead){
+
 			if(radar.left && !closest.left){
 				this.velocity.x = -this.speed
 				this.direction = "LEFT"
@@ -58,6 +60,16 @@ class Enemy extends Entity {
 				this.velocity.x = 0
 				this.isChasingPlayer = false
 			}
+
+			if(closest.left || closest.right || closest_running.right || closest_running.left){
+				this.isAttacking = true
+			}else{
+				this.isAttacking = false
+			}
+
+		}else{
+			this.isAttacking = false
+			this.isChasingPlayer = false
 		}
 
 		if(developerMode){
@@ -71,62 +83,13 @@ class Enemy extends Entity {
 	}
 
 	attack(){
-		const radar = detectInArea(this, player, 100)
-
-		if(radar.right){
-			this.isAttacking = true
-		}else if(radar.left){
-			this.isAttacking = true
-		}else{
-			this.isAttacking = false
+		if(this.isAttacking){
+			this.attackCountDown++
+			if(this.attackCountDown >= 20){
+				player.takeHit(8)
+				this.attackCountDown = 0
+			}
 		}
-		
-
-		// const {side, overlap, collider, target, distance} = collide(player, this)
-
-		// if(overlap.x >= overlap.y){
-		// 	if(distance.y > 0){
-		// 		if(Math.abs(distance.y) < 0){
-		// 		}
-		// 	}else{
-		// 		if(Math.abs(distance.y) < 0){
-		// 		}	
-		// 	}
-		// }else{
-		// 	if(distance.x < 0){
-		// 		if(Math.abs(distance.x) < 100){
-		// 			this.attackCountDown++
-		// 			if(this.attackCountDown == 18){
-		// 				player.takeHit(8)
-		// 				this.attackCountDown = 0
-
-		// 				if(developerMode){
-		// 					ctx.fillStyle = "green"
-		// 					ctx.fillRect(this.position.x - 100 + this.width, this.position.y + 30, 100, 10)
-		// 				}
-						
-		// 			}
-		// 		}else{
-		// 			this.attackCountDown = 0
-		// 		}
-		// 	}else{
-		// 		if(Math.abs(distance.x) < 100){
-		// 			this.attackCountDown++
-		// 			if(this.attackCountDown == 18){
-		// 				player.takeHit(8)
-		// 				this.attackCountDown = 0
-
-		// 				if(developerMode){
-		// 					ctx.fillStyle = "green"
-		// 					ctx.fillRect(this.position.x, this.position.y + 30, 100, 10)
-		// 				}
-							
-		// 			}
-		// 		}else{
-		// 			this.attackCountDown = 0
-		// 		}
-		// 	}
-		// }
 	}
 
 	update(){
@@ -138,35 +101,19 @@ class Enemy extends Entity {
 		const radar = detectInArea(this, player, 200)
 
 		if(!this.isChasingPlayer && !this.isDead && !this.isAttacking){
-			if(this.direction == "RIGHT"){
-				this.switchSprite("idle")	
-			}else if(this.direction == "LEFT"){
-				this.switchSprite("idle_left")	
-			}
+			this.switchSprite(`idle_${this.direction.toLowerCase()}`)
 		}
 
 		if(this.isChasingPlayer && !this.isDead && !this.isAttacking){
-			if(this.direction == "RIGHT"){
-				if(radar.right && player.isRunning){
-					this.switchSprite("attack_run")					
-				}else{
-					this.switchSprite("run")					
-				}
-			}else if(this.direction == "LEFT"){
-				if(radar.left && player.isRunning){
-					this.switchSprite("attack_run_left")
-				}else{
-					this.switchSprite("run_left")
-				}
+			if(radar.right || radar.left && player.isRunning){
+				this.switchSprite(`attack_run_${this.direction.toLowerCase()}`)
+			}else{
+				this.switchSprite(`run_${this.direction.toLowerCase()}`)
 			}
 		}
 
 		if(this.isAttacking && !this.isDead){
-			if(this.direction == "RIGHT"){	
-				this.switchSprite("attack_3")
-			}else if(this.direction == "LEFT"){
-				this.switchSprite("attack_3_left")
-			}
+			this.switchSprite(`attack_2_${this.direction.toLowerCase()}`)
 		}
 
 		if(this.health <= 0){

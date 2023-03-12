@@ -140,7 +140,7 @@ const itens_sprites = {
 
 const enemy_sprites = [
 	{
-		name: "idle",
+		name: "idle_right",
 		image: "arquivos/assets/enemys/skeleton_idle.png",
 		frames: 7
 	},
@@ -150,7 +150,7 @@ const enemy_sprites = [
 		frames: 7
 	},
 	{
-		name: "run",
+		name: "run_right",
 		image: "arquivos/assets/enemys/skeleton_run.png",
 		frames: 8
 	},
@@ -160,7 +160,7 @@ const enemy_sprites = [
 		frames: 8
 	},
 	{
-		name: "walk",
+		name: "walk_right",
 		image: "arquivos/assets/enemys/skeleton_walk.png",
 		frames: 7
 	},
@@ -170,7 +170,7 @@ const enemy_sprites = [
 		frames: 7
 	},
 	{
-		name: "attack_run",
+		name: "attack_run_right",
 		image: "arquivos/assets/enemys/skeleton_attack_run.png",
 		frames: 7
 	},
@@ -180,7 +180,7 @@ const enemy_sprites = [
 		frames: 7
 	},
 	{
-		name: "attack_1",
+		name: "attack_1_right",
 		image: "arquivos/assets/enemys/skeleton_attack_1.png",
 		frames: 5
 	},
@@ -190,7 +190,7 @@ const enemy_sprites = [
 		frames: 5
 	},
 	{
-		name: "attack_2",
+		name: "attack_2_right",
 		image: "arquivos/assets/enemys/skeleton_attack_2.png",
 		frames: 6
 	},
@@ -200,7 +200,7 @@ const enemy_sprites = [
 		frames: 6
 	},
 	{
-		name: "attack_3",
+		name: "attack_3_right",
 		image: "arquivos/assets/enemys/skeleton_attack_3.png",
 		frames: 4
 	},
