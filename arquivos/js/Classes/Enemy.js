@@ -161,7 +161,7 @@ class Enemy extends Entity {
 			}
 		}
 
-		if(this.isAttacking){
+		if(this.isAttacking && !this.isDead){
 			if(this.direction == "RIGHT"){	
 				this.switchSprite("attack_3")
 			}else if(this.direction == "LEFT"){
