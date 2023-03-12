@@ -14,7 +14,20 @@ const resizeAspectRatio = () => {
 resizeAspectRatio()
 window.onresize = () => resizeAspectRatio()
 
-
+const gamesave = {
+	player: {
+		health: 100,
+		position: {
+			x: 127,
+			y: 200
+		}
+	},
+	enemys: [
+		new Enemy({color: "red", health: 100, position: {x: 1000, y: 450}}),
+		new Enemy({color: "red", health: 100, position: {x: 2000, y: 400}}),
+		new Enemy({color: "red", health: 100, position: {x: 2500, y: 400}})
+	],
+}
 
 const GRAVITY = 0.6
 
@@ -47,6 +60,7 @@ const weapon_icon = document.getElementById("weapon-icon-img")
 
 // Botões
 const play_button     = document.getElementById("play-button")
+const restart_button  = document.querySelector("#restart-button")
 const continue_button = document.getElementById("continue-button")
 
 const munition_amount = document.getElementById("munition-amount")
