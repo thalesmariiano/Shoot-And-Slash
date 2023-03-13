@@ -11,7 +11,7 @@ class Enemy extends Entity {
 		this.health = health
 		this.offest = {
 			x: 90,
-			y: 140
+			y: 150
 		}
 		this.entitySize = 250
 	}

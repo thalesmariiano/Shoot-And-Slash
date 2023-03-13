@@ -1,5 +1,4 @@
 
-
 class Camera {
 	constructor(){
 		this.x = 0

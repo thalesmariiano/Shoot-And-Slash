@@ -1,6 +1,6 @@
 
 const projectileCollision = collison => {
-	const {side, overlap, collider, target} = collison
+	const {side, collider, target} = collison
 
 	if(side.top || side.bottom || side.left || side.right){
 		if(target.type == "Block"){
@@ -16,7 +16,7 @@ const projectileCollision = collison => {
 }
 
 const itemCollision = collision => {
-	const {side, overlap, collider, target} = collision
+	const {side, collider, target} = collision
 	const item = target
 	const isColliding = side.top || side.bottom || side.left || side.right
 
@@ -61,7 +61,7 @@ const itemCollision = collision => {
 }
 
 const basicCollision = (entity, block) => {
-	const {side, overlap, collider, target, distance} = collide(entity, block)
+	const {side, collider, target, overlap} = collide(entity, block)
 
 	if(side.top){
 		collider.velocity.y = 0

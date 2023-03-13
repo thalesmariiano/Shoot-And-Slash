@@ -1,5 +1,4 @@
 
-
 class Projectile {
 	constructor(position, velocity, weapon, direction){
 		this.color = "black"

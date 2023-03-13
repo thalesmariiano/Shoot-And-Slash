@@ -38,7 +38,6 @@ var digit1,
     digit3 = false
 
 var gameIsPaused = true
-var lockPlayerControls = false
 
 var lockLeft,
     lockRight = false
@@ -55,7 +54,7 @@ const weapon_icon = document.getElementById("weapon-icon-img")
 
 // Botões
 const play_button     = document.getElementById("play-button")
-const restart_button  = document.querySelector("#restart-button")
+const restart_button  = document.getElementById("restart-button")
 const continue_button = document.getElementById("continue-button")
 
 const munition_amount = document.getElementById("munition-amount")
@@ -121,6 +120,11 @@ const player_sprites = [
 	{
 		name: "death",
 		image: "arquivos/assets/player/death.png",
+		frames: 6
+	},
+	{
+		name: "death_left",
+		image: "arquivos/assets/player/death_left.png",
 		frames: 6
 	}
 ]
@@ -240,7 +244,15 @@ const enemy_sprites = [
 	}
 ]
 
+const enemys = []
+
 enemy_sprites.forEach(spr => {
+	const img = new Image()
+	img.src = spr.image
+	spr.image = img
+})
+
+player_sprites.forEach(spr => {
 	const img = new Image()
 	img.src = spr.image
 	spr.image = img
@@ -248,20 +260,14 @@ enemy_sprites.forEach(spr => {
 
 const player = new Player({position: {x: 127, y: 380}})
 player.setSprites(player_sprites)
-
 const camera = new Camera()
-const enemys    = [
-	// new Enemy({color: "red", health: 100, position: {x: 1000, y: 450}}),
-	// new Enemy({color: "red", health: 100, position: {x: 2000, y: 400}})
-]
-enemys.forEach(enemy => enemy.setSprites(enemy_sprites))
 
 const life = new Item({
 	imgSrc: "arquivos/assets/itens/life.png",
 	itemType: "Life",
 	position: {
 		x: 1600,
-		y: 600
+		y: 630
 	}
 })
 
@@ -341,11 +347,11 @@ const mapSize = playableMapTiles[0].length*50
 const playebleMapBlocks = []
 // const scenarioMapBlocks = []
 
+const tilemap = new Image()
+	  tilemap.src = "arquivos/assets/tilemap.png"
+
 function generateTerrain(mapArray, outputArray){
 	const tileSize = 50
-
-	const tilemap = new Image()
-	tilemap.src = "arquivos/assets/tilemap.png"
 
 	for(let row in mapArray){
 		for(let column in mapArray[row]){
@@ -362,10 +368,7 @@ function generateTerrain(mapArray, outputArray){
 				imgX: 0,
 				imgY: 0,
 				type: "Block",
-				visible: false,
-				draw: () => {
-					ctx.drawImage(tilemap, block.imgX, block.imgY, 32, 32, block.position.x, block.position.y, block.width, block.height)				
-				}
+				visible: false
 			}
 
 			if(tile){
@@ -454,7 +457,7 @@ function playerActions(){
 
 	// Player parado
 	if(!keyUp && !keyLeft && !keyRight && !player.isAttacking && !player.receiveDamage && !player.isFalling){
-		if(lastKeyPressed == "keyRight" || !lastKeyPressed[0]){
+		if(lastKeyPressed == "keyRight"){
 			player.switchSprite("idle")			
 		}else if(lastKeyPressed == "keyLeft"){
 			player.switchSprite("idle_left")
@@ -467,7 +470,7 @@ function playerActions(){
 	// Player caindo
 	if(player.velocity.y > 0){
 		player.receiveDamage = false
-		if(lastKeyPressed == "keyRight" || !lastKeyPressed[0]){
+		if(lastKeyPressed == "keyRight"){
 			player.switchSprite("fall")
 		}else if(lastKeyPressed == "keyLeft"){
 			player.switchSprite("fall_left")
@@ -478,7 +481,7 @@ function playerActions(){
 	// Player pulando
 	if(keyUp){
 		if(!player.isFalling){
-			if(lastKeyPressed == "keyRight" || !lastKeyPressed[0]){
+			if(lastKeyPressed == "keyRight"){
 				player.switchSprite("jump")
 			}else if(lastKeyPressed == "keyLeft"){
 				player.switchSprite("jump_left")
@@ -546,8 +549,12 @@ function playerActions(){
 		player.isDead = true
 	}
 
-	if(player.isDead){	
-		player.switchSprite("death")
+	if(player.isDead){
+		if(lastKeyPressed == "keyRight"){
+			player.switchSprite("death")
+		}else if(lastKeyPressed == "keyLeft"){
+			player.switchSprite("death_left")
+		}
 		player.velocity.x = 0
 
 		setTimeout(() => {
@@ -671,7 +678,7 @@ function render(){
 
 	/* PARALLAX */
 	ctx.drawImage(parallax_back, Math.floor(-camera.x)/7, 0, 2000, 700)
-	// ctx.drawImage(parallaxLight, 0, 0, canvas.width, canvas.height)							
+	// ctx.drawImage(parallax_light, Math.floor(-camera.x)/6, 0, canvas.width, canvas.height)							
 	ctx.drawImage(parallax_middle, Math.floor(-camera.x)/4, 0, 2000, 700)				
 	ctx.drawImage(parallax_front, Math.floor(-camera.x)/2, 0, 2000, 700)				
 
@@ -715,7 +722,7 @@ function render(){
 		const blockInArea = top || bottom || right || left
 
 		if(blockInArea){
-			block.draw()
+			ctx.drawImage(tilemap, block.imgX, block.imgY, 32, 32, block.position.x, block.position.y, block.width, block.height)				
 			basicCollision(player, block)
 		}
 	})
