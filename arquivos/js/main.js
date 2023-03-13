@@ -53,9 +53,10 @@ const pause_screen = document.getElementById("pause-screen")
 const weapon_icon = document.getElementById("weapon-icon-img")
 
 // Botões
-const play_button     = document.getElementById("play-button")
-const restart_button  = document.getElementById("restart-button")
-const continue_button = document.getElementById("continue-button")
+const play_button      = document.getElementById("play-button")
+const restart_button   = document.getElementById("restart-button")
+const restart_button_2 = document.getElementById("restart-button-2")
+const continue_button  = document.getElementById("continue-button")
 
 const munition_amount = document.getElementById("munition-amount")
 const bullets_amount  = document.getElementById("bullets-amount")
@@ -768,6 +769,24 @@ function pause(){
 	}
 }
 
+function restart(){
+	enemys.length = 0
+	generateEnemys(3, 100)
+	init()
+	player.receiveLife(100)
+	player.isDead = false
+	player.framesHold = 5
+	player.framesElapsed = 0
+	player.switchSprite("idle")
+	player.animateFinished = false
+	player.position.x = gamesave.player.position.x
+	player.position.y = gamesave.player.position.y
+	player.inventory.forEach(slot => {
+		slot.item = null
+		slot.isHolding = false
+	})
+}
+
 function loop(){
 	if(!gameIsPaused){
 		window.requestAnimationFrame(loop)
@@ -778,6 +797,7 @@ function loop(){
 }
 
 function init(){
+	gameIsPaused = false
 	loop()
 }
 

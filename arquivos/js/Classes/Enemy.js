@@ -7,11 +7,19 @@ class Enemy extends Entity {
 		this.entityType = "Enemy"
 		this.isChasingPlayer = false
 		this.direction = "RIGHT"
-		this.attackCountDown = 0
+		this.attack_timer = 0
 		this.health = health
 		this.offest = {
 			x: 90,
 			y: 150
+		}
+		this.sword = {
+			width: 25,
+			height: 65,
+			position: {
+				x: 0,
+				y: 0
+			}
 		}
 		this.entitySize = 250
 	}
@@ -50,28 +58,16 @@ class Enemy extends Entity {
 			if(enemyView.left && !distanceToAttack.left){
 				this.velocity.x = -this.speed
 				this.direction = "LEFT"
-				this.isIdle = false
 				this.isChasingPlayer = true
 			}else if(enemyView.right && !distanceToAttack.right){
 				this.velocity.x = this.speed
 				this.direction = "RIGHT"
-				this.isIdle = false
 				this.isChasingPlayer = true
 			}else{
 				this.velocity.x = 0
 				this.isChasingPlayer = false
-				this.isIdle = true
 			}
-
-			if(distanceToAttack.left || distanceToAttack.right){
-				this.isAttacking = true
-			}else{
-				this.isAttacking = false
-			}
-		}else{
-			this.isAttacking = false
-		}
-			
+		}		
 
 		if(developerMode){
 			if(this.direction == "LEFT"){
@@ -84,35 +80,37 @@ class Enemy extends Entity {
 	}
 
 	attack(){
-		if(this.isAttacking && !this.isDead){
-			this.attackCountDown++
-			if(this.attackCountDown >= 25){
+		const attack_distance = detectInArea(this, player, 100)
 
-				const sword = {
-					width: 25,
-					height: 65,
-					position: {
-						x: 0,
-						y: this.position.y - 20
-					}
-				}
+		this.sword.width = 25
+		this.sword.height = 65
+		this.sword.position.y = this.position.y - 20
+		if(attack_distance.left && !this.isDead && !player.isDead){
+			this.sword.position.x = this.position.x - 70
+			this.isAttacking = true
+			this.useSword()
+		}else if(attack_distance.right && !this.isDead && !player.isDead){
+			this.sword.position.x = this.position.x + 120
+			this.isAttacking = true
+			this.useSword()
+		}else{
+			this.isAttacking = false
+		}
+	}
 
-				if(this.direction == "LEFT"){
-					sword.position.x = this.position.x - 70
-				}else if(this.direction == "RIGHT"){
-					sword.position.x = this.position.x + 120
-				}
+	useSword(t){
+		this.attack_timer++
+		if(this.attack_timer >= 25){
 
-				const { side } = collide(sword, player)
-				const swordCollide = side.top || side.bottom || side.left || side.right
+			const { side } = collide(this.sword, player)
+			const sword_collide = side.top || side.bottom || side.left || side.right
 
-				if(swordCollide){
-					player.takeHit(8)
-				}else{
-					player.receiveDamage = false
-				}		
-				this.attackCountDown = 0
-			}
+			// ctx.fillStyle = "red"
+			// ctx.fillRect(this.sword.position.x, this.sword.position.y, this.sword.width, this.sword.height)
+
+			sword_collide ? player.takeHit(8) : player.receiveDamage = false
+					
+			this.attack_timer = 0
 		}
 	}
 
@@ -124,13 +122,17 @@ class Enemy extends Entity {
 
 		const radar = detectInArea(this, player, 200)
 
-		if(this.isIdle && !this.isDead && !this.isAttacking){
+		if(!this.isChasingPlayer && !this.isDead && !this.isAttacking){
 			this.switchSprite(`idle_${this.direction.toLowerCase()}`)
 		}
 
 		if(this.isChasingPlayer && !this.isDead && !this.isAttacking){
 			if(radar.right || radar.left && player.isRunning){
 				this.switchSprite(`attack_run_${this.direction.toLowerCase()}`)
+				this.sword.width = 65
+				this.sword.height = 25
+				this.sword.position.y = this.position.y + 30
+				this.useSword(2)
 			}else{
 				this.switchSprite(`run_${this.direction.toLowerCase()}`)
 			}
