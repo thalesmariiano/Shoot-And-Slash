@@ -21,12 +21,7 @@ const gamesave = {
 			x: 127,
 			y: 200
 		}
-	},
-	enemys: [
-		new Enemy({color: "red", health: 100, position: {x: 1000, y: 450}}),
-		new Enemy({color: "red", health: 100, position: {x: 2000, y: 400}}),
-		new Enemy({color: "red", health: 100, position: {x: 2500, y: 400}})
-	],
+	}
 }
 
 const GRAVITY = 0.6
@@ -234,8 +229,13 @@ const enemy_sprites = [
 		frames: 2
 	},
 	{
-		name: "dead",
+		name: "dead_right",
 		image: "arquivos/assets/enemys/skeleton_dead.png",
+		frames: 4
+	},
+	{
+		name: "dead_left",
+		image: "arquivos/assets/enemys/skeleton_dead_left.png",
 		frames: 4
 	}
 ]
@@ -251,8 +251,8 @@ player.setSprites(player_sprites)
 
 const camera = new Camera()
 const enemys    = [
-	new Enemy({color: "red", health: 100, position: {x: 1000, y: 450}}),
-	new Enemy({color: "red", health: 100, position: {x: 2000, y: 400}})
+	// new Enemy({color: "red", health: 100, position: {x: 1000, y: 450}}),
+	// new Enemy({color: "red", health: 100, position: {x: 2000, y: 400}})
 ]
 enemys.forEach(enemy => enemy.setSprites(enemy_sprites))
 
@@ -279,22 +279,22 @@ const ak47 = new Weapon({
 ak47.item_sprites = itens_sprites.ak47
 ak47.bulletsAmount = 30
 
-const escopeta = new Weapon({
-	imgSrc: "arquivos/assets/itens/escopeta.png",
-	name: "Dôze",
-	gunType: "Espingarda",
-	munition: 20,
-	gunLimit: 10,
-	position: {
-		x: 500,
-		y: 530
-	}
-})
-escopeta.item_sprites = itens_sprites.escopeta
-escopeta.bulletsAmount = 10
+// const escopeta = new Weapon({
+// 	imgSrc: "arquivos/assets/itens/escopeta.png",
+// 	name: "Dôze",
+// 	gunType: "Espingarda",
+// 	munition: 20,
+// 	gunLimit: 10,
+// 	position: {
+// 		x: 500,
+// 		y: 530
+// 	}
+// })
+// escopeta.item_sprites = itens_sprites.escopeta
+// escopeta.bulletsAmount = 10
 
 const itensArray = []
-itensArray.push(life, ak47, escopeta)
+itensArray.push(life, ak47)
 
 const playableMapTiles = [
 	[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
@@ -419,7 +419,8 @@ function detectInArea(entity, target, areaTotal, topArea, bottomArea, leftArea, 
 		top: false,
 		bottom: false,
 		left: false,
-		right: false
+		right: false,
+		distance
 	}
 
 	const top    = topArea ? topArea : areaTotal
@@ -706,12 +707,6 @@ function render(){
 			playebleMapBlocks.forEach(block => {
 				basicCollision(enemy, block)
 			})
-
-			if(enemy.isDead){
-				setTimeout(() => {
-					enemys.splice(index, 1)
-				}, 3000)
-			}
 		}
 	})
 

@@ -2,11 +2,14 @@
 play_button.addEventListener("click", () => {
 	gameScreen(hud_screen, start_screen)
 	gameIsPaused = false
+	generateEnemys(3, 100)
 	init()
 })
 
 restart_button.addEventListener("click", () => {
 	gameIsPaused = false
+	enemys.length = 0
+	generateEnemys(3, 100)
 	init()
 	player.receiveLife(100)
 	player.isDead = false

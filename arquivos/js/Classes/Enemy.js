@@ -23,7 +23,7 @@ class Enemy extends Entity {
 		if(this.framesElapsed % this.framesHold === 0){
 			this.currentFrames++
 			if(this.currentFrames >= this.spriteFrames){
-				if(this.sprInfo.name == "dead"){
+				if(this.sprInfo.name == `dead_${this.direction.toLowerCase()}`){
 					this.animateFinished = true
 					return
 				}
@@ -34,7 +34,7 @@ class Enemy extends Entity {
 	}
 
 	configAnimation(){
-		if(this.sprInfo && this.sprInfo.name == "dead") this.framesHold = 6
+		if(this.sprInfo && this.sprInfo.name == `dead_${this.direction.toLowerCase()}`) this.framesHold = 6
 		if(this.sprInfo && this.sprInfo.name == `attack_1_${this.direction.toLowerCase()}`) this.framesHold = 6
 	}
 
@@ -43,34 +43,35 @@ class Enemy extends Entity {
 	}
 
 	chasePlayer(){
-		const radar = detectInArea(this, player, 500)
-		const closest = detectInArea(this, player, 100)
+		const enemyView = detectInArea(this, player, 500)
+		const distanceToAttack = detectInArea(this, player, 100)
 
-		if(!player.isDead){
-
-			if(radar.left && !closest.left){
+		if(!player.isDead && !this.isDead){
+			if(enemyView.left && !distanceToAttack.left){
 				this.velocity.x = -this.speed
 				this.direction = "LEFT"
+				this.isIdle = false
 				this.isChasingPlayer = true
-			}else if(radar.right && !closest.right){
+			}else if(enemyView.right && !distanceToAttack.right){
 				this.velocity.x = this.speed
 				this.direction = "RIGHT"
+				this.isIdle = false
 				this.isChasingPlayer = true
 			}else{
 				this.velocity.x = 0
 				this.isChasingPlayer = false
+				this.isIdle = true
 			}
 
-			if(closest.left || closest.right){
+			if(distanceToAttack.left || distanceToAttack.right){
 				this.isAttacking = true
 			}else{
 				this.isAttacking = false
 			}
-
 		}else{
 			this.isAttacking = false
-			this.isChasingPlayer = false
 		}
+			
 
 		if(developerMode){
 			if(this.direction == "LEFT"){
@@ -107,8 +108,9 @@ class Enemy extends Entity {
 
 				if(swordCollide){
 					player.takeHit(8)
-				}
-				
+				}else{
+					player.receiveDamage = false
+				}		
 				this.attackCountDown = 0
 			}
 		}
@@ -122,7 +124,7 @@ class Enemy extends Entity {
 
 		const radar = detectInArea(this, player, 200)
 
-		if(!this.isChasingPlayer && !this.isDead && !this.isAttacking){
+		if(this.isIdle && !this.isDead && !this.isAttacking){
 			this.switchSprite(`idle_${this.direction.toLowerCase()}`)
 		}
 
@@ -143,9 +145,8 @@ class Enemy extends Entity {
 		}
 
 		if(this.isDead){
-			this.isChasingPlayer = false
 			this.velocity.x = 0
-			this.switchSprite("dead")
+			this.switchSprite(`dead_${this.direction.toLowerCase()}`)
 		}
 
 		this.position.x += this.velocity.x
