@@ -19,9 +19,9 @@ class Weapon extends Item {
 	}
 
 	animate(){
-		if(lastKeyPressed == "keyLeft"){
+		if(player.direction == "LEFT"){
 			this.position.x = player.position.x - Math.floor(Math.random() * (20 - 25) + 20)
-		}else if(lastKeyPressed == "keyRight"){
+		}else if(player.direction == "RIGHT"){
 			this.position.x = player.position.x + Math.floor(Math.random() * (50 - 55) + 50)			
 		}
 		this.position.y = player.position.y + Math.floor(Math.random() * (50 - 51) + 50)
@@ -59,18 +59,15 @@ class Weapon extends Item {
 						x: 0,
 						y: Math.random() * (.5 - -.5) + -.5 
 					}
-					var direction = null
 
-					if(lastKeyPressed == "keyLeft"){
+					if(player.direction == "LEFT"){
 						velocity.x = -20
-						direction = 'LEFT'
-					}else if(lastKeyPressed == "keyRight"){
+					}else if(player.direction == "RIGHT"){
 						position.x += 50
 						velocity.x = 20
-						direction = 'RIGHT'
 					}
 
-					this.bulletsFired.push(new Projectile(position, velocity, this, direction))
+					this.bulletsFired.push(new Projectile(position, velocity, this, player.direction))
 					this.bulletsAmount--
 					this.lockShot = false
 				}, this.shotTime)

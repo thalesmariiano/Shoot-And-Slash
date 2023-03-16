@@ -20,17 +20,21 @@ class Entity {
 		this.spriteFrames = 0
 		this.framesElapsed = 0
 		this.framesHold = 5
+		this.animateFinished = false
 		this.offest = {
-			x: 170,
-			y: 143
+			x: 0,
+			y: 0
 		}
+		this.entitySize = 0
 		//
 		this.isIdle = false
 		this.isFalling = false
 		this.isRunning = false
+		this.isWalking = false
 		this.isAttacking = false
 		this.isDying = false
 		this.isDead = false
+		this.receiveDamage = false
 		//
 		this.health = 100
 		this.maxHealth = 100
@@ -40,6 +44,7 @@ class Entity {
 		//
 		this.visible = true
 		this.type = "Entity"
+		this.direction = "RIGHT"
 		this.entityType = null
 	}
 
@@ -60,7 +65,7 @@ class Entity {
 	}
 
 	draw(){
-		ctx.drawImage(this.sprite, this.imgX, this.imgY, this.frameSizeX, this.frameSizeY, this.position.x - this.offest.x, this.position.y - this.offest.y, 400, 400)
+		ctx.drawImage(this.sprite, this.imgX, this.imgY, this.frameSizeX, this.frameSizeY, this.position.x - this.offest.x, this.position.y - this.offest.y, this.entitySize, this.entitySize)
 
 		if(developerMode){
 			ctx.strokeStyle = "black"
@@ -77,13 +82,6 @@ class Entity {
 		this.position.x += this.velocity.x
 		this.position.y += this.velocity.y
 		this.velocity.y += GRAVITY
-		
-
-		// Caso o player caia da tela, teletransportar para fora
-		if(this.position.y + (this.height - 200) > canvas.height){
-			this.position.x = 10
-			this.position.y = 10
-		}
 
 		// this.position.x = Math.max(1, Math.min(canvas.width - this.width - 2, this.position.x))
 	}

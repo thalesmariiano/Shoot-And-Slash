@@ -6,6 +6,10 @@ class Item  {
 		this.sprite = new Image()
 		this.itemType = itemType
 		this.position = position
+		this.initial_position = {
+			x: this.position.x,
+			y: this.position.y
+		}
 		this.velocity = {
 			x: 0,
 			y: 0

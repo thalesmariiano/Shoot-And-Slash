@@ -1,36 +1,6 @@
 
-/*
-const blockCollision = collision => {
-	const {side, overlap, collider, target} = collision
-
-	if(side.top){
-	}
-
-	if(side.bottom){
-	}
-
-	if(side.left){
-		collider.position.x -= overlap.x
-		if(collider.atributtes.isHeavy){
-			target.speed = 2
-		}
-	}
-
-	if(side.right){
-		collider.position.x += overlap.x
-		if(collider.atributtes.isHeavy){
-			target.speed = 2					
-		}			
-	}
-
-	if(!side.left && !side.right && collider.atributtes.isHeavy){
-		target.speed = target.defaultSpeed
-	}
-}
-*/
-
 const projectileCollision = collison => {
-	const {side, overlap, collider, target} = collison
+	const {side, collider, target} = collison
 
 	if(side.top || side.bottom || side.left || side.right){
 		if(target.type == "Block"){
@@ -38,7 +8,7 @@ const projectileCollision = collison => {
 			collider.velocity.y = 0
 		}
 
-		if(target.type == "Entity"){
+		if(target.type == "Entity" && !target.isDead){
 			target.takeHit(Math.floor(Math.random() * (6 - collider.dmg) + 6))
 			collider.visible = false
 		}
@@ -46,7 +16,7 @@ const projectileCollision = collison => {
 }
 
 const itemCollision = collision => {
-	const {side, overlap, collider, target} = collision
+	const {side, collider, target} = collision
 	const item = target
 	const isColliding = side.top || side.bottom || side.left || side.right
 
@@ -56,16 +26,10 @@ const itemCollision = collision => {
 				collider.coinNumbers += item.itemValue
 				item.visible = false
 				break
-			case "Life":
+			case "Vida":
 				if(collider.health < collider.maxHealth){
-					const currentLife = Math.abs(collider.health - collider.maxHealth)
-					if(currentLife < item.itemValue){
-						collider.receiveLife(currentLife)
-						item.visible = false
-					}else{
-						collider.receiveLife(item.itemValue)
-						item.visible = false
-					}
+					collider.receiveLife(item.itemValue)
+					item.visible = false
 				}
 				break
 			case "Bomb":
@@ -91,7 +55,7 @@ const itemCollision = collision => {
 }
 
 const basicCollision = (entity, block) => {
-	const {side, overlap, collider, target, distance} = collide(entity, block)
+	const {side, collider, target, overlap} = collide(entity, block)
 
 	if(side.top){
 		collider.velocity.y = 0

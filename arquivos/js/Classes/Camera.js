@@ -1,11 +1,10 @@
 
-
 class Camera {
-	constructor(width, height){
+	constructor(){
 		this.x = 0
 		this.y = 0
-		this.width = width
-		this.height = height
+		this.width
+		this.height
 	}
 
 	leftEdge(){
@@ -23,6 +22,9 @@ class Camera {
 	}
 
 	update(){
+		this.width = canvas.width
+		this.height = canvas.height
+
 		if(player.position.x < this.leftEdge()){
 			this.x = player.position.x - (this.width * 0.25)
 		}
@@ -36,9 +38,7 @@ class Camera {
 		}
 
 		if(player.position.y + player.height > this.bottomEdge()){
-			if(this.y < 250){
 				this.y = player.position.y + player.height - (this.height * 0.75)
-			}
 		}
 
 		// Limites da câmera

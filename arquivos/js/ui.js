@@ -1,24 +1,38 @@
 
-playButton.addEventListener("click", () => {
+play_button.addEventListener("click", () => {
 	gameScreen(hud_screen, start_screen)
-	gameIsPaused = false
+	generateEnemys(3, 100)
 	init()
 })
 
-contiueButton.addEventListener("click", () => {
+restart_button.addEventListener("click", () => {
+	restart()
+	gameScreen(hud_screen, die_screen)
+})
+
+restart_button_2.addEventListener("click", () => {
+	restart()
 	gameScreen(hud_screen, pause_screen)
-	gameIsPaused = false
+})
+
+continue_button.addEventListener("click", () => {
+	gameScreen(hud_screen, pause_screen)
 	init()
+})
+
+backtomenu_button.addEventListener("click", () => {
+	destroy()
+	gameScreen(start_screen, die_screen)
 })
 
 // Popup
 
-const popup = document.querySelector("#popup-container")
+// const popup = document.querySelector("#popup-container")
 
-document.querySelector("#aboutButton").addEventListener("click", () => {
-	popup.style.display = "flex"
-})
+// document.querySelector("#about-button").addEventListener("click", () => {
+// 	popup.style.display = "flex"
+// })
 
-document.querySelector("#closePopupBtn").addEventListener("click", () => {
-	popup.style.display = "none"
-})
+// document.querySelector("#closePopupBtn").addEventListener("click", () => {
+// 	popup.style.display = "none"
+// })

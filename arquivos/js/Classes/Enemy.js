@@ -4,20 +4,45 @@ class Enemy extends Entity {
 		super({color, position})
 		
 		this.speed = 3.5
-		this.entityType = "Enemy"
 		this.isChasingPlayer = false
-		this.direction = null
-		this.attackCountDown = 0
+		this.attack_timer = 0
 		this.health = health
+		this.offest = {
+			x: 90,
+			y: 150
+		}
+		this.sword = {
+			width: 25,
+			height: 65,
+			position: {
+				x: 0,
+				y: 0
+			}
+		}
+		this.entitySize = 250
+		this.entityType = "Enemy"
 	}
 
-	draw(){
-		ctx.fillStyle = this.color
-		ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
+	animate(){
+		this.configAnimation()
 
-		ctx.font = "15px Arial"
-		ctx.fillStyle = "black"
-		ctx.fillText(this.health, this.position.x + 13, this.position.y - 25)
+		this.framesElapsed++
+		if(this.framesElapsed % this.framesHold === 0){
+			this.currentFrames++
+			if(this.currentFrames >= this.spriteFrames){
+				if(this.sprInfo.name == `dead_${this.direction.toLowerCase()}`){
+					this.animateFinished = true
+					return
+				}
+				this.currentFrames = 0
+			}
+		}
+		this.imgX = this.frameSizeX*this.currentFrames
+	}
+
+	configAnimation(){
+		if(this.sprInfo && this.sprInfo.name == `dead_${this.direction.toLowerCase()}`) this.framesHold = 6
+		if(this.sprInfo && this.sprInfo.name == `attack_1_${this.direction.toLowerCase()}`) this.framesHold = 6
 	}
 
 	takeHit(dmg, direction){
@@ -25,60 +50,23 @@ class Enemy extends Entity {
 	}
 
 	chasePlayer(){
-		const radar = detectInArea(this, player, 500)
+		const enemyView = detectInArea(this, player, 500)
+		const distanceToAttack = detectInArea(this, player, 100)
 
-		if(!player.isDead){
-			if(radar.left){
+		if(!player.isDead && !this.isDead){
+			if(enemyView.left && !distanceToAttack.left){
 				this.velocity.x = -this.speed
 				this.direction = "LEFT"
 				this.isChasingPlayer = true
-			}else if(radar.right){
+			}else if(enemyView.right && !distanceToAttack.right){
 				this.velocity.x = this.speed
 				this.direction = "RIGHT"
 				this.isChasingPlayer = true
 			}else{
 				this.velocity.x = 0
-				this.direction = null
 				this.isChasingPlayer = false
 			}
-		}
-		
-
-		
-
-		// const {side, overlap, collider, target, distance} = collide(player, this)
-
-		// if(overlap.x >= overlap.y){
-		// 	if(distance.y > 0){
-		// 		if(Math.abs(distance.y) < 500){
-		// 		}
-		// 	}else{
-		// 		if(Math.abs(distance.y) < 50){
-		// 		}	
-		// 	}
-		// }else{
-		// 	if(distance.x < 0){
-		// 		if(Math.abs(distance.x) < 500){
-		// 			this.velocity.x = -this.speed
-		// 			this.direction = "LEFT"
-		// 			this.isChasingPlayer = true
-		// 		}else{
-		// 			this.velocity.x = 0
-		// 			this.direction = null
-		// 			this.isChasingPlayer = false
-		// 		}
-		// 	}else{
-		// 		if(Math.abs(distance.x) < 500){
-		// 			this.velocity.x = this.speed
-		// 			this.direction = "RIGHT"
-		// 			this.isChasingPlayer = true
-		// 		}else{
-		// 			this.velocity.x = 0
-		// 			this.direction = null
-		// 			this.isChasingPlayer = false
-		// 		}
-		// 	}
-		// }
+		}		
 
 		if(developerMode){
 			if(this.direction == "LEFT"){
@@ -91,71 +79,81 @@ class Enemy extends Entity {
 	}
 
 	attack(){
-		const {side, overlap, collider, target, distance} = collide(player, this)
+		const attack_distance = detectInArea(this, player, 100)
 
-		if(overlap.x >= overlap.y){
-			if(distance.y > 0){
-				if(Math.abs(distance.y) < 0){
-				}
-			}else{
-				if(Math.abs(distance.y) < 0){
-				}	
-			}
+		this.sword.width = 25
+		this.sword.height = 65
+		this.sword.position.y = this.position.y - 20
+		if(attack_distance.left && !this.isDead && !player.isDead){
+			this.sword.position.x = this.position.x - 70
+			this.isAttacking = true
+			this.useSword()
+		}else if(attack_distance.right && !this.isDead && !player.isDead){
+			this.sword.position.x = this.position.x + 120
+			this.isAttacking = true
+			this.useSword()
 		}else{
-			if(distance.x < 0){
-				if(Math.abs(distance.x) < 100){
-					this.attackCountDown++
-					if(this.attackCountDown == 18){
-						player.takeHit(8)
-						this.attackCountDown = 0
+			this.isAttacking = false
+		}
+	}
 
-						if(developerMode){
-							ctx.fillStyle = "green"
-							ctx.fillRect(this.position.x - 100 + this.width, this.position.y + 30, 100, 10)
-						}
-						
-					}
-				}else{
-					this.attackCountDown = 0
-				}
-			}else{
-				if(Math.abs(distance.x) < 100){
-					this.attackCountDown++
-					if(this.attackCountDown == 18){
-						player.takeHit(8)
-						this.attackCountDown = 0
+	useSword(t){
+		this.attack_timer++
+		if(this.attack_timer >= 25){
 
-						if(developerMode){
-							ctx.fillStyle = "green"
-							ctx.fillRect(this.position.x, this.position.y + 30, 100, 10)
-						}
-							
-					}
-				}else{
-					this.attackCountDown = 0
-				}
-			}
+			const { side } = collide(this.sword, player)
+			const sword_collide = side.top || side.bottom || side.left || side.right
+
+			// ctx.fillStyle = "red"
+			// ctx.fillRect(this.sword.position.x, this.sword.position.y, this.sword.width, this.sword.height)
+
+			sword_collide ? player.takeHit(8) : player.receiveDamage = false
+					
+			this.attack_timer = 0
 		}
 	}
 
 	update(){
 		this.draw()
+		if(!this.animateFinished) this.animate()
 		this.chasePlayer()
 		this.attack()
+
+		const radar = detectInArea(this, player, 200)
+
+		if(!this.isChasingPlayer && !this.isDead && !this.isAttacking){
+			this.switchSprite(`idle_${this.direction.toLowerCase()}`)
+		}
+
+		if(this.isChasingPlayer && !this.isDead && !this.isAttacking){
+			if(radar.right || radar.left && player.isRunning){
+				this.switchSprite(`attack_run_${this.direction.toLowerCase()}`)
+				this.sword.width = 65
+				this.sword.height = 25
+				this.sword.position.y = this.position.y + 30
+				this.useSword(2)
+			}else{
+				this.switchSprite(`run_${this.direction.toLowerCase()}`)
+			}
+		}
+
+		if(this.isAttacking && !this.isDead){
+			this.switchSprite(`attack_1_${this.direction.toLowerCase()}`)
+		}
+
+		if(this.health <= 0){
+			this.isDead = true
+		}
+
+		if(this.isDead){
+			this.velocity.x = 0
+			this.switchSprite(`dead_${this.direction.toLowerCase()}`)
+		}
 
 		this.position.x += this.velocity.x
 		this.position.y += this.velocity.y
 		this.velocity.y += GRAVITY
 
-		// Caso caia da tela, teletransportar para fora
-		if(this.position.y + (this.height - 200) > canvas.height){
-			this.position.x = 10
-			this.position.y = 10
-		}
-
-		if(this.health <= 0){
-			this.visible = false
-		}
 	}
 
 }
