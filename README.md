@@ -14,11 +14,7 @@ Slash And Shoot é um jogo 2D estilo Hack And Slash em desenvolvimento.
 ## Sprites Usados:
  Todos os sprites usados são de uso livre sem copyright.
 
-  - Skeleton Warrior
-  https://craftpix.net/freebies/free-skeleton-pixel-art-sprite-sheets/
-  - Parallax Florest
-  https://ansimuz.itch.io/parallax-forest
-  - Platform Villager Props
-  https://cainos.itch.io/
-  - Samurai Sprite
-  https://luizmelo.itch.io/martial-hero
+  - Skeleton Warrior: https://craftpix.net/freebies/free-skeleton-pixel-art-sprite-sheets/
+  - Parallax Florest: https://ansimuz.itch.io/parallax-forest
+  - Platform Villager Props: https://cainos.itch.io/
+  - Samurai Sprite: https://luizmelo.itch.io/martial-hero
