@@ -57,6 +57,7 @@ const play_button      = document.getElementById("play-button")
 const restart_button   = document.getElementById("restart-button")
 const restart_button_2 = document.getElementById("restart-button-2")
 const continue_button  = document.getElementById("continue-button")
+const backtomenu_button = document.getElementById("backToMenu-button")
 
 const munition_amount = document.getElementById("munition-amount")
 const bullets_amount  = document.getElementById("bullets-amount")
@@ -265,7 +266,7 @@ const camera = new Camera()
 
 const life = new Item({
 	imgSrc: "arquivos/assets/itens/life.png",
-	itemType: "Life",
+	itemType: "Vida",
 	position: {
 		x: 1600,
 		y: 630
@@ -773,7 +774,7 @@ function restart(){
 	enemys.length = 0
 	generateEnemys(3, 100)
 	init()
-	player.receiveLife(100)
+	player.receiveLife(1000)
 	player.isDead = false
 	player.framesHold = 5
 	player.framesElapsed = 0
@@ -785,6 +786,44 @@ function restart(){
 		slot.item = null
 		slot.isHolding = false
 	})
+	itensArray.forEach(item => {
+		item.isInInventory = false
+		item.position.x = item.initial_position.x
+		item.position.y = item.initial_position.y
+		item.visible = true
+		if(item.type == "Weapon" && item.gunType == "Fuzil"){
+			item.munition = 60
+			item.bulletsAmount = 30
+		}
+	})
+}
+
+function destroy(){
+	gameIsPaused = true
+	enemys.length = 0
+	player.receiveLife(1000)
+	player.isDead = false
+	player.framesHold = 5
+	player.framesElapsed = 0
+	player.switchSprite("idle")
+	player.animateFinished = false
+	player.position.x = gamesave.player.position.x
+	player.position.y = gamesave.player.position.y
+	player.inventory.forEach(slot => {
+		slot.item = null
+		slot.isHolding = false
+	})
+	itensArray.forEach(item => {
+		item.isInInventory = false
+		item.position.x = item.initial_position.x
+		item.position.y = item.initial_position.y
+		item.visible = true
+		if(item.type == "Weapon" && item.gunType == "Fuzil"){
+			item.munition = 60
+			item.bulletsAmount = 30
+		}
+	})
+	ctx.clearRect(0, 0, canvas.width, canvas.height)
 }
 
 function loop(){

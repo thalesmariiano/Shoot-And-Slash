@@ -26,16 +26,10 @@ const itemCollision = collision => {
 				collider.coinNumbers += item.itemValue
 				item.visible = false
 				break
-			case "Life":
+			case "Vida":
 				if(collider.health < collider.maxHealth){
-					const currentLife = Math.abs(collider.health - collider.maxHealth)
-					if(currentLife < item.itemValue){
-						collider.receiveLife(currentLife)
-						item.visible = false
-					}else{
-						collider.receiveLife(item.itemValue)
-						item.visible = false
-					}
+					collider.receiveLife(item.itemValue)
+					item.visible = false
 				}
 				break
 			case "Bomb":

@@ -61,13 +61,14 @@ class Player extends Entity {
 		}
 	}
 
-	receiveLife(life){
-		this.health += life
+	receiveLife(received_life){
+		const life_lack = Math.abs(this.health - this.maxHealth)
+		this.health += life_lack < received_life ? life_lack : received_life
 		updateUI("healthbar", this.health)
 	}
 
-	takeHit(dmg){
-		this.health += -dmg
+	takeHit(damage_taken){
+		this.health -= damage_taken
 		this.receiveDamage = true
 		updateUI("healthbar", this.health)
 	}

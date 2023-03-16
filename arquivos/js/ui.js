@@ -15,10 +15,14 @@ restart_button_2.addEventListener("click", () => {
 	gameScreen(hud_screen, pause_screen)
 })
 
-
 continue_button.addEventListener("click", () => {
 	gameScreen(hud_screen, pause_screen)
 	init()
+})
+
+backtomenu_button.addEventListener("click", () => {
+	destroy()
+	gameScreen(start_screen, die_screen)
 })
 
 // Popup
