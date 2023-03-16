@@ -34,7 +34,7 @@ class Player extends Entity {
 		if(this.framesElapsed % this.framesHold === 0){
 			this.currentFrames++
 			if(this.currentFrames >= this.spriteFrames){
-				if(this.sprInfo.name == "death" || this.sprInfo.name == "death_left"){
+				if(this.sprInfo.name == `death_${this.direction.toLowerCase()}`){
 					this.animateFinished = true
 					return
 				}
@@ -45,9 +45,8 @@ class Player extends Entity {
 	}
 
 	configAnimation(){
-		if(this.sprInfo && this.sprInfo.name == "death") this.framesHold = 8
-		if(this.sprInfo && this.sprInfo.name == "death_left") this.framesHold = 8
-		if(this.sprInfo && this.sprInfo.name == "take-hit") this.framesHold = 8
+		if(this.sprInfo && this.sprInfo.name == `death_${this.direction.toLowerCase()}`) this.framesHold = 8
+		if(this.sprInfo && this.sprInfo.name == `take-hit_${this.direction.toLowerCase()}`) this.framesHold = 8
 	}
 
 	getInventory(index){

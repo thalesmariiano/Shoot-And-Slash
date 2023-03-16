@@ -64,7 +64,7 @@ const bullets_amount  = document.getElementById("bullets-amount")
 
 const player_sprites = [
 	{
-		name: "idle",
+		name: "idle_right",
 		image: "arquivos/assets/player/idle.png",
 		frames: 8
 	},
@@ -74,7 +74,7 @@ const player_sprites = [
 		frames: 8
 	},
 	{
-		name: "run",
+		name: "run_right",
 		image: "arquivos/assets/player/run.png",
 		frames: 8
 		
@@ -85,7 +85,7 @@ const player_sprites = [
 		frames: 8
 	},
 	{
-		name: "jump",
+		name: "jump_right",
 		image: "arquivos/assets/player/jump.png",
 		frames: 2
 	},
@@ -95,7 +95,7 @@ const player_sprites = [
 		frames: 2
 	},
 	{
-		name: "fall",
+		name: "fall_right",
 		image: "arquivos/assets/player/fall.png",
 		frames: 2
 	},
@@ -110,7 +110,7 @@ const player_sprites = [
 		frames: 6
 	},
 	{
-		name: "take-hit",
+		name: "take-hit_right",
 		image: "arquivos/assets/player/take-hit.png",
 		frames: 4
 	},
@@ -120,7 +120,7 @@ const player_sprites = [
 		frames: 4
 	},
 	{
-		name: "death",
+		name: "death_right",
 		image: "arquivos/assets/player/death.png",
 		frames: 6
 	},
@@ -459,11 +459,7 @@ function playerActions(){
 
 	// Player parado
 	if(!keyUp && !keyLeft && !keyRight && !player.isAttacking && !player.receiveDamage && !player.isFalling){
-		if(lastKeyPressed == "keyRight"){
-			player.switchSprite("idle")			
-		}else if(lastKeyPressed == "keyLeft"){
-			player.switchSprite("idle_left")
-		}
+		player.switchSprite(`idle_${player.direction.toLowerCase()}`)
 		player.isIdle = true
 	}else{
 		player.isIdle = false
@@ -472,22 +468,14 @@ function playerActions(){
 	// Player caindo
 	if(player.velocity.y > 0){
 		player.receiveDamage = false
-		if(lastKeyPressed == "keyRight"){
-			player.switchSprite("fall")
-		}else if(lastKeyPressed == "keyLeft"){
-			player.switchSprite("fall_left")
-		}	
+		player.switchSprite(`fall_${player.direction.toLowerCase()}`)
 		player.isFalling = true
 	}
 
 	// Player pulando
 	if(keyUp){
 		if(!player.isFalling){
-			if(lastKeyPressed == "keyRight"){
-				player.switchSprite("jump")
-			}else if(lastKeyPressed == "keyLeft"){
-				player.switchSprite("jump_left")
-			}
+			player.switchSprite(`jump_${player.direction.toLowerCase()}`)
 			player.velocity.y = player.jump
 			player.isFalling = true
 		}
@@ -498,18 +486,18 @@ function playerActions(){
 		player.receiveDamage = false
 		if(keyLeft && !lockLeft){
 			player.velocity.x = -player.speed
-			lastKeyPressed = "keyLeft"
+			player.direction = "LEFT"
 			lockRight = true
 			if(!player.isFalling){
-				player.switchSprite("run_left")	
+				player.switchSprite(`run_${player.direction.toLowerCase()}`)
 			}
 		}
 		if(keyRight && !lockRight){
 			player.velocity.x = player.speed
-			lastKeyPressed = "keyRight"
+			player.direction = "RIGHT"
 			lockLeft = true
 			if(!player.isFalling){
-				player.switchSprite("run")	
+				player.switchSprite(`run_${player.direction.toLowerCase()}`)
 			}
 		}
 		player.isRunning = true
@@ -519,11 +507,7 @@ function playerActions(){
 	}
 
 	if(player.receiveDamage){
-		if(lastKeyPressed == "keyLeft"){
-			player.switchSprite("take-hit_left")
-		}else if(lastKeyPressed == "keyRight"){
-			player.switchSprite("take-hit")
-		}
+		player.switchSprite(`take-hit_${player.direction.toLowerCase()}`)
 	}
 
 	// Player atacando
@@ -552,11 +536,7 @@ function playerActions(){
 	}
 
 	if(player.isDead){
-		if(lastKeyPressed == "keyRight"){
-			player.switchSprite("death")
-		}else if(lastKeyPressed == "keyLeft"){
-			player.switchSprite("death_left")
-		}
+		player.switchSprite(`death_${player.direction.toLowerCase()}`)
 		player.velocity.x = 0
 
 		setTimeout(() => {
@@ -633,11 +613,11 @@ function inventorySlots(){
 	}
 
 	if(item){
-		if(lastKeyPressed == "keyLeft"){
+		if(player.direction == "LEFT"){
 			item.imgSrc     = item.item_sprites.img_invert
 			item.position.x = player.position.x - item.item_sprites.holding_position_left.x
 			item.position.y = player.position.y + item.item_sprites.holding_position_left.y
-		}else if(lastKeyPressed == "keyRight"){
+		}else if(player.direction == "RIGHT"){
 			item.imgSrc     = item.item_sprites.img
 			item.position.x = player.position.x + item.item_sprites.holding_position.x
 			item.position.y = player.position.y + item.item_sprites.holding_position.y
@@ -778,7 +758,8 @@ function restart(){
 	player.isDead = false
 	player.framesHold = 5
 	player.framesElapsed = 0
-	player.switchSprite("idle")
+	player.direction = "RIGHT"
+	player.switchSprite("idle_right")
 	player.animateFinished = false
 	player.position.x = gamesave.player.position.x
 	player.position.y = gamesave.player.position.y
@@ -796,6 +777,7 @@ function restart(){
 			item.bulletsAmount = 30
 		}
 	})
+	updateUI("icon", "")
 }
 
 function destroy(){
@@ -805,7 +787,8 @@ function destroy(){
 	player.isDead = false
 	player.framesHold = 5
 	player.framesElapsed = 0
-	player.switchSprite("idle")
+	player.direction = "RIGHT"
+	player.switchSprite("idle_right")
 	player.animateFinished = false
 	player.position.x = gamesave.player.position.x
 	player.position.y = gamesave.player.position.y
@@ -823,6 +806,7 @@ function destroy(){
 			item.bulletsAmount = 30
 		}
 	})
+	updateUI("icon", "")
 	ctx.clearRect(0, 0, canvas.width, canvas.height)
 }
 

@@ -44,6 +44,7 @@ class Entity {
 		//
 		this.visible = true
 		this.type = "Entity"
+		this.direction = "RIGHT"
 		this.entityType = null
 	}
 

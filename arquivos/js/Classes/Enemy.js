@@ -4,9 +4,7 @@ class Enemy extends Entity {
 		super({color, position})
 		
 		this.speed = 3.5
-		this.entityType = "Enemy"
 		this.isChasingPlayer = false
-		this.direction = "RIGHT"
 		this.attack_timer = 0
 		this.health = health
 		this.offest = {
@@ -22,6 +20,7 @@ class Enemy extends Entity {
 			}
 		}
 		this.entitySize = 250
+		this.entityType = "Enemy"
 	}
 
 	animate(){
