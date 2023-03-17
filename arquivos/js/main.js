@@ -663,7 +663,7 @@ function render(){
 
 	/* PARALLAX */
 	ctx.drawImage(parallax_back, Math.floor(-camera.x)/7, 0, 2000, 700)
-	// ctx.drawImage(parallax_light, Math.floor(-camera.x)/6, 0, canvas.width, canvas.height)							
+	ctx.drawImage(parallax_light, Math.floor(-camera.x)/6, 0, canvas.width, canvas.height)							
 	ctx.drawImage(parallax_middle, Math.floor(-camera.x)/4, 0, 2000, 700)				
 	ctx.drawImage(parallax_front, Math.floor(-camera.x)/2, 0, 3000, 700)				
 
