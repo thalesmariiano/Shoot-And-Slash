@@ -42,8 +42,6 @@ var gameIsPaused = true
 var lockLeft,
     lockRight = false
 
-var lastKeyPressed = "keyRight";
-
 // Telas
 const start_screen = document.getElementById("start-screen")
 const hud_screen   = document.getElementById("hud-screen")
@@ -53,10 +51,10 @@ const pause_screen = document.getElementById("pause-screen")
 const weapon_icon = document.getElementById("weapon-icon-img")
 
 // Botões
-const play_button      = document.getElementById("play-button")
-const restart_button   = document.getElementById("restart-button")
-const restart_button_2 = document.getElementById("restart-button-2")
-const continue_button  = document.getElementById("continue-button")
+const play_button       = document.getElementById("play-button")
+const restart_button    = document.getElementById("restart-button")
+const restart_button_2  = document.getElementById("restart-button-2")
+const continue_button   = document.getElementById("continue-button")
 const backtomenu_button = document.getElementById("backToMenu-button")
 
 const munition_amount = document.getElementById("munition-amount")
@@ -665,7 +663,7 @@ function render(){
 	ctx.drawImage(parallax_back, Math.floor(-camera.x)/7, 0, 2000, 700)
 	// ctx.drawImage(parallax_light, Math.floor(-camera.x)/6, 0, canvas.width, canvas.height)							
 	ctx.drawImage(parallax_middle, Math.floor(-camera.x)/4, 0, 2000, 700)				
-	ctx.drawImage(parallax_front, Math.floor(-camera.x)/2, 0, 3000, 700)				
+	ctx.drawImage(parallax_front, Math.floor(-camera.x)/2, 0, 3100, 770)				
 
 	ctx.translate(
 		Math.floor(-camera.x),

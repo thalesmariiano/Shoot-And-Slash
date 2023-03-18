@@ -8,8 +8,11 @@
   		<meta name="keywords" content="Jogos, jogo, Offline, Hack And Slash, games, game, offline, thales mariano, thales">
   		<meta name="author" content="Thales Mariano">
 
+  		<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha512-z4OUqw38qNLpn1libAN9BsoDx6nbNFio5lA6CuTp9NlK83b89hgyCVq+N5FdBJptINztxn1Z3SaKSKUS5UP60Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<script src="https://cdn.tailwindcss.com"></script>
 		<script src="arquivos/js/pre-load.js"></script>
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
 		<title>Shoot And Slash</title>
 	</head>
@@ -17,28 +20,39 @@
 		
 		<main id="container" class="flex justify-center items-center relative min-h-screen">
 			<canvas>O seu navegador não suporta o canvas.</canvas>
+
 			<div id="screens-container" class="absolute w-full h-full">
-				<section id="start-screen" class="game-screen w-full h-full">
-					<div id="start-container" class="screens relative py-28 flex flex-col justify-between items-center w-full h-full">
-						<div id="logo-container">
-							<img id="logo" src="arquivos/assets/logo.png">
-						</div>
-
-						<nav class="menu">
-							<div class="menu-container">
-								<button id="play-button" class="btn-default w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl">Jogar</button>
-								<button id="options-button" class="btn-default w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl opacity-70 cursor-not-allowed">Opções</button>
+				<section id="start-screen" class="w-full h-full">
+					<div id="start-container" class="flex justify-center items-center w-full h-full">
+						<div class="flex flex-col gap-10 justify-between items-center w-full max-h-[888px]">
+							<div id="logo-container">
+								<img id="logo" class="teste" src="arquivos/assets/logo.png" alt="Shoot And Slash">
 							</div>
-						</nav>
 
-						<div id="credits-container">
-							<p class="text-center text-sm">Este jogo está em <strong>Alpha</strong>, e não representa a sua versão final.<br>
-							<p class="text-center text-sm">Tem uma sugestão ou encontrou algum bug? <a href="https://twitter.com/somenteumcara" target="_blank" class="text-stone-200 underline hover:text-teal-500">Mande aqui!</a></p>
-							<p class="text-center text-sm">Este é um projeto de código aberto: <a href="https://github.com/thalesmariiano/shoot-and-slash" target="_blank" class="text-stone-200 underline hover:text-teal-500">Veja aqui</a>!</p>
+							<nav>
+								<div class="text-center">
+									<button id="play-button" class="btn-default w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl">Jogar</button>
+									<button id="options-button" class="btn-default w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl opacity-70 cursor-not-allowed">Opções</button>
+								</div>
+							</nav>
+
+							<div id="credits-container">
+								<p class="text-center text-sm">Este jogo está em <strong>Alpha</strong>, e não representa a sua versão final.<br>
+								<p class="text-center text-sm">Tem uma sugestão ou encontrou algum bug? <a href="https://twitter.com/somenteumcara" target="_blank" class="text-stone-200 underline hover:text-teal-500">Mande aqui!</a></p>
+								<p class="text-center text-sm">Este é um projeto de código aberto: <a href="https://github.com/thalesmariiano/shoot-and-slash" target="_blank" class="text-stone-200 underline hover:text-teal-500">Veja aqui</a>!</p>
+							</div>
 						</div>
 					</div>
 				</section>
-				<section id="hud-screen" class="game-screen w-full h-full hidden">
+				<section id="options-screen" class="w-full h-full hidden">
+						<div id="option-container" class="flex justify-center items-center w-full h-full">
+							Troca de controles <br>
+							wsd <br>
+							setas <br>
+							<button class="btn-default w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl">Voltar</button>
+						</div>
+				</section>
+				<section id="hud-screen" class="w-full h-full hidden">
 					<div id="hud-container" class="w-full">
 						<div id="weapon-icon-container">
 							<div id="weapon-icon">
@@ -67,8 +81,8 @@
 						</div>
 					</div>
 				</section>
-				<section id="die-screen" class="game-screen w-full h-full hidden">
-					<div id="die-container" class="screens relative py-20 flex flex-col justify-center items-center w-full h-full bg-neutral-900/75">
+				<section id="die-screen" class="w-full h-full hidden">
+					<div id="die-container" class="flex flex-col justify-center items-center w-full h-full bg-neutral-900/75">
 						<div class="title-container">
 							<h2 class="title">Você morreu</h2>
 						</div>
@@ -81,8 +95,8 @@
 						</nav>
 					</div>
 				</section>
-				<section id="pause-screen" class="game-screen w-full h-full hidden">
-					<div id="pause-container" class="screens relative py-20 flex flex-col justify-center items-center w-full h-full bg-neutral-900/75">
+				<section id="pause-screen" class="w-full h-full hidden">
+					<div id="pause-container" class="flex flex-col justify-center items-center w-full h-full bg-neutral-900/75">
 						<div class="title-container">
 							<h2 class="title">Jogo pausado!</h2>
 						</div>

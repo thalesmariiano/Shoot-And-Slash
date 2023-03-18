@@ -1,7 +1,7 @@
 
 const gameScreen = (screen1, screen2) => {
-	screen1.style.display = "flex"
-	screen2.style.display = "none"
+	screen1.classList.remove("hidden")
+	screen2.classList.add("hidden")
 }
 
 function updateUI(ui, value) {
