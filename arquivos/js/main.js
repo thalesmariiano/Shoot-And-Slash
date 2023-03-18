@@ -481,10 +481,14 @@ function playerActions(){
 
 	// Recarregar Arma
 	if(keyR && !keyEnter){
-		const item = player.getHoldingItem()
-		if(item && item.type === "Weapon"){
-			item.reload()
+		const slot = player.getHoldingItem()
+		if(slot){
+			const { item } = slot
+			if(item && item.type === "Weapon"){
+				item.reload()
+			}
 		}
+		
 	}
 
 	if(player.health <= 0){
