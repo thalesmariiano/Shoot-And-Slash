@@ -14,16 +14,6 @@ const resizeAspectRatio = () => {
 resizeAspectRatio()
 window.onresize = () => resizeAspectRatio()
 
-const gamesave = {
-	player: {
-		health: 100,
-		position: {
-			x: 127,
-			y: 200
-		}
-	}
-}
-
 const GRAVITY = 0.6
 
 var keyRight,
@@ -556,7 +546,7 @@ function selectSlot(id){
 	if(inventory.item){
 		inventory.item.visible = true
 		inventory.isHolding = true
-		
+
 		updateUI("icon", inventory.item)
 	}else{
 		const slot = player.getHoldingItem()
@@ -810,8 +800,8 @@ function restart(){
 	player.direction = "RIGHT"
 	player.switchSprite("idle_right")
 	player.animateFinished = false
-	player.position.x = gamesave.player.position.x
-	player.position.y = gamesave.player.position.y
+	player.position.x = player.initial_position.x
+	player.position.y = player.initial_position.y
 	player.inventory.forEach(slot => {
 		slot.item = null
 		slot.isHolding = false
@@ -839,8 +829,8 @@ function destroy(){
 	player.direction = "RIGHT"
 	player.switchSprite("idle_right")
 	player.animateFinished = false
-	player.position.x = gamesave.player.position.x
-	player.position.y = gamesave.player.position.y
+	player.position.x = player.initial_position.x
+	player.position.y = player.initial_position.y
 	player.inventory.forEach(slot => {
 		slot.item = null
 		slot.isHolding = false

@@ -4,6 +4,10 @@ class Entity {
 		this.sprite = new Image()
 		this.color = color
 		this.position = position
+		this.initial_position = {
+			x: this.position.x,
+			y: this.position.y
+		}
 		this.width = 55
 		this.height = 100
 		this.velocity = {
