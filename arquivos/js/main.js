@@ -488,7 +488,6 @@ function playerActions(){
 				item.reload()
 			}
 		}
-		
 	}
 
 	if(player.health <= 0){
@@ -547,7 +546,6 @@ function holdingItem(){
 			item.position.y = player.position.y + item.item_sprites.holding_position.y
 		}
 	}	
-
 }
 
 // function inventorySlots(){
