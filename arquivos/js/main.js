@@ -33,9 +33,9 @@ var keyRight,
     keyEnter,
     keyR = false
 
-var digit1,
-    digit2,
-    digit3 = false
+// var digit1,
+//     digit2,
+//     digit3 = false
 
 var gameIsPaused = true
 
@@ -513,12 +513,15 @@ function playerActions(){
 
 	// Player atacando
 	if(keyEnter){
-		const item = player.getHoldingItem()
-		if(item && item.type === "Weapon"){
-			item.shot()
-		}else{
-			player.switchSprite("attack1")
-			player.isAttacking = true
+		const slot = player.getHoldingItem()
+		if(slot){
+			const { item } = slot
+			if(item && item.type === "Weapon"){
+				item.shot()
+			}else{
+				player.switchSprite("attack1")
+				player.isAttacking = true
+			}
 		}
 	}else{
 		player.isAttacking = false
@@ -547,73 +550,37 @@ function playerActions(){
 	}
 }
 
-function inventorySlots(){
-
-	if(digit1){
-		const inventory = player.getInventory(0)
-		if(inventory.item){
-			inventory.item.visible = true
-			inventory.isHolding = true			
-		}else{
-			digit1 = false
-		}
-
+function selectSlot(id){
+	const inventory = player.getInventory(id)
+	
+	if(inventory.item){
+		inventory.item.visible = true
+		inventory.isHolding = true
+		
 		updateUI("icon", inventory.item)
 	}else{
-		const inventory = player.getInventory(0)
-		if(inventory.item){
-			inventory.item.visible = false
-			inventory.isHolding = false
+		const slot = player.getHoldingItem()
+		if(slot){
+			slot.item.visible = false
+			slot.isHolding = false
 		}
+		
+		updateUI("icon", "")
 	}
+}
 
-	if(digit2){
-		const inventory = player.getInventory(1)
-		if(inventory.item){
-			inventory.item.visible = true
-			inventory.isHolding = true
+function holdingItem(){
+	const slot = player.getHoldingItem()
+	if(slot){
+		const { item } = slot
+		if(item.type == "Weapon"){
+			bullets_amount.innerHTML = `${item.bulletsAmount}`
+			munition_amount.innerHTML = `${item.munition}`
 		}else{
-			digit2 = false
+			bullets_amount.innerHTML = '0'
+			munition_amount.innerHTML = '0'
 		}
 
-		updateUI("icon", inventory.item)
-	}else{
-		const inventory = player.getInventory(1)
-		if(inventory.item){
-			inventory.item.visible = false
-			inventory.isHolding = false
-		}
-	}
-
-	if(digit3){
-		const inventory = player.getInventory(2)
-		if(inventory.item){
-			inventory.item.visible = true
-			inventory.isHolding = true
-		}else{
-			digit3 = false
-		}
-
-		updateUI("icon", inventory.item)
-	}else{
-		const inventory = player.getInventory(2)
-		if(inventory.item){
-			inventory.item.visible = false
-			inventory.isHolding = false
-		}
-	}
-
-	const item = player.getHoldingItem()
-
-	if(item && item.type == "Weapon"){
-		bullets_amount.innerHTML = `${item.bulletsAmount}`
-		munition_amount.innerHTML = `${item.munition}`
-	}else{
-		bullets_amount.innerHTML = '0'
-		munition_amount.innerHTML = '0'
-	}
-
-	if(item){
 		if(player.direction == "LEFT"){
 			item.imgSrc     = item.item_sprites.img_invert
 			item.position.x = player.position.x - item.item_sprites.holding_position_left.x
@@ -623,11 +590,92 @@ function inventorySlots(){
 			item.position.x = player.position.x + item.item_sprites.holding_position.x
 			item.position.y = player.position.y + item.item_sprites.holding_position.y
 		}
-	}
+	}	
+
 }
 
+// function inventorySlots(){
+
+// 	if(digit1){
+// 		const inventory = player.getInventory(0)
+// 		if(inventory.item){
+// 			inventory.item.visible = true
+// 			inventory.isHolding = true			
+// 		}else{
+// 			digit1 = false
+// 		}
+
+// 		updateUI("icon", inventory.item)
+// 	}else{
+// 		const inventory = player.getInventory(0)
+// 		if(inventory.item){
+// 			inventory.item.visible = false
+// 			inventory.isHolding = false
+// 		}
+// 	}
+
+// 	if(digit2){
+// 		const inventory = player.getInventory(1)
+// 		if(inventory.item){
+// 			inventory.item.visible = true
+// 			inventory.isHolding = true
+// 		}else{
+// 			digit2 = false
+// 		}
+
+// 		updateUI("icon", inventory.item)
+// 	}else{
+// 		const inventory = player.getInventory(1)
+// 		if(inventory.item){
+// 			inventory.item.visible = false
+// 			inventory.isHolding = false
+// 		}
+// 	}
+
+// 	if(digit3){
+// 		const inventory = player.getInventory(2)
+// 		if(inventory.item){
+// 			inventory.item.visible = true
+// 			inventory.isHolding = true
+// 		}else{
+// 			digit3 = false
+// 		}
+
+// 		updateUI("icon", inventory.item)
+// 	}else{
+// 		const inventory = player.getInventory(2)
+// 		if(inventory.item){
+// 			inventory.item.visible = false
+// 			inventory.isHolding = false
+// 		}
+// 	}
+
+// 	const item = player.getHoldingItem()
+
+// 	if(item && item.type == "Weapon"){
+// 		bullets_amount.innerHTML = `${item.bulletsAmount}`
+// 		munition_amount.innerHTML = `${item.munition}`
+// 	}else{
+// 		bullets_amount.innerHTML = '0'
+// 		munition_amount.innerHTML = '0'
+// 	}
+
+// 	if(item){
+// 		if(player.direction == "LEFT"){
+// 			item.imgSrc     = item.item_sprites.img_invert
+// 			item.position.x = player.position.x - item.item_sprites.holding_position_left.x
+// 			item.position.y = player.position.y + item.item_sprites.holding_position_left.y
+// 		}else if(player.direction == "RIGHT"){
+// 			item.imgSrc     = item.item_sprites.img
+// 			item.position.x = player.position.x + item.item_sprites.holding_position.x
+// 			item.position.y = player.position.y + item.item_sprites.holding_position.y
+// 		}
+// 	}
+// }
+
 function update(){
-	inventorySlots()
+	// inventorySlots()
+	holdingItem()
 
 	if(!player.isDead){
 		playerActions()	

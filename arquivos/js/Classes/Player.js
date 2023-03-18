@@ -6,14 +6,17 @@ class Player extends Entity {
 		this.coinNumbers = 0
 		this.inventory = [
 			{
+				id: 1,
 				item: null,
 				isHolding: false
 			},
 			{
+				id: 2,
 				item: null,
 				isHolding: false,
 			},
 			{
+				id: 3,
 				item: null,
 				isHolding: false,
 			}
@@ -49,15 +52,13 @@ class Player extends Entity {
 		if(this.sprInfo && this.sprInfo.name == `take-hit_${this.direction.toLowerCase()}`) this.framesHold = 8
 	}
 
-	getInventory(index){
-		return this.inventory[index]
+	getInventory(id){
+		return this.inventory.find(i => i.id == id)
 	}
 
 	getHoldingItem(){
 		const slot = this.inventory.find(i => i.isHolding)
-		if(slot){
-			return slot.item
-		}
+		if(slot) return slot
 	}
 
 	receiveLife(received_life){

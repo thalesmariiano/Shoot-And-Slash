@@ -21,19 +21,22 @@ window.addEventListener("keydown", e => {
 			pause()
 			break
 		case "Digit1":
-			digit1 = true
-			digit2 = false
-			digit3 = false
+			selectSlot(1)
+			// digit1 = true
+			// digit2 = false
+			// digit3 = false
 			break
 		case "Digit2":
-			digit1 = false
-			digit2 = true
-			digit3 = false
+			selectSlot(2)
+			// digit1 = false
+			// digit2 = true
+			// digit3 = false
 			break
 		case "Digit3":
-			digit1 = false
-			digit2 = false
-			digit3 = true
+			selectSlot(3)
+			// digit1 = false
+			// digit2 = false
+			// digit3 = true
 			break
 		}
 })
