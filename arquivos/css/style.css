@@ -3,48 +3,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
-/** {
-	padding: 0px;
-	margin: 0px;
-	box-sizing: border-box;
-}*/
-
 body {
 	background-color: #252525;
 	color: white;
 }
 
-/*#container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	min-height: 100vh;
-	position: relative;
-}
-
-canvas {
-	border: 1px solid white;
-	background-color: #191919;
-}
-
-#screens-container {
-	position: absolute;
-}
-
-.game-screen {
-	width: 100%;
-	height: 100%;
-	color: white;
-}
-
-.screens {
-	position: relative;
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	height: 100%;
-}
-*/
 .title {
 	font: bold 3rem "Righteous", sans-serif;
 	text-transform: uppercase;
@@ -59,75 +22,9 @@ canvas {
 	height: 100%;
 }
 
-/*.menu {
-	margin-top: 3rem;
-}
-
-.menu-container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-}
-*/
 .btn-default {
-	/*width: 208px;
-	padding: 9px 0;
-	margin: 0 2rem;*/
-/*	cursor: pointer;*/
-/*	text-transform: uppercase;*/
 	font-family: 'Inter', sans-serif;
-	/*border: none;
-	border-radius: 12px;
-	box-shadow: 0px 3px 0px #808080;
-	transition: .2s all;*/
 }
-
-/*.btn-default:hover {
-	color: #424242;
-	box-shadow: 0px 0px 0px #808080;
-	transform: translateY(2px);
-	background-color: #ebebeb;
-}
-
-#hud-screen,
-#die-screen,
-#pause-screen {
-	display: none
-}
-
-#start-container,
-#die-container,
-#pause-container {
-	display: flex;
-	align-items: center;
-	flex-direction: column;
-}
-
-#start-container {
-	padding: 7rem 0;
-	justify-content: space-between;
-	height: 100%;
-}
-
-#start-container .menu {
-	margin-top: 0;
-}
-
-#start-container .menu-container {
-	flex-direction: row;
-}
-
-#credits-container p {
-	margin-top: 10px;
-	text-align: center;
-}
-
-#die-container,
-#pause-container {
-	justify-content: center;
-	background-color: rgba(0,0,0, .6);
-}*/
 
 #hud-container {
 	height: 70px;
@@ -137,7 +34,7 @@ canvas {
 	align-items: center;
 }
 
-#weapon-icon {
+/*#weapon-icon {
 	width: 60px;
 	height: 60px;
 	border: 3px solid black;
@@ -151,7 +48,7 @@ canvas {
 #weapon-icon-img {
 	transform: rotateZ(-45deg);
 }
-
+*/
 #status-container {
 	padding: 0 0 0 5px;
 	display: flex;
