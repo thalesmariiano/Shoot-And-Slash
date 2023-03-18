@@ -16,5 +16,5 @@ Slash And Shoot é um jogo 2D estilo Hack And Slash em desenvolvimento.
 
   - Skeleton Warrior: https://craftpix.net/freebies/free-skeleton-pixel-art-sprite-sheets/
   - Parallax Florest: https://ansimuz.itch.io/parallax-forest
-  - Platform Villager Props: https://cainos.itch.io/
+  - Platform Villager Props: https://cainos.itch.io/pixel-art-platformer-village-props
   - Samurai Sprite: https://luizmelo.itch.io/martial-hero
