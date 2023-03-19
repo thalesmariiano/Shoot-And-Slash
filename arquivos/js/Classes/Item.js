@@ -36,7 +36,7 @@ class Item  {
 		this.draw()
 
 		switch(this.itemType){
-			case "Life":
+			case "Vida":
 				this.itemValue = 30
 				break
 			case "Bomb":
