@@ -31,8 +31,6 @@ class Player extends Entity {
 	}
 
 	animate(){
-		this.configAnimation()
-
 		this.framesElapsed++
 		if(this.framesElapsed % this.framesHold === 0){
 			this.currentFrames++
@@ -45,11 +43,6 @@ class Player extends Entity {
 			}
 		}
 		this.imgX = this.frameSizeX*this.currentFrames
-	}
-
-	configAnimation(){
-		if(this.sprInfo && this.sprInfo.name == `death_${this.direction.toLowerCase()}`) this.framesHold = 8
-		if(this.sprInfo && this.sprInfo.name == `take-hit_${this.direction.toLowerCase()}`) this.framesHold = 8
 	}
 
 	getInventory(id){

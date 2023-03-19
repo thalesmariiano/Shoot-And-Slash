@@ -100,22 +100,26 @@ const player_sprites = [
 	{
 		name: "take-hit_right",
 		image: "arquivos/assets/player/take-hit.png",
-		frames: 4
+		frames: 4,
+		hold: 8
 	},
 	{
 		name: "take-hit_left",
 		image: "arquivos/assets/player/take-hit_left.png",
-		frames: 4
+		frames: 4,
+		hold: 8
 	},
 	{
 		name: "death_right",
 		image: "arquivos/assets/player/death.png",
-		frames: 6
+		frames: 6,
+		hold: 8
 	},
 	{
 		name: "death_left",
 		image: "arquivos/assets/player/death_left.png",
-		frames: 6
+		frames: 6,
+		hold: 8
 	}
 ]
 
