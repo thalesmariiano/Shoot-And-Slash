@@ -194,12 +194,14 @@ const enemy_sprites = [
 	{
 		name: "attack_1_right",
 		image: "arquivos/assets/enemys/skeleton_attack_1.png",
-		frames: 5
+		frames: 5,
+		hold: 6
 	},
 	{
 		name: "attack_1_left",
 		image: "arquivos/assets/enemys/skeleton_attack_1_left.png",
-		frames: 5
+		frames: 5,
+		hold: 6
 	},
 	{
 		name: "attack_2_right",
@@ -229,12 +231,14 @@ const enemy_sprites = [
 	{
 		name: "dead_right",
 		image: "arquivos/assets/enemys/skeleton_dead.png",
-		frames: 4
+		frames: 4,
+		hold: 6
 	},
 	{
 		name: "dead_left",
 		image: "arquivos/assets/enemys/skeleton_dead_left.png",
-		frames: 4
+		frames: 4,
+		hold: 6
 	}
 ]
 

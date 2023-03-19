@@ -24,8 +24,6 @@ class Enemy extends Entity {
 	}
 
 	animate(){
-		this.configAnimation()
-
 		this.framesElapsed++
 		if(this.framesElapsed % this.framesHold === 0){
 			this.currentFrames++
@@ -38,11 +36,6 @@ class Enemy extends Entity {
 			}
 		}
 		this.imgX = this.frameSizeX*this.currentFrames
-	}
-
-	configAnimation(){
-		if(this.sprInfo && this.sprInfo.name == `dead_${this.direction.toLowerCase()}`) this.framesHold = 6
-		if(this.sprInfo && this.sprInfo.name == `attack_1_${this.direction.toLowerCase()}`) this.framesHold = 6
 	}
 
 	takeHit(dmg, direction){
