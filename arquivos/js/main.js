@@ -788,6 +788,8 @@ function restart(){
 			item.bulletsAmount = 30
 		}
 	})
+	bullets_amount.innerHTML = '0'
+	munition_amount.innerHTML = '0'
 	updateUI("icon", "")
 }
 
@@ -817,6 +819,8 @@ function destroy(){
 			item.bulletsAmount = 30
 		}
 	})
+	bullets_amount.innerHTML = '0'
+	munition_amount.innerHTML = '0'
 	updateUI("icon", "")
 	ctx.clearRect(0, 0, canvas.width, canvas.height)
 }

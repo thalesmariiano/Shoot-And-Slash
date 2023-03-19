@@ -61,11 +61,10 @@ class Entity {
 
 		this.sprite = spr.image
 		this.spriteFrames = spr.frames
+		this.framesHold = spr.hold ? spr.hold : 5
 		this.frameSizeX = this.sprite.width/this.spriteFrames
 		this.frameSizeY = this.sprite.height
 		
-		this.framesHold = spr.hold ? spr.hold : 5
-
 		if(spr != this.sprInfo) this.currentFrames = 0
 		this.sprInfo = spr
 	}
