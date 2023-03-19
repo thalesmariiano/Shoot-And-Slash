@@ -1,7 +1,7 @@
 
 var developerMode = false
 
-const canvas  = document.querySelector("canvas")
+const canvas            = document.querySelector("canvas")
 const screens_container = document.querySelector("#screens-container")
 
 const ctx = canvas.getContext("2d", {alpha: false})
