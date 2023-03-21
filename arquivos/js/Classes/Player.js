@@ -50,8 +50,7 @@ class Player extends Entity {
 	}
 
 	getHoldingItem(){
-		const slot = this.inventory.find(i => i.isHolding)
-		if(slot) return slot
+		return this.inventory.find(i => i.isHolding)
 	}
 
 	receiveLife(received_life){
