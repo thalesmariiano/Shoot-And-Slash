@@ -478,10 +478,10 @@ function playerActions(){
 			const { item } = slot
 			if(item && item.type === "Weapon"){
 				item.shot()
-			}else{
-				player.switchSprite("attack1")
-				player.isAttacking = true
 			}
+		}else{
+			player.switchSprite("attack1")
+			player.isAttacking = true
 		}
 	}else{
 		player.isAttacking = false
