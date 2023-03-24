@@ -1,4 +1,11 @@
 
+const controlKey = {
+	left: "KeyA",
+	right: "KeyD",
+	jump: "Space",
+	jump_2: "KeyW"
+}
+
 const switchControls = (control, type) => {
 	const getControl = window.localStorage.getItem("SaSControl")
 
@@ -8,6 +15,10 @@ const switchControls = (control, type) => {
 				window.localStorage.setItem("SaSControl", 1)
 				control.classList.remove("opacity-50", "hover:opacity-75")
 				getElement(2).classList.add("opacity-50", "hover:opacity-75")
+				controlKey.left   = "KeyA"
+				controlKey.right  = "KeyD"
+				controlKey.jump   = "Space"
+				controlKey.jump_2 = "KeyW"
 			}
 			break
 		case 2:
@@ -15,21 +26,31 @@ const switchControls = (control, type) => {
 				window.localStorage.setItem("SaSControl", 2)
 				control.classList.remove("opacity-50", "hover:opacity-75")
 				getElement(1).classList.add("opacity-50", "hover:opacity-75")
+				controlKey.left   = "ArrowLeft"
+				controlKey.right  = "ArrowRight"
+				controlKey.jump   = "ArrowUp"
+				controlKey.jump_2 = ""
 			}
 			break
 	}
 }
 
-window.addEventListener("keydown", e => {
+window.addEventListener("keydown", keyDownHandler)
+window.addEventListener("keyup", keyUpHandler)
+
+function keyDownHandler(e){
 	let key = e.code
 	switch(key){
-		case "ArrowUp":
+		case controlKey.jump:
 			keyUp = true
 			break
-		case "ArrowLeft":
+		case controlKey.jump_2:
+			keyUp = true
+			break
+		case controlKey.left:
 			keyLeft = true
 			break
-		case "ArrowRight":
+		case controlKey.right:
 			keyRight = true
 			break
 		case "Enter":
@@ -59,22 +80,25 @@ window.addEventListener("keydown", e => {
 			// digit2 = false
 			// digit3 = true
 			break
-		}
-})
+	}
+}
 
-window.addEventListener("keyup", e => {
+function keyUpHandler(e){
 	let key = e.code
 	switch(key){
-		case "ArrowUp":
+		case controlKey.jump:
 			keyUp = false
 			break
-		case "ArrowRight":
-			keyRight = false
-			lockLeft = false
+		case controlKey.jump_2:
+			keyUp = false
 			break
-		case "ArrowLeft":
+		case controlKey.left:
 			keyLeft = false
 			lockRight = false
+			break
+		case controlKey.right:
+			keyRight = false
+			lockLeft = false
 			break
 		case "Enter":
 			keyEnter = false
@@ -83,4 +107,6 @@ window.addEventListener("keyup", e => {
 			keyR = false
 			break
 	}
-})
+}
+
+
