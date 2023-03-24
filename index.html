@@ -22,7 +22,7 @@
 			<canvas>O seu navegador não suporta o canvas.</canvas>
 
 			<div id="screens-container" class="absolute w-full h-full">
-				<section id="start-screen" class="w-full h-full">
+				<section id="start-screen" class="w-full h-full hidden">
 					<div id="start-container" class="flex justify-center items-center w-full h-full">
 						<div class="flex flex-col gap-10 justify-between items-center w-full max-h-[888px]">
 							<div id="logo-container">
@@ -44,15 +44,15 @@
 						</div>
 					</div>
 				</section>
-				<section id="options-screen" class="w-full h-full hidden">
+				<section id="options-screen" class="w-full h-full">
 						<div id="option-container" class="flex flex-col justify-center items-center w-full h-full">
 							<div class="title-container">
 								<h2 class="title">Opções</h2>
 							</div>
-							<div id="switch-controls" class="m-4">
-								<div id="controls-visual" class="flex">
+							<div id="switch-controls" class="my-7">
+								<div id="controls-visual" class="flex items-end">
 									<div class="flex flex-col justify-center items-center">
-										<div id="type-1" class="p-2 m-2 flex flex-col justify-center items-center cursor-pointer opacity-50 hover:opacity-100" data-control="1" onclick="switchControls(this, 1)">
+										<div id="type-1" class="w-[152px] p-2 m-2 flex flex-col justify-center items-center cursor-pointer opacity-50 hover:opacity-75" data-control="1" onclick="switchControls(this, 1)">
 											<div class="flex">
 												<div class="w-10 h-10"></div>
 												<div class="w-10 h-10 mb-2 text-black font-bold text-2xl flex justify-center items-center bg-white rounded-xl shadow-[0_3px_0_0_rgba(120,120,120,1)]">W</div>
@@ -62,6 +62,9 @@
 												<div class="w-10 h-10 flex text-black font-bold text-2xl justify-center items-center bg-white rounded-xl shadow-[0_3px_0_0_rgba(120,120,120,1)]">A</div>
 												<div class="w-10 h-10 mx-2 text-black font-bold text-2xl flex justify-center items-center bg-white rounded-xl shadow-[0_3px_0_0_rgba(120,120,120,1)]">S</div>
 												<div class="w-10 h-10 text-black font-bold text-2xl flex justify-center items-center bg-white rounded-xl shadow-[0_3px_0_0_rgba(120,120,120,1)]">D</div>
+											</div>
+											<div class="w-full">
+												<div class="w-full h-9 mt-3 bg-white text-black font-bold text-xl flex justify-center items-center rounded-xl shadow-[0_3px_0_0_rgba(120,120,120,1)]">SPACE</div>
 											</div>
 										</div>
 										<div>

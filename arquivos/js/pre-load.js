@@ -8,11 +8,11 @@ window.onload = () => {
 	generateTerrain(playableMapTiles, playebleMapBlocks)
 
 	if(getControl == 1){
-		getElement(1).classList.remove("opacity-50", "hover:opacity-100")
-		getElement(2).classList.add("opacity-50", "hover:opacity-100")
+		getElement(1).classList.remove("opacity-50", "hover:opacity-75")
+		getElement(2).classList.add("opacity-50", "hover:opacity-75")
 	}else{
-		getElement(2).classList.remove("opacity-50", "hover:opacity-100")
-		getElement(1).classList.add("opacity-50", "hover:opacity-100")
+		getElement(2).classList.remove("opacity-50", "hover:opacity-75")
+		getElement(1).classList.add("opacity-50", "hover:opacity-75")
 	}
 }
 
