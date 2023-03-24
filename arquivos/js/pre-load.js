@@ -20,7 +20,7 @@ window.onload = () => {
 		controlKey.left   = "ArrowLeft"
 		controlKey.right  = "ArrowRight"
 		controlKey.jump   = "ArrowUp"
-		controlKey.jump_2 = ""
+		controlKey.jump_2 = "Space"
 	}
 }
 
