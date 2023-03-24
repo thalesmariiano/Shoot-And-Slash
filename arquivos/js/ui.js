@@ -5,6 +5,14 @@ play_button.addEventListener("click", () => {
 	init()
 })
 
+options_button.addEventListener("click", () => {
+	gameScreen(options_screen, start_screen)
+})
+
+backtomenuoptions_button.addEventListener("click", () => {
+	gameScreen(start_screen, options_screen)
+})
+
 restart_button.addEventListener("click", () => {
 	restart()
 	gameScreen(hud_screen, die_screen)

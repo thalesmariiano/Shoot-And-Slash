@@ -1,4 +1,25 @@
 
+const switchControls = (control, type) => {
+	const getControl = window.localStorage.getItem("SaSControl")
+
+	switch(type){
+		case 1:
+			if(getControl == 2){
+				window.localStorage.setItem("SaSControl", 1)
+				control.classList.remove("opacity-50", "hover:opacity-100")
+				getElement(2).classList.add("opacity-50", "hover:opacity-100")
+			}
+			break
+		case 2:
+			if(getControl == 1){
+				window.localStorage.setItem("SaSControl", 2)
+				control.classList.remove("opacity-50", "hover:opacity-100")
+				getElement(1).classList.add("opacity-50", "hover:opacity-100")
+			}
+			break
+	}
+}
+
 window.addEventListener("keydown", e => {
 	let key = e.code
 	switch(key){

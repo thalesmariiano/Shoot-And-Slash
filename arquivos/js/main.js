@@ -34,6 +34,7 @@ var lockLeft,
 
 // Telas
 const start_screen = document.getElementById("start-screen")
+const options_screen = document.getElementById("options-screen")
 const hud_screen   = document.getElementById("hud-screen")
 const die_screen   = document.getElementById("die-screen")
 const pause_screen = document.getElementById("pause-screen")
@@ -41,11 +42,13 @@ const pause_screen = document.getElementById("pause-screen")
 const weapon_icon = document.getElementById("weapon-icon-img")
 
 // Botões
-const play_button       = document.getElementById("play-button")
-const restart_button    = document.getElementById("restart-button")
-const restart_button_2  = document.getElementById("restart-button-2")
-const continue_button   = document.getElementById("continue-button")
-const backtomenu_button = document.getElementById("backToMenu-button")
+const play_button               = document.getElementById("play-button")
+const options_button            = document.getElementById("options-button")
+const backtomenuoptions_button  = document.getElementById("backToMenuOptions-button")
+const restart_button            = document.getElementById("restart-button")
+const restart_button_2          = document.getElementById("restart-button-2")
+const continue_button           = document.getElementById("continue-button")
+const backtomenu_button         = document.getElementById("backToMenu-button")
 
 const munition_amount = document.getElementById("munition-amount")
 const bullets_amount  = document.getElementById("bullets-amount")
