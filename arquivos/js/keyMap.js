@@ -19,6 +19,7 @@ const switchControls = (control, type) => {
 				controlKey.right  = "KeyD"
 				controlKey.jump   = "Space"
 				controlKey.jump_2 = "KeyW"
+				dialogOpened = false
 			}
 			break
 		case 2:
@@ -30,6 +31,7 @@ const switchControls = (control, type) => {
 				controlKey.right  = "ArrowRight"
 				controlKey.jump   = "ArrowUp"
 				controlKey.jump_2 = "Space"
+				dialogOpened = false
 			}
 			break
 	}

@@ -570,6 +570,11 @@ function update(){
 		playerActions()	
 	}
 
+	if(gameIsPaused){
+		dialog_container.classList.remove("left-0")
+		dialog_container.classList.add("-left-60")
+	}
+
 	camera.update()
 }
 
@@ -684,7 +689,7 @@ function render(){
 function pause(){
 	if(!gameIsPaused){
 		gameScreen(pause_screen, hud_screen)
-		gameIsPaused = true	
+		gameIsPaused = true
 	}
 }
 
@@ -761,11 +766,17 @@ function loop(){
 	update()
 }
 
+var dialogOpened = false
+
 function init(){
 	gameIsPaused = false
 	loop()
 
-	dialog_container.classList.add("left-0")
-	dialog_container.classList.remove("-left-60")
+	if(!dialogOpened){
+		dialog_container.classList.add("left-0")
+		dialog_container.classList.remove("-left-60")
+		dialogOpened = true
+	}
+	
 }
 
