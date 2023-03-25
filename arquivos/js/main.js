@@ -356,7 +356,7 @@ const playebleMapBlocks = []
 // const scenarioMapBlocks = []
 
 const tilemap = new Image()
-	  tilemap.src = "arquivos/assets/tilemap.png"
+	  tilemap.src = "arquivos/assets/map/tilemap.png"
 
 function generateTerrain(mapArray, outputArray){
 	const tileSize = 50
@@ -578,16 +578,16 @@ const skyGradient = ctx.createLinearGradient(0, 0, 0, 150)
 	  skyGradient.addColorStop(1, "#7bc6d1")
 
 const parallax_back = new Image()
-parallax_back.src = "arquivos/assets/parallax-forest-back.png"
+parallax_back.src = "arquivos/assets/map/parallax-forest-back.png"
 
 const parallax_light = new Image()
-parallax_light.src = "arquivos/assets/parallax-forest-lights.png"
+parallax_light.src = "arquivos/assets/map/parallax-forest-lights.png"
 
 const parallax_middle = new Image()
-parallax_middle.src = "arquivos/assets/parallax-forest-middle-trees.png"
+parallax_middle.src = "arquivos/assets/map/parallax-forest-middle-trees.png"
 
 const parallax_front = new Image()
-parallax_front.src = "arquivos/assets/parallax-forest-front-trees.png"
+parallax_front.src = "arquivos/assets/map/parallax-forest-front-trees.png"
 
 function render(){
 	ctx.save()
