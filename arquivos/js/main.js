@@ -33,11 +33,11 @@ var lockLeft,
     lockRight = false
 
 // Telas
-const start_screen = document.getElementById("start-screen")
+const start_screen   = document.getElementById("start-screen")
 const options_screen = document.getElementById("options-screen")
-const hud_screen   = document.getElementById("hud-screen")
-const die_screen   = document.getElementById("die-screen")
-const pause_screen = document.getElementById("pause-screen")
+const hud_screen     = document.getElementById("hud-screen")
+const die_screen     = document.getElementById("die-screen")
+const pause_screen   = document.getElementById("pause-screen")
 
 const weapon_icon = document.getElementById("weapon-icon-img")
 
@@ -49,6 +49,10 @@ const restart_button            = document.getElementById("restart-button")
 const restart_button_2          = document.getElementById("restart-button-2")
 const continue_button           = document.getElementById("continue-button")
 const backtomenu_button         = document.getElementById("backToMenu-button")
+
+// Dialog
+const dialog_container = document.getElementById("dialog-container")
+const dialog_close_button = document.getElementById("close-dialog-button")
 
 const munition_amount = document.getElementById("munition-amount")
 const bullets_amount  = document.getElementById("bullets-amount")
@@ -760,5 +764,8 @@ function loop(){
 function init(){
 	gameIsPaused = false
 	loop()
+
+	dialog_container.classList.add("left-0")
+	dialog_container.classList.remove("-left-60")
 }
 

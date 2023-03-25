@@ -33,6 +33,11 @@ backtomenu_button.addEventListener("click", () => {
 	gameScreen(start_screen, die_screen)
 })
 
+dialog_close_button.addEventListener("click", () => {
+	dialog_container.classList.remove("left-0")
+	dialog_container.classList.add("-left-60")
+})
+
 // Popup
 
 // const popup = document.querySelector("#popup-container")
