@@ -11,6 +11,9 @@ Slash And Shoot é um jogo 2D estilo Hack And Slash em desenvolvimento.
 ## Design de Menus
   https://www.instagram.com/igor.design3r/
 
+## Arrow Icons
+  - FontAwesome: https://fontawesome.com/ 
+
 ## Sprites Usados:
  Todos os sprites usados são de uso livre sem copyright.
 
