@@ -52,8 +52,9 @@ const continue_button           = document.getElementById("continue-button")
 const backtomenu_button         = document.getElementById("backToMenu-button")
 
 // Dialog
-const dialog_container = document.getElementById("dialog-container")
+const dialog_container    = document.getElementById("dialog-container")
 const dialog_close_button = document.getElementById("close-dialog-button")
+const dialog_checkbox     = document.querySelector("[name=dontshow]")
 
 const munition_amount = document.getElementById("munition-amount")
 const bullets_amount  = document.getElementById("bullets-amount")
@@ -781,17 +782,19 @@ function loop(){
 	update()
 }
 
-var dialogOpened = false
-
 function init(){
 	gameIsPaused = false
 	loop()
 
-	if(!dialogOpened){
+	if(canShowDialog == "actived"){
 		dialog_container.classList.add("left-0")
 		dialog_container.classList.remove("-left-60")
-		dialogOpened = true
 	}
 	
 }
 
+dialog_checkbox.addEventListener("input", () => {
+	if(dialog_checkbox){
+		 window.localStorage.setItem("SaSdialog", "desatived")
+	}
+})
