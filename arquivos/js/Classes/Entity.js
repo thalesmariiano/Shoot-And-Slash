@@ -58,6 +58,7 @@ class Entity {
 
 	switchSprite(name){
 		const spr = this.entitySprites.find(sprite => sprite.name == name)
+		if(spr != this.sprInfo) this.currentFrames = 0
 
 		this.sprite = spr.image
 		this.spriteFrames = spr.frames
@@ -65,7 +66,6 @@ class Entity {
 		this.frameSizeX = this.sprite.width/this.spriteFrames
 		this.frameSizeY = this.sprite.height
 		
-		if(spr != this.sprInfo) this.currentFrames = 0
 		this.sprInfo = spr
 	}
 
