@@ -39,6 +39,9 @@ class Player extends Entity {
 					this.animateFinished = true
 					return
 				}
+				if(this.sprInfo.name == `attack_1_${this.direction.toLowerCase()}`){
+					this.isAttacking = false
+				}
 				this.currentFrames = 0
 			}
 		}

@@ -100,8 +100,13 @@ const player_sprites = [
 		frames: 2
 	},
 	{
-		name: "attack1",
+		name: "attack_1_right",
 		image: "arquivos/assets/player/attack1.png",
+		frames: 6
+	},
+	{
+		name: "attack_1_left",
+		image: "arquivos/assets/player/attack1_left.png",
 		frames: 6
 	},
 	{
@@ -231,7 +236,12 @@ const enemy_sprites = [
 		frames: 4
 	},
 	{
-		name: "take_hit",
+		name: "take_hit_right",
+		image: "arquivos/assets/enemys/skeleton_hit.png",
+		frames: 2
+	},
+	{
+		name: "take_hit_left",
 		image: "arquivos/assets/enemys/skeleton_hit.png",
 		frames: 2
 	},
@@ -426,7 +436,7 @@ function generateTerrain(mapArray, outputArray){
 function playerActions(){
 
 	// Player parado
-	if(!keyUp && !keyLeft && !keyRight && !player.isAttacking && !player.receiveDamage && !player.isFalling){
+	if(!keyUp && !player.isRunning && !player.isAttacking && !player.receiveDamage && !player.isFalling){
 		player.switchSprite(`idle_${player.direction.toLowerCase()}`)
 		player.isIdle = true
 	}else{
@@ -487,7 +497,7 @@ function playerActions(){
 				item.shot()
 			}
 		}else{
-			player.switchSprite("attack1")
+			player.switchSprite(`attack_1_${player.direction.toLowerCase()}`)
 			player.isAttacking = true
 		}
 	}else{
