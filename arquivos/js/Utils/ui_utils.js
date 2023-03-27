@@ -12,7 +12,7 @@ function updateUI(ui, value) {
 			break
 		case "icon":
 			const img = value ? value.item_sprites.img : "arquivos/assets/null.png"
-			weapon_icon.src = img
+			weapon_icon_img.src = img
 			break
 	}
 }

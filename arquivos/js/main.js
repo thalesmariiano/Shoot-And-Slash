@@ -39,7 +39,8 @@ const hud_screen     = document.getElementById("hud-screen")
 const die_screen     = document.getElementById("die-screen")
 const pause_screen   = document.getElementById("pause-screen")
 
-const weapon_icon = document.getElementById("weapon-icon-img")
+const weapon_icon     = document.getElementById("weapon-icon")
+const weapon_icon_img = document.getElementById("weapon-icon-img")
 
 // Botões
 const play_button               = document.getElementById("play-button")
@@ -537,6 +538,8 @@ function selectSlot(id){
 		inventory.item.visible = true
 		inventory.isHolding = true
 
+		weapon_icon.classList.add("border-neutral-300")
+		weapon_icon.classList.remove("border-black")
 		updateUI("icon", inventory.item)
 	}else{
 		const slot = player.getHoldingItem()
@@ -545,6 +548,8 @@ function selectSlot(id){
 			slot.isHolding = false
 		}
 		
+		weapon_icon.classList.remove("border-neutral-300")
+		weapon_icon.classList.add("border-black")
 		updateUI("icon", "")
 	}
 }
