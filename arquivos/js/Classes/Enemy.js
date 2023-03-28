@@ -40,6 +40,17 @@ class Enemy extends Entity {
 
 	takeHit(dmg, direction){
 		this.health += -dmg
+		this.receiveDamage = true
+		if(!this.isFalling && !this.isDead && this.receiveDamage){
+			this.velocity.y = -8
+			this.isFalling = true
+		}
+		this.velocity.x = this.velocity.x ? -2 : 2
+		this.switchSprite(`take_hit_${this.direction.toLowerCase()}`)
+		setTimeout(() => {
+			this.velocity.x = 0
+			this.receiveDamage = false
+		}, 700)
 	}
 
 	chasePlayer(){
@@ -95,9 +106,8 @@ class Enemy extends Entity {
 
 			// ctx.fillStyle = "red"
 			// ctx.fillRect(this.sword.position.x, this.sword.position.y, this.sword.width, this.sword.height)
+			if(sword_collide) player.takeHit(8)}
 
-			sword_collide ? player.takeHit(8) : player.receiveDamage = false
-					
 			this.attack_timer = 0
 		}
 	}
@@ -105,9 +115,12 @@ class Enemy extends Entity {
 	update(){
 		this.draw()
 		if(!this.endAnimation) this.animation()
-		this.attackPlayer()
-		this.chasePlayer()
 
+		if(!this.receiveDamage){
+			this.attackPlayer()
+			this.chasePlayer()
+		}
+		
 		const radar = detectInArea(this, player, 200)
 
 		// if(this.receiveDamage){
@@ -118,7 +131,7 @@ class Enemy extends Entity {
 			this.switchSprite(`idle_${this.direction.toLowerCase()}`)
 		}
 
-		if(this.isChasingPlayer && !this.isDead && !this.isAttacking){
+		if(this.isChasingPlayer && !this.isDead && !this.isAttacking && !this.receiveDamage){
 			if(radar.right || radar.left && player.isRunning){
 				this.switchSprite(`attack_run_${this.direction.toLowerCase()}`)
 				this.sword.width = 65
@@ -130,7 +143,7 @@ class Enemy extends Entity {
 			}
 		}
 
-		if(this.isAttacking && !this.isDead){
+		if(this.isAttacking && !this.isDead && !this.receiveDamage){
 			this.switchSprite(`attack_1_${this.direction.toLowerCase()}`)
 		}
 
