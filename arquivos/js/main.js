@@ -112,6 +112,16 @@ const player_sprites = [
 		frames: 6
 	},
 	{
+		name: "attack_2_right",
+		image: "arquivos/assets/player/attack2.png",
+		frames: 6
+	},
+	{
+		name: "attack_2_left",
+		image: "arquivos/assets/player/attack2_left.png",
+		frames: 6
+	},
+	{
 		name: "take-hit_right",
 		image: "arquivos/assets/player/take-hit.png",
 		frames: 4,
@@ -499,7 +509,7 @@ function playerActions(){
 				item.shot()
 			}
 		}else{
-			player.switchSprite(`attack_1_${player.direction.toLowerCase()}`)
+			player.switchSprite(`attack_2_${player.direction.toLowerCase()}`)
 			player.isAttacking = true
 		}
 	}else{
@@ -523,6 +533,7 @@ function playerActions(){
 
 	if(player.isDead){
 		player.switchSprite(`death_${player.direction.toLowerCase()}`)
+
 		player.velocity.x = 0
 
 		setTimeout(() => {
@@ -713,15 +724,7 @@ function restart(){
 	enemys.length = 0
 	generateEnemys(3, 100)
 	init()
-	player.receiveLife(1000)
-	player.isDead = false
-	player.framesHold = 5
-	player.framesElapsed = 0
-	player.direction = "RIGHT"
-	player.switchSprite("idle_right")
-	player.animateFinished = false
-	player.position.x = player.initial_position.x
-	player.position.y = player.initial_position.y
+	player.restart()
 	player.inventory.forEach(slot => {
 		slot.item = null
 		slot.isHolding = false
@@ -744,15 +747,7 @@ function restart(){
 function destroy(){
 	gameIsPaused = true
 	enemys.length = 0
-	player.receiveLife(1000)
-	player.isDead = false
-	player.framesHold = 5
-	player.framesElapsed = 0
-	player.direction = "RIGHT"
-	player.switchSprite("idle_right")
-	player.animateFinished = false
-	player.position.x = player.initial_position.x
-	player.position.y = player.initial_position.y
+	player.restart()
 	player.inventory.forEach(slot => {
 		slot.item = null
 		slot.isHolding = false

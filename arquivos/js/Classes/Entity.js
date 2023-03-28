@@ -24,7 +24,7 @@ class Entity {
 		this.spriteFrames = 0
 		this.framesElapsed = 0
 		this.framesHold = 5
-		this.animateFinished = false
+		this.endAnimation = false
 		this.offest = {
 			x: 0,
 			y: 0
@@ -58,7 +58,6 @@ class Entity {
 
 	switchSprite(name){
 		const spr = this.entitySprites.find(sprite => sprite.name == name)
-		if(spr != this.sprInfo) this.currentFrames = 0
 
 		this.sprite = spr.image
 		this.spriteFrames = spr.frames
@@ -66,7 +65,20 @@ class Entity {
 		this.frameSizeX = this.sprite.width/this.spriteFrames
 		this.frameSizeY = this.sprite.height
 		
+		if(spr != this.sprInfo) this.currentFrames = 0	
 		this.sprInfo = spr
+	}
+
+	restart(){
+		this.receiveLife(1000)
+		this.isDead = false
+		this.framesHold = 5
+		this.framesElapsed = 0
+		this.direction = "RIGHT"
+		this.switchSprite("idle_right")
+		this.endAnimation = false
+		this.position.x = this.initial_position.x
+		this.position.y = this.initial_position.y
 	}
 
 	draw(){

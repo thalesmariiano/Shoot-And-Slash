@@ -30,13 +30,13 @@ class Player extends Entity {
 		this.entityType = "Player"
 	}
 
-	animate(){
+	animation(){
 		this.framesElapsed++
 		if(this.framesElapsed % this.framesHold === 0){
 			this.currentFrames++
 			if(this.currentFrames >= this.spriteFrames){
 				if(this.sprInfo.name == `death_${this.direction.toLowerCase()}`){
-					this.animateFinished = true
+					this.endAnimation = true
 					return
 				}
 				if(this.sprInfo.name == `attack_1_${this.direction.toLowerCase()}`){
@@ -70,10 +70,7 @@ class Player extends Entity {
 
 	update(){
 		this.draw()
-		
-		if(!this.animateFinished){
-			this.animate()
-		}
+		if(!this.endAnimation) this.animation()
 
 		this.position.x += this.velocity.x
 		this.position.y += this.velocity.y

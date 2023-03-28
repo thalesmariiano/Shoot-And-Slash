@@ -23,13 +23,13 @@ class Enemy extends Entity {
 		this.entityType = "Enemy"
 	}
 
-	animate(){
+	animation(){
 		this.framesElapsed++
 		if(this.framesElapsed % this.framesHold === 0){
 			this.currentFrames++
 			if(this.currentFrames >= this.spriteFrames){
 				if(this.sprInfo.name == `dead_${this.direction.toLowerCase()}`){
-					this.animateFinished = true
+					this.endAnimation = true
 					return
 				}
 				this.currentFrames = 0
@@ -104,7 +104,7 @@ class Enemy extends Entity {
 
 	update(){
 		this.draw()
-		if(!this.animateFinished) this.animate()
+		if(!this.endAnimation) this.animation()
 		this.attackPlayer()
 		this.chasePlayer()
 
