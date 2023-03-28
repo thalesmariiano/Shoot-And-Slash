@@ -254,7 +254,7 @@ const enemy_sprites = [
 	},
 	{
 		name: "take_hit_left",
-		image: "arquivos/assets/enemys/skeleton_hit.png",
+		image: "arquivos/assets/enemys/skeleton_hit_left.png",
 		frames: 2
 	},
 	{
