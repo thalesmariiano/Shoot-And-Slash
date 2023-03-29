@@ -131,9 +131,6 @@ class Enemy extends Entity {
 		if(this.isChasingPlayer && !this.isDead && !this.isAttacking && !this.receiveDamage){
 			if(radar.right || radar.left && player.isRunning){
 				this.switchSprite(`attack_run_${this.direction.toLowerCase()}`)
-				this.sword.width = 65
-				this.sword.height = 25
-				this.sword.position.y = this.position.y + 30
 			}else{
 				this.switchSprite(`run_${this.direction.toLowerCase()}`)
 			}
