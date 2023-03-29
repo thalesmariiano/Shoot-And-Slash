@@ -19,7 +19,7 @@ class Enemy extends Entity {
 				y: 0
 			}
 		}
-		this.attack = Math.floor(Math.random() * 3) + 1
+		this.attack = 1
 		this.entitySize = 250
 		this.entityType = "Enemy"
 	}
