@@ -19,6 +19,7 @@ class Enemy extends Entity {
 				y: 0
 			}
 		}
+		this.attack = Math.floor(Math.random() * 3) + 1
 		this.entitySize = 250
 		this.entityType = "Enemy"
 	}
@@ -110,7 +111,7 @@ class Enemy extends Entity {
 			// ctx.fillStyle = "red"
 			// ctx.fillRect(this.sword.position.x, this.sword.position.y, this.sword.width, this.sword.height)
 
-			sword_collide ? player.takeHit(8) : player.receiveDamage = false
+			// sword_collide ? player.takeHit(8) : player.receiveDamage = false
 					
 			this.attack_timer = 0
 		}
@@ -148,7 +149,7 @@ class Enemy extends Entity {
 		}
 
 		if(this.isAttacking && !this.isDead && !this.receiveDamage){
-			this.switchSprite(`attack_1_${this.direction.toLowerCase()}`)
+			this.switchSprite(`attack_${this.attack}_${this.direction.toLowerCase()}`)
 		}
 
 		if(this.health <= 0){
