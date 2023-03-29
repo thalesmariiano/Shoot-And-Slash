@@ -45,7 +45,10 @@ class Enemy extends Entity {
 			this.velocity.y = -8
 			this.isFalling = true
 		}
-		this.velocity.x = this.velocity.x ? -2 : 2
+		
+		if(player.direction == "RIGHT") this.velocity.x = 2
+		else if(player.direction == "LEFT") this.velocity.x = -2
+
 		this.switchSprite(`take_hit_${this.direction.toLowerCase()}`)
 		setTimeout(() => {
 			this.velocity.x = 0
