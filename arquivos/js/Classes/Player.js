@@ -108,10 +108,7 @@ class Player extends Entity {
 	update(){
 		this.draw()
 		if(!this.endAnimation) this.animation()
-
-		// if(this.isAttacking){
-			player.swordAttack()
-		// }
+		player.swordAttack()
 
 		this.position.x += this.velocity.x
 		this.position.y += this.velocity.y
