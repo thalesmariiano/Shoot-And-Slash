@@ -496,7 +496,7 @@ function playerActions(){
 		player.velocity.x = 0
 	}
 
-	if(player.receiveDamage){
+	if(player.receiveDamage && !player.isAttacking){
 		player.switchSprite(`take-hit_${player.direction.toLowerCase()}`)
 	}
 
@@ -508,11 +508,13 @@ function playerActions(){
 			if(item && item.type === "Weapon"){
 				item.shot()
 			}
-		}else{
-			player.switchSprite(`attack_2_${player.direction.toLowerCase()}`)
+		}else if(!player.isFalling && !player.isRunning){
+			player.switchSprite(`attack_${player.attack}_${player.direction.toLowerCase()}`)
 			player.isAttacking = true
 		}
-	}else{
+	}
+
+	if(player.isAttacking && player.sprInfo.name != `attack_${player.attack}_${player.direction.toLowerCase()}`){
 		player.isAttacking = false
 	}
 

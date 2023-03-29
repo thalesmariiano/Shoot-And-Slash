@@ -25,6 +25,16 @@ class Player extends Entity {
 			x: 170,
 			y: 143
 		}
+		this.attack = 1
+		this.sword = {
+			width: 80,
+			height: 40,
+			position: {
+				x: 0,
+				y: 0
+			}
+		}
+		this.attack_timer = 0
 		this.entitySize = 400
 		//
 		this.entityType = "Player"
@@ -39,7 +49,12 @@ class Player extends Entity {
 					this.endAnimation = true
 					return
 				}
-				if(this.sprInfo.name == `attack_1_${this.direction.toLowerCase()}`){
+				if(this.sprInfo.name == `attack_${this.attack}_${this.direction.toLowerCase()}`){
+					if(this.attack == 1){
+						this.attack = 2
+					}else{
+						this.attack = 1
+					}
 					this.isAttacking = false
 				}
 				this.currentFrames = 0
@@ -62,6 +77,28 @@ class Player extends Entity {
 		updateUI("healthbar", this.health)
 	}
 
+	swordAttack(){
+		if(this.currentFrames == 4 && this.sprInfo.name == `attack_${this.attack}_${this.direction.toLowerCase()}`){
+
+			enemys.forEach(enemy => {
+				if(!enemy.isDead){
+					const { side } = collide(this.sword, enemy)
+					const sword_collide = side.top || side.bottom || side.left || side.right
+
+					sword_collide ? enemy.takeHit(5) : enemy.receiveDamage = false
+				}
+			})
+
+			if(this.direction == "RIGHT") this.sword.position.x = this.position.x + 125
+			else if(this.direction == "LEFT") this.sword.position.x = this.position.x - 145
+
+			this.sword.position.y = this.position.y + 8
+
+			// ctx.fillStyle = "red"
+			// ctx.fillRect(this.sword.position.x, this.sword.position.y, this.sword.width, this.sword.height)
+		}
+	}
+
 	takeHit(damage_taken){
 		this.health -= damage_taken
 		this.receiveDamage = true
@@ -71,6 +108,10 @@ class Player extends Entity {
 	update(){
 		this.draw()
 		if(!this.endAnimation) this.animation()
+
+		// if(this.isAttacking){
+			player.swordAttack()
+		// }
 
 		this.position.x += this.velocity.x
 		this.position.y += this.velocity.y
