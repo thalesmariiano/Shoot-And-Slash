@@ -84,32 +84,28 @@ class Enemy extends Entity {
 
 	attackPlayer(){
 		const attack_distance = detectInArea(this, player, 100)
-		this.sword.width = 25
-		this.sword.height = 65
 
+		this.sword.width = 25
+		this.sword.height = 65	
 		this.sword.position.y = this.position.y - 20
+
 		if(attack_distance.left && !player.isDead && !this.isDead){
 			this.sword.position.x = this.position.x - 73
-			this.useSword()
 			this.isAttacking = true
 		}else if(attack_distance.right && !player.isDead && !this.isDead){
 			this.sword.position.x = this.position.x + 117
-			this.useSword()
 			this.isAttacking = true
 		}else{
 			this.isAttacking = false
 		}
 	}
 
-	useSword(){
+	swordAttack(){
 		if(this.currentFrames == 4 && this.sprInfo.name == `attack_${this.attack}_${this.direction.toLowerCase()}`){
-
 			const { side } = collide(this.sword, player)
 			const sword_collide = side.top || side.bottom || side.left || side.right
 
-			sword_collide ? player.takeHit(8) : player.receiveDamage = false
-
-			this.sword.position.y = this.position.y - 25
+			sword_collide ? player.takeHit(1.5) : player.receiveDamage = false
 
 			// ctx.fillStyle = "red"
 			// ctx.fillRect(this.sword.position.x, this.sword.position.y, this.sword.width, this.sword.height)
@@ -124,6 +120,7 @@ class Enemy extends Entity {
 			this.attackPlayer()
 			this.chasePlayer()
 		}
+		this.swordAttack()
 		
 		const radar = detectInArea(this, player, 200)
 
@@ -141,7 +138,6 @@ class Enemy extends Entity {
 				this.sword.width = 65
 				this.sword.height = 25
 				this.sword.position.y = this.position.y + 30
-				this.useSword(2)
 			}else{
 				this.switchSprite(`run_${this.direction.toLowerCase()}`)
 			}
