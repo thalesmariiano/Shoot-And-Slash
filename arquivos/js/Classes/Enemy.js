@@ -124,10 +124,6 @@ class Enemy extends Entity {
 		
 		const radar = detectInArea(this, player, 200)
 
-		// if(this.receiveDamage){
-		// 	this.switchSprite(`take_hit_${this.direction.toLowerCase()}`)
-		// }
-
 		if(!this.isChasingPlayer && !this.isDead && !this.isAttacking && !this.receiveDamage){
 			this.switchSprite(`idle_${this.direction.toLowerCase()}`)
 		}
