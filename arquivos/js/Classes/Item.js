@@ -11,7 +11,8 @@ class Item extends Entity {
 			}
 			this.itemValue = 0
 			this.isInInventory = false
-			this.entitySize = 35
+			this.entitySizeX = 35
+			this.entitySizeY = 35
 			this.itemType = itemType
 			this.type = "Item"
 	}

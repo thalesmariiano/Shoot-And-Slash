@@ -153,12 +153,12 @@ const itens_sprites = {
 			{
 				name: "ak47_right",
 				image: "arquivos/assets/itens/ak47.png",
-				frames: 0
+				frames: 1
 			},
 			{
 				name: "ak47_left",
 				image: "arquivos/assets/itens/ak47_left.png",
-				frames: 0
+				frames: 1
 			}
 		],
 		holding_position: {
@@ -326,11 +326,11 @@ itens_sprites.life.sprites.forEach(spr => {
 	spr.image = img
 })
 
-// itens_sprites.ak47.sprites.forEach(spr => {
-// 	const img = new Image()
-// 	img.src = spr.image
-// 	spr.image = img
-// })
+itens_sprites.ak47.sprites.forEach(spr => {
+	const img = new Image()
+	img.src = spr.image
+	spr.image = img
+})
 
 
 
@@ -347,19 +347,27 @@ const life = new Item({
 })
 life.setSprites(itens_sprites.life.sprites)
 
-// const ak47 = new Weapon({
-// 	name: "Ak-47",
-// 	gunType: "Fuzil",
-// 	munition: 60,
-// 	gunLimit: 30,
-// 	position: {
-// 		x: 350,
-// 		y: 530
-// 	}
-// })
-// life.setSprites(itens_sprites.ak47.sprites)
-// // ak47.item_sprites = itens_sprites.ak47
-// ak47.bulletsAmount = 30
+const ak47 = new Weapon({
+	name: "Ak-47",
+	gunType: "Fuzil",
+	munition: 60,
+	gunLimit: 30,
+	position: {
+		x: 350,
+		y: 530
+	}
+})
+ak47.setSprites(itens_sprites.ak47.sprites)
+ak47.bulletsAmount = 30
+
+const soul = new Item({
+	itemType: "soul",
+	position: {
+		x: 400,
+		y: 515
+	}
+})
+soul.setSprites(itens_sprites.enemy_soul.sprites)
 
 // const escopeta = new Weapon({
 // 	imgSrc: "arquivos/assets/itens/escopeta.png",
@@ -375,18 +383,9 @@ life.setSprites(itens_sprites.life.sprites)
 // escopeta.item_sprites = itens_sprites.escopeta
 // escopeta.bulletsAmount = 10
 
-const soul = new Item({
-	itemType: "soul",
-	position: {
-		x: 400,
-		y: 515
-	}
-})
-soul.setSprites(itens_sprites.enemy_soul.sprites)
-
 
 const itensArray = []
-itensArray.push(life, soul)
+itensArray.push(ak47, life, soul)
 
 const playableMapTiles = [
 	[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
@@ -640,13 +639,13 @@ function holdingItem(){
 		}
 
 		if(player.direction == "LEFT"){
-			item.imgSrc     = item.item_sprites.img_invert
-			item.position.x = player.position.x - item.item_sprites.holding_position_left.x
-			item.position.y = player.position.y + item.item_sprites.holding_position_left.y
+			// item.imgSrc     = item.item_sprites.img_invert
+			// item.position.x = player.position.x - item.item_sprites.holding_position_left.x
+			// item.position.y = player.position.y + item.item_sprites.holding_position_left.y
 		}else if(player.direction == "RIGHT"){
-			item.imgSrc     = item.item_sprites.img
-			item.position.x = player.position.x + item.item_sprites.holding_position.x
-			item.position.y = player.position.y + item.item_sprites.holding_position.y
+			// item.imgSrc     = item.item_sprites.img
+			// item.position.x = player.position.x + item.item_sprites.holding_position.x
+			// item.position.y = player.position.y + item.item_sprites.holding_position.y
 		}
 	}	
 }

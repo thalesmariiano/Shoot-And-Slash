@@ -35,7 +35,8 @@ class Player extends Entity {
 			}
 		}
 		this.attack_timer = 0
-		this.entitySize = 400
+		this.entitySizeX = 400
+		this.entitySizeY = 400
 		//
 		this.entityType = "Player"
 	}

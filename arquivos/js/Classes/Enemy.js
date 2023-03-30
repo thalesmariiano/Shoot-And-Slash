@@ -20,7 +20,8 @@ class Enemy extends Entity {
 			}
 		}
 		this.attack = 1
-		this.entitySize = 250
+		this.entitySizeX = 240
+		this.entitySizeY = 240
 		this.entityType = "Enemy"
 	}
 

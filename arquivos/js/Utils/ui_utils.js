@@ -10,9 +10,9 @@ function updateUI(ui, value) {
 			const health_bar = document.getElementById("health")
 			health_bar.style.width = `${value}%`
 			break
-		case "icon":
-			const img = value ? value.item_sprites.img : "arquivos/assets/null.png"
-			weapon_icon_img.src = img
-			break
+		// case "icon":
+		// 	const img = value ? value.item_sprites.img : "arquivos/assets/null.png"
+		// 	weapon_icon_img.src = img
+		// 	break
 	}
 }

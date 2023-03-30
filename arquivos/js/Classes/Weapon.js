@@ -1,7 +1,7 @@
 
 class Weapon extends Item {
-	constructor({imgSrc, gunType, name, munition, gunLimit, itemType, position}){
-		super({imgSrc, itemType, position})
+	constructor({gunType, name, munition, gunLimit, itemType, position}){
+		super({itemType, position})
 
 		this.shotCount = 0
 		this.shotTime = 0
@@ -15,6 +15,8 @@ class Weapon extends Item {
 		this.lockShot = false
 		this.gunType = gunType
 		this.name = name
+		this.entitySizeX = 64
+		this.entitySizeY = 32
 		this.type = "Weapon"
 	}
 
@@ -77,6 +79,7 @@ class Weapon extends Item {
 
 	update(){
 		this.draw()
+		this.switchSprite(`ak47_${player.direction.toLowerCase()}`)
 
 		if(this.gunType == "Fuzil"){
 			this.shotTime = 80
