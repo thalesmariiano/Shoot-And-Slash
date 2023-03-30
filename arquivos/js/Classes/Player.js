@@ -27,8 +27,8 @@ class Player extends Entity {
 		}
 		this.attack = 1
 		this.sword = {
-			width: 80,
-			height: 40,
+			width: 100,
+			height: 50,
 			position: {
 				x: 0,
 				y: 0
@@ -89,10 +89,10 @@ class Player extends Entity {
 				}
 			})
 
-			if(this.direction == "RIGHT") this.sword.position.x = this.position.x + 125
-			else if(this.direction == "LEFT") this.sword.position.x = this.position.x - 145
+			if(this.direction == "RIGHT") this.sword.position.x = this.position.x + 110
+			else if(this.direction == "LEFT") this.sword.position.x = this.position.x - 150
 
-			this.sword.position.y = this.position.y + 8
+			this.sword.position.y = this.position.y + 15
 
 			// ctx.fillStyle = "red"
 			// ctx.fillRect(this.sword.position.x, this.sword.position.y, this.sword.width, this.sword.height)
