@@ -6,7 +6,6 @@ class Enemy extends Entity {
 		this.speed = 3.5
 		this.isChasingPlayer = false
 		this.isRunningAttacking = false
-		this.attack_timer = 0
 		this.health = health
 		this.offest = {
 			x: 90,
