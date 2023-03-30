@@ -149,8 +149,18 @@ const player_sprites = [
 
 const itens_sprites = {
 	ak47: {
-		img: "arquivos/assets/itens/ak47.png",
-		img_invert: "arquivos/assets/itens/ak47_left.png",
+		sprites: [
+			{
+				name: "ak47_right",
+				image: "arquivos/assets/itens/ak47.png",
+				frames: 0
+			},
+			{
+				name: "ak47_left",
+				image: "arquivos/assets/itens/ak47_left.png",
+				frames: 0
+			}
+		],
 		holding_position: {
 			x: 55,
 			y: 50
@@ -171,6 +181,25 @@ const itens_sprites = {
 			x: 30,
 			y: 50
 		}
+	},
+	enemy_soul: {
+		sprites: [
+			{
+				name: "soul",
+				image: "arquivos/assets/itens/enemy_soul.png",
+				frames: 4,
+				hold: 6
+			}
+		],
+	},
+	life: {
+		sprites: [
+			{
+				name: "life",
+				image: "arquivos/assets/itens/life.png",
+				frames: 1,
+			}
+		],
 	}
 }
 
@@ -285,32 +314,52 @@ player_sprites.forEach(spr => {
 	spr.image = img
 })
 
+itens_sprites.enemy_soul.sprites.forEach(spr => {
+	const img = new Image()
+	img.src = spr.image
+	spr.image = img
+})
+
+itens_sprites.life.sprites.forEach(spr => {
+	const img = new Image()
+	img.src = spr.image
+	spr.image = img
+})
+
+// itens_sprites.ak47.sprites.forEach(spr => {
+// 	const img = new Image()
+// 	img.src = spr.image
+// 	spr.image = img
+// })
+
+
+
 const player = new Player({position: {x: 127, y: 380}})
 player.setSprites(player_sprites)
 const camera = new Camera()
 
 const life = new Item({
-	imgSrc: "arquivos/assets/itens/life.png",
-	itemType: "Vida",
+	itemType: "life",
 	position: {
 		x: 1600,
-		y: 630
+		y: 615
 	}
 })
+life.setSprites(itens_sprites.life.sprites)
 
-const ak47 = new Weapon({
-	imgSrc: "arquivos/assets/itens/ak47.png",
-	name: "Ak-47",
-	gunType: "Fuzil",
-	munition: 60,
-	gunLimit: 30,
-	position: {
-		x: 350,
-		y: 530
-	}
-})
-ak47.item_sprites = itens_sprites.ak47
-ak47.bulletsAmount = 30
+// const ak47 = new Weapon({
+// 	name: "Ak-47",
+// 	gunType: "Fuzil",
+// 	munition: 60,
+// 	gunLimit: 30,
+// 	position: {
+// 		x: 350,
+// 		y: 530
+// 	}
+// })
+// life.setSprites(itens_sprites.ak47.sprites)
+// // ak47.item_sprites = itens_sprites.ak47
+// ak47.bulletsAmount = 30
 
 // const escopeta = new Weapon({
 // 	imgSrc: "arquivos/assets/itens/escopeta.png",
@@ -326,8 +375,18 @@ ak47.bulletsAmount = 30
 // escopeta.item_sprites = itens_sprites.escopeta
 // escopeta.bulletsAmount = 10
 
+const soul = new Item({
+	itemType: "soul",
+	position: {
+		x: 400,
+		y: 515
+	}
+})
+soul.setSprites(itens_sprites.enemy_soul.sprites)
+
+
 const itensArray = []
-itensArray.push(life, ak47)
+itensArray.push(life, soul)
 
 const playableMapTiles = [
 	[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
