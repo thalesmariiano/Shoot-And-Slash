@@ -46,8 +46,11 @@ class Item extends Entity {
 			
 		}
 
-		this.position.y += this.velocity.y
-		this.velocity.y += GRAVITY
+		if(this.itemType == "soul"){
+			this.position.y += this.velocity.y
+			this.velocity.y += GRAVITY
+		}
+		
 	}
 }
 
