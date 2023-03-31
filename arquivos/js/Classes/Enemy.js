@@ -41,6 +41,8 @@ class Enemy extends Entity {
 					})
 					soul.setSprites(itens_sprites.enemy_soul.sprites)
 					itensArray.push(soul)
+
+					setTimeout(() => this.visible = false, 5000)
 					return
 				}
 				this.currentFrames = 0
