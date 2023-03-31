@@ -727,7 +727,7 @@ function render(){
 		}
 	})
 
-	itensArray.forEach(item => {
+	itensArray.forEach((item, index) => {
 		if(item.visible){
 			item.update()
 
@@ -739,6 +739,10 @@ function render(){
 				playebleMapBlocks.forEach(block => {
 					basicCollision(item, block)
 				})
+
+				if(!item.visible){
+					itensArray.splice(index, 1)
+				}
 			}
 			
 

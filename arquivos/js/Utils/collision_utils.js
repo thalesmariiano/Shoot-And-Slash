@@ -36,6 +36,11 @@ const itemCollision = collision => {
 				collider.takeHit(item.itemValue)
 				item.visible = false
 				break
+			case "soul":
+				player.souls += 1
+				item.visible = false
+				console.log(player.souls)
+				break
 			default:
 				if(item.type != "Weapon") return
 

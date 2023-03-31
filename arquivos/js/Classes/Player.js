@@ -3,6 +3,7 @@ class Player extends Entity {
 	constructor({color, position}){
 		super({color, position})
 		
+		this.souls = 0
 		this.coinNumbers = 0
 		this.inventory = [
 			{
