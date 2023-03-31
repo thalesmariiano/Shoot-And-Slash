@@ -669,6 +669,8 @@ parallax_middle.src = "arquivos/assets/map/parallax-forest-middle-trees.png"
 const parallax_front = new Image()
 parallax_front.src = "arquivos/assets/map/parallax-forest-front-trees.png"
 
+var enemysWave = 3
+
 function render(){
 	ctx.save()
 	ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -718,6 +720,11 @@ function render(){
 			enemys.splice(index, 1)
 		}
 	})
+
+	if(!enemys.length){
+		enemysWave += 3
+		generateEnemys(enemysWave, 100)
+	}
 
 	playebleMapBlocks.forEach(block => {
 		const {top, bottom, left, right} = detectInArea(camera_position, block, 300, (canvas.height/2), 300, (canvas.width/2) + 50, (canvas.width/2))
