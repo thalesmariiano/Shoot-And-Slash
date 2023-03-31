@@ -821,6 +821,7 @@ function restart(){
 function destroy(){
 	gameIsPaused = true
 	enemys.length = 0
+	enemysWave = 3
 	player.restart()
 	player.inventory.forEach(slot => {
 		slot.item = null
