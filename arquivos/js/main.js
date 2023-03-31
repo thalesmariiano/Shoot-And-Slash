@@ -798,6 +798,7 @@ function restart(){
 	generateEnemys(3, 100)
 	init()
 	player.restart()
+	enemysWave = 3
 	player.inventory.forEach(slot => {
 		slot.item = null
 		slot.isHolding = false
