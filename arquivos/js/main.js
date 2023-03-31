@@ -163,11 +163,11 @@ const itens_sprites = {
 		],
 		holding_position: {
 			x: 55,
-			y: 50
+			y: 30
 		},
 		holding_position_left: {
 			x: 30,
-			y: 50
+			y: 30
 		}
 	},
 	escopeta: {
@@ -638,14 +638,13 @@ function holdingItem(){
 			munition_amount.innerHTML = '0'
 		}
 
+		item.switchSprite(`ak47_${player.direction.toLowerCase()}`)
 		if(player.direction == "LEFT"){
-			// item.imgSrc     = item.item_sprites.img_invert
-			// item.position.x = player.position.x - item.item_sprites.holding_position_left.x
-			// item.position.y = player.position.y + item.item_sprites.holding_position_left.y
+			item.position.x = player.position.x - itens_sprites.ak47.holding_position_left.x
+			item.position.y = player.position.y + itens_sprites.ak47.holding_position_left.y
 		}else if(player.direction == "RIGHT"){
-			// item.imgSrc     = item.item_sprites.img
-			// item.position.x = player.position.x + item.item_sprites.holding_position.x
-			// item.position.y = player.position.y + item.item_sprites.holding_position.y
+			item.position.x = player.position.x + itens_sprites.ak47.holding_position.x
+			item.position.y = player.position.y + itens_sprites.ak47.holding_position.y
 		}
 	}	
 }
