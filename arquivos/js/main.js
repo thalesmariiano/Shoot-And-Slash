@@ -421,6 +421,7 @@ const playableMapTiles = [
 // ]
 
 const mapSize = playableMapTiles[0].length*50
+const mapHeight = playableMapTiles.length*50
 const playebleMapBlocks = []
 // const scenarioMapBlocks = []
 
@@ -716,6 +717,12 @@ function render(){
 			playebleMapBlocks.forEach(block => {
 				basicCollision(enemy, block)
 			})
+
+			if(enemy.position.y > mapHeight){
+				enemys.splice(index, 1)
+				enemysWave -= 1
+			}
+
 		}else{
 			enemys.splice(index, 1)
 		}
