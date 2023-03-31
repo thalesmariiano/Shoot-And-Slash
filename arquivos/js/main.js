@@ -332,8 +332,6 @@ itens_sprites.ak47.sprites.forEach(spr => {
 	spr.image = img
 })
 
-
-
 const player = new Player({position: {x: 127, y: 380}})
 player.setSprites(player_sprites)
 const camera = new Camera()
@@ -354,7 +352,7 @@ const ak47 = new Weapon({
 	gunLimit: 30,
 	position: {
 		x: 350,
-		y: 530
+		y: 525
 	}
 })
 ak47.setSprites(itens_sprites.ak47.sprites)
