@@ -9,7 +9,7 @@ class Enemy extends Entity {
 		this.health = health
 		this.offest = {
 			x: 90,
-			y: 150
+			y: 140
 		}
 		this.sword = {
 			width: 25,
