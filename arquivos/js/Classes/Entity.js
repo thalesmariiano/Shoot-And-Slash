@@ -80,6 +80,7 @@ class Entity {
 		this.endAnimation = false
 		this.position.x = this.initial_position.x
 		this.position.y = this.initial_position.y
+		this.souls = 0
 	}
 
 	draw(){
