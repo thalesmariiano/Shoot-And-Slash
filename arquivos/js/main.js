@@ -746,6 +746,13 @@ function render(){
 				itemCollision(collide(player, item))
 			}
 
+			if(item.itemType == "soul"){
+				playebleMapBlocks.forEach(block => {
+					basicCollision(item, block)
+				})
+			}
+			
+
 			if(item.type == "Weapon"){
 				item.bulletsFired.forEach(bullet => {
 					if(bullet.visible){
