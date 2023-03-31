@@ -714,6 +714,8 @@ function render(){
 			playebleMapBlocks.forEach(block => {
 				basicCollision(enemy, block)
 			})
+		}else{
+			enemys.splice(index, 1)
 		}
 	})
 
