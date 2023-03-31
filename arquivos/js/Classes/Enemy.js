@@ -36,7 +36,7 @@ class Enemy extends Entity {
 						itemType: "soul",
 						position: {
 							x: this.position.x + this.width/2,
-							y: this.position.y + this.height - 32
+							y: this.position.y + this.height/2
 						}
 					})
 					soul.setSprites(itens_sprites.enemy_soul.sprites)
