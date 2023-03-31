@@ -45,6 +45,9 @@ class Item extends Entity {
 				break
 			
 		}
+
+		this.position.y += this.velocity.y
+		this.velocity.y += GRAVITY
 	}
 }
 
