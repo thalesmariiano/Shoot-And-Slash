@@ -360,15 +360,6 @@ const ak47 = new Weapon({
 ak47.setSprites(itens_sprites.ak47.sprites)
 ak47.bulletsAmount = 30
 
-const soul = new Item({
-	itemType: "soul",
-	position: {
-		x: 400,
-		y: 515
-	}
-})
-soul.setSprites(itens_sprites.enemy_soul.sprites)
-
 // const escopeta = new Weapon({
 // 	imgSrc: "arquivos/assets/itens/escopeta.png",
 // 	name: "Dôze",
@@ -385,7 +376,7 @@ soul.setSprites(itens_sprites.enemy_soul.sprites)
 
 
 const itensArray = []
-itensArray.push(ak47, life, soul)
+itensArray.push(ak47, life)
 
 const playableMapTiles = [
 	[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
@@ -765,9 +756,7 @@ function render(){
 						})
 
 						playebleMapBlocks.forEach(block => {
-							if(block.visible){
-								projectileCollision(collide(bullet, block))
-							}
+							projectileCollision(collide(bullet, block))
 						})
 					}
 				})
