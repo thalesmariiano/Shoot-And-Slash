@@ -1,7 +1,6 @@
 
 play_button.addEventListener("click", () => {
 	gameScreen(hud_screen, start_screen)
-	generateEnemys(3, 100)
 	init()
 })
 

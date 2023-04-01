@@ -29,6 +29,9 @@ var keyRight,
 
 var gameIsPaused = true
 
+var enemysCount = 3
+var gameWave = 1
+
 var lockLeft,
     lockRight = false
 
@@ -670,8 +673,6 @@ parallax_middle.src = "arquivos/assets/map/parallax-forest-middle-trees.png"
 const parallax_front = new Image()
 parallax_front.src = "arquivos/assets/map/parallax-forest-front-trees.png"
 
-var enemysWave = 3
-
 function render(){
 	ctx.save()
 	ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -720,7 +721,7 @@ function render(){
 
 			if(enemy.position.y > mapHeight){
 				enemys.splice(index, 1)
-				enemysWave -= 1
+				enemysCount -= 1
 			}
 
 		}else{
@@ -729,8 +730,10 @@ function render(){
 	})
 
 	if(!enemys.length){
-		enemysWave += 3
-		generateEnemys(enemysWave, 100)
+		updateUI("waves", gameWave)
+		gameWave++
+		generateEnemys(enemysCount, 100)
+		enemysCount += 3
 	}
 
 	playebleMapBlocks.forEach(block => {
@@ -795,10 +798,10 @@ function pause(){
 
 function restart(){
 	enemys.length = 0
-	generateEnemys(3, 100)
 	init()
 	player.restart()
-	enemysWave = 3
+	enemysCount = 3
+	gameWave = 1
 	player.inventory.forEach(slot => {
 		slot.item = null
 		slot.isHolding = false
@@ -821,7 +824,8 @@ function restart(){
 function destroy(){
 	gameIsPaused = true
 	enemys.length = 0
-	enemysWave = 3
+	enemysCount = 3
+	gameWave = 1
 	player.restart()
 	player.inventory.forEach(slot => {
 		slot.item = null
