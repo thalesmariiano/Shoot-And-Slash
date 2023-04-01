@@ -798,10 +798,10 @@ function pause(){
 
 function restart(){
 	enemys.length = 0
-	init()
-	player.restart()
 	enemysCount = 3
 	gameWave = 1
+	init()
+	player.restart()
 	player.inventory.forEach(slot => {
 		slot.item = null
 		slot.isHolding = false
