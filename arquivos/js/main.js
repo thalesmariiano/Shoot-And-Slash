@@ -379,6 +379,15 @@ ak47.bulletsAmount = 30
 const itensArray = []
 itensArray.push(ak47, life)
 
+const skillsButton = document.querySelectorAll("[data-skill]")
+skillsButton.forEach(button => {
+	const skillType = button.dataset.skill
+	button.addEventListener("click", () => {
+		button.dataset.level++
+		button.children[0].innerHTML = button.dataset.level
+	})
+})
+
 const playableMapTiles = [
 	[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
 	[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],

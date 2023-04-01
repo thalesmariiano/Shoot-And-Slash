@@ -31,6 +31,25 @@ function updateUI(ui, value) {
 				wavesContainer.classList.add("hidden")
 			}, 6000)
 			break
+		case "skills":
+			const skills_screen = document.getElementById("skills-screen")
+			skills_screen.classList.remove("hidden")
+
+			setTimeout(() => {
+				skills_screen.classList.remove("opacity-0")
+				skills_screen.classList.add("opacity-100")				
+			}, 500)
+
+			setTimeout(() => {
+				skills_screen.classList.remove("opacity-100")
+				skills_screen.classList.add("opacity-0")
+			}, 7000)
+
+			setTimeout(() => {
+				skills_screen.classList.add("hidden")
+			}, 8000)
+
+			break
 		// case "icon":
 		// 	const img = value ? value.item_sprites.img : "arquivos/assets/null.png"
 		// 	weapon_icon_img.src = img
