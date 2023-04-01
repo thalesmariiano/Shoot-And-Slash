@@ -32,17 +32,21 @@ class Enemy extends Entity {
 			if(this.currentFrames >= this.spriteFrames){
 				if(this.sprInfo.name == `dead_${this.direction.toLowerCase()}`){
 					this.endAnimation = true
-					const soul = new Item({
-						itemType: "soul",
-						position: {
-							x: this.position.x + this.width/2,
-							y: this.position.y + this.height/2
-						}
-					})
-					soul.setSprites(itens_sprites.enemy_soul.sprites)
-					itensArray.push(soul)
 
+					if(Math.floor(Math.random() * 2)){
+						const soul = new Item({
+							itemType: "soul",
+							position: {
+								x: this.position.x + this.width/2,
+								y: this.position.y + this.height/2
+							}
+						})
+						soul.setSprites(itens_sprites.enemy_soul.sprites)
+						itensArray.push(soul)
+					}
+					
 					setTimeout(() => this.visible = false, 3000)
+
 					return
 				}
 				this.currentFrames = 0
