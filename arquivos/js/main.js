@@ -59,8 +59,17 @@ const dialog_container    = document.getElementById("dialog-container")
 const dialog_close_button = document.getElementById("close-dialog-button")
 const dialog_checkbox     = document.querySelector("[name=dontshow]")
 
+const close_skills = document.getElementById("close-skills")
+
 const munition_amount = document.getElementById("munition-amount")
 const bullets_amount  = document.getElementById("bullets-amount")
+
+const souls_amount    = document.getElementById("souls-amount")
+
+const health_container = document.getElementById("health-container")
+const health_bar = document.getElementById("health-bar")
+const health_amount = document.getElementById("health-amount")
+const points = document.getElementsByClassName("health-points")
 
 const player_sprites = [
 	{
@@ -353,13 +362,13 @@ const ak47 = new Weapon({
 	gunType: "Fuzil",
 	munition: 60,
 	gunLimit: 30,
+	bullets: 30,
 	position: {
-		x: 350,
+		x: -200,
 		y: 525
 	}
 })
 ak47.setSprites(itens_sprites.ak47.sprites)
-ak47.bulletsAmount = 30
 
 // const escopeta = new Weapon({
 // 	imgSrc: "arquivos/assets/itens/escopeta.png",
@@ -385,8 +394,43 @@ skillsButton.forEach(button => {
 	button.addEventListener("click", () => {
 		button.dataset.level++
 		button.children[0].innerHTML = button.dataset.level
+
+		switch(skillType){
+			case "speed":
+				const speed = "." + button.dataset.level
+				player.speed += parseFloat(speed)
+				console.log("player speed: " + player.speed)
+				break
+			case "health":
+				player.health += 10
+				player.maxHealth += 10
+				health_bar.innerHTML += "<div class='health-points'></div>"
+				health_container.style.width = player.health + "px"
+				health_amount.style.width = player.health + "px"
+				break
+			case "strength":
+				player.attDamage += 1
+				console.log("player damage: " + player.attDamage)
+				break
+		}
 	})
 })
+
+const itensButton = document.querySelectorAll("[data-item]")
+itensButton.forEach(button => {
+	const itemType = button.dataset.item
+
+	button.addEventListener("click", () => {
+		switch(itemType){
+			case "ak47":
+				player.inventory[0].item = ak47
+				ak47.isInInventory = true
+				updateUI("icon", ak47.name)
+				break
+		}
+	})
+})
+
 
 const playableMapTiles = [
 	[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
@@ -614,7 +658,7 @@ function selectSlot(id){
 
 		weapon_icon.classList.add("border-neutral-300")
 		weapon_icon.classList.remove("border-black")
-		updateUI("icon", inventory.item)
+		updateUI("icon", inventory.item.name)
 	}else{
 		const slot = player.getHoldingItem()
 		if(slot){
@@ -624,7 +668,7 @@ function selectSlot(id){
 		
 		weapon_icon.classList.remove("border-neutral-300")
 		weapon_icon.classList.add("border-black")
-		updateUI("icon", "")
+		// updateUI("icon", "")
 	}
 }
 
@@ -632,13 +676,13 @@ function holdingItem(){
 	const slot = player.getHoldingItem()
 	if(slot){
 		const { item } = slot
-		if(item.type == "Weapon"){
-			bullets_amount.innerHTML = `${item.bulletsAmount}`
-			munition_amount.innerHTML = `${item.munition}`
-		}else{
-			bullets_amount.innerHTML = '0'
-			munition_amount.innerHTML = '0'
-		}
+		// if(item.type == "Weapon"){
+		// 	bullets_amount.innerHTML = `${item.bulletsAmount}`
+		// 	munition_amount.innerHTML = `${item.munition}`
+		// }else{
+		// 	bullets_amount.innerHTML = '0'
+		// 	munition_amount.innerHTML = '0'
+		// }
 
 		item.switchSprite(`ak47_${player.direction.toLowerCase()}`)
 		if(player.direction == "LEFT"){
@@ -810,6 +854,7 @@ function restart(){
 	enemysCount = 3
 	gameWave = 1
 	init()
+	souls_amount.innerHTML = 0
 	player.restart()
 	player.inventory.forEach(slot => {
 		slot.item = null
@@ -825,8 +870,8 @@ function restart(){
 			item.bulletsAmount = 30
 		}
 	})
-	bullets_amount.innerHTML = '0'
-	munition_amount.innerHTML = '0'
+	// bullets_amount.innerHTML = '0'
+	// munition_amount.innerHTML = '0'
 	updateUI("icon", "")
 }
 
@@ -835,6 +880,7 @@ function destroy(){
 	enemys.length = 0
 	enemysCount = 3
 	gameWave = 1
+	souls_amount.innerHTML = 0
 	player.restart()
 	player.inventory.forEach(slot => {
 		slot.item = null
@@ -850,8 +896,8 @@ function destroy(){
 			item.bulletsAmount = 30
 		}
 	})
-	bullets_amount.innerHTML = '0'
-	munition_amount.innerHTML = '0'
+	// bullets_amount.innerHTML = '0'
+	// munition_amount.innerHTML = '0'
 	updateUI("icon", "")
 	ctx.clearRect(0, 0, canvas.width, canvas.height)
 }
@@ -869,7 +915,10 @@ function init(){
 	gameIsPaused = false
 	loop()
 
-	if(canShowDialog == "actived"){
+	updateUI("skills", "")
+
+	const showDialog = window.localStorage.getItem("SaSdialog")
+	if(parseInt(showDialog)){
 		dialog_container.classList.add("left-0")
 		dialog_container.classList.remove("-left-60")
 	}
@@ -877,7 +926,6 @@ function init(){
 }
 
 dialog_checkbox.addEventListener("input", () => {
-	if(dialog_checkbox){
-		 window.localStorage.setItem("SaSdialog", "desatived")
-	}
+	const value = dialog_checkbox.checked ? 0 : 1
+	window.localStorage.setItem("SaSdialog", value)
 })

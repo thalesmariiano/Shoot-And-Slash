@@ -11,9 +11,11 @@
 
   		<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha512-z4OUqw38qNLpn1libAN9BsoDx6nbNFio5lA6CuTp9NlK83b89hgyCVq+N5FdBJptINztxn1Z3SaKSKUS5UP60Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<script src="https://cdn.tailwindcss.com"></script>
-		<script src="arquivos/js/pre-load.js"></script>
 
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+		<!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1017845986794503"
+        crossorigin="anonymous"></script> -->
 
 		<title>Shoot And Slash - Jogo 2D estilo hack and slash</title>
 	</head>
@@ -32,8 +34,8 @@
 
 							<nav>
 								<div class="text-center">
-									<button id="play-button" class="btn-default w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300">Jogar</button>
-									<button id="options-button" class="btn-default w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300">Opções</button>
+									<button id="play-button" class="btn-default w-48 py-1.5 mx-5 my-2 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300">Jogar</button>
+									<button id="options-button" class="btn-default w-48 py-1.5 mx-5 my-2 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300">Opções</button>
 								</div>
 							</nav>
 
@@ -105,23 +107,27 @@
 							</div>
 						</div>
 						<div id="status-container">
-							<div id="health-container" class="bar-container">
-								<div id="health" class="bar-amount"></div>
-								<div id="health-bar" class="bar-point-container">
-									<div class="bar-point"></div>
-									<div class="bar-point"></div>
-									<div class="bar-point"></div>
-									<div class="bar-point"></div>
-									<div class="bar-point"></div>
-									<div class="bar-point"></div>
-									<div class="bar-point"></div>
-									<div class="bar-point"></div>
-									<div class="bar-point"></div>
-									<div class="bar-point"></div>
+							<div id="health-container">
+								<div id="health-amount"></div>
+								<div id="health-bar">
+									<div class="health-points"></div>
+									<div class="health-points"></div>
+									<div class="health-points"></div>
+									<div class="health-points"></div>
+									<div class="health-points"></div>
+									<div class="health-points"></div>
+									<div class="health-points"></div>
+									<div class="health-points"></div>
+									<div class="health-points"></div>
+									<div class="health-points"></div>
 								</div>
 							</div>
 							<div id="inventory-status">
-								<p id="weapon-status"><span id="bullets-amount">0</span>/<span id="munition-amount">0</span></p>
+								<div class="flex items-center">
+									<img class="w-6 h-6 drop-shadow" src="arquivos/assets/icons/soul_icon.png">
+									<p id="souls-amount" class="font-bold mt-1">0</p>
+								</div>
+								<!-- <p id="weapon-status"><span id="bullets-amount">0</span>/<span id="munition-amount">0</span></p> -->
 							</div>
 						</div>
 					</div>
@@ -165,11 +171,11 @@
 							<div>
 								<p class="uppercase text-2xl text-neutral-800 font-bold">Habilidades</p>
 								<div id="skills">
+									<button class="w-full p-1 my-2 text-left bg-neutral-700 hover:bg-neutral-600" data-skill="health" data-level="1">
+										Health - <span>1</span>
+									</button>
 									<button class="w-full p-1 my-2 text-left bg-neutral-700 hover:bg-neutral-600" data-skill="speed" data-level="1">
 										Speed - <span>1</span>
-									</button>
-									<button class="w-full p-1 my-2 text-left bg-neutral-700 hover:bg-neutral-600" data-skill="attackSpeed" data-level="1">
-										Attack Speed - <span>1</span>
 									</button>
 									<button class="w-full p-1 my-2 text-left bg-neutral-700 hover:bg-neutral-600" data-skill="strength" data-level="1">
 										Strength - <span>1</span>
@@ -178,15 +184,21 @@
 								<div>
 									<p class="uppercase text-2xl text-neutral-800 font-bold">Armas</p>
 									<div id="itens">
-										<button class="w-full p-1 my-2 text-left bg-neutral-700 hover:bg-neutral-600">
+										<button class="w-full p-1 my-2 text-left bg-neutral-700 hover:bg-neutral-600" data-item="ak47">
 											Ak-47
+										</button>
+										<button class="w-full p-1 my-2 text-left bg-neutral-700 opacity-50 cursor-not-allowed" data-item="granade">
+											Granade
+										</button>
+										<button class="w-full p-1 my-2 text-left bg-neutral-700 opacity-50 cursor-not-allowed" data-item="flamekatana">
+											Flame Katana
 										</button>
 									</div>
 								</div>
 							</div>
 
 							<div>
-								<button class="px-3 py-1 bg-red-800">Fechar</button>
+								<button id="close-skills" class="px-3 py-1 bg-red-800">Fechar</button>
 							</div>
 						</div>
 					</div>
@@ -259,6 +271,8 @@
 				</div>
 			</div>
 		</div> -->
+
+		<script src="arquivos/js/pre-load.js"></script>
 
 		<script src="arquivos/js/Classes/Entity.js"></script>
 		<script src="arquivos/js/Classes/Player.js"></script>

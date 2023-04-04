@@ -34,21 +34,6 @@ body {
 	align-items: center;
 }
 
-/*#weapon-icon {
-	width: 60px;
-	height: 60px;
-	border: 3px solid black;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background-color: rgba(0, 0, 0, .15);
-	overflow: hidden;
-}
-
-#weapon-icon-img {
-	transform: rotateZ(-45deg);
-}
-*/
 #status-container {
 	padding: 0 0 0 5px;
 	display: flex;
@@ -57,45 +42,34 @@ body {
 	height: 100%;
 }
 
-.bar-container {
+#health-container {
+	width: 100px;
+	margin-top: 5px;
+	height: 21px;
+	background-color: #999;
+	border: 1.5px solid black;
 	position: relative;
-	border-top: 2px solid black;
-	border-bottom: 2px solid black;
-	border-left: 1px solid black;
-	border-right: 1px solid black;
-	background-color: #616161;
 }
 
-.bar-amount {
+#health-amount {
 	width: 100%;
 	height: 100%;
-	transition: .5s all;
+	background-color: red;
 }
 
-.bar-point-container {
+#health-bar {
 	display: flex;
+	height: 100%;
 	position: absolute;
 	top: 0;
 	left: 0;
-	width: 100%;
+}
+
+.health-points {
+	width: 10px;
 	height: 100%;
-}
-
-.bar-point {
-	border-left: 1.5px solid black;
-	border-right: 1.5px solid black;
-	width: 100%;
-	height: 100%;
-}
-
-#health-container {
-	width: 220px;
-	height: 25px;
-}
-
-#health {
-	background: rgb(191,0,0);
-	background: linear-gradient(0deg, rgba(191,0,0,1) 0%, rgba(251,0,0,1) 50%, rgba(191,0,0,1) 100%);
+	border-left: 1px solid black;
+	border-right: 1px solid black;
 }
 
 #inventory-status {
@@ -105,6 +79,10 @@ body {
 #inventory-status {
 	font: 15px 'monospace', sans-serif;
 	letter-spacing: 2px;
+}
+
+#souls-amount {
+	text-shadow: 0px 0px 5px rgba(0, 0, 0, .8);
 }
 
 

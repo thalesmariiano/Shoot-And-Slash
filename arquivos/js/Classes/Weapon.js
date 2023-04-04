@@ -1,11 +1,11 @@
 
 class Weapon extends Item {
-	constructor({gunType, name, munition, gunLimit, itemType, position}){
+	constructor({gunType, name, bullets, munition, gunLimit, itemType, position}){
 		super({itemType, position})
 
 		this.shotCount = 0
 		this.shotTime = 0
-		this.bulletsAmount = 0
+		this.bulletsAmount = bullets
 		this.munition = munition
 		this.gunLimit = gunLimit
 

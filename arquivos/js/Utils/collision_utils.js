@@ -38,6 +38,7 @@ const itemCollision = collision => {
 				break
 			case "soul":
 				player.souls += 1
+				souls_amount.innerHTML = player.souls
 				item.visible = false
 				break
 			default:

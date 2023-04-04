@@ -4,11 +4,12 @@ const gameScreen = (screen1, screen2) => {
 	screen2.classList.add("hidden")
 }
 
+const skills_screen = document.getElementById("skills-screen")
+
 function updateUI(ui, value) {
 	switch(ui){
 		case "healthbar":
-			const health_bar = document.getElementById("health")
-			health_bar.style.width = `${value}%`
+			health_amount.style.width = `${value}px`
 			break
 		case "waves":
 			const wavesContainer = document.getElementById("waves-container")
@@ -32,27 +33,25 @@ function updateUI(ui, value) {
 			}, 6000)
 			break
 		case "skills":
-			const skills_screen = document.getElementById("skills-screen")
 			skills_screen.classList.remove("hidden")
 
 			setTimeout(() => {
 				skills_screen.classList.remove("opacity-0")
 				skills_screen.classList.add("opacity-100")				
-			}, 500)
+			}, 700)
 
-			setTimeout(() => {
-				skills_screen.classList.remove("opacity-100")
-				skills_screen.classList.add("opacity-0")
-			}, 7000)
+			break
+		case "s": 
+			skills_screen.classList.remove("opacity-100")
+			skills_screen.classList.add("opacity-0")
 
 			setTimeout(() => {
 				skills_screen.classList.add("hidden")
-			}, 8000)
-
+			}, 1000)
 			break
-		// case "icon":
-		// 	const img = value ? value.item_sprites.img : "arquivos/assets/null.png"
-		// 	weapon_icon_img.src = img
-		// 	break
+		case "icon":
+			const img = value ? "arquivos/assets/itens/ak47.png" : "arquivos/assets/null.png"
+			weapon_icon_img.src = img
+			break
 	}
 }

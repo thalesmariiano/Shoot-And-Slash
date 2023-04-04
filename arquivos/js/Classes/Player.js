@@ -26,6 +26,7 @@ class Player extends Entity {
 			x: 170,
 			y: 143
 		}
+		this.attDamage = 5
 		this.attack = 1
 		this.sword = {
 			width: 100,
@@ -59,6 +60,10 @@ class Player extends Entity {
 					}
 					this.isAttacking = false
 				}
+				if(this.sprInfo.name == `take-hit_${this.direction.toLowerCase()}`){
+					this.receiveDamage = false
+				}
+
 				this.currentFrames = 0
 			}
 		}
@@ -87,7 +92,7 @@ class Player extends Entity {
 					const { side } = collide(this.sword, enemy)
 					const sword_collide = side.top || side.bottom || side.left || side.right
 
-					sword_collide ? enemy.takeHit(5) : enemy.receiveDamage = false
+					sword_collide ? enemy.takeHit(this.attDamage) : enemy.receiveDamage = false
 				}
 			})
 

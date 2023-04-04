@@ -24,6 +24,5 @@ window.onload = () => {
 	}
 }
 
-const canShowDialog = window.localStorage.getItem("SaSdialog")
-if(!canShowDialog) window.localStorage.setItem("SaSdialog", "actived")
+if(!window.localStorage.getItem("SaSdialog")) window.localStorage.setItem("SaSdialog", 1)
 

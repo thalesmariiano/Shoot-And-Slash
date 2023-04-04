@@ -37,6 +37,10 @@ dialog_close_button.addEventListener("click", () => {
 	dialog_container.classList.add("-left-60")
 })
 
+close_skills.addEventListener("click", () => {
+	updateUI("s", "")
+})
+
 // Popup
 
 // const popup = document.querySelector("#popup-container")
