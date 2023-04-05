@@ -116,22 +116,26 @@ const player_sprites = [
 	{
 		name: "attack_1_right",
 		image: "arquivos/assets/player/attack1.png",
-		frames: 6
+		frames: 6,
+		hold: 6
 	},
 	{
 		name: "attack_1_left",
 		image: "arquivos/assets/player/attack1_left.png",
-		frames: 6
+		frames: 6,
+		hold: 6
 	},
 	{
 		name: "attack_2_right",
 		image: "arquivos/assets/player/attack2.png",
-		frames: 6
+		frames: 6,
+		hold: 6
 	},
 	{
 		name: "attack_2_left",
 		image: "arquivos/assets/player/attack2_left.png",
-		frames: 6
+		frames: 6,
+		hold: 6
 	},
 	{
 		name: "take-hit_right",
