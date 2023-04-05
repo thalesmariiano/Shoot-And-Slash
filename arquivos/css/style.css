@@ -47,7 +47,8 @@ body {
 	margin-top: 5px;
 	height: 21px;
 	background-color: #999;
-	border: 1.5px solid black;
+	border-top: 1.5px solid black;
+	border-bottom: 1.5px solid black;
 	position: relative;
 }
 
