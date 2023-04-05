@@ -402,11 +402,11 @@ skillsButton.forEach(button => {
 				console.log("player speed: " + player.speed)
 				break
 			case "health":
-				player.health += 10
 				player.maxHealth += 10
+				player.receiveLife(1000)
 				health_bar.innerHTML += "<div class='health-points'></div>"
-				health_container.style.width = player.health + "px"
-				health_amount.style.width = player.health + "px"
+				health_container.style.width = player.maxHealth + "px"
+				health_amount.style.width = player.maxHealth + "px"
 				break
 			case "strength":
 				player.attDamage += 1
