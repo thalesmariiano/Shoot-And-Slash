@@ -44,6 +44,11 @@ class Player extends Entity {
 	}
 
 	animation(){
+
+		if(this.sprInfo && attackSpeedMax && this.sprInfo.name == `attack_${this.attack}_${this.direction.toLowerCase()}`){
+			this.framesHold = 5
+		}
+
 		this.framesElapsed++
 		if(this.framesElapsed % this.framesHold === 0){
 			this.currentFrames++
