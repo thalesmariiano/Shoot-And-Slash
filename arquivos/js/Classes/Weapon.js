@@ -48,6 +48,8 @@ class Weapon extends Item {
 						this.bulletsAmount += this.munition
 						this.munition = 0
 					}
+					bullets_amount.innerHTML = this.bulletsAmount
+					munition_amount.innerHTML = this.munition
 				}, 1500)
 			}
 		}

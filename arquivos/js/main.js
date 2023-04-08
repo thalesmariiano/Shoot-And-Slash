@@ -61,6 +61,7 @@ const dialog_checkbox     = document.querySelector("[name=dontshow]")
 
 const close_skills = document.getElementById("close-skills")
 
+const weapon_status = document.getElementById("weapon-status")
 const munition_amount = document.getElementById("munition-amount")
 const bullets_amount  = document.getElementById("bullets-amount")
 
@@ -430,6 +431,9 @@ itensButton.forEach(button => {
 				player.inventory[0].item = ak47
 				ak47.isInInventory = true
 				updateUI("icon", ak47.name)
+				weapon_status.classList.remove("hidden")
+				bullets_amount.innerHTML = ak47.bulletsAmount
+				munition_amount.innerHTML = ak47.munition
 				break
 		}
 	})
@@ -615,6 +619,7 @@ function playerActions(){
 			const { item } = slot
 			if(item && item.type === "Weapon"){
 				item.shot()
+				bullets_amount.innerHTML = item.bulletsAmount
 			}
 		}else if(!player.isFalling && !player.isRunning){
 			player.switchSprite(`attack_${player.attack}_${player.direction.toLowerCase()}`)
@@ -680,13 +685,10 @@ function holdingItem(){
 	const slot = player.getHoldingItem()
 	if(slot){
 		const { item } = slot
-		// if(item.type == "Weapon"){
-		// 	bullets_amount.innerHTML = `${item.bulletsAmount}`
-		// 	munition_amount.innerHTML = `${item.munition}`
-		// }else{
-		// 	bullets_amount.innerHTML = '0'
-		// 	munition_amount.innerHTML = '0'
-		// }
+
+		if(item.type == "Weapon"){
+			weapon_status.classList.remove("text-slate-500")
+		}
 
 		item.switchSprite(`ak47_${player.direction.toLowerCase()}`)
 		if(player.direction == "LEFT"){
@@ -696,7 +698,9 @@ function holdingItem(){
 			item.position.x = player.position.x + itens_sprites.ak47.holding_position.x
 			item.position.y = player.position.y + itens_sprites.ak47.holding_position.y
 		}
-	}	
+	}else{
+		weapon_status.classList.add("text-slate-500")
+	}
 }
 
 function update(){
@@ -874,8 +878,8 @@ function restart(){
 			item.bulletsAmount = 30
 		}
 	})
-	// bullets_amount.innerHTML = '0'
-	// munition_amount.innerHTML = '0'
+	bullets_amount.innerHTML = 0
+	munition_amount.innerHTML = 0
 	updateUI("icon", "")
 }
 
@@ -900,8 +904,8 @@ function destroy(){
 			item.bulletsAmount = 30
 		}
 	})
-	// bullets_amount.innerHTML = '0'
-	// munition_amount.innerHTML = '0'
+	bullets_amount.innerHTML = 0
+	munition_amount.innerHTML = 0
 	updateUI("icon", "")
 	ctx.clearRect(0, 0, canvas.width, canvas.height)
 }
