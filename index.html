@@ -101,10 +101,13 @@
 				</section>
 				<section id="hud-screen" class="w-full h-full hidden">
 					<div id="hud-container" class="w-full">
-						<div id="weapon-icon-container">
+						<div id="weapon-icon-container" class="relative">
 							<div id="weapon-icon" class="w-16 h-16 border-4 border-black rounded-xl bg-neutral-500/75 flex justify-center items-center">
 								<img id="weapon-icon-img" class="-rotate-45" src="arquivos/assets/null.png">
 							</div>
+							<p id="weapon-status" class="absolute top-15 left-[10px] font-bold hidden">
+								<span id="bullets-amount">0</span>/<span id="munition-amount">0</span>
+							</p>
 						</div>
 						<div id="status-container">
 							<div id="health-container">
@@ -127,7 +130,6 @@
 									<img class="w-6 h-6 drop-shadow" src="arquivos/assets/icons/soul_icon.png">
 									<p id="souls-amount" class="font-bold mt-1">0</p>
 								</div>
-								<!-- <p id="weapon-status"><span id="bullets-amount">0</span>/<span id="munition-amount">0</span></p> -->
 							</div>
 						</div>
 					</div>
