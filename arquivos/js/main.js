@@ -393,18 +393,26 @@ ak47.setSprites(itens_sprites.ak47.sprites)
 const itensArray = []
 itensArray.push(ak47, life)
 
+var attackSpeedMax = false
+
 const skillsButton = document.querySelectorAll("[data-skill]")
 skillsButton.forEach(button => {
 	const skillType = button.dataset.skill
 	button.addEventListener("click", () => {
+		const isMaxLevel = parseInt(button.dataset.level) >= parseInt(button.dataset.max)
+		if(isMaxLevel) return
+
+		const level_text = button.children[0].children[1]
+
 		button.dataset.level++
-		button.children[0].innerHTML = button.dataset.level
+
+		level_text.innerHTML = `Level ${button.dataset.level}`
+
 
 		switch(skillType){
 			case "speed":
 				const speed = "." + button.dataset.level
-				player.speed += parseFloat(speed)
-				console.log("player speed: " + player.speed)
+				player.speed += parseFloat(speed)	
 				break
 			case "health":
 				player.maxHealth += 10
@@ -415,9 +423,12 @@ skillsButton.forEach(button => {
 				break
 			case "strength":
 				player.attDamage += 1
-				console.log("player damage: " + player.attDamage)
+				break
+			case "attackspeed":
+				attackSpeedMax = true
 				break
 		}
+
 	})
 })
 
