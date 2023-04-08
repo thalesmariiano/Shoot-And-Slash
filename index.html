@@ -25,7 +25,7 @@
 			<canvas>O seu navegador não suporta o canvas.</canvas>
 
 			<div id="screens-container" class="absolute w-full h-full">
-				<section id="start-screen" class="w-full h-full">
+				<section id="start-screen" class="w-full h-full hidden">
 					<div id="start-container" class="flex justify-center items-center w-full h-full">
 						<div class="flex flex-col gap-10 justify-between items-center w-full max-h-[888px]">
 							<div id="logo-container">
@@ -167,20 +167,41 @@
 						</div>
 					</div>
 				</section>
-				<section id="skills-screen" class="w-full h-full absolute transition-all duration-500 opacity-0 hidden">
+				<section id="skills-screen" class="w-full h-full absolute transition-all duration-500 ">
 					<div id="skills-container" class="w-full h-full flex justify-center items-center bg-neutral-900/75">
-						<div class="w-[32rem] h-[27rem] p-2 flex flex-col justify-between bg-neutral-400 border-2 border-white">
+						<div class="w-[32rem] h-[27rem] p-2 flex flex-col justify-between bg-neutral-400 border-2 border-white rounded-xl">
 							<div>
 								<p class="uppercase text-2xl text-neutral-800 font-bold">Habilidades</p>
-								<div id="skills">
-									<button class="w-full p-1 my-2 text-left bg-neutral-700 hover:bg-neutral-600" data-skill="health" data-level="1">
-										Health - <span>1</span>
+								<div id="skills" class="flex justify-center gap-2">
+									<button class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="health" data-level="1">
+										<div class="w-full h-full flex flex-col justify-between">
+											<img class="mx-auto w-10 h-10" src="arquivos/assets/icons/life_icon.png">
+											<p class="font-bold mx-auto">Level 1</p>
+										</div>
 									</button>
-									<button class="w-full p-1 my-2 text-left bg-neutral-700 hover:bg-neutral-600" data-skill="speed" data-level="1">
-										Speed - <span>1</span>
+									<button class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="speed" data-level="1">
+										<div class="w-full h-full flex flex-col justify-between">
+											<img class="mx-auto w-10 h-10" src="arquivos/assets/icons/speed_icon.png">
+											<p class="font-bold mx-auto">Level 1</p>
+										</div>
 									</button>
-									<button class="w-full p-1 my-2 text-left bg-neutral-700 hover:bg-neutral-600" data-skill="strength" data-level="1">
-										Strength - <span>1</span>
+									<button class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="strength" data-level="1">
+										<div class="w-full h-full flex flex-col justify-between">
+											<img class="mx-auto w-10 h-10" src="arquivos/assets/icons/strength_icon.png">
+											<p class="font-bold mx-auto">Level 1</p>
+										</div>
+									</button>
+									<button class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="attackspeed" data-level="1">
+										<div class="w-full h-full flex flex-col justify-between">
+											<img class="mx-auto w-10 h-10" src="arquivos/assets/icons/attack_speed_icon.png">
+											<p class="font-bold mx-auto">Level 1</p>
+										</div>
+									</button>
+									<button class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 rounded-xl border-2 border-neutral-300 cursor-not-allowed opacity-50">
+										<div class="w-full h-full flex flex-col justify-between">
+											<span> </span>
+											<p class="font-bold mx-auto">Level 0</p>
+										</div>
 									</button>
 								</div>
 								<div>
