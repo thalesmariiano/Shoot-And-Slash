@@ -1,14 +1,58 @@
 
-window.addEventListener("keydown", e => {
+const controlKey = {
+	left: "KeyA",
+	right: "KeyD",
+	jump: "Space",
+	jump_2: "KeyW"
+}
+
+const switchControls = (control, type) => {
+	const getControl = window.localStorage.getItem("SaSControl")
+
+	switch(type){
+		case 1:
+			if(getControl == 2){
+				window.localStorage.setItem("SaSControl", 1)
+				control.classList.remove("opacity-50", "hover:opacity-75")
+				getElement(2).classList.add("opacity-50", "hover:opacity-75")
+				controlKey.left   = "KeyA"
+				controlKey.right  = "KeyD"
+				controlKey.jump   = "Space"
+				controlKey.jump_2 = "KeyW"
+				dialogOpened = false
+			}
+			break
+		case 2:
+			if(getControl == 1){
+				window.localStorage.setItem("SaSControl", 2)
+				control.classList.remove("opacity-50", "hover:opacity-75")
+				getElement(1).classList.add("opacity-50", "hover:opacity-75")
+				controlKey.left   = "ArrowLeft"
+				controlKey.right  = "ArrowRight"
+				controlKey.jump   = "ArrowUp"
+				controlKey.jump_2 = "Space"
+				dialogOpened = false
+			}
+			break
+	}
+}
+
+window.addEventListener("keydown", keyDownHandler)
+window.addEventListener("keyup", keyUpHandler)
+
+function keyDownHandler(e){
 	let key = e.code
 	switch(key){
-		case "ArrowUp":
+		case controlKey.jump:
 			keyUp = true
 			break
-		case "ArrowLeft":
+		case controlKey.jump_2:
+			keyUp = true
+			break
+		case controlKey.left:
 			keyLeft = true
 			break
-		case "ArrowRight":
+		case controlKey.right:
 			keyRight = true
 			break
 		case "Enter":
@@ -21,36 +65,33 @@ window.addEventListener("keydown", e => {
 			pause()
 			break
 		case "Digit1":
-			digit1 = true
-			digit2 = false
-			digit3 = false
+			selectSlot(1)
 			break
 		case "Digit2":
-			digit1 = false
-			digit2 = true
-			digit3 = false
+			selectSlot(2)
 			break
 		case "Digit3":
-			digit1 = false
-			digit2 = false
-			digit3 = true
+			selectSlot(3)
 			break
-		}
-})
+	}
+}
 
-window.addEventListener("keyup", e => {
+function keyUpHandler(e){
 	let key = e.code
 	switch(key){
-		case "ArrowUp":
+		case controlKey.jump:
 			keyUp = false
 			break
-		case "ArrowRight":
-			keyRight = false
-			lockLeft = false
+		case controlKey.jump_2:
+			keyUp = false
 			break
-		case "ArrowLeft":
+		case controlKey.left:
 			keyLeft = false
 			lockRight = false
+			break
+		case controlKey.right:
+			keyRight = false
+			lockLeft = false
 			break
 		case "Enter":
 			keyEnter = false
@@ -59,4 +100,6 @@ window.addEventListener("keyup", e => {
 			keyR = false
 			break
 	}
-})
+}
+
+

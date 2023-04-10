@@ -1,43 +1,41 @@
 
-class Item  {
-	constructor({imgSrc, item_sprites, itemType, itemValue, position}){
-		this.imgSrc = imgSrc
-		this.item_sprites = item_sprites
-		this.sprite = new Image()
-		this.itemType = itemType
-		this.position = position
-		this.initial_position = {
-			x: this.position.x,
-			y: this.position.y
-		}
-		this.velocity = {
-			x: 0,
-			y: 0
-		}
-		this.offest ={
-			x: 16,
-			y: 20
-		}
-		this.width = 32
-		this.height = 32
-		//
-		this.visible = true
-		this.itemValue = 0
-		this.isInInventory = false
-		this.type = "Item"
+class Item extends Entity {
+	constructor({color, position, itemType}){
+		super({color, position})
+
+			this.width = 32
+			this.height = 32
+			this.offest ={
+				x: 0,
+				y: 0
+			}
+			this.itemValue = 0
+			this.isInInventory = false
+			this.entitySizeX = 35
+			this.entitySizeY = 35
+			this.itemType = itemType
+			this.type = "Item"
 	}
 
-	draw(){
-		ctx.drawImage(this.sprite, this.position.x - this.offest.x, this.position.y - this.offest.y)
-		this.sprite.src = this.imgSrc
+	animation(){
+		this.framesElapsed++
+		if(this.framesElapsed % this.framesHold === 0){
+			this.currentFrames++
+			if(this.currentFrames >= this.spriteFrames){
+				this.currentFrames = 0
+			}
+		}
+		this.imgX = this.frameSizeX*this.currentFrames
 	}
 
 	update(){
 		this.draw()
+		this.animation()
+		this.switchSprite(this.itemType)
 
 		switch(this.itemType){
-			case "Life":
-				this.itemValue = 30
+			case "life":
+				this.itemValue = 35
 				break
 			case "Bomb":
 				this.itemValue = 45
@@ -45,6 +43,15 @@ class Item  {
 			case "Coin":
 				this.itemValue = 1
 				break
+			
 		}
+
+		if(this.itemType == "soul"){
+			this.position.y += this.velocity.y
+			this.velocity.y += GRAVITY
+		}
+		
 	}
 }
+
+

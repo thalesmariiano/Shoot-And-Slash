@@ -4,6 +4,10 @@ class Entity {
 		this.sprite = new Image()
 		this.color = color
 		this.position = position
+		this.initial_position = {
+			x: this.position.x,
+			y: this.position.y
+		}
 		this.width = 55
 		this.height = 100
 		this.velocity = {
@@ -20,12 +24,13 @@ class Entity {
 		this.spriteFrames = 0
 		this.framesElapsed = 0
 		this.framesHold = 5
-		this.animateFinished = false
+		this.endAnimation = false
 		this.offest = {
 			x: 0,
 			y: 0
 		}
-		this.entitySize = 0
+		this.entitySizeX = 0
+		this.entitySizeY = 0
 		//
 		this.isIdle = false
 		this.isFalling = false
@@ -57,15 +62,33 @@ class Entity {
 
 		this.sprite = spr.image
 		this.spriteFrames = spr.frames
+		this.framesHold = spr.hold ? spr.hold : 5
 		this.frameSizeX = this.sprite.width/this.spriteFrames
 		this.frameSizeY = this.sprite.height
-
-		if(spr != this.sprInfo) this.currentFrames = 0
+		
+		if(spr != this.sprInfo) this.currentFrames = 0	
 		this.sprInfo = spr
 	}
 
+	restart(){
+		this.maxHealth = this.health = 100
+		this.receiveLife(1000)
+		this.isDead = false
+		this.framesHold = 5
+		this.framesElapsed = 0
+		this.direction = "RIGHT"
+		this.switchSprite("idle_right")
+		this.endAnimation = false
+		this.position.x = this.initial_position.x
+		this.position.y = this.initial_position.y
+		this.souls = 0
+		this.dropLuck = 70
+		this.speed = this.defaultSpeed
+		this.attackSpeedMax = false
+	}
+
 	draw(){
-		ctx.drawImage(this.sprite, this.imgX, this.imgY, this.frameSizeX, this.frameSizeY, this.position.x - this.offest.x, this.position.y - this.offest.y, this.entitySize, this.entitySize)
+		ctx.drawImage(this.sprite, this.imgX, this.imgY, this.frameSizeX, this.frameSizeY, this.position.x - this.offest.x, this.position.y - this.offest.y, this.entitySizeX, this.entitySizeY)
 
 		if(developerMode){
 			ctx.strokeStyle = "black"

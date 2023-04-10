@@ -1,7 +1,7 @@
 
 var developerMode = false
 
-const canvas  = document.querySelector("canvas")
+const canvas            = document.querySelector("canvas")
 const screens_container = document.querySelector("#screens-container")
 
 const ctx = canvas.getContext("2d", {alpha: false})
@@ -14,16 +14,6 @@ const resizeAspectRatio = () => {
 resizeAspectRatio()
 window.onresize = () => resizeAspectRatio()
 
-const gamesave = {
-	player: {
-		health: 100,
-		position: {
-			x: 127,
-			y: 200
-		}
-	}
-}
-
 const GRAVITY = 0.6
 
 var keyRight,
@@ -33,34 +23,55 @@ var keyRight,
     keyEnter,
     keyR = false
 
-var digit1,
-    digit2,
-    digit3 = false
+// var digit1,
+//     digit2,
+//     digit3 = false
 
 var gameIsPaused = true
+var isIniting = false
+
+var enemysCount = 3
+var gameWave = 1
 
 var lockLeft,
     lockRight = false
 
-var lastKeyPressed = "keyRight";
-
 // Telas
-const start_screen = document.getElementById("start-screen")
-const hud_screen   = document.getElementById("hud-screen")
-const die_screen   = document.getElementById("die-screen")
-const pause_screen = document.getElementById("pause-screen")
+const start_screen   = document.getElementById("start-screen")
+const options_screen = document.getElementById("options-screen")
+const hud_screen     = document.getElementById("hud-screen")
+const die_screen     = document.getElementById("die-screen")
+const pause_screen   = document.getElementById("pause-screen")
 
-const weapon_icon = document.getElementById("weapon-icon-img")
+const weapon_icon     = document.getElementById("weapon-icon")
+const weapon_icon_img = document.getElementById("weapon-icon-img")
 
 // Botões
-const play_button      = document.getElementById("play-button")
-const restart_button   = document.getElementById("restart-button")
-const restart_button_2 = document.getElementById("restart-button-2")
-const continue_button  = document.getElementById("continue-button")
-const backtomenu_button = document.getElementById("backToMenu-button")
+const play_button               = document.getElementById("play-button")
+const options_button            = document.getElementById("options-button")
+const backtomenuoptions_button  = document.getElementById("backToMenuOptions-button")
+const restart_button            = document.getElementById("restart-button")
+const restart_button_2          = document.getElementById("restart-button-2")
+const continue_button           = document.getElementById("continue-button")
+const backtomenu_button         = document.getElementById("backToMenu-button")
 
+// Dialog
+const dialog_container    = document.getElementById("dialog-container")
+const dialog_close_button = document.getElementById("close-dialog-button")
+const dialog_checkbox     = document.querySelector("[name=dontshow]")
+
+const close_skills = document.getElementById("close-skills")
+
+const weapon_status = document.getElementById("weapon-status")
 const munition_amount = document.getElementById("munition-amount")
 const bullets_amount  = document.getElementById("bullets-amount")
+
+const souls_amount    = document.getElementById("souls-amount")
+
+const health_container = document.getElementById("health-container")
+const health_bar = document.getElementById("health-bar")
+const health_amount = document.getElementById("health-amount")
+const points = document.getElementsByClassName("health-points")
 
 const player_sprites = [
 	{
@@ -105,43 +116,76 @@ const player_sprites = [
 		frames: 2
 	},
 	{
-		name: "attack1",
+		name: "attack_1_right",
 		image: "arquivos/assets/player/attack1.png",
-		frames: 6
+		frames: 6,
+		hold: 6
+	},
+	{
+		name: "attack_1_left",
+		image: "arquivos/assets/player/attack1_left.png",
+		frames: 6,
+		hold: 6
+	},
+	{
+		name: "attack_2_right",
+		image: "arquivos/assets/player/attack2.png",
+		frames: 6,
+		hold: 6
+	},
+	{
+		name: "attack_2_left",
+		image: "arquivos/assets/player/attack2_left.png",
+		frames: 6,
+		hold: 6
 	},
 	{
 		name: "take-hit_right",
 		image: "arquivos/assets/player/take-hit.png",
-		frames: 4
+		frames: 4,
+		hold: 8
 	},
 	{
 		name: "take-hit_left",
 		image: "arquivos/assets/player/take-hit_left.png",
-		frames: 4
+		frames: 4,
+		hold: 8
 	},
 	{
 		name: "death_right",
 		image: "arquivos/assets/player/death.png",
-		frames: 6
+		frames: 6,
+		hold: 8
 	},
 	{
 		name: "death_left",
 		image: "arquivos/assets/player/death_left.png",
-		frames: 6
+		frames: 6,
+		hold: 8
 	}
 ]
 
 const itens_sprites = {
 	ak47: {
-		img: "arquivos/assets/itens/ak47.png",
-		img_invert: "arquivos/assets/itens/ak47_left.png",
+		sprites: [
+			{
+				name: "ak47_right",
+				image: "arquivos/assets/itens/ak47.png",
+				frames: 1
+			},
+			{
+				name: "ak47_left",
+				image: "arquivos/assets/itens/ak47_left.png",
+				frames: 1
+			}
+		],
 		holding_position: {
 			x: 55,
-			y: 50
+			y: 30
 		},
 		holding_position_left: {
 			x: 30,
-			y: 50
+			y: 30
 		}
 	},
 	escopeta: {
@@ -155,6 +199,25 @@ const itens_sprites = {
 			x: 30,
 			y: 50
 		}
+	},
+	enemy_soul: {
+		sprites: [
+			{
+				name: "soul",
+				image: "arquivos/assets/itens/enemy_soul.png",
+				frames: 4,
+				hold: 6
+			}
+		],
+	},
+	life: {
+		sprites: [
+			{
+				name: "life",
+				image: "arquivos/assets/itens/life.png",
+				frames: 1,
+			}
+		],
 	}
 }
 
@@ -202,12 +265,14 @@ const enemy_sprites = [
 	{
 		name: "attack_1_right",
 		image: "arquivos/assets/enemys/skeleton_attack_1.png",
-		frames: 5
+		frames: 5,
+		hold: 6
 	},
 	{
 		name: "attack_1_left",
 		image: "arquivos/assets/enemys/skeleton_attack_1_left.png",
-		frames: 5
+		frames: 5,
+		hold: 6
 	},
 	{
 		name: "attack_2_right",
@@ -230,19 +295,26 @@ const enemy_sprites = [
 		frames: 4
 	},
 	{
-		name: "take_hit",
+		name: "take_hit_right",
 		image: "arquivos/assets/enemys/skeleton_hit.png",
+		frames: 2
+	},
+	{
+		name: "take_hit_left",
+		image: "arquivos/assets/enemys/skeleton_hit_left.png",
 		frames: 2
 	},
 	{
 		name: "dead_right",
 		image: "arquivos/assets/enemys/skeleton_dead.png",
-		frames: 4
+		frames: 4,
+		hold: 6
 	},
 	{
 		name: "dead_left",
 		image: "arquivos/assets/enemys/skeleton_dead_left.png",
-		frames: 4
+		frames: 4,
+		hold: 6
 	}
 ]
 
@@ -260,32 +332,49 @@ player_sprites.forEach(spr => {
 	spr.image = img
 })
 
+itens_sprites.enemy_soul.sprites.forEach(spr => {
+	const img = new Image()
+	img.src = spr.image
+	spr.image = img
+})
+
+itens_sprites.life.sprites.forEach(spr => {
+	const img = new Image()
+	img.src = spr.image
+	spr.image = img
+})
+
+itens_sprites.ak47.sprites.forEach(spr => {
+	const img = new Image()
+	img.src = spr.image
+	spr.image = img
+})
+
 const player = new Player({position: {x: 127, y: 380}})
 player.setSprites(player_sprites)
 const camera = new Camera()
 
 const life = new Item({
-	imgSrc: "arquivos/assets/itens/life.png",
-	itemType: "Vida",
+	itemType: "life",
 	position: {
 		x: 1600,
-		y: 630
+		y: 615
 	}
 })
+life.setSprites(itens_sprites.life.sprites)
 
 const ak47 = new Weapon({
-	imgSrc: "arquivos/assets/itens/ak47.png",
 	name: "Ak-47",
 	gunType: "Fuzil",
 	munition: 60,
 	gunLimit: 30,
+	bullets: 30,
 	position: {
-		x: 350,
-		y: 530
+		x: -200,
+		y: 525
 	}
 })
-ak47.item_sprites = itens_sprites.ak47
-ak47.bulletsAmount = 30
+ak47.setSprites(itens_sprites.ak47.sprites)
 
 // const escopeta = new Weapon({
 // 	imgSrc: "arquivos/assets/itens/escopeta.png",
@@ -301,8 +390,114 @@ ak47.bulletsAmount = 30
 // escopeta.item_sprites = itens_sprites.escopeta
 // escopeta.bulletsAmount = 10
 
+
 const itensArray = []
-itensArray.push(life, ak47)
+itensArray.push(ak47, life)
+
+var attackSpeedMax = false
+
+const skillsButton = document.querySelectorAll("[data-skill]")
+skillsButton.forEach(button => {
+	const skillType = button.dataset.skill
+	button.addEventListener("click", () => {
+		const skillPrice = button.dataset.price
+
+		const level_text = button.children[0].children[1]
+		const price_text = button.nextElementSibling
+		const isMaxLevel = parseInt(button.dataset.level) >= parseInt(button.dataset.max)
+
+		if(isMaxLevel){
+			level_text.innerHTML = "Max"
+			level_text.classList.add("text-red-500")
+
+			setTimeout(() => {
+				level_text.classList.remove("text-red-500")
+				level_text.innerHTML = `Level ${button.dataset.level}`		
+			}, 1000)
+			return
+		}
+
+		if(player.souls < skillPrice){
+			price_text.classList.add("animate__animated", "animate__shakeX")
+			price_text.classList.add("bg-red-500/75")
+
+			price_text.addEventListener("animationend", () => {
+				price_text.classList.remove("animate__animated", "animate__shakeX")
+				price_text.classList.remove("bg-red-500/75")
+			})
+			return
+		}
+
+		player.souls -= parseInt(button.dataset.price)
+		souls_amount.innerHTML = player.souls
+
+		button.dataset.price = parseInt(skillPrice) + 5
+		price_text.innerHTML = `${button.dataset.price} Almas`
+
+		button.dataset.level++
+		level_text.innerHTML = `Level ${button.dataset.level}`
+
+		switch(skillType){
+			case "speed":
+				const speed = "." + button.dataset.level
+				player.speed += parseFloat(speed)	
+				break
+			case "health":
+				player.maxHealth += 10
+				player.receiveLife(1000)
+				health_bar.innerHTML += "<div class='health-points'></div>"
+				health_container.style.width = player.maxHealth + "px"
+				health_amount.style.width = player.maxHealth + "px"
+				break
+			case "strength":
+				player.attDamage += 1
+				break
+			case "attackspeed":
+				attackSpeedMax = true
+				break
+			case "loot":
+				player.dropLuck += 5
+				break
+		}
+
+	})
+})
+
+const itensButton = document.querySelectorAll("[data-item]")
+itensButton.forEach(button => {
+	const itemType = button.dataset.item
+
+	button.addEventListener("click", () => {
+		const skillPrice = button.dataset.price
+		const price_text = button.nextElementSibling
+
+		if(player.souls < skillPrice){
+			price_text.classList.add("animate__animated", "animate__shakeX")
+			price_text.classList.add("bg-red-500/75")
+
+			price_text.addEventListener("animationend", () => {
+				price_text.classList.remove("animate__animated", "animate__shakeX")
+				price_text.classList.remove("bg-red-500/75")
+			})
+			return
+		}
+
+		player.souls -= parseInt(button.dataset.price)
+		souls_amount.innerHTML = player.souls
+
+		switch(itemType){
+			case "ak47":
+				player.inventory[0].item = ak47
+				ak47.isInInventory = true
+				updateUI("icon", ak47.name)
+				weapon_status.classList.remove("hidden")
+				bullets_amount.innerHTML = ak47.bulletsAmount
+				munition_amount.innerHTML = ak47.munition
+				break
+		}
+	})
+})
+
 
 const playableMapTiles = [
 	[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
@@ -349,11 +544,12 @@ const playableMapTiles = [
 // ]
 
 const mapSize = playableMapTiles[0].length*50
+const mapHeight = playableMapTiles.length*50
 const playebleMapBlocks = []
 // const scenarioMapBlocks = []
 
 const tilemap = new Image()
-	  tilemap.src = "arquivos/assets/tilemap.png"
+	  tilemap.src = "arquivos/assets/map/tilemap.png"
 
 function generateTerrain(mapArray, outputArray){
 	const tileSize = 50
@@ -420,48 +616,10 @@ function generateTerrain(mapArray, outputArray){
 	}
 }
 
-function detectInArea(entity, target, areaTotal, topArea, bottomArea, leftArea, rightArea){
-	const {overlap, distance} = collide(target, entity)
-
-	const radar = {
-		top: false,
-		bottom: false,
-		left: false,
-		right: false,
-		distance
-	}
-
-	const top    = topArea ? topArea : areaTotal
-	const bottom = bottomArea ? bottomArea : areaTotal
-	const left   = leftArea ? leftArea : areaTotal
-	const right  = rightArea ? rightArea : areaTotal
-
-	const isInTopArea = Math.abs(distance.y) < top
-	const isInBottomArea = Math.abs(distance.y) < bottom
-
-	const isInLeftArea = Math.abs(distance.x) < left
-	const isInRightArea = Math.abs(distance.x) < right
-
-	if(overlap.x >= overlap.y){
-		if(distance.y > 0){
-			radar.top = isInTopArea
-		}else{
-			radar.bottom = isInBottomArea
-		}
-	}else{
-		if(distance.x < 0){
-			radar.left = isInLeftArea
-		}else{
-			radar.right = isInRightArea
-		}
-	}
-	return radar
-}
-
 function playerActions(){
 
 	// Player parado
-	if(!keyUp && !keyLeft && !keyRight && !player.isAttacking && !player.receiveDamage && !player.isFalling){
+	if(!keyUp && !player.isRunning && !player.isAttacking && !player.receiveDamage && !player.isFalling){
 		player.switchSprite(`idle_${player.direction.toLowerCase()}`)
 		player.isIdle = true
 	}else{
@@ -509,28 +667,37 @@ function playerActions(){
 		player.velocity.x = 0
 	}
 
-	if(player.receiveDamage){
+	if(player.receiveDamage && !player.isAttacking){
 		player.switchSprite(`take-hit_${player.direction.toLowerCase()}`)
 	}
 
 	// Player atacando
 	if(keyEnter){
-		const item = player.getHoldingItem()
-		if(item && item.type === "Weapon"){
-			item.shot()
-		}else{
-			player.switchSprite("attack1")
+		const slot = player.getHoldingItem()
+		if(slot){
+			const { item } = slot
+			if(item && item.type === "Weapon"){
+				item.shot()
+				bullets_amount.innerHTML = item.bulletsAmount
+			}
+		}else if(!player.isFalling && !player.isRunning){
+			player.switchSprite(`attack_${player.attack}_${player.direction.toLowerCase()}`)
 			player.isAttacking = true
 		}
-	}else{
+	}
+
+	if(player.isAttacking && player.sprInfo.name != `attack_${player.attack}_${player.direction.toLowerCase()}`){
 		player.isAttacking = false
 	}
 
 	// Recarregar Arma
 	if(keyR && !keyEnter){
-		const item = player.getHoldingItem()
-		if(item && item.type === "Weapon"){
-			item.reload()
+		const slot = player.getHoldingItem()
+		if(slot){
+			const { item } = slot
+			if(item && item.type === "Weapon"){
+				item.reload()
+			}
 		}
 	}
 
@@ -540,6 +707,7 @@ function playerActions(){
 
 	if(player.isDead){
 		player.switchSprite(`death_${player.direction.toLowerCase()}`)
+
 		player.velocity.x = 0
 
 		setTimeout(() => {
@@ -549,90 +717,61 @@ function playerActions(){
 	}
 }
 
-function inventorySlots(){
+function selectSlot(id){
+	const inventory = player.getInventory(id)
+	
+	if(inventory.item){
+		inventory.item.visible = true
+		inventory.isHolding = true
 
-	if(digit1){
-		const inventory = player.getInventory(0)
-		if(inventory.item){
-			inventory.item.visible = true
-			inventory.isHolding = true			
-		}else{
-			digit1 = false
-		}
-
-		updateUI("icon", inventory.item)
+		weapon_icon.classList.add("border-neutral-300")
+		weapon_icon.classList.remove("border-black")
+		updateUI("icon", inventory.item.name)
 	}else{
-		const inventory = player.getInventory(0)
-		if(inventory.item){
-			inventory.item.visible = false
-			inventory.isHolding = false
+		const slot = player.getHoldingItem()
+		if(slot){
+			slot.item.visible = false
+			slot.isHolding = false
 		}
+		
+		weapon_icon.classList.remove("border-neutral-300")
+		weapon_icon.classList.add("border-black")
+		// updateUI("icon", "")
 	}
+}
 
-	if(digit2){
-		const inventory = player.getInventory(1)
-		if(inventory.item){
-			inventory.item.visible = true
-			inventory.isHolding = true
-		}else{
-			digit2 = false
+function holdingItem(){
+	const slot = player.getHoldingItem()
+	if(slot){
+		const { item } = slot
+
+		if(item.type == "Weapon"){
+			weapon_status.classList.remove("text-slate-500")
 		}
 
-		updateUI("icon", inventory.item)
-	}else{
-		const inventory = player.getInventory(1)
-		if(inventory.item){
-			inventory.item.visible = false
-			inventory.isHolding = false
-		}
-	}
-
-	if(digit3){
-		const inventory = player.getInventory(2)
-		if(inventory.item){
-			inventory.item.visible = true
-			inventory.isHolding = true
-		}else{
-			digit3 = false
-		}
-
-		updateUI("icon", inventory.item)
-	}else{
-		const inventory = player.getInventory(2)
-		if(inventory.item){
-			inventory.item.visible = false
-			inventory.isHolding = false
-		}
-	}
-
-	const item = player.getHoldingItem()
-
-	if(item && item.type == "Weapon"){
-		bullets_amount.innerHTML = `${item.bulletsAmount}`
-		munition_amount.innerHTML = `${item.munition}`
-	}else{
-		bullets_amount.innerHTML = '0'
-		munition_amount.innerHTML = '0'
-	}
-
-	if(item){
+		item.switchSprite(`ak47_${player.direction.toLowerCase()}`)
 		if(player.direction == "LEFT"){
-			item.imgSrc     = item.item_sprites.img_invert
-			item.position.x = player.position.x - item.item_sprites.holding_position_left.x
-			item.position.y = player.position.y + item.item_sprites.holding_position_left.y
+			item.position.x = player.position.x - itens_sprites.ak47.holding_position_left.x
+			item.position.y = player.position.y + itens_sprites.ak47.holding_position_left.y
 		}else if(player.direction == "RIGHT"){
-			item.imgSrc     = item.item_sprites.img
-			item.position.x = player.position.x + item.item_sprites.holding_position.x
-			item.position.y = player.position.y + item.item_sprites.holding_position.y
+			item.position.x = player.position.x + itens_sprites.ak47.holding_position.x
+			item.position.y = player.position.y + itens_sprites.ak47.holding_position.y
 		}
+	}else{
+		weapon_status.classList.add("text-slate-500")
 	}
 }
 
 function update(){
-	inventorySlots()
+	holdingItem()
 
 	if(!player.isDead){
 		playerActions()	
+	}
+
+	if(gameIsPaused){
+		dialog_container.classList.remove("left-0")
+		dialog_container.classList.add("-left-60")
 	}
 
 	camera.update()
@@ -643,16 +782,16 @@ const skyGradient = ctx.createLinearGradient(0, 0, 0, 150)
 	  skyGradient.addColorStop(1, "#7bc6d1")
 
 const parallax_back = new Image()
-parallax_back.src = "arquivos/assets/parallax-forest-back.png"
+parallax_back.src = "arquivos/assets/map/parallax-forest-back.png"
 
 const parallax_light = new Image()
-parallax_light.src = "arquivos/assets/parallax-forest-lights.png"
+parallax_light.src = "arquivos/assets/map/parallax-forest-lights.png"
 
 const parallax_middle = new Image()
-parallax_middle.src = "arquivos/assets/parallax-forest-middle-trees.png"
+parallax_middle.src = "arquivos/assets/map/parallax-forest-middle-trees.png"
 
 const parallax_front = new Image()
-parallax_front.src = "arquivos/assets/parallax-forest-front-trees.png"
+parallax_front.src = "arquivos/assets/map/parallax-forest-front-trees.png"
 
 function render(){
 	ctx.save()
@@ -665,7 +804,7 @@ function render(){
 	ctx.drawImage(parallax_back, Math.floor(-camera.x)/7, 0, 2000, 700)
 	// ctx.drawImage(parallax_light, Math.floor(-camera.x)/6, 0, canvas.width, canvas.height)							
 	ctx.drawImage(parallax_middle, Math.floor(-camera.x)/4, 0, 2000, 700)				
-	ctx.drawImage(parallax_front, Math.floor(-camera.x)/2, 0, 3000, 700)				
+	ctx.drawImage(parallax_front, Math.floor(-camera.x)/2, 0, 3100, 770)				
 
 	ctx.translate(
 		Math.floor(-camera.x),
@@ -696,11 +835,45 @@ function render(){
 		if(enemy.visible){
 			enemy.update()
 
+			const {top, bottom, left, right} = detectInArea(camera_position, enemy, 300, (canvas.height/2), 300, (canvas.width/2) + 50, (canvas.width/2))
+			const enemyInArea = top || bottom || right || left
+
+			if(enemyInArea){
+				enemy.draw()
+			}
+
 			playebleMapBlocks.forEach(block => {
 				basicCollision(enemy, block)
 			})
+
+			if(enemy.position.y > mapHeight){
+				enemys.splice(index, 1)
+				enemysCount -= 1
+			}
+
+		}else{
+			enemys.splice(index, 1)
 		}
 	})
+
+
+	// Waves System
+	if(!enemys.length && !isIniting){
+		isIniting = true
+
+		setTimeout(() => {
+			updateUI("skills", true)				
+		}, 1000)
+
+		setTimeout(() => {
+			updateUI("waves", gameWave)
+			gameWave++
+			generateEnemys(enemysCount, 100)
+			enemysCount += 3
+			updateUI("skills", false)
+			isIniting = false
+		}, 10000)
+	}
 
 	playebleMapBlocks.forEach(block => {
 		const {top, bottom, left, right} = detectInArea(camera_position, block, 300, (canvas.height/2), 300, (canvas.width/2) + 50, (canvas.width/2))
@@ -712,13 +885,24 @@ function render(){
 		}
 	})
 
-	itensArray.forEach(item => {
+	itensArray.forEach((item, index) => {
 		if(item.visible){
 			item.update()
 
 			if(!item.isInInventory){
 				itemCollision(collide(player, item))
 			}
+
+			if(item.itemType == "soul"){
+				playebleMapBlocks.forEach(block => {
+					basicCollision(item, block)
+				})
+
+				if(!item.visible){
+					itensArray.splice(index, 1)
+				}
+			}
+			
 
 			if(item.type == "Weapon"){
 				item.bulletsFired.forEach(bullet => {
@@ -732,9 +916,7 @@ function render(){
 						})
 
 						playebleMapBlocks.forEach(block => {
-							if(block.visible){
-								projectileCollision(collide(bullet, block))
-							}
+							projectileCollision(collide(bullet, block))
 						})
 					}
 				})
@@ -749,23 +931,17 @@ function render(){
 function pause(){
 	if(!gameIsPaused){
 		gameScreen(pause_screen, hud_screen)
-		gameIsPaused = true	
+		gameIsPaused = true
 	}
 }
 
 function restart(){
 	enemys.length = 0
-	generateEnemys(3, 100)
+	enemysCount = 3
+	gameWave = 1
 	init()
-	player.receiveLife(1000)
-	player.isDead = false
-	player.framesHold = 5
-	player.framesElapsed = 0
-	player.direction = "RIGHT"
-	player.switchSprite("idle_right")
-	player.animateFinished = false
-	player.position.x = gamesave.player.position.x
-	player.position.y = gamesave.player.position.y
+	souls_amount.innerHTML = 0
+	player.restart()
 	player.inventory.forEach(slot => {
 		slot.item = null
 		slot.isHolding = false
@@ -780,21 +956,40 @@ function restart(){
 			item.bulletsAmount = 30
 		}
 	})
+
+	skillsButton.forEach(button => {
+		button.dataset.price = 5
+		button.children[0].children[1].innerHTML = "Lv 1"
+		button.dataset.level = 1
+		button.nextElementSibling.innerHTML = "5 Almas"
+	})
+
+	health_container.style.width = 100 + "px"
+	health_amount.style.width = 100 + "px"
+
+	if(points.length > 10){
+		while(i < 10){
+			i++
+
+			if(points.length > 10){
+				points[i].remove()				
+			}
+		}
+	}
+	
+
+	bullets_amount.innerHTML = 0
+	munition_amount.innerHTML = 0
 	updateUI("icon", "")
 }
 
 function destroy(){
 	gameIsPaused = true
 	enemys.length = 0
-	player.receiveLife(1000)
-	player.isDead = false
-	player.framesHold = 5
-	player.framesElapsed = 0
-	player.direction = "RIGHT"
-	player.switchSprite("idle_right")
-	player.animateFinished = false
-	player.position.x = gamesave.player.position.x
-	player.position.y = gamesave.player.position.y
+	enemysCount = 3
+	gameWave = 1
+	souls_amount.innerHTML = 0
+	player.restart()
 	player.inventory.forEach(slot => {
 		slot.item = null
 		slot.isHolding = false
@@ -809,6 +1004,29 @@ function destroy(){
 			item.bulletsAmount = 30
 		}
 	})
+
+	skillsButton.forEach(button => {
+		button.dataset.price = 5
+		button.dataset.level = 1
+		button.children[0].children[1].innerHTML = "Lv 1"
+		button.nextElementSibling.innerHTML = "5 Almas"
+	})
+
+	health_container.style.width = 100 + "px"
+	health_amount.style.width = 100 + "px"
+
+	if(points.length > 10){
+		while(i < 10){
+			i++
+
+			if(points.length > 10){
+				points[i].remove()				
+			}
+		}
+	}
+
+	bullets_amount.innerHTML = 0
+	munition_amount.innerHTML = 0
 	updateUI("icon", "")
 	ctx.clearRect(0, 0, canvas.width, canvas.height)
 }
@@ -825,5 +1043,16 @@ function loop(){
 function init(){
 	gameIsPaused = false
 	loop()
+
+	const showDialog = window.localStorage.getItem("SaSdialog")
+	if(parseInt(showDialog)){
+		dialog_container.classList.add("left-0")
+		dialog_container.classList.remove("-left-60")
+	}
+	
 }
 
+dialog_checkbox.addEventListener("input", () => {
+	const value = dialog_checkbox.checked ? 0 : 1
+	window.localStorage.setItem("SaSdialog", value)
+})

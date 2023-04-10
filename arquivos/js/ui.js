@@ -1,8 +1,15 @@
 
 play_button.addEventListener("click", () => {
 	gameScreen(hud_screen, start_screen)
-	generateEnemys(3, 100)
 	init()
+})
+
+options_button.addEventListener("click", () => {
+	gameScreen(options_screen, start_screen)
+})
+
+backtomenuoptions_button.addEventListener("click", () => {
+	gameScreen(start_screen, options_screen)
 })
 
 restart_button.addEventListener("click", () => {
@@ -23,6 +30,15 @@ continue_button.addEventListener("click", () => {
 backtomenu_button.addEventListener("click", () => {
 	destroy()
 	gameScreen(start_screen, die_screen)
+})
+
+dialog_close_button.addEventListener("click", () => {
+	dialog_container.classList.remove("left-0")
+	dialog_container.classList.add("-left-60")
+})
+
+close_skills.addEventListener("click", () => {
+	updateUI("skills", false)
 })
 
 // Popup

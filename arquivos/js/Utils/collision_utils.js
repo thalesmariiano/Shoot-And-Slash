@@ -9,7 +9,7 @@ const projectileCollision = collison => {
 		}
 
 		if(target.type == "Entity" && !target.isDead){
-			target.takeHit(Math.floor(Math.random() * (6 - collider.dmg) + 6))
+			target.takeHit(collider.dmg)
 			collider.visible = false
 		}
 	}
@@ -26,7 +26,7 @@ const itemCollision = collision => {
 				collider.coinNumbers += item.itemValue
 				item.visible = false
 				break
-			case "Vida":
+			case "life":
 				if(collider.health < collider.maxHealth){
 					collider.receiveLife(item.itemValue)
 					item.visible = false
@@ -34,6 +34,11 @@ const itemCollision = collision => {
 				break
 			case "Bomb":
 				collider.takeHit(item.itemValue)
+				item.visible = false
+				break
+			case "soul":
+				player.souls += 1
+				souls_amount.innerHTML = player.souls
 				item.visible = false
 				break
 			default:
@@ -61,10 +66,6 @@ const basicCollision = (entity, block) => {
 		collider.velocity.y = 0
 		collider.position.y -= parseInt(overlap.y)
 		collider.isFalling = false
-
-		if(collider.entityType === "Player"){
-			lockPlayerControls = false
-		}
 	}
 
 	if(side.bottom){

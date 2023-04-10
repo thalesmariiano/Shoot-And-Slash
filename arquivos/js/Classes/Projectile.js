@@ -1,7 +1,7 @@
 
 class Projectile {
 	constructor(position, velocity, weapon, direction){
-		this.color = "black"
+		this.color = "#f7d092"
 		this.position = position
 		this.width = 4
 		this.height = 3
@@ -25,7 +25,7 @@ class Projectile {
 		this.position.y += this.velocity.y
 
 		if(this.weapon.gunType == "Fuzil"){
-			this.dmg = 8
+			this.dmg = 20
 		}
 
 		if(this.weapon.gunType == "Espingarda"){

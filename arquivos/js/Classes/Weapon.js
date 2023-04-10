@@ -1,11 +1,11 @@
 
 class Weapon extends Item {
-	constructor({imgSrc, gunType, name, munition, gunLimit, itemType, position}){
-		super({imgSrc, itemType, position})
+	constructor({gunType, name, bullets, munition, gunLimit, itemType, position}){
+		super({itemType, position})
 
 		this.shotCount = 0
 		this.shotTime = 0
-		this.bulletsAmount = 0
+		this.bulletsAmount = bullets
 		this.munition = munition
 		this.gunLimit = gunLimit
 
@@ -15,6 +15,14 @@ class Weapon extends Item {
 		this.lockShot = false
 		this.gunType = gunType
 		this.name = name
+
+		this.offest = {
+			x: 15,
+			y: 0
+		}
+
+		this.entitySizeX = 64
+		this.entitySizeY = 32
 		this.type = "Weapon"
 	}
 
@@ -24,7 +32,7 @@ class Weapon extends Item {
 		}else if(player.direction == "RIGHT"){
 			this.position.x = player.position.x + Math.floor(Math.random() * (50 - 55) + 50)			
 		}
-		this.position.y = player.position.y + Math.floor(Math.random() * (50 - 51) + 50)
+		this.position.y = player.position.y + Math.floor(Math.random() * (30 - 31) + 30)
 	}
 
 	reload(){
@@ -40,6 +48,8 @@ class Weapon extends Item {
 						this.bulletsAmount += this.munition
 						this.munition = 0
 					}
+					bullets_amount.innerHTML = this.bulletsAmount
+					munition_amount.innerHTML = this.munition
 				}, 1500)
 			}
 		}
@@ -53,7 +63,7 @@ class Weapon extends Item {
 				const shotTimeout = setTimeout(() => {
 					const position = {
 						x: this.position.x,
-						y: this.position.y - 9
+						y: this.position.y + 11
 					}
 					const velocity = {
 						x: 0,
@@ -77,6 +87,10 @@ class Weapon extends Item {
 
 	update(){
 		this.draw()
+
+		if(!this.isInInventory){
+			this.switchSprite(`ak47_right`)			
+		}
 
 		if(this.gunType == "Fuzil"){
 			this.shotTime = 80
