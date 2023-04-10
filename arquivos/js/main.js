@@ -940,6 +940,7 @@ function restart(){
 	skillsButton.forEach(button => {
 		button.dataset.price = 5
 		button.children[0].children[1].innerHTML = "Lv 1"
+		button.dataset.level = 1
 		button.nextElementSibling.innerHTML = "5 Almas"
 	})
 
@@ -986,6 +987,7 @@ function destroy(){
 
 	skillsButton.forEach(button => {
 		button.dataset.price = 5
+		button.dataset.level = 1
 		button.children[0].children[1].innerHTML = "Lv 1"
 		button.nextElementSibling.innerHTML = "5 Almas"
 	})
