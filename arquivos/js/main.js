@@ -405,17 +405,6 @@ skillsButton.forEach(button => {
 		const price_text = button.nextElementSibling
 		const isMaxLevel = parseInt(button.dataset.level) >= parseInt(button.dataset.max)
 
-		if(player.souls < skillPrice){
-			price_text.classList.add("animate__animated", "animate__shakeX")
-			price_text.classList.add("bg-red-500/75")
-
-			price_text.addEventListener("animationend", () => {
-				price_text.classList.remove("animate__animated", "animate__shakeX")
-				price_text.classList.remove("bg-red-500/75")
-			})
-			return
-		}
-
 		if(isMaxLevel){
 			level_text.innerHTML = "Max"
 			level_text.classList.add("text-red-500")
@@ -424,6 +413,17 @@ skillsButton.forEach(button => {
 				level_text.classList.remove("text-red-500")
 				level_text.innerHTML = `Level ${button.dataset.level}`		
 			}, 1000)
+			return
+		}
+
+		if(player.souls < skillPrice){
+			price_text.classList.add("animate__animated", "animate__shakeX")
+			price_text.classList.add("bg-red-500/75")
+
+			price_text.addEventListener("animationend", () => {
+				price_text.classList.remove("animate__animated", "animate__shakeX")
+				price_text.classList.remove("bg-red-500/75")
+			})
 			return
 		}
 
@@ -936,6 +936,27 @@ function restart(){
 			item.bulletsAmount = 30
 		}
 	})
+
+	skillsButton.forEach(button => {
+		button.dataset.price = 5
+		button.children[0].children[1].innerHTML = "Lv 1"
+		button.nextElementSibling.innerHTML = "5 Almas"
+	})
+
+	health_container.style.width = 100 + "px"
+	health_amount.style.width = 100 + "px"
+
+	if(points.length > 10){
+		while(i < 10){
+			i++
+
+			if(points.length > 10){
+				points[i].remove()				
+			}
+		}
+	}
+	
+
 	bullets_amount.innerHTML = 0
 	munition_amount.innerHTML = 0
 	updateUI("icon", "")
@@ -962,6 +983,26 @@ function destroy(){
 			item.bulletsAmount = 30
 		}
 	})
+
+	skillsButton.forEach(button => {
+		button.dataset.price = 5
+		button.children[0].children[1].innerHTML = "Lv 1"
+		button.nextElementSibling.innerHTML = "5 Almas"
+	})
+
+	health_container.style.width = 100 + "px"
+	health_amount.style.width = 100 + "px"
+
+	if(points.length > 10){
+		while(i < 10){
+			i++
+
+			if(points.length > 10){
+				points[i].remove()				
+			}
+		}
+	}
+
 	bullets_amount.innerHTML = 0
 	munition_amount.innerHTML = 0
 	updateUI("icon", "")

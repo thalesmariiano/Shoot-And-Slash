@@ -71,6 +71,7 @@ class Entity {
 	}
 
 	restart(){
+		this.maxHealth = this.health = 100
 		this.receiveLife(1000)
 		this.isDead = false
 		this.framesHold = 5
@@ -81,6 +82,8 @@ class Entity {
 		this.position.x = this.initial_position.x
 		this.position.y = this.initial_position.y
 		this.souls = 0
+		this.dropLuck = 70
+		this.attackSpeedMax = false
 	}
 
 	draw(){
