@@ -73,6 +73,9 @@ const health_bar = document.getElementById("health-bar")
 const health_amount = document.getElementById("health-amount")
 const points = document.getElementsByClassName("health-points")
 
+const skillsButton = document.querySelectorAll("[data-skill]")
+const itensButton = document.querySelectorAll("[data-item]")
+
 const player_sprites = [
 	{
 		name: "idle_right",
@@ -396,15 +399,17 @@ itensArray.push(ak47, life)
 
 var attackSpeedMax = false
 
-const skillsButton = document.querySelectorAll("[data-skill]")
 skillsButton.forEach(button => {
-	const skillType = button.dataset.skill
 	button.addEventListener("click", () => {
-		const skillPrice = button.dataset.price
+		const skillType     = button.dataset.skill
+		const skillPrice    = parseInt(button.dataset.price)
+		const skillLevel    = parseInt(button.dataset.level)
+		const skillLevelMax = parseInt(button.dataset.max)
 
 		const level_text = button.children[0].children[1]
 		const price_text = button.nextElementSibling
-		const isMaxLevel = parseInt(button.dataset.level) >= parseInt(button.dataset.max)
+
+		const isMaxLevel = skillLevel >= skillLevelMax 
 
 		if(isMaxLevel){
 			level_text.innerHTML = "Max"
@@ -412,7 +417,7 @@ skillsButton.forEach(button => {
 
 			setTimeout(() => {
 				level_text.classList.remove("text-red-500")
-				level_text.innerHTML = `Level ${button.dataset.level}`		
+				level_text.innerHTML = `Lv ${button.dataset.level}`		
 			}, 1000)
 			return
 		}
@@ -428,42 +433,43 @@ skillsButton.forEach(button => {
 			return
 		}
 
-		player.souls -= parseInt(button.dataset.price)
+		player.souls -= skillPrice
 		souls_amount.innerHTML = player.souls
 
-		button.dataset.price = parseInt(skillPrice) + 5
+		button.dataset.price = skillPrice + 5
 		price_text.innerHTML = `${button.dataset.price} Almas`
 
 		button.dataset.level++
-		level_text.innerHTML = `Level ${button.dataset.level}`
+		level_text.innerHTML = `Lv ${button.dataset.level}`
 
-		switch(skillType){
-			case "speed":
-				const speed = "." + button.dataset.level
-				player.speed += parseFloat(speed)	
-				break
-			case "health":
-				player.maxHealth += 10
-				player.receiveLife(1000)
-				health_bar.innerHTML += "<div class='health-points'></div>"
-				health_container.style.width = player.maxHealth + "px"
-				health_amount.style.width = player.maxHealth + "px"
-				break
-			case "strength":
-				player.attDamage += 1
-				break
-			case "attackspeed":
-				attackSpeedMax = true
-				break
-			case "loot":
-				player.dropLuck += 5
-				break
-		}
-
+		updateSkill(skillType)
 	})
 })
 
-const itensButton = document.querySelectorAll("[data-item]")
+function updateSkill(skill){
+	switch(skill){
+		case "speed":
+			player.speed += .3
+			break
+		case "health":
+			player.maxHealth += 10
+			player.receiveLife(1000)
+			health_bar.innerHTML += "<div class='health-points'></div>"
+			health_container.style.width = player.maxHealth + "px"
+			health_amount.style.width = player.maxHealth + "px"
+			break
+		case "strength":
+			player.attDamage += 1
+			break
+		case "attackspeed":
+			attackSpeedMax = true
+			break
+		case "loot":
+			player.dropLuck += 5
+			break
+	}
+}
+
 itensButton.forEach(button => {
 	const itemType = button.dataset.item
 
