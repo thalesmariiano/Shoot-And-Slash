@@ -841,7 +841,7 @@ function render(){
 			if(enemyInArea){
 				enemy.draw()
 			}
-			
+
 			playebleMapBlocks.forEach(block => {
 				basicCollision(enemy, block)
 			})
@@ -860,8 +860,11 @@ function render(){
 	// Waves System
 	if(!enemys.length && !isIniting){
 		isIniting = true
-		updateUI("skills", true)
-		console.log("a")
+
+		setTimeout(() => {
+			updateUI("skills", true)				
+		}, 1000)
+
 		setTimeout(() => {
 			updateUI("waves", gameWave)
 			gameWave++
@@ -869,7 +872,7 @@ function render(){
 			enemysCount += 3
 			updateUI("skills", false)
 			isIniting = false
-		}, 7000)
+		}, 10000)
 	}
 
 	playebleMapBlocks.forEach(block => {
