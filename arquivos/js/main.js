@@ -408,7 +408,6 @@ skillsButton.forEach(button => {
 
 		level_text.innerHTML = `Level ${button.dataset.level}`
 
-
 		switch(skillType){
 			case "speed":
 				const speed = "." + button.dataset.level
@@ -426,6 +425,9 @@ skillsButton.forEach(button => {
 				break
 			case "attackspeed":
 				attackSpeedMax = true
+				break
+			case "loot":
+				player.dropLuck += 5
 				break
 		}
 

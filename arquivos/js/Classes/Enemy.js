@@ -33,7 +33,7 @@ class Enemy extends Entity {
 				if(this.sprInfo.name == `dead_${this.direction.toLowerCase()}`){
 					this.endAnimation = true
 
-					if((Math.floor(Math.random() * 100) + 1) < 80){
+					if((Math.floor(Math.random() * 100) + 1) < player.dropLuck){
 						const soul = new Item({
 							itemType: "soul",
 							position: {
