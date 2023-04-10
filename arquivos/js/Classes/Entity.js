@@ -83,6 +83,7 @@ class Entity {
 		this.position.y = this.initial_position.y
 		this.souls = 0
 		this.dropLuck = 70
+		this.speed = this.defaultSpeed
 		this.attackSpeedMax = false
 	}
 
