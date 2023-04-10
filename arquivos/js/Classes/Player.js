@@ -36,6 +36,7 @@ class Player extends Entity {
 				y: 0
 			}
 		}
+		this.attackSpeedMax = false
 		this.dropLuck = 70
 		this.attack_timer = 0
 		this.entitySizeX = 400
@@ -46,7 +47,7 @@ class Player extends Entity {
 
 	animation(){
 
-		if(this.sprInfo && attackSpeedMax && this.sprInfo.name == `attack_${this.attack}_${this.direction.toLowerCase()}`){
+		if(this.sprInfo && this.attackSpeedMax && this.sprInfo.name == `attack_${this.attack}_${this.direction.toLowerCase()}`){
 			this.framesHold = 5
 		}
 

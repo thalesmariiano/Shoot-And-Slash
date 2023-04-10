@@ -397,8 +397,6 @@ ak47.setSprites(itens_sprites.ak47.sprites)
 const itensArray = []
 itensArray.push(ak47, life)
 
-var attackSpeedMax = false
-
 skillsButton.forEach(button => {
 	button.addEventListener("click", () => {
 		const skillType     = button.dataset.skill
@@ -462,7 +460,7 @@ function updateSkill(skill){
 			player.attDamage += 1
 			break
 		case "attackspeed":
-			attackSpeedMax = true
+			player.attackSpeedMax = true
 			break
 		case "loot":
 			player.dropLuck += 5
