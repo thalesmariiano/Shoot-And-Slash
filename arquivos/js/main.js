@@ -399,9 +399,23 @@ const skillsButton = document.querySelectorAll("[data-skill]")
 skillsButton.forEach(button => {
 	const skillType = button.dataset.skill
 	button.addEventListener("click", () => {
-		const level_text = button.children[0].children[1]
+		const skillPrice = button.dataset.price
 
+		const level_text = button.children[0].children[1]
+		const price_text = button.nextElementSibling
 		const isMaxLevel = parseInt(button.dataset.level) >= parseInt(button.dataset.max)
+
+		if(player.souls < skillPrice){
+			price_text.classList.add("animate__animated", "animate__shakeX")
+			price_text.classList.add("bg-red-500/75")
+
+			price_text.addEventListener("animationend", () => {
+				price_text.classList.remove("animate__animated", "animate__shakeX")
+				price_text.classList.remove("bg-red-500/75")
+			})
+			return
+		}
+
 		if(isMaxLevel){
 			level_text.innerHTML = "Max"
 			level_text.classList.add("text-red-500")
@@ -413,8 +427,13 @@ skillsButton.forEach(button => {
 			return
 		}
 
-		button.dataset.level++
+		player.souls -= parseInt(button.dataset.price)
+		souls_amount.innerHTML = player.souls
 
+		button.dataset.price = parseInt(skillPrice) + 5
+		price_text.innerHTML = `${button.dataset.price} Almas`
+
+		button.dataset.level++
 		level_text.innerHTML = `Level ${button.dataset.level}`
 
 		switch(skillType){
@@ -448,6 +467,23 @@ itensButton.forEach(button => {
 	const itemType = button.dataset.item
 
 	button.addEventListener("click", () => {
+		const skillPrice = button.dataset.price
+		const price_text = button.nextElementSibling
+
+		if(player.souls < skillPrice){
+			price_text.classList.add("animate__animated", "animate__shakeX")
+			price_text.classList.add("bg-red-500/75")
+
+			price_text.addEventListener("animationend", () => {
+				price_text.classList.remove("animate__animated", "animate__shakeX")
+				price_text.classList.remove("bg-red-500/75")
+			})
+			return
+		}
+
+		player.souls -= parseInt(button.dataset.price)
+		souls_amount.innerHTML = player.souls
+
 		switch(itemType){
 			case "ak47":
 				player.inventory[0].item = ak47
