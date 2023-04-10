@@ -835,6 +835,13 @@ function render(){
 		if(enemy.visible){
 			enemy.update()
 
+			const {top, bottom, left, right} = detectInArea(camera_position, enemy, 300, (canvas.height/2), 300, (canvas.width/2) + 50, (canvas.width/2))
+			const enemyInArea = top || bottom || right || left
+
+			if(enemyInArea){
+				enemy.draw()
+			}
+			
 			playebleMapBlocks.forEach(block => {
 				basicCollision(enemy, block)
 			})

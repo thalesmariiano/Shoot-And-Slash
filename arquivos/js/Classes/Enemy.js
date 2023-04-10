@@ -159,7 +159,7 @@ class Enemy extends Entity {
 	}
 
 	update(){
-		this.draw()
+		// this.draw()
 		if(!this.endAnimation) this.animation()
 
 		if(!this.receiveDamage){
