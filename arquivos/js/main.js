@@ -28,6 +28,7 @@ var keyRight,
 //     digit3 = false
 
 var gameIsPaused = true
+var isIniting = false
 
 var enemysCount = 3
 var gameWave = 1
@@ -848,11 +849,20 @@ function render(){
 		}
 	})
 
-	if(!enemys.length){
-		updateUI("waves", gameWave)
-		gameWave++
-		generateEnemys(enemysCount, 100)
-		enemysCount += 3
+
+	// Waves System
+	if(!enemys.length && !isIniting){
+		isIniting = true
+		updateUI("skills", true)
+		console.log("a")
+		setTimeout(() => {
+			updateUI("waves", gameWave)
+			gameWave++
+			generateEnemys(enemysCount, 100)
+			enemysCount += 3
+			updateUI("skills", false)
+			isIniting = false
+		}, 7000)
 	}
 
 	playebleMapBlocks.forEach(block => {
@@ -1023,8 +1033,6 @@ function loop(){
 function init(){
 	gameIsPaused = false
 	loop()
-
-	updateUI("skills", "")
 
 	const showDialog = window.localStorage.getItem("SaSdialog")
 	if(parseInt(showDialog)){

@@ -38,7 +38,7 @@ dialog_close_button.addEventListener("click", () => {
 })
 
 close_skills.addEventListener("click", () => {
-	updateUI("s", "")
+	updateUI("skills", false)
 })
 
 // Popup

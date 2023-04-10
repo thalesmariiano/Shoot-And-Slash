@@ -33,21 +33,21 @@ function updateUI(ui, value) {
 			}, 6000)
 			break
 		case "skills":
-			skills_screen.classList.remove("hidden")
+			if(value){
+				skills_screen.classList.remove("hidden")
 
-			setTimeout(() => {
-				skills_screen.classList.remove("opacity-0")
-				skills_screen.classList.add("opacity-100")				
-			}, 700)
+				setTimeout(() => {
+					skills_screen.classList.remove("opacity-0")
+					skills_screen.classList.add("opacity-100")				
+				}, 700)
+			}else{
+				skills_screen.classList.remove("opacity-100")
+				skills_screen.classList.add("opacity-0")
 
-			break
-		case "s": 
-			skills_screen.classList.remove("opacity-100")
-			skills_screen.classList.add("opacity-0")
-
-			setTimeout(() => {
-				skills_screen.classList.add("hidden")
-			}, 1000)
+				setTimeout(() => {
+					skills_screen.classList.add("hidden")
+				}, 1000)
+			}
 			break
 		case "icon":
 			const img = value ? "arquivos/assets/itens/ak47.png" : "arquivos/assets/null.png"
