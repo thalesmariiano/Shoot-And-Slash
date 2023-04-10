@@ -399,10 +399,19 @@ const skillsButton = document.querySelectorAll("[data-skill]")
 skillsButton.forEach(button => {
 	const skillType = button.dataset.skill
 	button.addEventListener("click", () => {
-		const isMaxLevel = parseInt(button.dataset.level) >= parseInt(button.dataset.max)
-		if(isMaxLevel) return
-
 		const level_text = button.children[0].children[1]
+
+		const isMaxLevel = parseInt(button.dataset.level) >= parseInt(button.dataset.max)
+		if(isMaxLevel){
+			level_text.innerHTML = "Max"
+			level_text.classList.add("text-red-500")
+
+			setTimeout(() => {
+				level_text.classList.remove("text-red-500")
+				level_text.innerHTML = `Level ${button.dataset.level}`		
+			}, 1000)
+			return
+		}
 
 		button.dataset.level++
 
