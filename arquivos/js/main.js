@@ -471,10 +471,9 @@ function updateSkill(skill){
 }
 
 itensButton.forEach(button => {
-	const itemType = button.dataset.item
-
 	button.addEventListener("click", () => {
-		const skillPrice = button.dataset.price
+		const itemType   = button.dataset.item
+		const skillPrice = parseInt(button.dataset.price)
 		const price_text = button.nextElementSibling
 
 		if(player.souls < skillPrice){
@@ -488,21 +487,25 @@ itensButton.forEach(button => {
 			return
 		}
 
-		player.souls -= parseInt(button.dataset.price)
+		player.souls -= skillPrice
 		souls_amount.innerHTML = player.souls
 
-		switch(itemType){
-			case "ak47":
-				player.inventory[0].item = ak47
-				ak47.isInInventory = true
-				updateUI("icon", ak47.name)
-				weapon_status.classList.remove("hidden")
-				bullets_amount.innerHTML = ak47.bulletsAmount
-				munition_amount.innerHTML = ak47.munition
-				break
-		}
+		buyItens(itemType)
 	})
 })
+
+function buyItens(item){
+	switch(item){
+		case "ak47":
+		player.inventory[0].item = ak47
+		ak47.isInInventory = true
+		updateUI("icon", ak47.name)
+		weapon_status.classList.remove("hidden")
+		bullets_amount.innerHTML = ak47.bulletsAmount
+		munition_amount.innerHTML = ak47.munition
+		break
+	}
+}
 
 
 const playableMapTiles = [
