@@ -1,3 +1,4 @@
+if(!window.localStorage.getItem("SaSdialog")) window.localStorage.setItem("SaSdialog", 1)
 
 var developerMode = false
 
@@ -622,6 +623,7 @@ function generateTerrain(mapArray, outputArray){
 		}
 	}
 }
+generateTerrain(playableMapTiles, playebleMapBlocks)
 
 function playerActions(){
 
