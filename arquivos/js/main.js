@@ -779,6 +779,8 @@ function update(){
 	if(gameIsPaused){
 		dialog_container.classList.remove("left-0")
 		dialog_container.classList.add("-left-60")
+
+		updateUI("skills", false)
 	}
 
 	camera.update()
