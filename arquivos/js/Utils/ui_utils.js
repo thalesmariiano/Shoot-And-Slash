@@ -1,7 +1,7 @@
 
-const gameScreen = (screen1, screen2) => {
-	screen1.classList.remove("hidden")
-	screen2.classList.add("hidden")
+function switchScreen(screen1, screen2){
+	document.getElementById(screen1).classList.remove("hidden")
+	document.getElementById(screen2).classList.add("hidden")
 }
 
 const skills_screen = document.getElementById("skills-screen")

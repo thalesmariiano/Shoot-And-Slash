@@ -37,24 +37,8 @@ var gameWave = 1
 var lockLeft,
     lockRight = false
 
-// Telas
-const start_screen   = document.getElementById("start-screen")
-const options_screen = document.getElementById("options-screen")
-const hud_screen     = document.getElementById("hud-screen")
-const die_screen     = document.getElementById("die-screen")
-const pause_screen   = document.getElementById("pause-screen")
-
 const weapon_icon     = document.getElementById("weapon-icon")
 const weapon_icon_img = document.getElementById("weapon-icon-img")
-
-// Botões
-const play_button               = document.getElementById("play-button")
-const options_button            = document.getElementById("options-button")
-const backtomenuoptions_button  = document.getElementById("backToMenuOptions-button")
-const restart_button            = document.getElementById("restart-button")
-const restart_button_2          = document.getElementById("restart-button-2")
-const continue_button           = document.getElementById("continue-button")
-const backtomenu_button         = document.getElementById("backToMenu-button")
 
 // Dialog
 const dialog_container    = document.getElementById("dialog-container")
@@ -721,7 +705,7 @@ function playerActions(){
 
 		setTimeout(() => {
 			gameIsPaused = true
-			gameScreen(die_screen, hud_screen)
+			switchScreen("die-screen", "hud-screen")
 		}, 1500)
 	}
 }
@@ -941,7 +925,7 @@ function render(){
 
 function pause(){
 	if(!gameIsPaused){
-		gameScreen(pause_screen, hud_screen)
+		switchScreen("pause-screen", "hud-screen")
 		gameIsPaused = true
 	}
 }

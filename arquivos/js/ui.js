@@ -1,35 +1,42 @@
 
+const play_button               = document.getElementById("play-button")
+const options_button            = document.getElementById("options-button")
+const continue_button           = document.getElementById("continue-button")
+const restart_buttons           = document.querySelectorAll(".restart-btns")
+const back_to_menu_buttons      = document.querySelectorAll(".back-to-menu-btns")
+const back_from_options_button  = document.getElementById("backToMenuOptions-button")
+
+
 play_button.addEventListener("click", () => {
-	gameScreen(hud_screen, start_screen)
 	init()
+	switchScreen("hud-screen", "start-screen")
 })
 
 options_button.addEventListener("click", () => {
-	gameScreen(options_screen, start_screen)
+	switchScreen("options-screen", "start-screen")
 })
 
-backtomenuoptions_button.addEventListener("click", () => {
-	gameScreen(start_screen, options_screen)
-})
-
-restart_button.addEventListener("click", () => {
-	restart()
-	gameScreen(hud_screen, die_screen)
-})
-
-restart_button_2.addEventListener("click", () => {
-	restart()
-	gameScreen(hud_screen, pause_screen)
+back_from_options_button.addEventListener("click", () => {
+	switchScreen("start-screen", "options-screen")
 })
 
 continue_button.addEventListener("click", () => {
-	gameScreen(hud_screen, pause_screen)
 	init()
+	switchScreen("hud-screen", "pause-screen")
 })
 
-backtomenu_button.addEventListener("click", () => {
-	destroy()
-	gameScreen(start_screen, die_screen)
+restart_buttons.forEach(btn => {
+	btn.addEventListener("click", () => {
+		restart()
+		switchScreen("hud-screen", btn.dataset.screen)
+	})
+})
+
+back_to_menu_buttons.forEach(btn => {
+	btn.addEventListener("click", () => {
+		destroy()
+		switchScreen("start-screen", btn.dataset.screen)
+	})
 })
 
 dialog_close_button.addEventListener("click", () => {
@@ -41,14 +48,5 @@ close_skills.addEventListener("click", () => {
 	updateUI("skills", false)
 })
 
-// Popup
 
-// const popup = document.querySelector("#popup-container")
 
-// document.querySelector("#about-button").addEventListener("click", () => {
-// 	popup.style.display = "flex"
-// })
-
-// document.querySelector("#closePopupBtn").addEventListener("click", () => {
-// 	popup.style.display = "none"
-// })

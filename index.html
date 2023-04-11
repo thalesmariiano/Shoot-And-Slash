@@ -146,9 +146,9 @@
 						</div>
 
 						<nav class="menu mt-10">
-							<div class="menu-container">
-								<button id="restart-button" class="btn-default w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300">Reiniciar</button>
-								<button id="backToMenu-button" class="btn-default w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300">Menu</button>
+							<div class="menu-container flex flex-col gap-3">
+								<button id="restart-button" class="restart-btns btn-default w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300" data-screen="die-screen">Reiniciar</button>
+								<button id="backToMenu-button" class="back-to-menu-btns btn-default w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300" data-screen="die-screen">Menu</button>
 							</div>
 						</nav>
 					</div>
@@ -160,9 +160,10 @@
 						</div>
 
 						<nav class="menu mt-10">
-							<div class="menu-container">
-								<button id="continue-button" class="btn-default  w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300">Continuar</button>
-								<button id="restart-button-2" class="btn-default w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300">Reiniciar</button>
+							<div class="menu-container flex flex-col gap-3">
+								<button id="continue-button" class="btn-default w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300">Continuar</button>
+								<button id="restart-button-2" class="restart-btns btn-default w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300" data-screen="pause-screen">Reiniciar</button>
+								<button class="back-to-menu-btns btn-default w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300" data-screen="pause-screen">Menu</button>
 							</div>
 						</div>
 					</div>
