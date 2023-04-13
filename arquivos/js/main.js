@@ -784,6 +784,7 @@ parallax_front.src = "arquivos/assets/map/parallax-forest-front-trees.png"
 
 function enemysWaves(){
 	if(!enemys.length && !isIniting){
+		onWaves = false
 		isIniting = true
 
 		if(timeBetweenWaves == 15){
