@@ -861,26 +861,22 @@ function render(){
 	player.update()
 
 	enemys.forEach((enemy, index) => {
-		if(enemy.visible){
-			enemy.update()
+		if(!enemy.visible){
+			enemys.splice(index, 1)
+			return
+		}
 
-			const {top, bottom, left, right} = detectInArea(camera_position, enemy, 300, (canvas.height/2), 300, (canvas.width/2) + 50, (canvas.width/2))
-			const enemyInArea = top || bottom || right || left
+		const {top, bottom, left, right} = detectInArea(camera_position, enemy, 300, (canvas.height/2), 300, (canvas.width/2) + 50, (canvas.width/2))
+		const isInScreen = top || bottom || right || left
 
-			if(enemyInArea){
-				enemy.draw()
-			}
+		if(isInScreen) enemy.draw()
+		enemy.update()
 
-			playebleMapBlocks.forEach(block => {
-				basicCollision(enemy, block)
-			})
+		playebleMapBlocks.forEach(block => {
+			basicCollision(enemy, block)
+		})
 
-			if(enemy.position.y > mapHeight){
-				enemys.splice(index, 1)
-				enemysCount -= 1
-			}
-
-		}else{
+		if(enemy.position.y > mapHeight){
 			enemys.splice(index, 1)
 		}
 	})
