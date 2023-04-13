@@ -984,6 +984,7 @@ function restart(){
 	enemys.length = 0
 	enemysCount = 0
 	gameWave = 0
+	enemysKilled = 0
 	init()
 	souls_amount.innerHTML = 0
 	player.restart()
@@ -1033,6 +1034,7 @@ function destroy(){
 	enemys.length = 0
 	enemysCount = 0
 	gameWave = 0
+	enemysKilled = 0
 	souls_amount.innerHTML = 0
 	player.restart()
 	player.inventory.forEach(slot => {
