@@ -27,6 +27,7 @@ var onWaves = false
 var enemysCount = 0
 var gameWave = 0
 var timeBetweenWaves = 15
+var enemysKilled = 0
 
 var lockLeft,
     lockRight = false
@@ -701,6 +702,7 @@ function playerActions(){
 		player.velocity.x = 0
 
 		waves_count.innerHTML = `Onda: ${gameWave}`
+		kills_count.innerHTML = `Abates: ${enemysKilled}`
 
 		setTimeout(() => {
 			gameIsPaused = true
