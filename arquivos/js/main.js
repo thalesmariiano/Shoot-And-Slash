@@ -15,6 +15,17 @@ const resizeAspectRatio = () => {
 resizeAspectRatio()
 window.onresize = () => resizeAspectRatio()
 
+window.onblur = () => {
+	pause()
+	keyLeft =
+	keyRight =
+	keyUp =
+	keyR =
+	keyEnter =
+	lockLeft =
+	lockRight = false
+}
+
 const GRAVITY = 0.6
 
 var keyRight,
