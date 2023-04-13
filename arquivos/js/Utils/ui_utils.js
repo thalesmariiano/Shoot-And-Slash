@@ -16,21 +16,21 @@ function updateUI(ui, value) {
 			wavesContainer.classList.remove("hidden")
 
 			const wavesText = document.getElementById("waves-text")
-			wavesText.innerHTML = `Onda ${value}`
+			wavesText.innerHTML = `Onda ${gameWave}`
 
-			setTimeout(() => {
-				wavesContainer.classList.remove("opacity-0")
-				wavesContainer.classList.add("opacity-100")				
-			}, 500)
-
-			setTimeout(() => {
+			if(value){
+				setTimeout(() => {
+					wavesContainer.classList.remove("opacity-0")
+					wavesContainer.classList.add("opacity-100")				
+				}, 500)
+			}else{
 				wavesContainer.classList.remove("opacity-100")
 				wavesContainer.classList.add("opacity-0")
-			}, 5000)
 
-			setTimeout(() => {
-				wavesContainer.classList.add("hidden")
-			}, 6000)
+				setTimeout(() => {
+					wavesContainer.classList.add("hidden")
+				}, 1000)
+			}
 			break
 		case "skills":
 			if(value){

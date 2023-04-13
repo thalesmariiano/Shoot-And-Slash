@@ -812,7 +812,9 @@ function enemysWaves(){
 			if(!timeBetweenWaves){
 				gameWave++
 				enemysCount += 3
-				updateUI("waves", gameWave)
+				updateUI("waves", true)
+				setTimeout(() => updateUI("waves", false), 3000)
+				
 				updateUI("timer", false)
 				generateEnemys(enemysCount, 100)
 				updateUI("skills", false)
