@@ -795,9 +795,7 @@ function enemysWaves(){
 		isIniting = true
 
 		if(timeBetweenWaves == 15){
-			setTimeout(() => {
-				updateUI("skills", true)				
-			}, 1000)
+			updateUI("skills", true)
 		}
 
 		const wavesTimer = setInterval(() => {
@@ -977,6 +975,8 @@ function pause(){
 }
 
 function restart(){
+	timeBetweenWaves = 15
+	isIniting = false
 	enemys.length = 0
 	enemysCount = 0
 	gameWave = 0
@@ -1026,11 +1026,13 @@ function restart(){
 }
 
 function destroy(){
+	isIniting = false
 	gameIsPaused = true
 	enemys.length = 0
 	enemysCount = 0
 	gameWave = 0
 	enemysKilled = 0
+	timeBetweenWaves = 15
 	souls_amount.innerHTML = 0
 	player.restart()
 	player.inventory.forEach(slot => {
