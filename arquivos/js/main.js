@@ -55,7 +55,8 @@ const points = document.getElementsByClassName("health-points")
 
 const waves_count = document.getElementById("waves-count")
 const kills_count = document.getElementById("kills-count")
-const wave_timer = document.getElementById("wave-timer")
+const waves_skills_timer = document.getElementById("waves-skills-timer")
+const waves_hud_timer = document.getElementById("waves-hud-timer")
 
 const skillsButton = document.querySelectorAll("[data-skill]")
 const itensButton = document.querySelectorAll("[data-item]")
@@ -805,11 +806,14 @@ function enemysWaves(){
 				return
 			}
 
-			wave_timer.innerHTML = `${timeBetweenWaves}s`
+			waves_skills_timer.innerHTML = `${timeBetweenWaves}s`
+			if(timeBetweenWaves <= 5) waves_hud_timer.innerHTML = `${timeBetweenWaves}s`
+
 			if(!timeBetweenWaves){
 				gameWave++
 				enemysCount += 3
 				updateUI("waves", gameWave)
+				updateUI("timer", false)
 				generateEnemys(enemysCount, 100)
 				updateUI("skills", false)
 				isIniting = false

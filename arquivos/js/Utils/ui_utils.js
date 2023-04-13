@@ -49,6 +49,24 @@ function updateUI(ui, value) {
 				}, 1000)
 			}
 			break
+		case "timer":
+			const wavesTimerContainer = document.getElementById("waves-timer-container")
+			wavesTimerContainer.classList.remove("hidden")
+
+			if(value){
+				setTimeout(() => {
+					wavesTimerContainer.classList.remove("opacity-0")
+					wavesTimerContainer.classList.add("opacity-100")				
+				}, 500)
+			}else{
+				wavesTimerContainer.classList.remove("opacity-100")
+				wavesTimerContainer.classList.add("opacity-0")
+
+				setTimeout(() => {
+					wavesTimerContainer.classList.add("hidden")
+				}, 1000)
+			}	
+			break
 		case "icon":
 			const img = value ? "arquivos/assets/itens/ak47.png" : "arquivos/assets/null.png"
 			weapon_icon_img.src = img
