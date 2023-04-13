@@ -44,7 +44,8 @@ class Enemy extends Entity {
 						soul.setSprites(itens_sprites.enemy_soul.sprites)
 						itensArray.push(soul)
 					}
-					
+
+					enemysKilled++
 					setTimeout(() => this.visible = false, 3000)
 
 					return
