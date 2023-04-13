@@ -55,6 +55,7 @@ const points = document.getElementsByClassName("health-points")
 
 const waves_count = document.getElementById("waves-count")
 const kills_count = document.getElementById("kills-count")
+const wave_timer = document.getElementById("wave-timer")
 
 const skillsButton = document.querySelectorAll("[data-skill]")
 const itensButton = document.querySelectorAll("[data-item]")
@@ -804,6 +805,7 @@ function enemysWaves(){
 				return
 			}
 
+			wave_timer.innerHTML = `${timeBetweenWaves}s`
 			if(!timeBetweenWaves){
 				gameWave++
 				enemysCount += 3
@@ -815,7 +817,6 @@ function enemysWaves(){
 				onWaves = true
 				clearInterval(wavesTimer)
 			}else timeBetweenWaves--
-			console.log(timeBetweenWaves)
 		}, 1000)
 	}
 }
