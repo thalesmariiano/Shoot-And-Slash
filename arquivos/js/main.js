@@ -52,6 +52,9 @@ const health_bar = document.getElementById("health-bar")
 const health_amount = document.getElementById("health-amount")
 const points = document.getElementsByClassName("health-points")
 
+const waves_count = document.getElementById("waves-count")
+const kills_count = document.getElementById("kills-count")
+
 const skillsButton = document.querySelectorAll("[data-skill]")
 const itensButton = document.querySelectorAll("[data-item]")
 
@@ -696,6 +699,8 @@ function playerActions(){
 		player.switchSprite(`death_${player.direction.toLowerCase()}`)
 
 		player.velocity.x = 0
+
+		waves_count.innerHTML = `Onda: ${gameWave}`
 
 		setTimeout(() => {
 			gameIsPaused = true
