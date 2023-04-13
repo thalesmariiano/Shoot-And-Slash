@@ -938,7 +938,6 @@ function loop(){
 
 function init(){
 	gameIsPaused = false
-	isIniting = false
 	loop()
 
 	const showDialog = window.localStorage.getItem("SaSdialog")
@@ -947,6 +946,15 @@ function init(){
 		dialog_container.classList.remove("-left-60")
 	}
 	
+}
+
+function continues(){
+	if(gameIsPaused){
+		isIniting = false
+		gameIsPaused = false
+		loop()
+		switchScreen("hud-screen", "pause-screen")
+	}
 }
 
 function pause(){

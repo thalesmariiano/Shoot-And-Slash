@@ -21,8 +21,7 @@ back_from_options_button.addEventListener("click", () => {
 })
 
 continue_button.addEventListener("click", () => {
-	init()
-	switchScreen("hud-screen", "pause-screen")
+	continues()
 })
 
 restart_buttons.forEach(btn => {
