@@ -22,6 +22,7 @@ var keyRight,
 
 var gameIsPaused = true
 var isIniting = false
+var onWaves = false
 
 var enemysCount = 0
 var gameWave = 0
@@ -792,7 +793,10 @@ function enemysWaves(){
 		}
 
 		const wavesTimer = setInterval(() => {
-			if(gameIsPaused) clearInterval(wavesTimer)
+			if(gameIsPaused){
+				clearInterval(wavesTimer)
+				return
+			}
 
 			if(!timeBetweenWaves){
 				gameWave++
@@ -802,6 +806,7 @@ function enemysWaves(){
 				updateUI("skills", false)
 				isIniting = false
 				timeBetweenWaves = 15
+				onWaves = true
 				clearInterval(wavesTimer)
 			}else timeBetweenWaves--
 			console.log(timeBetweenWaves)
@@ -945,7 +950,6 @@ function init(){
 		dialog_container.classList.add("left-0")
 		dialog_container.classList.remove("-left-60")
 	}
-	
 }
 
 function continues(){
@@ -954,6 +958,10 @@ function continues(){
 		gameIsPaused = false
 		loop()
 		switchScreen("hud-screen", "pause-screen")
+
+		if(!onWaves && timeBetweenWaves > 5){
+			updateUI("skills", true)
+		}
 	}
 }
 
