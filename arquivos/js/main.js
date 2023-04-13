@@ -795,7 +795,7 @@ function enemysWaves(){
 		onWaves = false
 		isIniting = true
 
-		if(timeBetweenWaves == 15){
+		if(timeBetweenWaves > 5){
 			updateUI("skills", true)
 		}
 
