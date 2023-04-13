@@ -9,7 +9,7 @@
   		<meta name="keywords" content="Jogos, jogo, Offline, Hack And Slash, games, game, offline, thales mariano, thales, indie">
   		<meta name="author" content="Thales Mariano">
 
-		<!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1017845986794503" crossorigin="anonymous"></script> -->
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1017845986794503" crossorigin="anonymous"></script>
 
   		<!-- TAILWIND CSS -->
 		<script src="https://cdn.tailwindcss.com"></script>
@@ -138,6 +138,13 @@
 							<p id="waves-text" class="font-bold uppercase text-3xl">Onda 1</p>
 						</div>
 					</div>
+					<div id="waves-timer-container" class="w-full flex flex-col items-center absolute top-32 left-0 transition-all duration-500 opacity-0 hidden">
+						<p class="text-lg font-bold">Começa em:</p>
+						<div class="w-16 flex justify-center items-center">
+							<img class="w-5 h-5 mr-1" src="arquivos/assets/icons/clock_icon.png">
+							<p id="waves-hud-timer" class="font-semibold">5s</p>
+						</div>
+					</div>
 				</section>
 				<section id="die-screen" class="w-full h-full hidden">
 					<div id="die-container" class="flex flex-col justify-center items-center w-full h-full bg-neutral-900/75">
@@ -178,7 +185,7 @@
 						<div class="w-[32rem] h-[27rem] p-2 relative flex flex-col justify-between bg-neutral-400 border-2 border-white rounded-xl">
 							<div class="w-16 absolute -top-0 -right-20 flex justify-center items-center py-1 bg-neutral-400/50 border-[1.5px] border-white rounded-xl">
 								<img class="w-5 h-5 mr-1" src="arquivos/assets/icons/clock_icon.png">
-								<p id="wave-timer" class="font-semibold">15s</p>
+								<p id="waves-skills-timer" class="font-semibold">15s</p>
 							</div>
 							<div>
 								<p class="uppercase text-2xl text-center text-neutral-800 font-bold">Habilidades</p>
