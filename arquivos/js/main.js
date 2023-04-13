@@ -23,8 +23,9 @@ var keyRight,
 var gameIsPaused = true
 var isIniting = false
 
-var enemysCount = 3
-var gameWave = 1
+var enemysCount = 0
+var gameWave = 0
+var timeBetweenWaves = 15
 
 var lockLeft,
     lockRight = false
@@ -780,6 +781,34 @@ parallax_middle.src = "arquivos/assets/map/parallax-forest-middle-trees.png"
 const parallax_front = new Image()
 parallax_front.src = "arquivos/assets/map/parallax-forest-front-trees.png"
 
+function enemysWaves(){
+	if(!enemys.length && !isIniting){
+		isIniting = true
+
+		if(timeBetweenWaves == 15){
+			setTimeout(() => {
+				updateUI("skills", true)				
+			}, 1000)
+		}
+
+		const wavesTimer = setInterval(() => {
+			if(gameIsPaused) clearInterval(wavesTimer)
+
+			if(!timeBetweenWaves){
+				gameWave++
+				enemysCount += 3
+				updateUI("waves", gameWave)
+				generateEnemys(enemysCount, 100)
+				updateUI("skills", false)
+				isIniting = false
+				timeBetweenWaves = 15
+				clearInterval(wavesTimer)
+			}else timeBetweenWaves--
+			console.log(timeBetweenWaves)
+		}, 1000)
+	}
+}
+
 function render(){
 	ctx.save()
 	ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -843,24 +872,7 @@ function render(){
 		}
 	})
 
-
-	// Waves System
-	if(!enemys.length && !isIniting){
-		isIniting = true
-
-		setTimeout(() => {
-			updateUI("skills", true)				
-		}, 1000)
-
-		setTimeout(() => {
-			updateUI("waves", gameWave)
-			gameWave++
-			generateEnemys(enemysCount, 100)
-			enemysCount += 3
-			updateUI("skills", false)
-			isIniting = false
-		}, 10000)
-	}
+	enemysWaves()
 
 	playebleMapBlocks.forEach(block => {
 		const {top, bottom, left, right} = detectInArea(camera_position, block, 300, (canvas.height/2), 300, (canvas.width/2) + 50, (canvas.width/2))
@@ -926,6 +938,7 @@ function loop(){
 
 function init(){
 	gameIsPaused = false
+	isIniting = false
 	loop()
 
 	const showDialog = window.localStorage.getItem("SaSdialog")
@@ -945,8 +958,8 @@ function pause(){
 
 function restart(){
 	enemys.length = 0
-	enemysCount = 3
-	gameWave = 1
+	enemysCount = 0
+	gameWave = 0
 	init()
 	souls_amount.innerHTML = 0
 	player.restart()
@@ -994,8 +1007,8 @@ function restart(){
 function destroy(){
 	gameIsPaused = true
 	enemys.length = 0
-	enemysCount = 3
-	gameWave = 1
+	enemysCount = 0
+	gameWave = 0
 	souls_amount.innerHTML = 0
 	player.restart()
 	player.inventory.forEach(slot => {

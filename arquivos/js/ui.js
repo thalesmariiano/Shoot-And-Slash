@@ -52,6 +52,7 @@ dialog_checkbox.addEventListener("input", () => {
 
 close_skills.addEventListener("click", () => {
 	updateUI("skills", false)
+	timeBetweenWaves = 5
 })
 
 
