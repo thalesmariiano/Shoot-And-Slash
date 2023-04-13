@@ -7,25 +7,6 @@ const screens_container = document.querySelector("#screens-container")
 
 const ctx = canvas.getContext("2d", {alpha: false})
 
-const resizeAspectRatio = () => {
-	ctx.canvas.width = window.innerWidth
-	ctx.canvas.height = window.innerHeight
-	ctx.imageSmoothingEnabled = false
-}
-resizeAspectRatio()
-window.onresize = () => resizeAspectRatio()
-
-window.onblur = () => {
-	pause()
-	keyLeft =
-	keyRight =
-	keyUp =
-	keyR =
-	keyEnter =
-	lockLeft =
-	lockRight = false
-}
-
 const GRAVITY = 0.6
 
 var keyRight,
@@ -934,6 +915,27 @@ function render(){
 
 }
 
+function loop(){
+	if(!gameIsPaused){
+		window.requestAnimationFrame(loop)
+	}
+
+	render()
+	update()
+}
+
+function init(){
+	gameIsPaused = false
+	loop()
+
+	const showDialog = window.localStorage.getItem("SaSdialog")
+	if(parseInt(showDialog)){
+		dialog_container.classList.add("left-0")
+		dialog_container.classList.remove("-left-60")
+	}
+	
+}
+
 function pause(){
 	if(!gameIsPaused){
 		switchScreen("pause-screen", "hud-screen")
@@ -1037,28 +1039,21 @@ function destroy(){
 	ctx.clearRect(0, 0, canvas.width, canvas.height)
 }
 
-function loop(){
-	if(!gameIsPaused){
-		window.requestAnimationFrame(loop)
-	}
-
-	render()
-	update()
+const resizeAspectRatio = () => {
+	ctx.canvas.width = window.innerWidth
+	ctx.canvas.height = window.innerHeight
+	ctx.imageSmoothingEnabled = false
 }
+resizeAspectRatio()
 
-function init(){
-	gameIsPaused = false
-	loop()
-
-	const showDialog = window.localStorage.getItem("SaSdialog")
-	if(parseInt(showDialog)){
-		dialog_container.classList.add("left-0")
-		dialog_container.classList.remove("-left-60")
-	}
-	
+window.onresize = () => resizeAspectRatio()
+window.onblur = () => {
+	pause()
+	keyLeft =
+	keyRight =
+	keyUp =
+	keyR =
+	keyEnter =
+	lockLeft =
+	lockRight = false
 }
-
-dialog_checkbox.addEventListener("input", () => {
-	const value = dialog_checkbox.checked ? 0 : 1
-	window.localStorage.setItem("SaSdialog", value)
-})

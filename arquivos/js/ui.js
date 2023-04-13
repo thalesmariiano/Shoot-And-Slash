@@ -44,6 +44,12 @@ dialog_close_button.addEventListener("click", () => {
 	dialog_container.classList.add("-left-60")
 })
 
+dialog_checkbox.addEventListener("input", () => {
+	const value = dialog_checkbox.checked ? 0 : 1
+	window.localStorage.setItem("SaSdialog", value)
+})
+
+
 close_skills.addEventListener("click", () => {
 	updateUI("skills", false)
 })
