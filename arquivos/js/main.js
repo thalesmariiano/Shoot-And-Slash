@@ -408,13 +408,23 @@ skillsButton.forEach(button => {
 		if(player.souls < skillPrice){
 			price_text.classList.add("animate__animated", "animate__shakeX")
 			price_text.classList.add("bg-red-500/75")
+			button.classList.add("border-red-500")
 
 			price_text.addEventListener("animationend", () => {
 				price_text.classList.remove("animate__animated", "animate__shakeX")
 				price_text.classList.remove("bg-red-500/75")
+				button.classList.remove("border-red-500")
 			})
 			return
 		}
+
+		price_text.classList.add("bg-green-700/75")
+		button.classList.add("border-green-700")
+
+		setTimeout(() => {
+			price_text.classList.remove("bg-green-700/75")
+			button.classList.remove("border-green-700")
+		}, 700)
 
 		player.souls -= skillPrice
 		souls_amount.innerHTML = player.souls
@@ -469,6 +479,14 @@ itensButton.forEach(button => {
 			})
 			return
 		}
+
+		price_text.classList.add("bg-green-700/75")
+		button.classList.add("border-green-700")
+
+		setTimeout(() => {
+			price_text.classList.remove("bg-green-700/75")
+			button.classList.remove("border-green-700")
+		}, 700)
 
 		player.souls -= skillPrice
 		souls_amount.innerHTML = player.souls
