@@ -475,10 +475,12 @@ itensButton.forEach(button => {
 		if(player.souls < skillPrice){
 			price_text.classList.add("animate__animated", "animate__shakeX")
 			price_text.classList.add("bg-red-500/75")
+			button.classList.add("border-red-500")
 
 			price_text.addEventListener("animationend", () => {
 				price_text.classList.remove("animate__animated", "animate__shakeX")
 				price_text.classList.remove("bg-red-500/75")
+				button.classList.remove("border-red-500")
 			})
 			return
 		}
