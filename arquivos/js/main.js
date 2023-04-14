@@ -32,6 +32,9 @@ var enemysKilled = 0
 var lockLeft,
     lockRight = false
 
+
+const hud_screen = document.querySelector("#hud-screen")
+
 const weapon_icon     = document.getElementById("weapon-icon")
 const weapon_icon_img = document.getElementById("weapon-icon-img")
 
@@ -781,6 +784,13 @@ function update(){
 
 	if(!player.isDead){
 		playerActions()	
+	}
+
+
+	if(player.health < 20){
+		hud_screen.style.boxShadow = "inset 0 0 30px rgba(190, 0, 0, .7)"
+	}else{
+		hud_screen.style.boxShadow = "none"
 	}
 
 	if(gameIsPaused){
