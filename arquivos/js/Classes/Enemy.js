@@ -137,12 +137,14 @@ class Enemy extends Entity {
 			this.sword.height = 25
 			this.sword.position.x = this.position.x - 80
 			this.sword.position.y = this.position.y + 45
+			this.direction = "LEFT"
 			this.isRunningAttacking = true
 		}else if(attack_run_distance.right && !player.isDead && !this.isDead){
 			this.sword.width = 50
 			this.sword.height = 25
 			this.sword.position.x = this.position.x + 100
 			this.sword.position.y = this.position.y + 45
+			this.direction = "RIGHT"
 			this.isRunningAttacking = true
 		}else{
 			this.isRunningAttacking = false
