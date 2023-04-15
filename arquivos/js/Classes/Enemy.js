@@ -101,11 +101,11 @@ class Enemy extends Entity {
 
 	swordAttack(){
 		const attack_distance = detectInArea(this, player, 100)
-		const attack_distance2 = detectInArea(this, player, 80)
+		const distance_to_fallback = detectInArea(this, player, 80)
 
-		if(attack_distance2.left){
+		if(distance_to_fallback.left && !player.isDead && !this.isDead){
 			this.position.x += this.speed
-		}else if(attack_distance2.right){
+		}else if(distance_to_fallback.right && !player.isDead && !this.isDead){
 			this.position.x -= this.speed
 		}
 
