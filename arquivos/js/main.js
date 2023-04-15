@@ -911,7 +911,7 @@ function render(){
 			basicCollision(enemy, block)
 		})
 
-		if(enemy.position.y > mapHeight){
+		if(enemy.position.y > mapHeight || enemy.position.x > mapSize){
 			enemys.splice(index, 1)
 		}
 	})
