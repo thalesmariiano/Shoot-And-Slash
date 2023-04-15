@@ -85,7 +85,7 @@ class Enemy extends Entity {
 			this.velocity.x = this.speed
 			this.direction = "RIGHT"
 			this.isChasingPlayer = true
-		}else{
+		}else if(!this.isAttacking){
 			this.velocity.x = 0
 			this.isChasingPlayer = false
 		}	
@@ -103,6 +103,9 @@ class Enemy extends Entity {
 		const attack_distance = detectInArea(this, player, 100)
 
 		if(attack_distance.left && !player.isDead && !this.isDead){
+			this.velocity.x = 0
+			this.isChasingPlayer = false
+			
 			this.sword.width = 25
 			this.sword.height = 65	
 			this.sword.position.y = this.position.y - 20
@@ -110,6 +113,9 @@ class Enemy extends Entity {
 			this.direction = "LEFT"
 			this.isAttacking = true
 		}else if(attack_distance.right && !player.isDead && !this.isDead){
+			this.velocity.x = 0
+			this.isChasingPlayer = false
+
 			this.sword.width = 25
 			this.sword.height = 65	
 			this.sword.position.x = this.position.x + 117
