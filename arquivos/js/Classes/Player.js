@@ -38,7 +38,6 @@ class Player extends Entity {
 		}
 		this.attackSpeedMax = false
 		this.dropLuck = 70
-		this.attack_timer = 0
 		this.entitySizeX = 400
 		this.entitySizeY = 400
 		//
