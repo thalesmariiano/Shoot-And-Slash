@@ -946,8 +946,9 @@ function restart(){
 			}
 		}
 	}
-	
 
+	updateUI("timer", false)
+	
 	bullets_amount.innerHTML = 0
 	munition_amount.innerHTML = 0
 	updateUI("icon", "")
@@ -998,6 +999,8 @@ function destroy(){
 			}
 		}
 	}
+
+	updateUI("timer", false)
 
 	bullets_amount.innerHTML = 0
 	munition_amount.innerHTML = 0
