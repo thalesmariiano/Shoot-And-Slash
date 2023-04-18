@@ -908,6 +908,7 @@ function restart(){
 	enemysCount = 0
 	gameWave = 0
 	enemysKilled = 0
+	weapon_status.classList.add("hidden")
 	init()
 	souls_amount.innerHTML = 0
 	player.restart()
@@ -960,6 +961,7 @@ function destroy(){
 	gameWave = 0
 	enemysKilled = 0
 	timeBetweenWaves = 15
+	weapon_status.classList.add("hidden")
 	souls_amount.innerHTML = 0
 	player.restart()
 	player.inventory.forEach(slot => {
