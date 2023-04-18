@@ -729,8 +729,8 @@ function enemysWaves(){
 		onWaves = false
 		isIniting = true
 
-		if(timeBetweenWaves > 5){
-			updateUI("skills", true)
+		if(!onWaves && timeBetweenWaves >= 5){
+			updateUI("skills", true)	
 		}
 
 		const wavesTimer = setInterval(() => {
@@ -745,17 +745,17 @@ function enemysWaves(){
 			if(!timeBetweenWaves){
 				gameWave++
 				enemysCount += 3
-				updateUI("waves", true)
-				setTimeout(() => updateUI("waves", false), 3000)
-				
-				updateUI("timer", false)
 				generateEnemys(enemysCount, 100)
+				updateUI("waves", true)
+				updateUI("timer", false)
 				updateUI("skills", false)
 				isIniting = false
-				timeBetweenWaves = 15
 				onWaves = true
+				timeBetweenWaves = 15
+				setTimeout(() => updateUI("waves", false), 3000)
 				clearInterval(wavesTimer)
 			}else timeBetweenWaves--
+			console.log(timeBetweenWaves)
 		}, 1000)
 	}
 }
@@ -888,7 +888,7 @@ function continues(){
 		loop()
 		switchScreen("hud-screen", "pause-screen")
 
-		if(!onWaves && timeBetweenWaves > 5){
+		if(!onWaves && timeBetweenWaves >= 5){
 			updateUI("skills", true)
 		}
 	}
@@ -902,20 +902,17 @@ function pause(){
 }
 
 function restart(){
-	timeBetweenWaves = 15
 	isIniting = false
+	onWaves = false
+	timeBetweenWaves = 15
 	enemys.length = 0
-	enemysCount = 0
 	gameWave = 0
-	enemysKilled = 0
-	weapon_status.classList.add("hidden")
-	init()
-	souls_amount.innerHTML = 0
-	player.restart()
+
 	player.inventory.forEach(slot => {
 		slot.item = null
 		slot.isHolding = false
 	})
+
 	itensArray.forEach(item => {
 		item.isInInventory = false
 		item.position.x = item.initial_position.x
@@ -948,27 +945,32 @@ function restart(){
 	}
 
 	updateUI("timer", false)
-	
+	updateUI("icon", "")
+
+	enemysCount = 0
+	enemysKilled = 0
 	bullets_amount.innerHTML = 0
 	munition_amount.innerHTML = 0
-	updateUI("icon", "")
+	souls_amount.innerHTML = 0
+	weapon_status.classList.add("hidden")
+
+	player.restart()
+	init()
 }
 
 function destroy(){
-	isIniting = false
 	gameIsPaused = true
+	isIniting = false
+	onWaves = false
 	enemys.length = 0
 	enemysCount = 0
-	gameWave = 0
-	enemysKilled = 0
 	timeBetweenWaves = 15
-	weapon_status.classList.add("hidden")
-	souls_amount.innerHTML = 0
-	player.restart()
+
 	player.inventory.forEach(slot => {
 		slot.item = null
 		slot.isHolding = false
 	})
+
 	itensArray.forEach(item => {
 		item.isInInventory = false
 		item.position.x = item.initial_position.x
@@ -1001,10 +1003,16 @@ function destroy(){
 	}
 
 	updateUI("timer", false)
+	updateUI("icon", "")
 
+	gameWave = 0
+	enemysKilled = 0
 	bullets_amount.innerHTML = 0
 	munition_amount.innerHTML = 0
-	updateUI("icon", "")
+	souls_amount.innerHTML = 0
+	weapon_status.classList.add("hidden")
+
+	player.restart()
 	ctx.clearRect(0, 0, canvas.width, canvas.height)
 }
 
