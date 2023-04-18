@@ -5,7 +5,6 @@ class Camera {
 		this.y = 0
 		this.width
 		this.height
-		this.xcount = 0
 	}
 
 	leftEdge(){

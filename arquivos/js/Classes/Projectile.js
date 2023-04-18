@@ -28,8 +28,8 @@ class Projectile {
 			this.dmg = 20
 		}
 
-		if(this.weapon.gunType == "Espingarda"){
-			this.dmg = 10
-		}
+		// if(this.weapon.gunType == "Espingarda"){
+		// 	this.dmg = 10
+		// }
 	}
 }
