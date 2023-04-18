@@ -69,23 +69,6 @@ class Entity {
 		this.sprInfo = spr
 	}
 
-	restart(){
-		this.maxHealth = this.health = 100
-		this.receiveLife(1000)
-		this.isDead = false
-		this.framesHold = 5
-		this.framesElapsed = 0
-		this.direction = "RIGHT"
-		this.switchSprite("idle_right")
-		this.endAnimation = false
-		this.position.x = this.initial_position.x
-		this.position.y = this.initial_position.y
-		this.souls = 0
-		this.dropLuck = 70
-		this.speed = this.defaultSpeed
-		this.attackSpeedMax = false
-	}
-
 	draw(){
 		ctx.drawImage(this.sprite, this.imgX, this.imgY, this.frameSizeX, this.frameSizeY, this.position.x - this.offest.x, this.position.y - this.offest.y, this.entitySizeX, this.entitySizeY)
 
