@@ -46,3 +46,68 @@ function detectInArea(entity, target, areaTotal, topArea, bottomArea, leftArea, 
 	}
 	return radar
 }
+
+function generateTerrain(mapArray, outputArray){
+	const tileSize = 50
+
+	for(let row in mapArray){
+		for(let column in mapArray[row]){
+			const tile = mapArray[row][column]
+
+			const block = {
+				id: 1,
+				width: tileSize,
+				height: tileSize,
+				position: {
+					x: column*tileSize,
+					y: row*tileSize
+				},
+				imgX: 0,
+				imgY: 0,
+				type: "Block",
+				visible: false
+			}
+
+			if(tile){
+				switch(tile){
+					case 1:
+						block.imgX = 32
+						block.imgY = 0
+						block.id = 1
+						break
+					case 2:
+						block.imgX = 32*2
+						block.imgY = 0
+						block.id = 2
+						break
+					case 3:
+						block.imgX = 0
+						block.imgY = 32*6
+						block.id = 3
+						break
+					case 3.5:
+						block.imgX = 32*2
+						block.imgY = 32*6
+						block.id = 3.5
+						break
+					case 4:
+						block.imgX = 32*2
+						block.imgY = 32
+						block.id = 4
+						break
+					case 4.5:
+						block.imgX = 0
+						block.imgY = 32
+						block.id = 4.5
+						break
+					case 5:
+						block.imgX = 32
+						block.imgY = 32
+						block.id = 5
+						break
+				}
+				outputArray.push(block)
+			}	
+		}
+	}
+}
