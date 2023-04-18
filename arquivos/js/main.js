@@ -755,7 +755,6 @@ function enemysWaves(){
 				setTimeout(() => updateUI("waves", false), 3000)
 				clearInterval(wavesTimer)
 			}else timeBetweenWaves--
-			console.log(timeBetweenWaves)
 		}, 1000)
 	}
 }
