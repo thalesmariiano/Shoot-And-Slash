@@ -542,7 +542,8 @@ function buyItens(item){
 	switch(item){
 		case "ak47":
 		player.inventory[0].item = ak47
-		ak47.isInInventory = true
+		ak47.bulletsAmount = 30
+		ak47.munition = 60
 		updateUI("icon", ak47.name)
 		weapon_status.classList.remove("hidden")
 		bullets_amount.innerHTML = ak47.bulletsAmount
@@ -821,9 +822,7 @@ function render(){
 		if(item.visible){
 			item.update()
 
-			if(!item.isInInventory){
-				itemCollision(collide(player, item))
-			}
+			itemCollision(collide(player, item))
 
 			if(item.itemType == "soul"){
 				playebleMapBlocks.forEach(block => {
@@ -837,6 +836,21 @@ function render(){
 			
 
 			if(item.type == "Weapon"){
+				playebleMapBlocks.forEach(block => {
+					basicCollision(item, block)
+				})
+
+				if(!item.bulletsAmount){
+					if(!item.munition){
+						player.inventory[0].item = 0
+						player.inventory[0].isHolding = false
+						weapon_status.classList.add("hidden")
+						weapon_icon.classList.remove("border-neutral-300")
+						weapon_icon.classList.add("border-black")
+						updateUI("icon", "")
+					}
+				}
+
 				item.bulletsFired.forEach(bullet => {
 					if(bullet.visible){
 						bullet.update()
