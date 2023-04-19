@@ -3,6 +3,7 @@ class Weapon extends Item {
 	constructor({gunType, name, bullets, munition, gunLimit, itemType, position}){
 		super({itemType, position})
 
+		this.height = 24
 		this.shotTime = 0
 		this.bulletsAmount = bullets
 		this.munition = munition
@@ -98,6 +99,9 @@ class Weapon extends Item {
 		// if(this.gunType == "Espingarda"){
 		// 	this.shotTime = 350
 		// }
+
+		this.position.y += this.velocity.y
+		this.velocity.y += GRAVITY
 
 	}
 }
