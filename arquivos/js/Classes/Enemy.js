@@ -44,7 +44,8 @@ class Enemy extends Entity {
 						soul.setSprites(itens_sprites.enemy_soul.sprites)
 						itensArray.push(soul)
 					}
-					
+
+					enemysKilled++
 					setTimeout(() => this.visible = false, 3000)
 
 					return
@@ -100,18 +101,33 @@ class Enemy extends Entity {
 
 	swordAttack(){
 		const attack_distance = detectInArea(this, player, 100)
+		const distance_to_fallback = detectInArea(this, player, 80)
+
+		if(distance_to_fallback.left && !player.isDead && !this.isDead){
+			this.position.x += this.speed
+		}else if(distance_to_fallback.right && !player.isDead && !this.isDead){
+			this.position.x -= this.speed
+		}
 
 		if(attack_distance.left && !player.isDead && !this.isDead){
+			this.velocity.x = 0
+			this.isChasingPlayer = false
+
 			this.sword.width = 25
 			this.sword.height = 65	
 			this.sword.position.y = this.position.y - 20
 			this.sword.position.x = this.position.x - 73
+			this.direction = "LEFT"
 			this.isAttacking = true
 		}else if(attack_distance.right && !player.isDead && !this.isDead){
+			this.velocity.x = 0
+			this.isChasingPlayer = false
+
 			this.sword.width = 25
 			this.sword.height = 65	
 			this.sword.position.x = this.position.x + 117
 			this.sword.position.y = this.position.y - 20
+			this.direction = "RIGHT"
 			this.isAttacking = true
 		}else{
 			this.isAttacking = false

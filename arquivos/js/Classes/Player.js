@@ -36,8 +36,8 @@ class Player extends Entity {
 				y: 0
 			}
 		}
+		this.attackSpeedMax = false
 		this.dropLuck = 70
-		this.attack_timer = 0
 		this.entitySizeX = 400
 		this.entitySizeY = 400
 		//
@@ -46,7 +46,7 @@ class Player extends Entity {
 
 	animation(){
 
-		if(this.sprInfo && attackSpeedMax && this.sprInfo.name == `attack_${this.attack}_${this.direction.toLowerCase()}`){
+		if(this.sprInfo && this.attackSpeedMax && this.sprInfo.name == `attack_${this.attack}_${this.direction.toLowerCase()}`){
 			this.framesHold = 5
 		}
 
@@ -116,6 +116,23 @@ class Player extends Entity {
 		this.health -= damage_taken
 		this.receiveDamage = true
 		updateUI("healthbar", this.health)
+	}
+
+	restart(){
+		this.maxHealth = this.health = 100
+		this.receiveLife(1000)
+		this.isDead = false
+		this.framesHold = 5
+		this.framesElapsed = 0
+		this.direction = "RIGHT"
+		this.switchSprite("idle_right")
+		this.endAnimation = false
+		this.position.x = this.initial_position.x
+		this.position.y = this.initial_position.y
+		this.souls = 0
+		this.dropLuck = 70
+		this.speed = this.defaultSpeed
+		this.attackSpeedMax = false
 	}
 
 	update(){

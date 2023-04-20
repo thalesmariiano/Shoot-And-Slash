@@ -1,3 +1,4 @@
+if(!window.localStorage.getItem("SaSdialog")) window.localStorage.setItem("SaSdialog", 1)
 
 var developerMode = false
 
@@ -5,14 +6,6 @@ const canvas            = document.querySelector("canvas")
 const screens_container = document.querySelector("#screens-container")
 
 const ctx = canvas.getContext("2d", {alpha: false})
-
-const resizeAspectRatio = () => {
-	ctx.canvas.width = window.innerWidth
-	ctx.canvas.height = window.innerHeight
-	ctx.imageSmoothingEnabled = false
-}
-resizeAspectRatio()
-window.onresize = () => resizeAspectRatio()
 
 const GRAVITY = 0.6
 
@@ -23,55 +16,61 @@ var keyRight,
     keyEnter,
     keyR = false
 
-// var digit1,
-//     digit2,
-//     digit3 = false
-
 var gameIsPaused = true
 var isIniting = false
+var onWaves = false
 
-var enemysCount = 3
-var gameWave = 1
+var enemysCount = 0
+var gameWave = 0
+var timeBetweenWaves = 15
+var enemysKilled = 0
 
 var lockLeft,
     lockRight = false
 
-// Telas
-const start_screen   = document.getElementById("start-screen")
-const options_screen = document.getElementById("options-screen")
-const hud_screen     = document.getElementById("hud-screen")
-const die_screen     = document.getElementById("die-screen")
-const pause_screen   = document.getElementById("pause-screen")
+const tilemap = new Image()
+tilemap.src   = "arquivos/assets/map/tilemap.png"
 
+const parallax_back = new Image()
+parallax_back.src   = "arquivos/assets/map/parallax-forest-back.png"
+
+const parallax_light = new Image()
+parallax_light.src   = "arquivos/assets/map/parallax-forest-lights.png"
+
+const parallax_middle = new Image()
+parallax_middle.src   = "arquivos/assets/map/parallax-forest-middle-trees.png"
+
+const parallax_front = new Image()
+parallax_front.src   = "arquivos/assets/map/parallax-forest-front-trees.png"
+
+
+const hud_screen      = document.getElementById("hud-screen")
 const weapon_icon     = document.getElementById("weapon-icon")
 const weapon_icon_img = document.getElementById("weapon-icon-img")
+const weapon_status   = document.getElementById("weapon-status")
+const munition_amount = document.getElementById("munition-amount")
+const bullets_amount  = document.getElementById("bullets-amount")
 
-// Botões
-const play_button               = document.getElementById("play-button")
-const options_button            = document.getElementById("options-button")
-const backtomenuoptions_button  = document.getElementById("backToMenuOptions-button")
-const restart_button            = document.getElementById("restart-button")
-const restart_button_2          = document.getElementById("restart-button-2")
-const continue_button           = document.getElementById("continue-button")
-const backtomenu_button         = document.getElementById("backToMenu-button")
+const souls_amount    = document.getElementById("souls-amount")
 
 // Dialog
 const dialog_container    = document.getElementById("dialog-container")
 const dialog_close_button = document.getElementById("close-dialog-button")
 const dialog_checkbox     = document.querySelector("[name=dontshow]")
 
-const close_skills = document.getElementById("close-skills")
-
-const weapon_status = document.getElementById("weapon-status")
-const munition_amount = document.getElementById("munition-amount")
-const bullets_amount  = document.getElementById("bullets-amount")
-
-const souls_amount    = document.getElementById("souls-amount")
-
 const health_container = document.getElementById("health-container")
-const health_bar = document.getElementById("health-bar")
-const health_amount = document.getElementById("health-amount")
-const points = document.getElementsByClassName("health-points")
+const health_bar       = document.getElementById("health-bar")
+const health_amount    = document.getElementById("health-amount")
+const points           = document.getElementsByClassName("health-points")
+
+const waves_count        = document.getElementById("waves-count")
+const kills_count        = document.getElementById("kills-count")
+const waves_skills_timer = document.getElementById("waves-skills-timer")
+const waves_hud_timer    = document.getElementById("waves-hud-timer")
+
+const close_skills = document.getElementById("close-skills")
+const skillsButton = document.querySelectorAll("[data-skill]")
+const itensButton  = document.querySelectorAll("[data-item]")
 
 const player_sprites = [
 	{
@@ -394,112 +393,7 @@ ak47.setSprites(itens_sprites.ak47.sprites)
 const itensArray = []
 itensArray.push(ak47, life)
 
-var attackSpeedMax = false
-
-const skillsButton = document.querySelectorAll("[data-skill]")
-skillsButton.forEach(button => {
-	const skillType = button.dataset.skill
-	button.addEventListener("click", () => {
-		const skillPrice = button.dataset.price
-
-		const level_text = button.children[0].children[1]
-		const price_text = button.nextElementSibling
-		const isMaxLevel = parseInt(button.dataset.level) >= parseInt(button.dataset.max)
-
-		if(isMaxLevel){
-			level_text.innerHTML = "Max"
-			level_text.classList.add("text-red-500")
-
-			setTimeout(() => {
-				level_text.classList.remove("text-red-500")
-				level_text.innerHTML = `Level ${button.dataset.level}`		
-			}, 1000)
-			return
-		}
-
-		if(player.souls < skillPrice){
-			price_text.classList.add("animate__animated", "animate__shakeX")
-			price_text.classList.add("bg-red-500/75")
-
-			price_text.addEventListener("animationend", () => {
-				price_text.classList.remove("animate__animated", "animate__shakeX")
-				price_text.classList.remove("bg-red-500/75")
-			})
-			return
-		}
-
-		player.souls -= parseInt(button.dataset.price)
-		souls_amount.innerHTML = player.souls
-
-		button.dataset.price = parseInt(skillPrice) + 5
-		price_text.innerHTML = `${button.dataset.price} Almas`
-
-		button.dataset.level++
-		level_text.innerHTML = `Level ${button.dataset.level}`
-
-		switch(skillType){
-			case "speed":
-				const speed = "." + button.dataset.level
-				player.speed += parseFloat(speed)	
-				break
-			case "health":
-				player.maxHealth += 10
-				player.receiveLife(1000)
-				health_bar.innerHTML += "<div class='health-points'></div>"
-				health_container.style.width = player.maxHealth + "px"
-				health_amount.style.width = player.maxHealth + "px"
-				break
-			case "strength":
-				player.attDamage += 1
-				break
-			case "attackspeed":
-				attackSpeedMax = true
-				break
-			case "loot":
-				player.dropLuck += 5
-				break
-		}
-
-	})
-})
-
-const itensButton = document.querySelectorAll("[data-item]")
-itensButton.forEach(button => {
-	const itemType = button.dataset.item
-
-	button.addEventListener("click", () => {
-		const skillPrice = button.dataset.price
-		const price_text = button.nextElementSibling
-
-		if(player.souls < skillPrice){
-			price_text.classList.add("animate__animated", "animate__shakeX")
-			price_text.classList.add("bg-red-500/75")
-
-			price_text.addEventListener("animationend", () => {
-				price_text.classList.remove("animate__animated", "animate__shakeX")
-				price_text.classList.remove("bg-red-500/75")
-			})
-			return
-		}
-
-		player.souls -= parseInt(button.dataset.price)
-		souls_amount.innerHTML = player.souls
-
-		switch(itemType){
-			case "ak47":
-				player.inventory[0].item = ak47
-				ak47.isInInventory = true
-				updateUI("icon", ak47.name)
-				weapon_status.classList.remove("hidden")
-				bullets_amount.innerHTML = ak47.bulletsAmount
-				munition_amount.innerHTML = ak47.munition
-				break
-		}
-	})
-})
-
-
-const playableMapTiles = [
+const first_MapTiles = [
 	[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
 	[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
 	[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
@@ -523,96 +417,138 @@ const playableMapTiles = [
 	[5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5]
 ]
 
-// const scenarioMapTiles = [
-// 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-// 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-// 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-// 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-// 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-// 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-// 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-// 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-// 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-// 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-// 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-// 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-// 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-// 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-// 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-// 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-// 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-// ]
-
-const mapSize = playableMapTiles[0].length*50
-const mapHeight = playableMapTiles.length*50
+const mapSize = first_MapTiles[0].length*50
+const mapHeight = first_MapTiles.length*50
 const playebleMapBlocks = []
-// const scenarioMapBlocks = []
 
-const tilemap = new Image()
-	  tilemap.src = "arquivos/assets/map/tilemap.png"
+generateTerrain(first_MapTiles, playebleMapBlocks)
 
-function generateTerrain(mapArray, outputArray){
-	const tileSize = 50
+skillsButton.forEach(button => {
+	button.addEventListener("click", () => {
+		const skillType     = button.dataset.skill
+		const skillPrice    = parseInt(button.dataset.price)
+		const skillLevel    = parseInt(button.dataset.level)
+		const skillLevelMax = parseInt(button.dataset.max)
 
-	for(let row in mapArray){
-		for(let column in mapArray[row]){
-			const tile = mapArray[row][column]
+		const level_text = button.children[0].children[1]
+		const price_text = button.nextElementSibling
 
-			const block = {
-				id: 1,
-				width: tileSize,
-				height: tileSize,
-				position: {
-					x: column*tileSize,
-					y: row*tileSize
-				},
-				imgX: 0,
-				imgY: 0,
-				type: "Block",
-				visible: false
-			}
+		const isMaxLevel = skillLevel >= skillLevelMax 
 
-			if(tile){
-				switch(tile){
-					case 1:
-						block.imgX = 32
-						block.imgY = 0
-						block.id = 1
-						break
-					case 2:
-						block.imgX = 32*2
-						block.imgY = 0
-						block.id = 2
-						break
-					case 3:
-						block.imgX = 0
-						block.imgY = 32*6
-						block.id = 3
-						break
-					case 3.5:
-						block.imgX = 32*2
-						block.imgY = 32*6
-						block.id = 3.5
-						break
-					case 4:
-						block.imgX = 32*2
-						block.imgY = 32
-						block.id = 4
-						break
-					case 4.5:
-						block.imgX = 0
-						block.imgY = 32
-						block.id = 4.5
-						break
-					case 5:
-						block.imgX = 32
-						block.imgY = 32
-						block.id = 5
-						break
-				}
-				outputArray.push(block)
-			}	
+		if(isMaxLevel){
+			level_text.innerHTML = "Max"
+			level_text.classList.add("text-red-500")
+
+			setTimeout(() => {
+				level_text.classList.remove("text-red-500")
+				level_text.innerHTML = `Lv ${button.dataset.level}`		
+			}, 1000)
+			return
 		}
+
+		if(player.souls < skillPrice){
+			price_text.classList.add("animate__animated", "animate__shakeX")
+			price_text.classList.add("bg-red-500/75")
+			button.classList.add("border-red-500")
+
+			price_text.addEventListener("animationend", () => {
+				price_text.classList.remove("animate__animated", "animate__shakeX")
+				price_text.classList.remove("bg-red-500/75")
+				button.classList.remove("border-red-500")
+			})
+			return
+		}
+
+		price_text.classList.add("bg-green-700/75")
+		button.classList.add("border-green-700")
+
+		setTimeout(() => {
+			price_text.classList.remove("bg-green-700/75")
+			button.classList.remove("border-green-700")
+		}, 700)
+
+		player.souls -= skillPrice
+		souls_amount.innerHTML = player.souls
+
+		button.dataset.price = skillPrice + 5
+		price_text.innerHTML = `${button.dataset.price} Almas`
+
+		button.dataset.level++
+		level_text.innerHTML = `Lv ${button.dataset.level}`
+
+		updateSkill(skillType)
+	})
+})
+
+function updateSkill(skill){
+	switch(skill){
+		case "speed":
+			player.speed += .3
+			break
+		case "health":
+			player.maxHealth += 10
+			player.receiveLife(1000)
+			health_bar.innerHTML += "<div class='health-points'></div>"
+			health_container.style.width = player.maxHealth + "px"
+			health_amount.style.width = player.maxHealth + "px"
+			break
+		case "strength":
+			player.attDamage += 1
+			break
+		case "attackspeed":
+			player.attackSpeedMax = true
+			break
+		case "loot":
+			player.dropLuck += 5
+			break
+	}
+}
+
+itensButton.forEach(button => {
+	button.addEventListener("click", () => {
+		const itemType   = button.dataset.item
+		const skillPrice = parseInt(button.dataset.price)
+		const price_text = button.nextElementSibling
+
+		if(player.souls < skillPrice){
+			price_text.classList.add("animate__animated", "animate__shakeX")
+			price_text.classList.add("bg-red-500/75")
+			button.classList.add("border-red-500")
+
+			price_text.addEventListener("animationend", () => {
+				price_text.classList.remove("animate__animated", "animate__shakeX")
+				price_text.classList.remove("bg-red-500/75")
+				button.classList.remove("border-red-500")
+			})
+			return
+		}
+
+		price_text.classList.add("bg-green-700/75")
+		button.classList.add("border-green-700")
+
+		setTimeout(() => {
+			price_text.classList.remove("bg-green-700/75")
+			button.classList.remove("border-green-700")
+		}, 700)
+
+		player.souls -= skillPrice
+		souls_amount.innerHTML = player.souls
+
+		buyItens(itemType)
+	})
+})
+
+function buyItens(item){
+	switch(item){
+		case "ak47":
+		player.inventory[0].item = ak47
+		ak47.bulletsAmount = 30
+		ak47.munition = 60
+		updateUI("icon", ak47.name)
+		weapon_status.classList.remove("hidden")
+		bullets_amount.innerHTML = ak47.bulletsAmount
+		munition_amount.innerHTML = ak47.munition
+		break
 	}
 }
 
@@ -710,9 +646,12 @@ function playerActions(){
 
 		player.velocity.x = 0
 
+		waves_count.innerHTML = `Onda: ${gameWave}`
+		kills_count.innerHTML = `Abates: ${enemysKilled}`
+
 		setTimeout(() => {
 			gameIsPaused = true
-			gameScreen(die_screen, hud_screen)
+			switchScreen("die-screen", "hud-screen")
 		}, 1500)
 	}
 }
@@ -769,40 +708,64 @@ function update(){
 		playerActions()	
 	}
 
+
+	if(player.health < 20){
+		hud_screen.style.boxShadow = "inset 0 0 30px rgba(190, 0, 0, .7)"
+	}else{
+		hud_screen.style.boxShadow = "none"
+	}
+
 	if(gameIsPaused){
 		dialog_container.classList.remove("left-0")
 		dialog_container.classList.add("-left-60")
+
+		updateUI("skills", false)
 	}
 
 	camera.update()
 }
 
-const skyGradient = ctx.createLinearGradient(0, 0, 0, 150)
-      skyGradient.addColorStop(0, "#4287f5")
-	  skyGradient.addColorStop(1, "#7bc6d1")
+function enemysWaves(){
+	if(!enemys.length && !isIniting){
+		onWaves = false
+		isIniting = true
 
-const parallax_back = new Image()
-parallax_back.src = "arquivos/assets/map/parallax-forest-back.png"
+		if(!onWaves && timeBetweenWaves >= 5){
+			updateUI("skills", true)	
+		}
 
-const parallax_light = new Image()
-parallax_light.src = "arquivos/assets/map/parallax-forest-lights.png"
+		const wavesTimer = setInterval(() => {
+			if(gameIsPaused){
+				clearInterval(wavesTimer)
+				return
+			}
 
-const parallax_middle = new Image()
-parallax_middle.src = "arquivos/assets/map/parallax-forest-middle-trees.png"
+			waves_skills_timer.innerHTML = `${timeBetweenWaves}s`
+			if(timeBetweenWaves <= 5) waves_hud_timer.innerHTML = `${timeBetweenWaves}s`
 
-const parallax_front = new Image()
-parallax_front.src = "arquivos/assets/map/parallax-forest-front-trees.png"
+			if(!timeBetweenWaves){
+				gameWave++
+				enemysCount += 3
+				generateEnemys(enemysCount, 100)
+				updateUI("waves", true)
+				updateUI("timer", false)
+				updateUI("skills", false)
+				isIniting = false
+				onWaves = true
+				timeBetweenWaves = 15
+				setTimeout(() => updateUI("waves", false), 3000)
+				clearInterval(wavesTimer)
+			}else timeBetweenWaves--
+		}, 1000)
+	}
+}
 
 function render(){
 	ctx.save()
 	ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-	ctx.fillStyle = skyGradient
-	ctx.fillRect(0, -2500/2, mapSize, 2500)
-
 	/* PARALLAX */
-	ctx.drawImage(parallax_back, Math.floor(-camera.x)/7, 0, 2000, 700)
-	// ctx.drawImage(parallax_light, Math.floor(-camera.x)/6, 0, canvas.width, canvas.height)							
+	ctx.drawImage(parallax_back, Math.floor(-camera.x)/7, 0, 2000, 700)							
 	ctx.drawImage(parallax_middle, Math.floor(-camera.x)/4, 0, 2000, 700)				
 	ctx.drawImage(parallax_front, Math.floor(-camera.x)/2, 0, 3100, 770)				
 
@@ -820,60 +783,30 @@ function render(){
 		height: 50
 	}
 
-	// scenarioMapBlocks.forEach(block => {
-		// const { top, bottom, left, right } = detectInArea(player, block, 300)
-		// const blockInArea = top || bottom || right || left
-
-		// if(blockInArea){
-	//		block.draw()
-		// }
-	// })
-
 	player.update()
 
 	enemys.forEach((enemy, index) => {
-		if(enemy.visible){
-			enemy.update()
+		if(!enemy.visible){
+			enemys.splice(index, 1)
+			return
+		}
 
-			const {top, bottom, left, right} = detectInArea(camera_position, enemy, 300, (canvas.height/2), 300, (canvas.width/2) + 50, (canvas.width/2))
-			const enemyInArea = top || bottom || right || left
+		const {top, bottom, left, right} = detectInArea(camera_position, enemy, 300, (canvas.height/2), 300, (canvas.width/2) + 50, (canvas.width/2))
+		const isInScreen = top || bottom || right || left
 
-			if(enemyInArea){
-				enemy.draw()
-			}
+		if(isInScreen) enemy.draw()
+		enemy.update()
 
-			playebleMapBlocks.forEach(block => {
-				basicCollision(enemy, block)
-			})
+		playebleMapBlocks.forEach(block => {
+			basicCollision(enemy, block)
+		})
 
-			if(enemy.position.y > mapHeight){
-				enemys.splice(index, 1)
-				enemysCount -= 1
-			}
-
-		}else{
+		if(enemy.position.y > mapHeight || enemy.position.x > mapSize){
 			enemys.splice(index, 1)
 		}
 	})
 
-
-	// Waves System
-	if(!enemys.length && !isIniting){
-		isIniting = true
-
-		setTimeout(() => {
-			updateUI("skills", true)				
-		}, 1000)
-
-		setTimeout(() => {
-			updateUI("waves", gameWave)
-			gameWave++
-			generateEnemys(enemysCount, 100)
-			enemysCount += 3
-			updateUI("skills", false)
-			isIniting = false
-		}, 10000)
-	}
+	enemysWaves()
 
 	playebleMapBlocks.forEach(block => {
 		const {top, bottom, left, right} = detectInArea(camera_position, block, 300, (canvas.height/2), 300, (canvas.width/2) + 50, (canvas.width/2))
@@ -889,9 +822,7 @@ function render(){
 		if(item.visible){
 			item.update()
 
-			if(!item.isInInventory){
-				itemCollision(collide(player, item))
-			}
+			itemCollision(collide(player, item))
 
 			if(item.itemType == "soul"){
 				playebleMapBlocks.forEach(block => {
@@ -905,6 +836,21 @@ function render(){
 			
 
 			if(item.type == "Weapon"){
+				playebleMapBlocks.forEach(block => {
+					basicCollision(item, block)
+				})
+
+				if(!item.bulletsAmount){
+					if(!item.munition){
+						player.inventory[0].item = 0
+						player.inventory[0].isHolding = false
+						weapon_status.classList.add("hidden")
+						weapon_icon.classList.remove("border-neutral-300")
+						weapon_icon.classList.add("border-black")
+						updateUI("icon", "")
+					}
+				}
+
 				item.bulletsFired.forEach(bullet => {
 					if(bullet.visible){
 						bullet.update()
@@ -928,109 +874,6 @@ function render(){
 
 }
 
-function pause(){
-	if(!gameIsPaused){
-		gameScreen(pause_screen, hud_screen)
-		gameIsPaused = true
-	}
-}
-
-function restart(){
-	enemys.length = 0
-	enemysCount = 3
-	gameWave = 1
-	init()
-	souls_amount.innerHTML = 0
-	player.restart()
-	player.inventory.forEach(slot => {
-		slot.item = null
-		slot.isHolding = false
-	})
-	itensArray.forEach(item => {
-		item.isInInventory = false
-		item.position.x = item.initial_position.x
-		item.position.y = item.initial_position.y
-		item.visible = true
-		if(item.type == "Weapon" && item.gunType == "Fuzil"){
-			item.munition = 60
-			item.bulletsAmount = 30
-		}
-	})
-
-	skillsButton.forEach(button => {
-		button.dataset.price = 5
-		button.children[0].children[1].innerHTML = "Lv 1"
-		button.dataset.level = 1
-		button.nextElementSibling.innerHTML = "5 Almas"
-	})
-
-	health_container.style.width = 100 + "px"
-	health_amount.style.width = 100 + "px"
-
-	if(points.length > 10){
-		while(i < 10){
-			i++
-
-			if(points.length > 10){
-				points[i].remove()				
-			}
-		}
-	}
-	
-
-	bullets_amount.innerHTML = 0
-	munition_amount.innerHTML = 0
-	updateUI("icon", "")
-}
-
-function destroy(){
-	gameIsPaused = true
-	enemys.length = 0
-	enemysCount = 3
-	gameWave = 1
-	souls_amount.innerHTML = 0
-	player.restart()
-	player.inventory.forEach(slot => {
-		slot.item = null
-		slot.isHolding = false
-	})
-	itensArray.forEach(item => {
-		item.isInInventory = false
-		item.position.x = item.initial_position.x
-		item.position.y = item.initial_position.y
-		item.visible = true
-		if(item.type == "Weapon" && item.gunType == "Fuzil"){
-			item.munition = 60
-			item.bulletsAmount = 30
-		}
-	})
-
-	skillsButton.forEach(button => {
-		button.dataset.price = 5
-		button.dataset.level = 1
-		button.children[0].children[1].innerHTML = "Lv 1"
-		button.nextElementSibling.innerHTML = "5 Almas"
-	})
-
-	health_container.style.width = 100 + "px"
-	health_amount.style.width = 100 + "px"
-
-	if(points.length > 10){
-		while(i < 10){
-			i++
-
-			if(points.length > 10){
-				points[i].remove()				
-			}
-		}
-	}
-
-	bullets_amount.innerHTML = 0
-	munition_amount.innerHTML = 0
-	updateUI("icon", "")
-	ctx.clearRect(0, 0, canvas.width, canvas.height)
-}
-
 function loop(){
 	if(!gameIsPaused){
 		window.requestAnimationFrame(loop)
@@ -1049,10 +892,158 @@ function init(){
 		dialog_container.classList.add("left-0")
 		dialog_container.classList.remove("-left-60")
 	}
-	
 }
 
-dialog_checkbox.addEventListener("input", () => {
-	const value = dialog_checkbox.checked ? 0 : 1
-	window.localStorage.setItem("SaSdialog", value)
-})
+function continues(){
+	if(gameIsPaused){
+		isIniting = false
+		gameIsPaused = false
+		loop()
+		switchScreen("hud-screen", "pause-screen")
+
+		if(!onWaves && timeBetweenWaves >= 5){
+			updateUI("skills", true)
+		}
+	}
+}
+
+function pause(){
+	if(!gameIsPaused){
+		switchScreen("pause-screen", "hud-screen")
+		gameIsPaused = true
+	}
+}
+
+function restart(){
+	isIniting = false
+	onWaves = false
+	timeBetweenWaves = 15
+	enemys.length = 0
+	gameWave = 0
+
+	player.inventory.forEach(slot => {
+		slot.item = null
+		slot.isHolding = false
+	})
+
+	itensArray.forEach(item => {
+		item.isInInventory = false
+		item.position.x = item.initial_position.x
+		item.position.y = item.initial_position.y
+		item.visible = true
+		if(item.type == "Weapon" && item.gunType == "Fuzil"){
+			item.munition = 60
+			item.bulletsAmount = 30
+		}
+	})
+
+	skillsButton.forEach(button => {
+		button.dataset.price = 5
+		button.children[0].children[1].innerHTML = "Lv 1"
+		button.dataset.level = 1
+		button.nextElementSibling.innerHTML = "5 Almas"
+	})
+
+	health_container.style.width = 100 + "px"
+	health_amount.style.width = 100 + "px"
+
+	if(points.length > 10){
+		while(i < 10){
+			i++
+
+			if(points.length > 10){
+				points[i].remove()				
+			}
+		}
+	}
+
+	updateUI("timer", false)
+	updateUI("icon", "")
+
+	enemysCount = 0
+	enemysKilled = 0
+	bullets_amount.innerHTML = 0
+	munition_amount.innerHTML = 0
+	souls_amount.innerHTML = 0
+	weapon_status.classList.add("hidden")
+
+	player.restart()
+	init()
+}
+
+function destroy(){
+	gameIsPaused = true
+	isIniting = false
+	onWaves = false
+	enemys.length = 0
+	enemysCount = 0
+	timeBetweenWaves = 15
+
+	player.inventory.forEach(slot => {
+		slot.item = null
+		slot.isHolding = false
+	})
+
+	itensArray.forEach(item => {
+		item.isInInventory = false
+		item.position.x = item.initial_position.x
+		item.position.y = item.initial_position.y
+		item.visible = true
+		if(item.type == "Weapon" && item.gunType == "Fuzil"){
+			item.munition = 60
+			item.bulletsAmount = 30
+		}
+	})
+
+	skillsButton.forEach(button => {
+		button.dataset.price = 5
+		button.dataset.level = 1
+		button.children[0].children[1].innerHTML = "Lv 1"
+		button.nextElementSibling.innerHTML = "5 Almas"
+	})
+
+	health_container.style.width = 100 + "px"
+	health_amount.style.width = 100 + "px"
+
+	if(points.length > 10){
+		while(i < 10){
+			i++
+
+			if(points.length > 10){
+				points[i].remove()				
+			}
+		}
+	}
+
+	updateUI("timer", false)
+	updateUI("icon", "")
+
+	gameWave = 0
+	enemysKilled = 0
+	bullets_amount.innerHTML = 0
+	munition_amount.innerHTML = 0
+	souls_amount.innerHTML = 0
+	weapon_status.classList.add("hidden")
+
+	player.restart()
+	ctx.clearRect(0, 0, canvas.width, canvas.height)
+}
+
+const resizeAspectRatio = () => {
+	ctx.canvas.width = window.innerWidth
+	ctx.canvas.height = window.innerHeight
+	ctx.imageSmoothingEnabled = false
+}
+resizeAspectRatio()
+
+window.onresize = () => resizeAspectRatio()
+window.onblur = () => {
+	pause()
+	keyLeft =
+	keyRight =
+	keyUp =
+	keyR =
+	keyEnter =
+	lockLeft =
+	lockRight = false
+}

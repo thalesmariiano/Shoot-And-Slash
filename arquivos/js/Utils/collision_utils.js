@@ -42,18 +42,18 @@ const itemCollision = collision => {
 				item.visible = false
 				break
 			default:
-				if(item.type != "Weapon") return
+				// if(item.type != "Weapon") return
 
-				for(i = 0; i < collider.inventory.length; i++){
-					const slot = collider.inventory[i]
-					if(!slot.item){
-						slot.item = item
-						item.visible = false
-						item.isInInventory = true
-						updateUI("icon", item)
-						return
-					}		
-				}
+				// for(i = 0; i < collider.inventory.length; i++){
+				// 	const slot = collider.inventory[i]
+				// 	if(!slot.item){
+				// 		slot.item = item
+				// 		item.visible = false
+				// 		item.isInInventory = true
+				// 		updateUI("icon", item)
+				// 		return
+				// 	}		
+				// }
 				break
 		}
 	}

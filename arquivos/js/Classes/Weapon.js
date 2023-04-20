@@ -3,7 +3,7 @@ class Weapon extends Item {
 	constructor({gunType, name, bullets, munition, gunLimit, itemType, position}){
 		super({itemType, position})
 
-		this.shotCount = 0
+		this.height = 24
 		this.shotTime = 0
 		this.bulletsAmount = bullets
 		this.munition = munition
@@ -11,7 +11,7 @@ class Weapon extends Item {
 
 		this.bulletsFired = []
 
-		this.reloadTimer = 2500
+		this.reloadTime = 1500
 		this.lockShot = false
 		this.gunType = gunType
 		this.name = name
@@ -50,7 +50,7 @@ class Weapon extends Item {
 					}
 					bullets_amount.innerHTML = this.bulletsAmount
 					munition_amount.innerHTML = this.munition
-				}, 1500)
+				}, this.reloadTime)
 			}
 		}
 	}
@@ -96,9 +96,12 @@ class Weapon extends Item {
 			this.shotTime = 80
 		}
 
-		if(this.gunType == "Espingarda"){
-			this.shotTime = 350
-		}
+		// if(this.gunType == "Espingarda"){
+		// 	this.shotTime = 350
+		// }
+
+		this.position.y += this.velocity.y
+		this.velocity.y += GRAVITY
 
 	}
 }

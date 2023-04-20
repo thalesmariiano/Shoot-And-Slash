@@ -1,7 +1,7 @@
 
-const gameScreen = (screen1, screen2) => {
-	screen1.classList.remove("hidden")
-	screen2.classList.add("hidden")
+function switchScreen(screen1, screen2){
+	document.getElementById(screen1).classList.remove("hidden")
+	document.getElementById(screen2).classList.add("hidden")
 }
 
 const skills_screen = document.getElementById("skills-screen")
@@ -16,21 +16,21 @@ function updateUI(ui, value) {
 			wavesContainer.classList.remove("hidden")
 
 			const wavesText = document.getElementById("waves-text")
-			wavesText.innerHTML = `Onda ${value}`
+			wavesText.innerHTML = `Onda ${gameWave}`
 
-			setTimeout(() => {
-				wavesContainer.classList.remove("opacity-0")
-				wavesContainer.classList.add("opacity-100")				
-			}, 500)
-
-			setTimeout(() => {
+			if(value){
+				setTimeout(() => {
+					wavesContainer.classList.remove("opacity-0")
+					wavesContainer.classList.add("opacity-100")				
+				}, 500)
+			}else{
 				wavesContainer.classList.remove("opacity-100")
 				wavesContainer.classList.add("opacity-0")
-			}, 5000)
 
-			setTimeout(() => {
-				wavesContainer.classList.add("hidden")
-			}, 6000)
+				setTimeout(() => {
+					wavesContainer.classList.add("hidden")
+				}, 1000)
+			}
 			break
 		case "skills":
 			if(value){
@@ -48,6 +48,24 @@ function updateUI(ui, value) {
 					skills_screen.classList.add("hidden")
 				}, 1000)
 			}
+			break
+		case "timer":
+			const wavesTimerContainer = document.getElementById("waves-timer-container")
+			wavesTimerContainer.classList.remove("hidden")
+
+			if(value){
+				setTimeout(() => {
+					wavesTimerContainer.classList.remove("opacity-0")
+					wavesTimerContainer.classList.add("opacity-100")				
+				}, 500)
+			}else{
+				wavesTimerContainer.classList.remove("opacity-100")
+				wavesTimerContainer.classList.add("opacity-0")
+
+				setTimeout(() => {
+					wavesTimerContainer.classList.add("hidden")
+				}, 1000)
+			}	
 			break
 		case "icon":
 			const img = value ? "arquivos/assets/itens/ak47.png" : "arquivos/assets/null.png"

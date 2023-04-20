@@ -10,7 +10,6 @@ class Item extends Entity {
 				y: 0
 			}
 			this.itemValue = 0
-			this.isInInventory = false
 			this.entitySizeX = 35
 			this.entitySizeY = 35
 			this.itemType = itemType

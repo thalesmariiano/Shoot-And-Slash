@@ -37,7 +37,6 @@ class Entity {
 		this.isRunning = false
 		this.isWalking = false
 		this.isAttacking = false
-		this.isDying = false
 		this.isDead = false
 		this.receiveDamage = false
 		//
@@ -68,23 +67,6 @@ class Entity {
 		
 		if(spr != this.sprInfo) this.currentFrames = 0	
 		this.sprInfo = spr
-	}
-
-	restart(){
-		this.maxHealth = this.health = 100
-		this.receiveLife(1000)
-		this.isDead = false
-		this.framesHold = 5
-		this.framesElapsed = 0
-		this.direction = "RIGHT"
-		this.switchSprite("idle_right")
-		this.endAnimation = false
-		this.position.x = this.initial_position.x
-		this.position.y = this.initial_position.y
-		this.souls = 0
-		this.dropLuck = 70
-		this.speed = this.defaultSpeed
-		this.attackSpeedMax = false
 	}
 
 	draw(){
