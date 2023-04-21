@@ -760,59 +760,18 @@ function enemysWaves(){
 	}
 }
 
-class Parallax {
-	constructor(image, velocity){
-		this.image = image
-		this.velocity = velocity
-		this.width = 1000
-		this.height = 700
-		this.parallax_positions = []
-	}
-
-	generateParallax(){
-		if(this.width*this.parallax_positions.length + Math.floor(-camera.x) < canvas.width){
-			this.parallax_positions.push(this.width*this.parallax_positions.length)
-		}
-	}
-
-	drawParallax(){
-		this.parallax_positions.forEach(position => {
-			ctx.drawImage(this.image, Math.floor(-camera.x)/this.velocity + position, 0, this.width, this.height)
-		})
-	}
-
-	update(){
-		this.generateParallax()
-		this.drawParallax()
-	}
-}
-
 const back = new Parallax(parallax_back, 7)
 const middle = new Parallax(parallax_middle, 4)
 const front = new Parallax(parallax_front, 2)
-
-var parallax_position = []
 
 function render(){
 	ctx.save()
 	ctx.clearRect(0, 0, canvas.width, canvas.height)
 
 	/* PARALLAX */
-	// ctx.drawImage(parallax_back, Math.floor(-camera.x)/7, 0, 2000, 700)
-
 	back.update()
 	middle.update()
-	front.update()
-
-	// if(1000*parallax_position.length + Math.floor(-camera.x) < canvas.width){
-	// 	parallax_position.push(1000*parallax_position.length)
-	// 	console.log("teste")
-	// }
-
-	// parallax_position.forEach(position => {
-	// 	ctx.drawImage(parallax_middle,(Math.floor(-camera.x)/4 + position), 0, 1000, 700)									
-	// })
-	// ctx.drawImage(parallax_front, Math.floor(-camera.x)/2, 0, 3100, 770)				
+	front.update()			
 
 	ctx.translate(
 		Math.floor(-camera.x),
