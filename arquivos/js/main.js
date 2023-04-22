@@ -317,37 +317,13 @@ const enemy_sprites = [
 	}
 ]
 
+spriteConverter(enemy_sprites)
+spriteConverter(player_sprites)
+spriteConverter(itens_sprites.enemy_soul.sprites)
+spriteConverter(itens_sprites.life.sprites)
+spriteConverter(itens_sprites.ak47.sprites)
+
 const enemys = []
-
-enemy_sprites.forEach(spr => {
-	const img = new Image()
-	img.src = spr.image
-	spr.image = img
-})
-
-player_sprites.forEach(spr => {
-	const img = new Image()
-	img.src = spr.image
-	spr.image = img
-})
-
-itens_sprites.enemy_soul.sprites.forEach(spr => {
-	const img = new Image()
-	img.src = spr.image
-	spr.image = img
-})
-
-itens_sprites.life.sprites.forEach(spr => {
-	const img = new Image()
-	img.src = spr.image
-	spr.image = img
-})
-
-itens_sprites.ak47.sprites.forEach(spr => {
-	const img = new Image()
-	img.src = spr.image
-	spr.image = img
-})
 
 const player = new Player({position: {x: 127, y: 380}})
 player.setSprites(player_sprites)
