@@ -9,7 +9,7 @@
   		<meta name="keywords" content="Jogos, jogo, Offline, Hack And Slash, games, game, offline, thales mariano, thales, indie">
   		<meta name="author" content="Thales Mariano">
 
-		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1017845986794503" crossorigin="anonymous"></script>
+		<!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1017845986794503" crossorigin="anonymous"></script> -->
 
   		<!-- TAILWIND CSS -->
 		<script src="https://cdn.tailwindcss.com"></script>
@@ -145,6 +145,103 @@
 							<p id="waves-hud-timer" class="text-shadow text-lg font-semibold">5s</p>
 						</div>
 					</div>
+					<div id="skills-screen" class="w-full h-full absolute top-0 left-0 transition-all duration-500 opacity-0 hidden">
+						<div id="skills-container" class="w-full h-full flex justify-center items-center bg-neutral-900/75">
+							<div class="w-[32rem] h-[27rem] p-2 relative flex flex-col justify-between bg-neutral-400 border-2 border-white rounded-xl">
+								<div class="w-16 absolute -top-0 -right-20 flex justify-center items-center py-1 bg-neutral-400/50 border-[1.5px] border-white rounded-xl">
+									<img class="w-5 h-5 mr-1" src="arquivos/assets/icons/clock_icon.png">
+									<p id="waves-skills-timer" class="font-semibold">15s</p>
+								</div>
+								<div>
+									<p class="uppercase text-2xl text-center text-neutral-800 font-bold">Habilidades</p>
+									<div id="skills" class="mt-1 flex justify-center gap-2">
+										<div class="flex flex-col items-center">
+											<button title="Vida" class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="health" data-level="1" data-max="20" data-price="5">
+												<div class="w-full h-full flex flex-col justify-between">
+													<img class="mx-auto w-10 h-10" src="arquivos/assets/icons/life_icon.png" alt="Vida">
+													<p class="font-bold mx-auto transition-all duration-200">Lv 1</p>
+												</div>
+											</button>
+											<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1">5 Almas</p>
+										</div>
+										<div class="flex flex-col items-center">
+											<button title="Velocidade" class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="speed" data-level="1" data-max="5" data-price="5">
+												<div class="w-full h-full flex flex-col justify-between">
+													<img class="mx-auto w-10 h-10" src="arquivos/assets/icons/speed_icon.png" alt="Velocidade">
+													<p class="font-bold mx-auto transition-all duration-200">Lv 1</p>
+												</div>
+											</button>
+											<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1">5 Almas</p>
+										</div>
+										<div class="flex flex-col items-center">
+											<button title="Força" class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="strength" data-level="1" data-max="20" data-price="5">
+												<div class="w-full h-full flex flex-col justify-between">
+													<img class="mx-auto w-10 h-10" src="arquivos/assets/icons/strength_icon.png" alt="Força">
+													<p class="font-bold mx-auto transition-all duration-200">Lv 1</p>
+												</div>
+											</button>
+											<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1">5 Almas</p>
+										</div>
+										<div class="flex flex-col items-center">
+											<button title="Velocidade de Ataque" class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="attackspeed" data-level="1" data-max="2" data-price="10">
+												<div class="w-full h-full flex flex-col justify-between">
+													<img class="mx-auto w-10 h-10" src="arquivos/assets/icons/attack_speed_icon.png" alt="Velocidade de Ataque">
+													<p class="font-bold mx-auto transition-all duration-200">Lv 1</p>
+												</div>
+											</button>
+											<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1">10 Almas</p>
+										</div>
+										<div class="flex flex-col items-center">
+											<button title="Dropar mais loot" class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="loot" data-level="1" data-max="7" data-price="10">
+												<div class="w-full h-full flex flex-col justify-between">
+													<img class="mx-auto w-14 h-10" src="arquivos/assets/icons/loot_icon.png" alt="Loot">
+													<p class="font-bold mx-auto transition-all duration-200">Lv 1</p>
+												</div>
+											</button>
+											<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1">10 Almas</p>
+										</div>
+									</div>
+									<div class="mt-5">
+										<p class="uppercase text-2xl text-center text-neutral-800 font-bold">Armas</p>
+										<div id="itens" class="mt-1 flex justify-center gap-2">
+											<div class="flex flex-col items-center">
+												<button title="AK-47" class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-item="ak47" data-price="50">
+													<div class="w-full h-full flex flex-col justify-center">
+														<img class="mx-auto -rotate-45" src="arquivos/assets/itens/ak47.png">
+													</div>
+												</button>
+												<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1">50 Almas</p>
+											</div>
+											<button class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 rounded-xl border-2 border-neutral-300 cursor-not-allowed opacity-50">
+												<div class="w-full h-full flex items-center">
+													
+												</div>
+											</button>
+											<button class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 rounded-xl border-2 border-neutral-300 cursor-not-allowed opacity-50">
+												<div class="w-full h-full flex items-center">
+													
+												</div>
+											</button>
+											<button class="w-20 h-20 p-1 my-2 text-left bg-neutral-500  rounded-xl border-2 border-neutral-300 cursor-not-allowed opacity-50">
+												<div class="w-full h-full flex items-center">
+													
+												</div>
+											</button>
+											<button class="w-20 h-20 p-1 my-2 text-left bg-neutral-500  rounded-xl border-2 border-neutral-300 cursor-not-allowed opacity-50">
+												<div class="w-full h-full flex items-center">
+													
+												</div>
+											</button>
+										</div>
+									</div>
+								</div>
+
+								<div>
+									<button id="close-skills" class="px-3 py-1 bg-red-800">Fechar</button>
+								</div>
+							</div>
+						</div>
+					</div>
 				</section>
 				<section id="die-screen" class="w-full h-full hidden">
 					<div id="die-container" class="flex flex-col justify-center items-center w-full h-full bg-neutral-900/75">
@@ -176,103 +273,6 @@
 								<button id="continue-button" class="btn-default w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300">Continuar</button>
 								<button id="restart-button-2" class="restart-btns btn-default w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300" data-screen="pause-screen">Reiniciar</button>
 								<button class="back-to-menu-btns btn-default w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300" data-screen="pause-screen">Menu</button>
-							</div>
-						</div>
-					</div>
-				</section>
-				<section id="skills-screen" class="w-full h-full absolute transition-all duration-500 opacity-0 hidden">
-					<div id="skills-container" class="w-full h-full flex justify-center items-center bg-neutral-900/75">
-						<div class="w-[32rem] h-[27rem] p-2 relative flex flex-col justify-between bg-neutral-400 border-2 border-white rounded-xl">
-							<div class="w-16 absolute -top-0 -right-20 flex justify-center items-center py-1 bg-neutral-400/50 border-[1.5px] border-white rounded-xl">
-								<img class="w-5 h-5 mr-1" src="arquivos/assets/icons/clock_icon.png">
-								<p id="waves-skills-timer" class="font-semibold">15s</p>
-							</div>
-							<div>
-								<p class="uppercase text-2xl text-center text-neutral-800 font-bold">Habilidades</p>
-								<div id="skills" class="mt-1 flex justify-center gap-2">
-									<div class="flex flex-col items-center">
-										<button title="Vida" class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="health" data-level="1" data-max="20" data-price="5">
-											<div class="w-full h-full flex flex-col justify-between">
-												<img class="mx-auto w-10 h-10" src="arquivos/assets/icons/life_icon.png" alt="Vida">
-												<p class="font-bold mx-auto transition-all duration-200">Lv 1</p>
-											</div>
-										</button>
-										<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1">5 Almas</p>
-									</div>
-									<div class="flex flex-col items-center">
-										<button title="Velocidade" class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="speed" data-level="1" data-max="5" data-price="5">
-											<div class="w-full h-full flex flex-col justify-between">
-												<img class="mx-auto w-10 h-10" src="arquivos/assets/icons/speed_icon.png" alt="Velocidade">
-												<p class="font-bold mx-auto transition-all duration-200">Lv 1</p>
-											</div>
-										</button>
-										<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1">5 Almas</p>
-									</div>
-									<div class="flex flex-col items-center">
-										<button title="Força" class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="strength" data-level="1" data-max="20" data-price="5">
-											<div class="w-full h-full flex flex-col justify-between">
-												<img class="mx-auto w-10 h-10" src="arquivos/assets/icons/strength_icon.png" alt="Força">
-												<p class="font-bold mx-auto transition-all duration-200">Lv 1</p>
-											</div>
-										</button>
-										<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1">5 Almas</p>
-									</div>
-									<div class="flex flex-col items-center">
-										<button title="Velocidade de Ataque" class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="attackspeed" data-level="1" data-max="2" data-price="10">
-											<div class="w-full h-full flex flex-col justify-between">
-												<img class="mx-auto w-10 h-10" src="arquivos/assets/icons/attack_speed_icon.png" alt="Velocidade de Ataque">
-												<p class="font-bold mx-auto transition-all duration-200">Lv 1</p>
-											</div>
-										</button>
-										<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1">10 Almas</p>
-									</div>
-									<div class="flex flex-col items-center">
-										<button title="Dropar mais loot" class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="loot" data-level="1" data-max="7" data-price="10">
-											<div class="w-full h-full flex flex-col justify-between">
-												<img class="mx-auto w-14 h-10" src="arquivos/assets/icons/loot_icon.png" alt="Loot">
-												<p class="font-bold mx-auto transition-all duration-200">Lv 1</p>
-											</div>
-										</button>
-										<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1">10 Almas</p>
-									</div>
-								</div>
-								<div class="mt-5">
-									<p class="uppercase text-2xl text-center text-neutral-800 font-bold">Armas</p>
-									<div id="itens" class="mt-1 flex justify-center gap-2">
-										<div class="flex flex-col items-center">
-											<button title="AK-47" class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-item="ak47" data-price="50">
-												<div class="w-full h-full flex flex-col justify-center">
-													<img class="mx-auto -rotate-45" src="arquivos/assets/itens/ak47.png">
-												</div>
-											</button>
-											<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1">50 Almas</p>
-										</div>
-										<button class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 rounded-xl border-2 border-neutral-300 cursor-not-allowed opacity-50">
-											<div class="w-full h-full flex items-center">
-												
-											</div>
-										</button>
-										<button class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 rounded-xl border-2 border-neutral-300 cursor-not-allowed opacity-50">
-											<div class="w-full h-full flex items-center">
-												
-											</div>
-										</button>
-										<button class="w-20 h-20 p-1 my-2 text-left bg-neutral-500  rounded-xl border-2 border-neutral-300 cursor-not-allowed opacity-50">
-											<div class="w-full h-full flex items-center">
-												
-											</div>
-										</button>
-										<button class="w-20 h-20 p-1 my-2 text-left bg-neutral-500  rounded-xl border-2 border-neutral-300 cursor-not-allowed opacity-50">
-											<div class="w-full h-full flex items-center">
-												
-											</div>
-										</button>
-									</div>
-								</div>
-							</div>
-
-							<div>
-								<button id="close-skills" class="px-3 py-1 bg-red-800">Fechar</button>
 							</div>
 						</div>
 					</div>
