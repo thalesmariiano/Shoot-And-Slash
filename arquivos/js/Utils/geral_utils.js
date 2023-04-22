@@ -1,4 +1,12 @@
 
+function spriteConverter(imgArray){
+	imgArray.forEach(spr => {
+		const img = new Image()
+		img.src = spr.image
+		spr.image = img
+	})
+}
+
 function generateEnemys(amount, health){
 	const newMapSize = mapSize - 100
 	for(i = 0; i < amount; i++){
