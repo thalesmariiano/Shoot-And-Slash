@@ -661,7 +661,7 @@ function holdingItem(){
 		const { item } = slot
 
 		if(item.type == "Weapon"){
-			weapon_status.classList.remove("text-slate-500")
+			weapon_status.style.color = ""
 		}
 
 		item.switchSprite(`ak47_${player.direction.toLowerCase()}`)
@@ -673,7 +673,7 @@ function holdingItem(){
 			item.position.y = player.position.y + itens_sprites.ak47.holding_position.y
 		}
 	}else{
-		weapon_status.classList.add("text-slate-500")
+		weapon_status.style.color = "#64748b"
 	}
 }
 
