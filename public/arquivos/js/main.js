@@ -413,10 +413,10 @@ skillsButton.forEach(button => {
 
 		if(isMaxLevel){
 			level_text.innerHTML = "Max"
-			level_text.classList.add("text-red-500")
+			level_text.style.color = "#f74a4a"
 
 			setTimeout(() => {
-				level_text.classList.remove("text-red-500")
+				level_text.style.color = ""
 				level_text.innerHTML = `Lv ${button.dataset.level}`		
 			}, 1000)
 			return
@@ -424,23 +424,23 @@ skillsButton.forEach(button => {
 
 		if(player.souls < skillPrice){
 			price_text.classList.add("animate__animated", "animate__shakeX")
-			price_text.classList.add("bg-red-500/75")
-			button.classList.add("border-red-500")
+			price_text.style.background = "#f74a4a"
+			button.style.border = "2px solid #f74a4a"
 
 			price_text.addEventListener("animationend", () => {
 				price_text.classList.remove("animate__animated", "animate__shakeX")
-				price_text.classList.remove("bg-red-500/75")
-				button.classList.remove("border-red-500")
+				price_text.style.background = ""
+				button.style.border = ""
 			})
 			return
 		}
 
-		price_text.classList.add("bg-green-700/75")
-		button.classList.add("border-green-700")
+		price_text.style.background = "green"
+		button.style.border = "2px solid green"
 
 		setTimeout(() => {
-			price_text.classList.remove("bg-green-700/75")
-			button.classList.remove("border-green-700")
+			price_text.style.background = ""
+			button.style.border = ""
 		}, 700)
 
 		player.souls -= skillPrice
@@ -488,23 +488,23 @@ itensButton.forEach(button => {
 
 		if(player.souls < skillPrice){
 			price_text.classList.add("animate__animated", "animate__shakeX")
-			price_text.classList.add("bg-red-500/75")
-			button.classList.add("border-red-500")
+			price_text.style.background = "#f74a4a"
+			button.style.border = "2px solid #f74a4a"
 
 			price_text.addEventListener("animationend", () => {
 				price_text.classList.remove("animate__animated", "animate__shakeX")
-				price_text.classList.remove("bg-red-500/75")
-				button.classList.remove("border-red-500")
+				price_text.style.background = ""
+				button.style.border = ""
 			})
 			return
 		}
 
-		price_text.classList.add("bg-green-700/75")
-		button.classList.add("border-green-700")
+		price_text.style.background = "green"
+		button.style.border = "2px solid green"
 
 		setTimeout(() => {
-			price_text.classList.remove("bg-green-700/75")
-			button.classList.remove("border-green-700")
+			price_text.style.background = ""
+			button.style.border = ""
 		}, 700)
 
 		player.souls -= skillPrice
