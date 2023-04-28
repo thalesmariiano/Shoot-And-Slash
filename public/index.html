@@ -32,8 +32,8 @@
 
 							<nav>
 								<div class="text-center">
-									<button id="play-button" class="btn-default w-48 py-1.5 mx-5 my-2 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300">Jogar</button>
-									<button id="options-button" class="btn-default w-48 py-1.5 mx-5 my-2 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300">Opções</button>
+									<button id="play-button" class="font-inter w-48 py-1.5 mx-5 my-2 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300">Jogar</button>
+									<button id="options-button" class="font-inter w-48 py-1.5 mx-5 my-2 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300">Opções</button>
 								</div>
 							</nav>
 
@@ -48,7 +48,7 @@
 				<section id="options-screen" class="w-full h-full hidden">
 						<div id="option-container" class="flex flex-col justify-center items-center w-full h-full">
 							<div class="title-container">
-								<h2 class="title">Opções</h2>
+								<h2 class="font-bold font-righteous text-5xl uppercase">Opções</h2>
 							</div>
 							<div id="switch-controls" class="my-7">
 								<div id="controls-visual" class="flex items-end">
@@ -94,7 +94,7 @@
 									</div>
 								</div>
 							</div>
-							<button id="backToMenuOptions-button" class="btn-default w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300">Voltar</button>
+							<button id="backToMenuOptions-button" class="font-inter w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300">Voltar</button>
 						</div>
 				</section>
 				<section id="hud-screen" class="w-full h-full relative p-5 transition-all duration-500 hidden">
@@ -244,7 +244,7 @@
 				<section id="die-screen" class="w-full h-full hidden">
 					<div id="die-container" class="flex flex-col justify-center items-center w-full h-full bg-neutral-900/75">
 						<div class="title-container">
-							<h2 class="title">Você morreu</h2>
+							<h2 class="font-bold font-righteous text-5xl uppercase">Você morreu</h2>
 						</div>
 						<div class="my-5">
 							<div class="text-center">
@@ -254,8 +254,8 @@
 						</div>
 						<nav class="menu mt-1">
 							<div class="menu-container flex flex-col gap-3">
-								<button id="restart-button" class="restart-btns btn-default w-48 py-1.5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300" data-screen="die-screen">Reiniciar</button>
-								<button id="backToMenu-button" class="back-to-menu-btns btn-default w-48 py-1.5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300" data-screen="die-screen">Menu</button>
+								<button id="restart-button" class="restart-btns font-inter w-48 py-1.5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300" data-screen="die-screen">Reiniciar</button>
+								<button id="backToMenu-button" class="back-to-menu-btns font-inter w-48 py-1.5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300" data-screen="die-screen">Menu</button>
 							</div>
 						</nav>
 					</div>
@@ -263,14 +263,14 @@
 				<section id="pause-screen" class="w-full h-full hidden">
 					<div id="pause-container" class="flex flex-col justify-center items-center w-full h-full bg-neutral-900/75">
 						<div class="title-container">
-							<h2 class="title">Jogo pausado!</h2>
+							<h2 class="font-bold font-righteous text-5xl uppercase">Jogo pausado!</h2>
 						</div>
 
 						<nav class="menu mt-10">
 							<div class="menu-container flex flex-col gap-3">
-								<button id="continue-button" class="btn-default w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300">Continuar</button>
-								<button id="restart-button-2" class="restart-btns btn-default w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300" data-screen="pause-screen">Reiniciar</button>
-								<button class="back-to-menu-btns btn-default w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300" data-screen="pause-screen">Menu</button>
+								<button id="continue-button" class="font-inter w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300">Continuar</button>
+								<button id="restart-button-2" class="restart-btns font-inter w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300" data-screen="pause-screen">Reiniciar</button>
+								<button class="back-to-menu-btns font-inter w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300" data-screen="pause-screen">Menu</button>
 							</div>
 						</div>
 					</div>
