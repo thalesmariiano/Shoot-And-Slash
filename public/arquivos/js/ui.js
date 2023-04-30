@@ -55,5 +55,27 @@ close_skills.addEventListener("click", () => {
 	timeBetweenWaves = 5
 })
 
+const warning_screen = document.querySelector("#warning-screen")
+const close_warning = document.querySelector("#close-warning")
+
+warning_screen.classList.remove("hidden")
+warning_screen.classList.add("animate__animated", "animate__bounceIn")
+
+warning_screen.addEventListener("animationend", () => {
+	warning_screen.classList.remove("animate__animated", "animate__bounceIn")
+})
+
+document.querySelector("body").style.overflow = "hidden"
+
+close_warning.addEventListener("click", () => {
+	warning_screen.classList.add("animate__animated", "animate__bounceOut")
+
+	warning_screen.addEventListener("animationend", () => {
+		warning_screen.classList.remove("animate__animated", "animate__bounceOut")
+		warning_screen.classList.add("hidden")
+		document.querySelector("body").style.overflow = ""
+	})
+})
+
 
 
