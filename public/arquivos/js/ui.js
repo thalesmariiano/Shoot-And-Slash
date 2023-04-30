@@ -1,12 +1,17 @@
 
 const play_button               = document.getElementById("play-button")
 const options_button            = document.getElementById("options-button")
+const arcade_mode_button        = document.getElementById("arcade-mode-button")
 const continue_button           = document.getElementById("continue-button")
 const restart_buttons           = document.querySelectorAll(".restart-btns")
 const back_to_menu_buttons      = document.querySelectorAll(".back-to-menu-btns")
 const back_from_options_button  = document.getElementById("backToMenuOptions-button")
 const back_from_gm_button       = document.getElementById("backToGm-button")
 
+arcade_mode_button.addEventListener("click", () => {
+	init()
+	switchScreen("hud-screen", "gamemodes-screen")
+})
 
 play_button.addEventListener("click", () => {
 	switchScreen("gamemodes-screen", "start-screen")
