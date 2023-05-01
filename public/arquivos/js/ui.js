@@ -64,27 +64,36 @@ close_skills.addEventListener("click", () => {
 	timeBetweenWaves = 5
 })
 
-// const warning_screen = document.querySelector("#warning-screen")
-// const close_warning = document.querySelector("#close-warning")
+const newsStoraged = window.localStorage.getItem("SaS-News")
 
-// warning_screen.classList.remove("hidden")
-// warning_screen.classList.add("animate__animated", "animate__bounceIn")
 
-// warning_screen.addEventListener("animationend", () => {
-// 	warning_screen.classList.remove("animate__animated", "animate__bounceIn")
-// })
+if(parseFloat(newsStoraged) != 1.2){
+	const warning_screen = document.querySelector("#warning-screen")
+	const close_warning = document.querySelector("#close-warning")
 
-// document.querySelector("body").style.overflow = "hidden"
+	warning_screen.classList.remove("hidden")
+	warning_screen.classList.add("animate__animated", "animate__bounceIn")
 
-// close_warning.addEventListener("click", () => {
-// 	warning_screen.classList.add("animate__animated", "animate__bounceOut")
+	warning_screen.addEventListener("animationend", () => {
+		warning_screen.classList.remove("animate__animated", "animate__bounceIn")
+	})
 
-// 	warning_screen.addEventListener("animationend", () => {
-// 		warning_screen.classList.remove("animate__animated", "animate__bounceOut")
-// 		warning_screen.classList.add("hidden")
-// 		document.querySelector("body").style.overflow = ""
-// 	})
-// })
+	document.querySelector("body").style.overflow = "hidden"
+
+	close_warning.addEventListener("click", () => {
+		window.localStorage.setItem("SaS-News", 1.2)
+
+		warning_screen.classList.add("animate__animated", "animate__bounceOut")
+
+		warning_screen.addEventListener("animationend", () => {
+			warning_screen.classList.remove("animate__animated", "animate__bounceOut")
+			warning_screen.classList.add("hidden")
+			document.querySelector("body").style.overflow = ""
+		})
+	})
+}
+
+
 
 
 
