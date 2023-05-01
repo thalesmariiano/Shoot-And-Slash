@@ -1,5 +1,7 @@
 if(!window.localStorage.getItem("SaSdialog")) window.localStorage.setItem("SaSdialog", 1)
 if(!window.localStorage.getItem("SaS-Arcade")) window.localStorage.setItem("SaS-Arcade", 0)
+if(!window.localStorage.getItem("SaS-News")) window.localStorage.setItem("SaS-Arcade", 0)
+
 
 document.querySelector("#arcade-record").innerHTML = `Recorde: ${window.localStorage.getItem("SaS-Arcade")}`
 
