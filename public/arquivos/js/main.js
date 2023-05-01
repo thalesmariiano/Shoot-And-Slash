@@ -1,4 +1,7 @@
 if(!window.localStorage.getItem("SaSdialog")) window.localStorage.setItem("SaSdialog", 1)
+if(!window.localStorage.getItem("SaS-Arcade")) window.localStorage.setItem("SaS-Arcade", 0)
+
+document.querySelector("#arcade-record").innerHTML = `Recorde: ${window.localStorage.getItem("SaS-Arcade")}`
 
 var developerMode = false
 
@@ -627,6 +630,7 @@ function playerActions(){
 
 		setTimeout(() => {
 			gameIsPaused = true
+			saveData()
 			switchScreen("die-screen", "hud-screen")
 		}, 1500)
 	}
@@ -731,6 +735,13 @@ function enemysWaves(){
 				clearInterval(wavesTimer)
 			}else timeBetweenWaves--
 		}, 1000)
+	}
+}
+
+function saveData(){
+	if(enemysKilled > parseInt(window.localStorage.getItem("SaS-Arcade"))){
+		window.localStorage.setItem("SaS-Arcade", enemysKilled)
+		document.querySelector("#arcade-record").innerHTML = `Recorde: ${window.localStorage.getItem("SaS-Arcade")}`
 	}
 }
 
@@ -941,6 +952,8 @@ function restart(){
 	souls_amount.innerHTML = 0
 	weapon_status.classList.add("hidden")
 
+	saveData()
+
 	player.restart()
 	init()
 }
@@ -998,6 +1011,8 @@ function destroy(){
 	munition_amount.innerHTML = 0
 	souls_amount.innerHTML = 0
 	weapon_status.classList.add("hidden")
+
+	saveData()
 
 	player.restart()
 	ctx.clearRect(0, 0, canvas.width, canvas.height)
