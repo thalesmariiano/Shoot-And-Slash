@@ -4,7 +4,7 @@
   "description": "Um jogo estilo hack and slash",
   "main": "index.js",
   "scripts": {
-    "start": "tailwindcss -i ./public/styles.css -o ./dist/styles.css --watch"
+    "start": "tailwindcss -i ./public/styles.css -o ./public/arquivos/css/styles.css --watch"
   },
   "repository": {
     "type": "git",
