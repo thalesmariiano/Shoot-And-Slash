@@ -19,8 +19,7 @@
 
 		<title>Shoot And Slash - Jogo 2D estilo hack and slash</title>
 	</head>
-	<body>
-		
+	<body class="text-white">
 		<main id="container" class="flex justify-center items-center relative min-h-screen">
 			<canvas>O seu navegador não suporta o canvas.</canvas>
 
@@ -135,7 +134,7 @@
 					</div>
 				</section>
 				<section id="hud-screen" class="w-full h-full relative p-5 transition-all duration-500 hidden">
-					<div id="hud-container" class="w-full">
+					<div id="hud-container" class="w-full h-[70px] flex justify-start items-center p-[5px]">
 						<div id="weapon-icon-container" class="relative">
 							<div id="weapon-icon" class="w-16 h-16 border-4 border-black rounded-xl bg-neutral-500/75 flex justify-center items-center">
 								<img id="weapon-icon-img" class="-rotate-45" src="arquivos/assets/null.png">
@@ -144,10 +143,10 @@
 								<span id="bullets-amount">0</span>/<span id="munition-amount">0</span>
 							</p>
 						</div>
-						<div id="status-container">
-							<div id="health-container">
-								<div id="health-amount"></div>
-								<div id="health-bar">
+						<div class="flex flex-col justify-start h-full pl-[5px]">
+							<div id="health-container" class="w-[100px] h-[21px] mt-[5px] bg-[#999] border-y-[1.5px] border-black relative">
+								<div id="health-amount" class="w-full h-full bg-red-700 transition-all duration-200"></div>
+								<div id="health-bar" class="flex h-full absolute top-0 left-0">
 									<div class="health-points"></div>
 									<div class="health-points"></div>
 									<div class="health-points"></div>
