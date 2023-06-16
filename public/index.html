@@ -11,6 +11,8 @@
   		<!-- TAILWIND CSS -->
   		<link rel="stylesheet" href="arquivos/css/styles.css">
 
+  		<script src="https://cdn.tailwindcss.com"></script>
+
 		<!-- Animate CSS -->
 		<link rel="stylesheet" href="http
 		s://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
@@ -22,7 +24,7 @@
 			<canvas>O seu navegador não suporta o canvas.</canvas>
 
 			<div id="screens-container" class="absolute w-full h-full">
-				<section id="start-screen" class="w-full h-full bg-neutral-900">
+				<section id="start-screen" class="w-full h-full bg-gradient-to-tr from-neutral-900 to-neutral-800">
 					<div id="start-container" class="flex justify-center items-center w-full h-full">
 						<div class="flex flex-col gap-10 justify-between items-center w-full max-h-[888px]">
 							<div id="logo-container" class="max-w-[25rem]">
@@ -37,14 +39,14 @@
 							</nav>
 
 							<div id="credits-container">
-								<p class="font-inter text-center text-sm">Este jogo está em <strong>Alpha</strong>, e não representa a sua versão final.<br>
+								<p class="font-inter text-center text-sm">Este jogo está em <strong>Alpha</strong>, e não representa a sua versão final.</p>
 								<p class="font-inter text-center text-sm">Tem uma sugestão ou encontrou algum bug? <a href="https://twitter.com/dev_thales" target="_blank" class="text-stone-200 underline hover:text-teal-500">Mande aqui!</a></p>
 								<p class="font-inter text-center text-sm">Este é um projeto de código aberto: <a href="https://github.com/thalesmariiano/shoot-and-slash" target="_blank" class="text-stone-200 underline hover:text-teal-500">Veja aqui</a>!</p>
 							</div>
 						</div>
 					</div>
 				</section>
-				<section id="gamemodes-screen" class="w-full h-full bg-neutral-900 hidden">
+				<section id="gamemodes-screen" class="w-full h-full bg-gradient-to-tr from-neutral-900 to-neutral-800 hidden">
 					<div class="w-full h-full flex flex-col justify-evenly items-center">
 						<h1 class="text-center uppercase font-righteous font-bold text-4xl">Modos de jogo</h1>
 						<div class="flex gap-7">
@@ -79,7 +81,7 @@
 						<button id="backToGm-button" class="font-inter w-48 py-1.5 mx-5 my-2 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300">Voltar</button>
 					</div>
 				</section>
-				<section id="options-screen" class="w-full h-full bg-neutral-900 hidden">
+				<section id="options-screen" class="w-full h-full bg-gradient-to-tr from-neutral-900 to-neutral-800 hidden">
 					<div id="option-container" class="flex flex-col justify-center items-center w-full h-full">
 						<div class="title-container">
 							<h2 class="font-bold font-righteous text-5xl uppercase">Opções</h2>
