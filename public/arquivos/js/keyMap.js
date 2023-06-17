@@ -12,15 +12,15 @@ const controlKey = {
 }
 
 if(getControl == 1){
-	getElement(1).classList.remove("opacity-50", "hover:opacity-75")
-	getElement(2).classList.add("opacity-50", "hover:opacity-75")
+	getElement(1).classList.remove("opacity-40", "hover:opacity-75")
+	getElement(2).classList.add("opacity-40", "hover:opacity-75")
 	controlKey.left   = "KeyA"
 	controlKey.right  = "KeyD"
 	controlKey.jump   = "Space"
 	controlKey.jump_2 = "KeyW"
 }else{
-	getElement(2).classList.remove("opacity-50", "hover:opacity-75")
-	getElement(1).classList.add("opacity-50", "hover:opacity-75")
+	getElement(2).classList.remove("opacity-40", "hover:opacity-75")
+	getElement(1).classList.add("opacity-40", "hover:opacity-75")
 	controlKey.left   = "ArrowLeft"
 	controlKey.right  = "ArrowRight"
 	controlKey.jump   = "ArrowUp"
@@ -35,8 +35,8 @@ const switchControls = (control, type) => {
 		case 1:
 			if(getControl == 2){
 				window.localStorage.setItem("SaSControl", 1)
-				control.classList.remove("opacity-50", "hover:opacity-75")
-				getElement(2).classList.add("opacity-50", "hover:opacity-75")
+				control.classList.remove("opacity-40", "hover:opacity-75")
+				getElement(2).classList.add("opacity-40", "hover:opacity-75")
 				controlKey.left   = "KeyA"
 				controlKey.right  = "KeyD"
 				controlKey.jump   = "Space"
@@ -47,8 +47,8 @@ const switchControls = (control, type) => {
 		case 2:
 			if(getControl == 1){
 				window.localStorage.setItem("SaSControl", 2)
-				control.classList.remove("opacity-50", "hover:opacity-75")
-				getElement(1).classList.add("opacity-50", "hover:opacity-75")
+				control.classList.remove("opacity-40", "hover:opacity-75")
+				getElement(1).classList.add("opacity-40", "hover:opacity-75")
 				controlKey.left   = "ArrowLeft"
 				controlKey.right  = "ArrowRight"
 				controlKey.jump   = "ArrowUp"
