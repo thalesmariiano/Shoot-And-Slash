@@ -13,6 +13,12 @@
 
   		<script src="https://cdn.tailwindcss.com"></script>
 
+  		<style>
+  			.animate__animated.animate__fadeIn {
+			  --animate-duration: 1s;
+			}
+  		</style>
+
 		<!-- Animate CSS -->
 		<link rel="stylesheet" href="http
 		s://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
@@ -24,7 +30,7 @@
 			<canvas>O seu navegador não suporta o canvas.</canvas>
 
 			<div id="screens-container" class="absolute w-full h-full">
-				<section id="start-screen" class="w-full h-full bg-gradient-to-tr from-neutral-900 to-neutral-800 hidden">
+				<section id="start-screen" class="w-full h-full bg-gradient-to-tr from-neutral-900 to-neutral-800">
 					<div id="start-container" class="flex justify-center items-center w-full h-full">
 						<div class="flex flex-col gap-10 justify-between items-center w-full max-h-[888px]">
 							<div id="logo-container" class="max-w-[25rem]">
@@ -88,7 +94,7 @@
 						<button id="backToGm-button" class="font-inter w-48 py-1.5 mx-5 my-2 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400">Voltar</button>
 					</div>
 				</section>
-				<section id="options-screen" class="w-full h-full bg-gradient-to-tr from-neutral-900 to-neutral-800 ">
+				<section id="options-screen" class="w-full h-full bg-gradient-to-tr from-neutral-900 to-neutral-800 hidden">
 					<div id="option-container" class="w-full h-full flex flex-col justify-center items-center gap-y-12">
 						<div class="title-container">
 							<h2 class="font-bold font-righteous text-5xl uppercase underline">Opções</h2>

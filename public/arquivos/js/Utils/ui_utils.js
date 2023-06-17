@@ -1,7 +1,15 @@
 
 function switchScreen(screen1, screen2){
-	document.getElementById(screen1).classList.remove("hidden")
-	document.getElementById(screen2).classList.add("hidden")
+	const screenIn = document.getElementById(screen1)
+	const screenOut = document.getElementById(screen2)
+
+	screenIn.classList.remove("hidden")
+
+	screenIn.classList.add("animate__animated", "animate__fadeIn")
+	screenIn.addEventListener("animationend", () => {
+		screenIn.classList.remove("animate__animated", "animate__fadeIn")
+	})
+	screenOut.classList.add("hidden")
 }
 
 const skills_screen = document.getElementById("skills-screen")
