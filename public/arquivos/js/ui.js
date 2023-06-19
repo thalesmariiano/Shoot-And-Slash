@@ -11,6 +11,7 @@ const back_from_gm_button       = document.getElementById("backToGm-button")
 arcade_mode_button.addEventListener("click", () => {
 	init()
 	switchScreen("hud-screen", "gamemodes-screen")
+	document.querySelector("#uis-container").classList.add("hidden")
 })
 
 play_button.addEventListener("click", () => {
@@ -44,6 +45,7 @@ back_to_menu_buttons.forEach(btn => {
 	btn.addEventListener("click", () => {
 		destroy()
 		switchScreen("start-screen", btn.dataset.screen)
+		document.querySelector("#uis-container").classList.remove("hidden")
 	})
 })
 
