@@ -30,114 +30,116 @@
 			<canvas>O seu navegador não suporta o canvas.</canvas>
 
 			<div id="screens-container" class="absolute w-full h-full">
-				<section id="start-screen" class="w-full h-full bg-gradient-to-tr from-neutral-900 to-neutral-800">
-					<div id="start-container" class="flex justify-center items-center w-full h-full">
-						<div class="flex flex-col gap-10 justify-between items-center w-full max-h-[888px]">
-							<div id="logo-container" class="max-w-[25rem]">
-								<img src="arquivos/assets/sas_logo.png" alt="Shoot And Slash">
-							</div>
+				<div id="uis-container" class="w-full h-full bg-gradient-to-tr from-neutral-900 to-neutral-800">
+					<section id="start-screen" class="w-full h-full">
+						<div id="start-container" class="flex justify-center items-center w-full h-full">
+							<div class="flex flex-col gap-10 justify-between items-center w-full max-h-[888px]">
+								<div id="logo-container" class="max-w-[25rem]">
+									<img src="arquivos/assets/sas_logo.png" alt="Shoot And Slash">
+								</div>
 
-							<nav>
-								<div class="text-center">
-									<button id="play-button" class="font-inter w-48 py-1.5 mx-5 my-2 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400">Jogar</button>
-									<button id="options-button" class="font-inter w-48 py-1.5 mx-5 my-2 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400">Opções</button>
-								</div>
-							</nav>
+								<nav>
+									<div class="text-center">
+										<button id="play-button" class="font-inter w-48 py-1.5 mx-5 my-2 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400">Jogar</button>
+										<button id="options-button" class="font-inter w-48 py-1.5 mx-5 my-2 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400">Opções</button>
+									</div>
+								</nav>
 
-							<div id="credits-container">
-								<p class="font-inter text-zinc-400 text-center text-sm">Este jogo está em <strong>Alpha</strong>, e não representa a sua versão final.</p>
-								<p class="font-inter text-zinc-400 text-center text-sm">Tem uma sugestão ou encontrou algum bug? <a href="https://twitter.com/dev_thales" target="_blank" class="text-zinc-300 underline hover:text-teal-500">Mande aqui!</a></p>
-								<p class="font-inter text-zinc-400 text-center text-sm">Este é um projeto de código aberto: <a href="https://github.com/thalesmariiano/shoot-and-slash" target="_blank" class="text-zinc-300 underline hover:text-teal-500">Veja aqui</a>!</p>
-							</div>
+								<div id="credits-container">
+									<p class="font-inter text-zinc-400 text-center text-sm">Este jogo está em <strong>Alpha</strong>, e não representa a sua versão final.</p>
+									<p class="font-inter text-zinc-400 text-center text-sm">Tem uma sugestão ou encontrou algum bug? <a href="https://twitter.com/dev_thales" target="_blank" class="text-zinc-300 underline hover:text-teal-500">Mande aqui!</a></p>
+									<p class="font-inter text-zinc-400 text-center text-sm">Este é um projeto de código aberto: <a href="https://github.com/thalesmariiano/shoot-and-slash" target="_blank" class="text-zinc-300 underline hover:text-teal-500">Veja aqui</a>!</p>
+								</div>
 
-							<div>
-								<a href="https://thalesdeveloper.com.br" target="_blank">
-									<span class="text-xs text-zinc-400">Made by</span>
-									<img class="w-36 brightness-75" src="arquivos/assets/thalesdeveloper_logo.png">
-								</a>
-							</div>
-						</div>
-					</div>
-				</section>
-				<section id="gamemodes-screen" class="w-full h-full bg-gradient-to-tr from-neutral-900 to-neutral-800 hidden">
-					<div class="w-full h-full flex flex-col justify-evenly items-center">
-						<h1 class="text-center uppercase font-righteous font-bold text-4xl">Modos de jogo</h1>
-						<div class="flex gap-7">
-							<div class="w-64 h-80 bg-neutral-600 relative border-4 border-neutral-400 rounded-lg cursor-not-allowed opacity-20">
-								<div class="flex justify-center items-center w-full h-full rounded-lg">
-									
-								</div>
-								<div class="w-full bg-gradient-to-t from-neutral-800 py-4 text-center absolute bottom-0 rounded-b-lg">
-									<p class="font-inter text-xl uppercase font-bold">História</p>
-									<p class="font-inter text-sm">Em breve</p>
-								</div>
-							</div>
-							<div id="arcade-mode-button" class="w-64 h-80 group bg-neutral-600 relative border-4 border-neutral-500 rounded-lg  hover:scale-105 hover:border-white transition cursor-pointer">
-								<div class="flex justify-center items-center w-full h-full">
-									<img class="w-full h-full contrast-75 group-hover:contrast-100 rounded-lg" src="arquivos/assets/banner/arcade_banner.png">
-								</div>
-								<div class="w-full bg-gradient-to-t from-neutral-800 py-4 text-center absolute bottom-0 rounded-b-lg">
-									<p class="font-inter text-xl uppercase font-bold text-shadow">Arcade</p>
-									<p id="arcade-record" class="font-inter text-sm text-neutral-400 text-shadow">Recorde: 0</p>
-								</div>
-							</div>
-							<div class="w-64 h-80 bg-neutral-600 relative border-4 border-neutral-400 rounded-lg cursor-not-allowed opacity-20">
-								<div class="flex justify-center items-center w-full h-full rounded-lg">
-									
-								</div>
-								<div class="w-full bg-gradient-to-t from-neutral-800 py-4 text-center absolute bottom-0 rounded-b-lg">
-									<p class="font-inter text-xl uppercase font-bold">Multiplayer</p>
-									<p class="font-inter text-sm">Em breve</p>
+								<div>
+									<a href="https://thalesdeveloper.com.br" target="_blank">
+										<span class="text-xs text-zinc-400">Made by</span>
+										<img class="w-36 brightness-75" src="arquivos/assets/thalesdeveloper_logo.png">
+									</a>
 								</div>
 							</div>
 						</div>
-						<button id="backToGm-button" class="font-inter w-48 py-1.5 mx-5 my-2 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400">Voltar</button>
-					</div>
-				</section>
-				<section id="options-screen" class="w-full h-full bg-gradient-to-tr from-neutral-900 to-neutral-800 hidden">
-					<div id="option-container" class="w-full h-full flex flex-col justify-center items-center gap-y-12">
-						<div class="title-container">
-							<h2 class="font-bold font-righteous text-5xl uppercase underline">Opções</h2>
+					</section>
+					<section id="gamemodes-screen" class="w-full h-full hidden">
+						<div class="w-full h-full flex flex-col justify-evenly items-center">
+							<h1 class="text-center uppercase font-righteous font-bold text-4xl">Modos de jogo</h1>
+							<div class="flex gap-7">
+								<div class="w-64 h-80 bg-neutral-600 relative border-4 border-neutral-400 rounded-lg cursor-not-allowed opacity-20">
+									<div class="flex justify-center items-center w-full h-full rounded-lg">
+										
+									</div>
+									<div class="w-full bg-gradient-to-t from-neutral-800 py-4 text-center absolute bottom-0 rounded-b-lg">
+										<p class="font-inter text-xl uppercase font-bold">História</p>
+										<p class="font-inter text-sm">Em breve</p>
+									</div>
+								</div>
+								<div id="arcade-mode-button" class="w-64 h-80 group bg-neutral-600 relative border-4 border-neutral-500 rounded-lg  hover:scale-105 hover:border-white transition cursor-pointer">
+									<div class="flex justify-center items-center w-full h-full">
+										<img class="w-full h-full contrast-75 group-hover:contrast-100 rounded-lg" src="arquivos/assets/banner/arcade_banner.png">
+									</div>
+									<div class="w-full bg-gradient-to-t from-neutral-800 py-4 text-center absolute bottom-0 rounded-b-lg">
+										<p class="font-inter text-xl uppercase font-bold text-shadow">Arcade</p>
+										<p id="arcade-record" class="font-inter text-sm text-neutral-400 text-shadow">Recorde: 0</p>
+									</div>
+								</div>
+								<div class="w-64 h-80 bg-neutral-600 relative border-4 border-neutral-400 rounded-lg cursor-not-allowed opacity-20">
+									<div class="flex justify-center items-center w-full h-full rounded-lg">
+										
+									</div>
+									<div class="w-full bg-gradient-to-t from-neutral-800 py-4 text-center absolute bottom-0 rounded-b-lg">
+										<p class="font-inter text-xl uppercase font-bold">Multiplayer</p>
+										<p class="font-inter text-sm">Em breve</p>
+									</div>
+								</div>
+							</div>
+							<button id="backToGm-button" class="font-inter w-48 py-1.5 mx-5 my-2 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400">Voltar</button>
 						</div>
-						<div class="space-y-5">
-							<div id="switch-controls">
-								<p class="font-bold font-inter">Controles</p>
-								<div id="controls-visual" class="flex justify-end">
-									<div class="flex justify-center items-center">
-										<div id="type-1" class="flex justify-center items-center cursor-pointer opacity-40 hover:opacity-75" data-control="1" onclick="switchControls(this, 1)">
-											<img class="w-28" src="arquivos/assets/wasd_icon.png">
+					</section>
+					<section id="options-screen" class="w-full h-full hidden">
+						<div id="option-container" class="w-full h-full flex flex-col justify-center items-center gap-y-12">
+							<div class="title-container">
+								<h2 class="font-bold font-righteous text-5xl uppercase underline">Opções</h2>
+							</div>
+							<div class="space-y-5">
+								<div id="switch-controls">
+									<p class="font-bold font-inter">Controles</p>
+									<div id="controls-visual" class="flex justify-end">
+										<div class="flex justify-center items-center">
+											<div id="type-1" class="flex justify-center items-center cursor-pointer opacity-40 hover:opacity-75" data-control="1" onclick="switchControls(this, 1)">
+												<img class="w-28" src="arquivos/assets/wasd_icon.png">
+											</div>
+										</div>
+										<div class="flex flex-col justify-center items-center">
+											<div id="type-2" class="flex justify-center items-center cursor-pointer opacity-40 hover:opacity-75" data-control="2" onclick="switchControls(this, 2)">
+												<img class="w-28" src="arquivos/assets/arrows_icon.png">
+											</div>
 										</div>
 									</div>
-									<div class="flex flex-col justify-center items-center">
-										<div id="type-2" class="flex justify-center items-center cursor-pointer opacity-40 hover:opacity-75" data-control="2" onclick="switchControls(this, 2)">
-											<img class="w-28" src="arquivos/assets/arrows_icon.png">
+								</div>
+								<hr/>
+								<div id="memory">
+									<div class="flex flex-col justify-center items-start gap-y-3">
+										<div>
+											<div class="flex items-center">
+												<p class="font-bold font-inter">Informações</p>
+												<div class="w-4 h-4 bg-neutral-700 flex justify-center items-center rounded-full ml-2 text-zinc-500 text-sm cursor-pointer">?</div>
+											</div>
+											<label class="text-zinc-300">
+												<input id="save-memory" class="ml-1 translate-y-[1px]" type="checkbox" checked>
+												Salvar
+											</label>
+										</div>
+										<div>
+											<p class="font-bold font-inter">Histórico do jogo</p>
+											<button class="bg-red-800 ml-1 text-zinc-300 font-inter text-sm px-3 rounded-lg hover:bg-red-900">Deletar</button>
 										</div>
 									</div>
 								</div>
 							</div>
-							<hr/>
-							<div id="memory">
-								<div class="flex flex-col justify-center items-start gap-y-3">
-									<div>
-										<div class="flex items-center">
-											<p class="font-bold font-inter">Informações</p>
-											<div class="w-4 h-4 bg-neutral-700 flex justify-center items-center rounded-full ml-2 text-zinc-500 text-sm cursor-pointer">?</div>
-										</div>
-										<label class="text-zinc-300">
-											<input id="save-memory" class="ml-1 translate-y-[1px]" type="checkbox" checked>
-											Salvar
-										</label>
-									</div>
-									<div>
-										<p class="font-bold font-inter">Histórico do jogo</p>
-										<button class="bg-red-800 ml-1 text-zinc-300 font-inter text-sm px-3 rounded-lg hover:bg-red-900">Deletar</button>
-									</div>
-								</div>
-							</div>
+							<button id="backToMenuOptions-button" class="font-inter w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400">Voltar</button>
 						</div>
-						<button id="backToMenuOptions-button" class="font-inter w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400">Voltar</button>
-					</div>
-				</section>
+					</section>
+				</div> 
 				<section id="hud-screen" class="w-full h-full relative p-5 transition-all duration-500 hidden">
 					<div id="hud-container" class="w-full h-[70px] flex justify-start items-center p-[5px]">
 						<div id="weapon-icon-container" class="relative">
