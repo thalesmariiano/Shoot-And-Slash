@@ -8,9 +8,9 @@ document.querySelector("#arcade-record").innerHTML = `Recorde: ${window.localSto
 var developerMode = false
 
 const canvas            = document.querySelector("canvas")
-const screens_container = document.querySelector("#screens-container")
-
 const ctx = canvas.getContext("2d", {alpha: false})
+
+const screens_container = document.querySelector("#screens-container")
 
 const GRAVITY = 0.6
 
