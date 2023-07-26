@@ -70,11 +70,11 @@ class Entity {
 	}
 
 	draw(){
-		ctx.drawImage(this.sprite, this.imgX, this.imgY, this.frameSizeX, this.frameSizeY, this.position.x - this.offest.x, this.position.y - this.offest.y, this.entitySizeX, this.entitySizeY)
+		buffer.drawImage(this.sprite, this.imgX, this.imgY, this.frameSizeX, this.frameSizeY, this.position.x - this.offest.x, this.position.y - this.offest.y, this.entitySizeX, this.entitySizeY)
 
 		if(developerMode){
-			ctx.strokeStyle = "black"
-			ctx.strokeRect(this.position.x, this.position.y, this.width, this.height)
+			buffer.strokeStyle = "black"
+			buffer.strokeRect(this.position.x, this.position.y, this.width, this.height)
 		}
 			
 		// ctx.fillStyle = this.color

@@ -8,7 +8,10 @@ document.querySelector("#arcade-record").innerHTML = `Recorde: ${window.localSto
 var developerMode = false
 
 const canvas            = document.querySelector("canvas")
-const ctx = canvas.getContext("2d", {alpha: false})
+const display = canvas.getContext("2d", {alpha: false})
+
+const cv = document.createElement("canvas")
+const buffer = cv.getContext('2d', {alpha: false})
 
 const screens_container = document.querySelector("#screens-container")
 
@@ -752,15 +755,17 @@ const middle = new Parallax(parallax_middle, 4)
 const front = new Parallax(parallax_front, 2)
 
 function render(){
-	ctx.save()
-	ctx.clearRect(0, 0, canvas.width, canvas.height)
+	display.save()
+	display.clearRect(0, 0, canvas.width, canvas.height)
+	buffer.save()
+	buffer.clearRect(0, 0, canvas.width, canvas.height)
 
 	/* PARALLAX */
 	back.update()
 	middle.update()
 	front.update()			
 
-	ctx.translate(
+	buffer.translate(
 		Math.floor(-camera.x),
 		Math.floor(-camera.y)
 	)
@@ -804,7 +809,7 @@ function render(){
 		const blockInArea = top || bottom || right || left
 
 		if(blockInArea){
-			ctx.drawImage(tilemap, block.imgX, block.imgY, 32, 32, block.position.x, block.position.y, block.width, block.height)				
+			buffer.drawImage(tilemap, block.imgX, block.imgY, 32, 32, block.position.x, block.position.y, block.width, block.height)				
 			basicCollision(player, block)
 		}
 	})
@@ -861,7 +866,9 @@ function render(){
 		}
 	})
 
-	ctx.restore()
+	display.drawImage(cv, 0, 0)
+	display.restore()
+	buffer.restore()
 
 }
 
@@ -1017,13 +1024,14 @@ function destroy(){
 	saveData()
 
 	player.restart()
-	ctx.clearRect(0, 0, canvas.width, canvas.height)
+	buffer.clearRect(0, 0, canvas.width, canvas.height)
 }
 
 const resizeAspectRatio = () => {
-	ctx.canvas.width = window.innerWidth
-	ctx.canvas.height = window.innerHeight
-	ctx.imageSmoothingEnabled = false
+	display.canvas.width = cv.width = window.innerWidth
+	display.canvas.height = cv.height = window.innerHeight
+	display.imageSmoothingEnabled = false
+	buffer.imageSmoothingEnabled = false
 }
 resizeAspectRatio()
 
