@@ -1,4 +1,6 @@
 
+const $ = element => document.querySelector(element)
+
 function spriteConverter(imgArray){
 	imgArray.forEach(spr => {
 		const img = new Image()
