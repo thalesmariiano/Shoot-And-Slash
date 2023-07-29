@@ -730,6 +730,7 @@ function enemysWaves(){
 				gameWave++
 				enemysCount += 3
 				generateEnemys(enemysCount, 100)
+				$("#waves-text").innerHTML = `Onda ${gameWave}`
 				showUI("waves-container", "animate__fadeIn")
 				removeUI("waves-timer-container", "animate__fadeOut")
 				removeUI("skills-screen", "animate__fadeOut")
