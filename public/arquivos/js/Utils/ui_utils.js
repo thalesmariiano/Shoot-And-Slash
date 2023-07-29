@@ -54,35 +54,15 @@ function updateUI(ui, value) {
 
 			if(value){
 				showUI("waves-container", "animate__fadeIn")
-				// setTimeout(() => {
-				// 	wavesContainer.classList.remove("opacity-0")
-				// 	wavesContainer.classList.add("opacity-100")				
-				// }, 500)
 			}else{
 				removeUI("waves-container", "animate__fadeOut")
-				// wavesContainer.classList.remove("opacity-100")
-				// wavesContainer.classList.add("opacity-0")
-
-				// setTimeout(() => {
-				// 	wavesContainer.classList.add("hidden")
-				// }, 1000)
 			}
 			break
 		case "skills":
 			if(value){
-				skills_screen.classList.remove("hidden")
-
-				setTimeout(() => {
-					skills_screen.classList.remove("opacity-0")
-					skills_screen.classList.add("opacity-100")				
-				}, 700)
+				showUI("skills-screen", "animate__fadeIn")
 			}else{
-				skills_screen.classList.remove("opacity-100")
-				skills_screen.classList.add("opacity-0")
-
-				setTimeout(() => {
-					skills_screen.classList.add("hidden")
-				}, 1000)
+				removeUI("skills-screen", "animate__fadeOut")
 			}
 			break
 		case "timer":
