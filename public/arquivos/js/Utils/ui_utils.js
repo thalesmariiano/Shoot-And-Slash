@@ -52,36 +52,36 @@ function updateUI(ui, value) {
 			const wavesText = document.getElementById("waves-text")
 			wavesText.innerHTML = `Onda ${gameWave}`
 
-			if(value){
-				showUI("waves-container", "animate__fadeIn")
-			}else{
-				removeUI("waves-container", "animate__fadeOut")
-			}
+			// if(value){
+			// 	showUI("waves-container", "animate__fadeIn")
+			// }else{
+			// 	removeUI("waves-container", "animate__fadeOut")
+			// }
 			break
 		case "skills":
-			if(value){
-				showUI("skills-screen", "animate__fadeIn")
-			}else{
-				removeUI("skills-screen", "animate__fadeOut")
-			}
+			// if(value){
+			// 	showUI("skills-screen", "animate__fadeIn")
+			// }else{
+			// 	removeUI("skills-screen", "animate__fadeOut")
+			// }
 			break
 		case "timer":
-			const wavesTimerContainer = document.getElementById("waves-timer-container")
-			wavesTimerContainer.classList.remove("hidden")
+			// const wavesTimerContainer = document.getElementById("waves-timer-container")
+			// wavesTimerContainer.classList.remove("hidden")
 
-			if(value){
-				setTimeout(() => {
-					wavesTimerContainer.classList.remove("opacity-0")
-					wavesTimerContainer.classList.add("opacity-100")				
-				}, 500)
-			}else{
-				wavesTimerContainer.classList.remove("opacity-100")
-				wavesTimerContainer.classList.add("opacity-0")
+			// if(value){
+			// 	setTimeout(() => {
+			// 		wavesTimerContainer.classList.remove("opacity-0")
+			// 		wavesTimerContainer.classList.add("opacity-100")				
+			// 	}, 500)
+			// }else{
+			// 	wavesTimerContainer.classList.remove("opacity-100")
+			// 	wavesTimerContainer.classList.add("opacity-0")
 
-				setTimeout(() => {
-					wavesTimerContainer.classList.add("hidden")
-				}, 1000)
-			}	
+			// 	setTimeout(() => {
+			// 		wavesTimerContainer.classList.add("hidden")
+			// 	}, 1000)
+			// }	
 			break
 		case "icon":
 			const img = value ? "arquivos/assets/itens/ak47.png" : "arquivos/assets/null.png"
