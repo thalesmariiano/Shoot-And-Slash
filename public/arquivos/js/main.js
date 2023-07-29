@@ -714,7 +714,7 @@ function enemysWaves(){
 		isIniting = true
 
 		if(!onWaves && timeBetweenWaves >= 5){
-			updateUI("skills", true)	
+			showUI("skills-screen", "animate__fadeIn")	
 		}
 
 		const wavesTimer = setInterval(() => {
@@ -730,13 +730,13 @@ function enemysWaves(){
 				gameWave++
 				enemysCount += 3
 				generateEnemys(enemysCount, 100)
-				updateUI("waves", true)
-				updateUI("timer", false)
-				updateUI("skills", false)
+				showUI("waves-container", "animate__fadeIn")
+				removeUI("waves-timer-container", "animate__fadeOut")
+				removeUI("skills-screen", "animate__fadeOut")
 				isIniting = false
 				onWaves = true
 				timeBetweenWaves = 15
-				setTimeout(() => updateUI("waves", false), 3000)
+				setTimeout(() => removeUI("waves-container", "animate__fadeOut"), 3000)
 				clearInterval(wavesTimer)
 			}else timeBetweenWaves--
 		}, 1000)
