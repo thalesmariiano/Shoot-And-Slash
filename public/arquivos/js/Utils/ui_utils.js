@@ -12,6 +12,32 @@ function switchScreen(screen1, screen2){
 	screenOut.classList.add("hidden")
 }
 
+function showUI(id, animation){
+	const ui = document.getElementById(id)
+
+	ui.classList.remove("hidden")
+	ui.classList.add("animate__animated", animation)
+	ui.addEventListener("animationend", animationEndListener)
+
+	function animationEndListener(){
+		ui.classList.remove("animate__animated", animation)
+		ui.removeEventListener("animationend", animationEndListener)
+	}
+}
+
+function removeUI(id, animation){
+	const ui = document.getElementById(id)
+
+	ui.classList.add("animate__animated", animation)
+	ui.addEventListener("animationend", animationEndListener)
+
+	function animationEndListener(){
+		ui.classList.remove("animate__animated", animation)
+		ui.classList.add("hidden")
+		ui.removeEventListener("animationend", animationEndListener)
+	}
+}
+
 const skills_screen = document.getElementById("skills-screen")
 
 function updateUI(ui, value) {
@@ -20,24 +46,26 @@ function updateUI(ui, value) {
 			health_amount.style.width = `${value}px`
 			break
 		case "waves":
-			const wavesContainer = document.getElementById("waves-container")
-			wavesContainer.classList.remove("hidden")
+			// const wavesContainer = document.getElementById("waves-container")
+			// wavesContainer.classList.remove("hidden")
 
 			const wavesText = document.getElementById("waves-text")
 			wavesText.innerHTML = `Onda ${gameWave}`
 
 			if(value){
-				setTimeout(() => {
-					wavesContainer.classList.remove("opacity-0")
-					wavesContainer.classList.add("opacity-100")				
-				}, 500)
+				showUI("waves-container", "animate__fadeIn")
+				// setTimeout(() => {
+				// 	wavesContainer.classList.remove("opacity-0")
+				// 	wavesContainer.classList.add("opacity-100")				
+				// }, 500)
 			}else{
-				wavesContainer.classList.remove("opacity-100")
-				wavesContainer.classList.add("opacity-0")
+				removeUI("waves-container", "animate__fadeOut")
+				// wavesContainer.classList.remove("opacity-100")
+				// wavesContainer.classList.add("opacity-0")
 
-				setTimeout(() => {
-					wavesContainer.classList.add("hidden")
-				}, 1000)
+				// setTimeout(() => {
+				// 	wavesContainer.classList.add("hidden")
+				// }, 1000)
 			}
 			break
 		case "skills":
