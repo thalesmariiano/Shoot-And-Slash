@@ -63,7 +63,7 @@ dialog_checkbox.addEventListener("input", () => {
 close_skills.addEventListener("click", () => {
 	removeUI("skills-screen", "animate__fadeOut")
 	showUI("waves-timer-container", "animate__fadeIn")
-	timeBetweenWaves = 5
+	waveTimer = 5
 })
 
 const newsStoraged = window.localStorage.getItem("SaS-News")
