@@ -25,12 +25,12 @@ var keyRight,
     keyR = false
 
 var gameIsPaused = true
-var isIniting = false
+var waveStarted = false
 var onWaves = false
 
 var enemysCount = 0
 var gameWave = 0
-var timeBetweenWaves = 15
+var waveTimer = 15
 var enemysKilled = 0
 
 var lockLeft,
@@ -708,12 +708,52 @@ function update(){
 	camera.update()
 }
 
-function enemysWaves(){
-	if(!enemys.length && !isIniting){
-		onWaves = false
-		isIniting = true
+class EnemyWave {
+	constructor(count, health){
+		this.enemys = []
+		this.waveStarted = false
+		this.waveNumber = 1
+		this.enemysCount = count
+		this.enemyHealth = health
+	}
 
-		if(!onWaves && timeBetweenWaves >= 5){
+	initWave(){
+		$("#waves-text").innerHTML = `Onda ${this.waveNumber}`
+		showUI("waves-container", "animate__fadeIn")
+		setTimeout(() => removeUI("waves-container", "animate__fadeOut"), 3000)
+		generateEnemys(this.enemysCount, this.enemyHealth)
+	}
+}
+
+const arcadeWave = new EnemyWave(3, 100)
+
+function arcadeMode(){
+	if(!arcadeWave.waveStarted){
+		arcadeWave.waveStarted = true
+
+		showUI("skills-screen", "animate__fadeIn")
+
+		const timer = setInterval(() => {
+			$("#waves-skills-timer").innerHTML = `${waveTimer}s`
+
+			if(waveTimer <= 5){
+				$("#waves-hud-timer").innerHTML = `${waveTimer}s`
+				showUI("waves-timer-container", "animate__fadeIn")
+				removeUI("skills-screen", "animate__fadeOut")
+
+			}
+
+			waveTimer--
+		}, 1000)
+	}
+}
+
+function enemysWaves(){
+	if(!enemys.length && !waveStarted){
+		onWaves = false
+		waveStarted = true
+
+		if(!onWaves && waveTimer >= 5){
 			showUI("skills-screen", "animate__fadeIn")	
 		}
 
@@ -723,10 +763,10 @@ function enemysWaves(){
 				return
 			}
 
-			waves_skills_timer.innerHTML = `${timeBetweenWaves}s`
-			if(timeBetweenWaves <= 5) waves_hud_timer.innerHTML = `${timeBetweenWaves}s`
+			waves_skills_timer.innerHTML = `${waveTimer}s`
+			if(waveTimer <= 5) waves_hud_timer.innerHTML = `${waveTimer}s`
 
-			if(!timeBetweenWaves){
+			if(!waveTimer){
 				gameWave++
 				enemysCount += 3
 				generateEnemys(enemysCount, 100)
@@ -734,12 +774,12 @@ function enemysWaves(){
 				showUI("waves-container", "animate__fadeIn")
 				removeUI("waves-timer-container", "animate__fadeOut")
 				removeUI("skills-screen", "animate__fadeOut")
-				isIniting = false
+				waveStarted = false
 				onWaves = true
-				timeBetweenWaves = 15
+				waveTimer = 15
 				setTimeout(() => removeUI("waves-container", "animate__fadeOut"), 3000)
 				clearInterval(wavesTimer)
-			}else timeBetweenWaves--
+			}else waveTimer--
 		}, 1000)
 	}
 }
@@ -803,7 +843,8 @@ function render(){
 		}
 	})
 
-	enemysWaves()
+	// enemysWaves()
+	arcadeMode()
 
 	playebleMapBlocks.forEach(block => {
 		const {top, bottom, left, right} = detectInArea(camera_position, block, 300, (canvas.height/2), 300, (canvas.width/2) + 50, (canvas.width/2))
@@ -895,7 +936,7 @@ function init(){
 
 function continues(){
 	if(gameIsPaused){
-		isIniting = false
+		waveStarted = false
 		gameIsPaused = false
 		loop()
 		switchScreen("hud-screen", "pause-screen")
@@ -910,9 +951,9 @@ function pause(){
 }
 
 function restart(){
-	isIniting = false
+	waveStarted = false
 	onWaves = false
-	timeBetweenWaves = 15
+	waveTimer = 15
 	enemys.length = 0
 	gameWave = 0
 
@@ -970,11 +1011,11 @@ function restart(){
 
 function destroy(){
 	gameIsPaused = true
-	isIniting = false
+	waveStarted = false
 	onWaves = false
 	enemys.length = 0
 	enemysCount = 0
-	timeBetweenWaves = 15
+	waveTimer = 15
 
 	player.inventory.forEach(slot => {
 		slot.item = null
