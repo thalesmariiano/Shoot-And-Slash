@@ -28,6 +28,11 @@ function showUI(id, animation){
 function removeUI(id, animation){
 	const ui = document.getElementById(id)
 
+	if(animation == "hidden"){
+		ui.classList.add(animation)
+		return
+	}
+
 	ui.classList.add("animate__animated", animation)
 	ui.addEventListener("animationend", animationEndListener)
 
