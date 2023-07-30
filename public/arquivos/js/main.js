@@ -770,6 +770,7 @@ function arcadeMode(){
 
 	if(!enemys.length && arcadeWave.waveIsPlaying){
 		waveTimer = 15
+		$("#waves-skills-timer").innerHTML = `${waveTimer}s`
 		arcadeWave.waveIsPlaying = false
 		arcadeWave.waveStarted = false
 		arcadeWave.waveNumber++
