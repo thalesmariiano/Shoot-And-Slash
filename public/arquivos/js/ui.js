@@ -61,7 +61,7 @@ dialog_checkbox.addEventListener("input", () => {
 
 
 close_skills.addEventListener("click", () => {
-	removeUI("skills-container", "animate__fadeOut")
+	removeUI("skills-screen", "animate__fadeOut")
 	showUI("waves-timer-container", "animate__fadeIn")
 	timeBetweenWaves = 5
 })
