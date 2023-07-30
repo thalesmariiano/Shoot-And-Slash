@@ -712,12 +712,22 @@ class EnemyWave {
 	constructor(count, health){
 		this.enemys = []
 		this.waveStarted = false
+		this.waveIsPlaying = false
 		this.waveNumber = 1
 		this.enemysCount = count
 		this.enemyHealth = health
 	}
 
-	initWave(){
+	restart(){
+		this.waveStarted = false
+		this.waveIsPlaying = false
+		this.waveNumber = 1
+		this.enemysCount = 3
+		this.enemyHealth = 100
+		enemys.length = 0
+	}
+
+	init(){
 		$("#waves-text").innerHTML = `Onda ${this.waveNumber}`
 		showUI("waves-container", "animate__fadeIn")
 		setTimeout(() => removeUI("waves-container", "animate__fadeOut"), 3000)
@@ -728,61 +738,80 @@ class EnemyWave {
 const arcadeWave = new EnemyWave(3, 100)
 
 function arcadeMode(){
-	if(!arcadeWave.waveStarted){
+	if(!arcadeWave.waveStarted && !arcadeWave.waveIsPlaying){
 		arcadeWave.waveStarted = true
 
-		showUI("skills-screen", "animate__fadeIn")
+		if(waveTimer >= 5) showUI("skills-screen", "animate__fadeIn")
 
 		const timer = setInterval(() => {
-			$("#waves-skills-timer").innerHTML = `${waveTimer}s`
+			if(gameIsPaused){
+				clearInterval(timer)
+				return
+			}
 
-			if(waveTimer <= 5){
-				$("#waves-hud-timer").innerHTML = `${waveTimer}s`
+			$("#waves-skills-timer").innerHTML = `${waveTimer}s`
+			if(waveTimer <= 5) $("#waves-hud-timer").innerHTML = `${waveTimer}s`
+
+			if(waveTimer == 5){
 				showUI("waves-timer-container", "animate__fadeIn")
 				removeUI("skills-screen", "animate__fadeOut")
+			}
 
+			if(!waveTimer){
+				arcadeWave.init()
+				arcadeWave.waveIsPlaying = true
+				removeUI("waves-timer-container", "animate__fadeOut")
+				clearInterval(timer)
 			}
 
 			waveTimer--
 		}, 1000)
 	}
-}
 
-function enemysWaves(){
-	if(!enemys.length && !waveStarted){
-		onWaves = false
-		waveStarted = true
-
-		if(!onWaves && waveTimer >= 5){
-			showUI("skills-screen", "animate__fadeIn")	
-		}
-
-		const wavesTimer = setInterval(() => {
-			if(gameIsPaused){
-				clearInterval(wavesTimer)
-				return
-			}
-
-			waves_skills_timer.innerHTML = `${waveTimer}s`
-			if(waveTimer <= 5) waves_hud_timer.innerHTML = `${waveTimer}s`
-
-			if(!waveTimer){
-				gameWave++
-				enemysCount += 3
-				generateEnemys(enemysCount, 100)
-				$("#waves-text").innerHTML = `Onda ${gameWave}`
-				showUI("waves-container", "animate__fadeIn")
-				removeUI("waves-timer-container", "animate__fadeOut")
-				removeUI("skills-screen", "animate__fadeOut")
-				waveStarted = false
-				onWaves = true
-				waveTimer = 15
-				setTimeout(() => removeUI("waves-container", "animate__fadeOut"), 3000)
-				clearInterval(wavesTimer)
-			}else waveTimer--
-		}, 1000)
+	if(!enemys.length && arcadeWave.waveIsPlaying){
+		waveTimer = 15
+		arcadeWave.waveIsPlaying = false
+		arcadeWave.waveStarted = false
+		arcadeWave.waveNumber++
+		arcadeWave.enemysCount += 3
 	}
 }
+
+// function enemysWaves(){
+// 	if(!enemys.length && !waveStarted){
+// 		onWaves = false
+// 		waveStarted = true
+
+// 		if(!onWaves && waveTimer >= 5){
+// 			showUI("skills-screen", "animate__fadeIn")	
+// 		}
+
+// 		const wavesTimer = setInterval(() => {
+// 			if(gameIsPaused){
+// 				clearInterval(wavesTimer)
+// 				return
+// 			}
+
+// 			waves_skills_timer.innerHTML = `${waveTimer}s`
+// 			if(waveTimer <= 5) waves_hud_timer.innerHTML = `${waveTimer}s`
+
+// 			if(!waveTimer){
+// 				gameWave++
+// 				enemysCount += 3
+// 				generateEnemys(enemysCount, 100)
+// 				$("#waves-text").innerHTML = `Onda ${gameWave}`
+// 				showUI("waves-container", "animate__fadeIn")
+// 				removeUI("waves-timer-container", "animate__fadeOut")
+// 				removeUI("skills-screen", "animate__fadeOut")
+// 				waveStarted = false
+// 				onWaves = true
+// 				waveTimer = 15
+// 				setTimeout(() => removeUI("waves-container", "animate__fadeOut"), 3000)
+// 				clearInterval(wavesTimer)
+// 			}else waveTimer--
+// 		}, 1000)
+// 	}
+// }
 
 function saveData(){
 	if(enemysKilled > parseInt(window.localStorage.getItem("SaS-Arcade"))){
@@ -936,7 +965,7 @@ function init(){
 
 function continues(){
 	if(gameIsPaused){
-		waveStarted = false
+		arcadeWave.waveStarted = false
 		gameIsPaused = false
 		loop()
 		switchScreen("hud-screen", "pause-screen")
@@ -951,11 +980,12 @@ function pause(){
 }
 
 function restart(){
-	waveStarted = false
-	onWaves = false
+	arcadeWave.restart()
+	// waveStarted = false
+	// onWaves = false
 	waveTimer = 15
 	enemys.length = 0
-	gameWave = 0
+	// gameWave = 0
 
 	player.inventory.forEach(slot => {
 		slot.item = null
@@ -1010,10 +1040,11 @@ function restart(){
 }
 
 function destroy(){
+	arcadeWave.restart()
 	gameIsPaused = true
-	waveStarted = false
-	onWaves = false
-	enemys.length = 0
+	// waveStarted = false
+	// onWaves = false
+	// enemys.length = 0
 	enemysCount = 0
 	waveTimer = 15
 
@@ -1056,7 +1087,7 @@ function destroy(){
 	updateUI("timer", false)
 	updateUI("icon", "")
 
-	gameWave = 0
+	// gameWave = 0
 	enemysKilled = 0
 	bullets_amount.innerHTML = 0
 	munition_amount.innerHTML = 0
