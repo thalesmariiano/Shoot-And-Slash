@@ -1023,7 +1023,7 @@ function restart(){
 		}
 	}
 
-	updateUI("timer", false)
+	removeUI("waves-timer-container", "hidden")
 	updateUI("icon", "")
 
 	enemysCount = 0
@@ -1084,7 +1084,7 @@ function destroy(){
 		}
 	}
 
-	updateUI("timer", false)
+	removeUI("waves-timer-container", "hidden")
 	updateUI("icon", "")
 
 	// gameWave = 0
