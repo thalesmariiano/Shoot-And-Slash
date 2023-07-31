@@ -10,24 +10,30 @@ const back_from_gm_button       = document.getElementById("backToGm-button")
 
 arcade_mode_button.addEventListener("click", () => {
 	init()
-	switchScreen("hud-screen", "gamemodes-screen")
-	document.querySelector("#uis-container").classList.add("hidden")
+
+	removeUI("uis-container", "animate__fadeOut")
+	showUI("hud-screen", "animate__fadeIn")
 })
 
 play_button.addEventListener("click", () => {
-	switchScreen("gamemodes-screen", "start-screen")
+	showUI("gamemodes-screen", "animate__fadeIn")
+	removeUI("start-screen", "hidden")
 })
 
 back_from_gm_button.addEventListener("click", () => {
-	switchScreen("start-screen", "gamemodes-screen")
+	showUI("start-screen", "animate__fadeIn")
+	removeUI("gamemodes-screen", "hidden")
 })
 
 options_button.addEventListener("click", () => {
-	switchScreen("options-screen", "start-screen")
+	showUI("options-screen", "animate__fadeIn")
+	removeUI("start-screen", "hidden")
+	removeUI("gamemodes-screen", "hidden")
 })
 
 back_from_options_button.addEventListener("click", () => {
-	switchScreen("start-screen", "options-screen")
+	showUI("start-screen", "animate__fadeIn")
+	removeUI("options-screen", "hidden")
 })
 
 continue_button.addEventListener("click", () => {
@@ -37,15 +43,18 @@ continue_button.addEventListener("click", () => {
 restart_buttons.forEach(btn => {
 	btn.addEventListener("click", () => {
 		restart()
-		switchScreen("hud-screen", btn.dataset.screen)
+
+		showUI("hud-screen", "animate__fadeIn")
+		removeUI(btn.dataset.screen, "hidden")
 	})
 })
 
 back_to_menu_buttons.forEach(btn => {
 	btn.addEventListener("click", () => {
 		destroy()
-		switchScreen("start-screen", btn.dataset.screen)
-		document.querySelector("#uis-container").classList.remove("hidden")
+
+		showUI("start-screen", "show")
+		showUI("uis-container", "animate__fadeIn")
 	})
 })
 
