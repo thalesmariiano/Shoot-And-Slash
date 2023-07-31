@@ -15,6 +15,11 @@ function switchScreen(screen1, screen2){
 function showUI(id, animation){
 	const ui = document.getElementById(id)
 
+	if(animation == "show"){
+		ui.classList.remove("hidden")
+		return
+	}
+
 	ui.classList.remove("hidden")
 	ui.classList.add("animate__animated", animation)
 	ui.addEventListener("animationend", animationEndListener)
