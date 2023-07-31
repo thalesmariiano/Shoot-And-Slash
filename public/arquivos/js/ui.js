@@ -80,28 +80,14 @@ const newsStoraged = window.localStorage.getItem("SaS-News")
 
 
 if(parseFloat(newsStoraged) != 1.2){
-	const warning_screen = document.querySelector("#warning-screen")
-	const close_warning = document.querySelector("#close-warning")
-
-	warning_screen.classList.remove("hidden")
-	warning_screen.classList.add("animate__animated", "animate__bounceIn")
-
-	warning_screen.addEventListener("animationend", () => {
-		warning_screen.classList.remove("animate__animated", "animate__bounceIn")
-	})
+	showUI("warning-screen", "animate__bounceIn")	
 
 	document.querySelector("body").style.overflow = "hidden"
 
 	close_warning.addEventListener("click", () => {
 		window.localStorage.setItem("SaS-News", 1.2)
-
-		warning_screen.classList.add("animate__animated", "animate__bounceOut")
-
-		warning_screen.addEventListener("animationend", () => {
-			warning_screen.classList.remove("animate__animated", "animate__bounceOut")
-			warning_screen.classList.add("hidden")
-			document.querySelector("body").style.overflow = ""
-		})
+		removeUI("warning-screen", "animate__bounceOut")
+		document.querySelector("body").style.overflow = ""
 	})
 }
 
