@@ -1,6 +1,4 @@
 
-if(!getStorage("SaSControl")) setStorage("SaSControl", 1)
-
 const controlKey = {
 	left: null,
 	right: null,

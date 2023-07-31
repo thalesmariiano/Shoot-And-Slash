@@ -5,6 +5,7 @@ if(save_allowed){
 	if(!getStorage("SaSdialog")) setStorage("SaSdialog", 1)
 	if(!getStorage("SaS-Arcade")) setStorage("SaS-Arcade", 0)
 	if(!getStorage("SaS-News")) setStorage("SaS-Arcade", 0)
+	if(!getStorage("SaSControl")) setStorage("SaSControl", 1)
 }
 
 document.querySelector("#arcade-record").innerHTML = `Recorde: ${getStorage("SaS-Arcade")}`
