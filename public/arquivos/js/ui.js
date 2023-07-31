@@ -7,7 +7,7 @@ const restart_buttons           = document.querySelectorAll(".restart-btns")
 const back_to_menu_buttons      = document.querySelectorAll(".back-to-menu-btns")
 const back_from_options_button  = document.getElementById("backToMenuOptions-button")
 const back_from_gm_button       = document.getElementById("backToGm-button")
-const close_news = document.querySelector("#close-news")
+const close_news                = document.querySelector("#close-news")
 
 arcade_mode_button.addEventListener("click", () => {
 	init()
