@@ -25,11 +25,7 @@ var keyRight,
     keyR = false
 
 var gameIsPaused = true
-var waveStarted = false
-var onWaves = false
 
-var enemysCount = 0
-var gameWave = 0
 var waveTimer = 15
 var enemysKilled = 0
 
@@ -630,7 +626,7 @@ function playerActions(){
 
 		player.velocity.x = 0
 
-		waves_count.innerHTML = `Onda: ${gameWave}`
+		waves_count.innerHTML = `Onda: ${arcadeWave.waveNumber}`
 		kills_count.innerHTML = `Abates: ${enemysKilled}`
 
 		setTimeout(() => {
@@ -778,42 +774,6 @@ function arcadeMode(){
 		arcadeWave.enemysCount += 3
 	}
 }
-
-// function enemysWaves(){
-// 	if(!enemys.length && !waveStarted){
-// 		onWaves = false
-// 		waveStarted = true
-
-// 		if(!onWaves && waveTimer >= 5){
-// 			showUI("skills-screen", "animate__fadeIn")	
-// 		}
-
-// 		const wavesTimer = setInterval(() => {
-// 			if(gameIsPaused){
-// 				clearInterval(wavesTimer)
-// 				return
-// 			}
-
-// 			waves_skills_timer.innerHTML = `${waveTimer}s`
-// 			if(waveTimer <= 5) waves_hud_timer.innerHTML = `${waveTimer}s`
-
-// 			if(!waveTimer){
-// 				gameWave++
-// 				enemysCount += 3
-// 				generateEnemys(enemysCount, 100)
-// 				$("#waves-text").innerHTML = `Onda ${gameWave}`
-// 				showUI("waves-container", "animate__fadeIn")
-// 				removeUI("waves-timer-container", "animate__fadeOut")
-// 				removeUI("skills-screen", "animate__fadeOut")
-// 				waveStarted = false
-// 				onWaves = true
-// 				waveTimer = 15
-// 				setTimeout(() => removeUI("waves-container", "animate__fadeOut"), 3000)
-// 				clearInterval(wavesTimer)
-// 			}else waveTimer--
-// 		}, 1000)
-// 	}
-// }
 
 function saveData(){
 	if(enemysKilled > parseInt(window.localStorage.getItem("SaS-Arcade"))){
@@ -983,11 +943,8 @@ function pause(){
 
 function restart(){
 	arcadeWave.restart()
-	// waveStarted = false
-	// onWaves = false
 	waveTimer = 15
 	enemys.length = 0
-	// gameWave = 0
 
 	player.inventory.forEach(slot => {
 		slot.item = null
@@ -1028,7 +985,6 @@ function restart(){
 	removeUI("waves-timer-container", "hidden")
 	updateUI("icon", "")
 
-	enemysCount = 0
 	enemysKilled = 0
 	bullets_amount.innerHTML = 0
 	munition_amount.innerHTML = 0
@@ -1044,10 +1000,6 @@ function restart(){
 function destroy(){
 	arcadeWave.restart()
 	gameIsPaused = true
-	// waveStarted = false
-	// onWaves = false
-	// enemys.length = 0
-	enemysCount = 0
 	waveTimer = 15
 
 	player.inventory.forEach(slot => {
@@ -1089,7 +1041,6 @@ function destroy(){
 	removeUI("waves-timer-container", "hidden")
 	updateUI("icon", "")
 
-	// gameWave = 0
 	enemysKilled = 0
 	bullets_amount.innerHTML = 0
 	munition_amount.innerHTML = 0
