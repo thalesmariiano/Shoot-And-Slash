@@ -76,7 +76,7 @@ close_skills.addEventListener("click", () => {
 	removeUI("skills-screen", "animate__fadeOut")
 	showUI("waves-timer-container", "animate__fadeIn")
 	$("#waves-hud-timer").innerHTML = "5s"
-	waveTimer = 5
+	arcadeWave.waveTimer = 5
 })
 
 const newsStoraged = window.localStorage.getItem("SaS-News")

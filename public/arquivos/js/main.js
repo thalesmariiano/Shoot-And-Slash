@@ -26,7 +26,6 @@ var keyRight,
 
 var gameIsPaused = true
 
-var waveTimer = 15
 var enemysKilled = 0
 
 var lockLeft,
@@ -711,6 +710,7 @@ class EnemyWave {
 		this.waveStarted = false
 		this.waveIsPlaying = false
 		this.waveNumber = 1
+		this.waveTimer = 15
 		this.enemysCount = count
 		this.enemyHealth = health
 	}
@@ -719,6 +719,7 @@ class EnemyWave {
 		this.waveStarted = false
 		this.waveIsPlaying = false
 		this.waveNumber = 1
+		this.waveTimer = 15
 		this.enemysCount = 3
 		this.enemyHealth = 100
 		enemys.length = 0
@@ -738,7 +739,7 @@ function arcadeMode(){
 	if(!arcadeWave.waveStarted && !arcadeWave.waveIsPlaying){
 		arcadeWave.waveStarted = true
 
-		if(waveTimer >= 5) showUI("skills-screen", "animate__fadeIn")
+		if(arcadeWave.waveTimer >= 5) showUI("skills-screen", "animate__fadeIn")
 
 		const timer = setInterval(() => {
 			if(gameIsPaused){
@@ -746,28 +747,28 @@ function arcadeMode(){
 				return
 			}
 
-			$("#waves-skills-timer").innerHTML = `${waveTimer}s`
-			if(waveTimer <= 5) $("#waves-hud-timer").innerHTML = `${waveTimer}s`
+			$("#waves-skills-timer").innerHTML = `${arcadeWave.waveTimer}s`
+			if(arcadeWave.waveTimer <= 5) $("#waves-hud-timer").innerHTML = `${arcadeWave.waveTimer}s`
 
-			if(waveTimer == 5){
+			if(arcadeWave.waveTimer == 5){
 				showUI("waves-timer-container", "animate__fadeIn")
 				removeUI("skills-screen", "animate__fadeOut")
 			}
 
-			if(!waveTimer){
+			if(!arcadeWave.waveTimer){
 				arcadeWave.init()
 				arcadeWave.waveIsPlaying = true
 				removeUI("waves-timer-container", "animate__fadeOut")
 				clearInterval(timer)
 			}
 
-			waveTimer--
+			arcadeWave.waveTimer--
 		}, 1000)
 	}
 
 	if(!enemys.length && arcadeWave.waveIsPlaying){
-		waveTimer = 15
-		$("#waves-skills-timer").innerHTML = `${waveTimer}s`
+		arcadeWave.waveTimer = 15
+		$("#waves-skills-timer").innerHTML = `${arcadeWave.waveTimer}s`
 		arcadeWave.waveIsPlaying = false
 		arcadeWave.waveStarted = false
 		arcadeWave.waveNumber++
@@ -943,7 +944,6 @@ function pause(){
 
 function restart(){
 	arcadeWave.restart()
-	waveTimer = 15
 	enemys.length = 0
 
 	player.inventory.forEach(slot => {
@@ -1000,7 +1000,6 @@ function restart(){
 function destroy(){
 	arcadeWave.restart()
 	gameIsPaused = true
-	waveTimer = 15
 
 	player.inventory.forEach(slot => {
 		slot.item = null
