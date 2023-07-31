@@ -1,6 +1,11 @@
-if(!getStorage("SaSdialog")) setStorage("SaSdialog", 1)
-if(!getStorage("SaS-Arcade")) setStorage("SaS-Arcade", 0)
-if(!getStorage("SaS-News")) setStorage("SaS-Arcade", 0)
+
+const save_allowed = $("#save-memory").checked
+
+if(save_allowed){
+	if(!getStorage("SaSdialog")) setStorage("SaSdialog", 1)
+	if(!getStorage("SaS-Arcade")) setStorage("SaS-Arcade", 0)
+	if(!getStorage("SaS-News")) setStorage("SaS-Arcade", 0)
+}
 
 document.querySelector("#arcade-record").innerHTML = `Recorde: ${getStorage("SaS-Arcade")}`
 
@@ -775,10 +780,13 @@ function arcadeMode(){
 }
 
 function saveData(){
-	if(enemysKilled > parseInt(getStorage("SaS-Arcade"))){
-		setStorage("SaS-Arcade", enemysKilled)
-		document.querySelector("#arcade-record").innerHTML = `Recorde: ${getStorage("SaS-Arcade")}`
+	if(save_allowed){
+		if(enemysKilled > parseInt(getStorage("SaS-Arcade"))){
+			setStorage("SaS-Arcade", enemysKilled)
+			document.querySelector("#arcade-record").innerHTML = `Recorde: ${getStorage("SaS-Arcade")}`
+		}
 	}
+	
 }
 
 const back = new Parallax(parallax_back, 7)
@@ -916,7 +924,7 @@ function loop(){
 function init(){
 	gameIsPaused = false
 	loop()
-	
+
 	if(parseInt(getStorage("SaSdialog"))){
 		dialog_container.classList.add("left-0")
 		dialog_container.classList.remove("-left-60")
