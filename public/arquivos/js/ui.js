@@ -7,6 +7,7 @@ const restart_buttons           = document.querySelectorAll(".restart-btns")
 const back_to_menu_buttons      = document.querySelectorAll(".back-to-menu-btns")
 const back_from_options_button  = document.getElementById("backToMenuOptions-button")
 const back_from_gm_button       = document.getElementById("backToGm-button")
+const close_news = document.querySelector("#close-news")
 
 arcade_mode_button.addEventListener("click", () => {
 	init()
@@ -78,16 +79,14 @@ close_skills.addEventListener("click", () => {
 
 const newsStoraged = window.localStorage.getItem("SaS-News")
 
-
 if(parseFloat(newsStoraged) != 1.2){
-	showUI("warning-screen", "animate__bounceIn")	
+	showUI("news-screen", "animate__bounceIn")	
+	$("body").style.overflow = "hidden"
 
-	document.querySelector("body").style.overflow = "hidden"
-
-	close_warning.addEventListener("click", () => {
+	close_news.addEventListener("click", () => {
 		window.localStorage.setItem("SaS-News", 1.2)
-		removeUI("warning-screen", "animate__bounceOut")
-		document.querySelector("body").style.overflow = ""
+		removeUI("news-screen", "animate__bounceOut")
+		$("body").style.overflow = ""
 	})
 }
 
