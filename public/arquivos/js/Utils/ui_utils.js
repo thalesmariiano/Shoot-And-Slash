@@ -2,8 +2,9 @@
 function showUI(id, animation){
 	const ui = document.getElementById(id)
 
-	if(animation == "show"){
-		ui.classList.remove("hidden")
+	if(!animation.split("__").find(e => e == "animate")){
+		if(animation == "show") ui.classList.remove("hidden")			
+		else ui.classList.add(animation)
 		return
 	}
 
@@ -20,7 +21,7 @@ function showUI(id, animation){
 function removeUI(id, animation){
 	const ui = document.getElementById(id)
 
-	if(animation == "hidden"){
+	if(!animation.split("__").find(e => e == "animate")){
 		ui.classList.add(animation)
 		return
 	}
