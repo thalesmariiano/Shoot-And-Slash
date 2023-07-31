@@ -969,7 +969,6 @@ function continues(){
 		arcadeWave.waveStarted = false
 		gameIsPaused = false
 		loop()
-		switchScreen("hud-screen", "pause-screen")
 	}
 }
 

@@ -39,6 +39,8 @@ back_from_options_button.addEventListener("click", () => {
 
 continue_button.addEventListener("click", () => {
 	continues()
+	showUI("hud-screen", "animate__fadeIn")
+	removeUI("pause-screen", "hidden")
 })
 
 restart_buttons.forEach(btn => {
