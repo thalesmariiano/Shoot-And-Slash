@@ -746,6 +746,7 @@ function arcadeMode(){
 				clearInterval(timer)
 				return
 			}
+			arcadeWave.waveTimer--
 
 			$("#waves-skills-timer").innerHTML = `${arcadeWave.waveTimer}s`
 			if(arcadeWave.waveTimer <= 5) $("#waves-hud-timer").innerHTML = `${arcadeWave.waveTimer}s`
@@ -761,8 +762,6 @@ function arcadeMode(){
 				removeUI("waves-timer-container", "animate__fadeOut")
 				clearInterval(timer)
 			}
-
-			arcadeWave.waveTimer--
 		}, 1000)
 	}
 
