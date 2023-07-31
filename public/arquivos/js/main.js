@@ -974,7 +974,8 @@ function continues(){
 
 function pause(){
 	if(!gameIsPaused){
-		switchScreen("pause-screen", "hud-screen")
+		showUI("pause-screen", "animate__fadeIn")
+		removeUI("hud-screen", "hidden")
 		gameIsPaused = true
 	}
 }
