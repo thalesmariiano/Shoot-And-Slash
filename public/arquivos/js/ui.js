@@ -68,7 +68,7 @@ dialog_close_button.addEventListener("click", () => {
 
 dialog_checkbox.addEventListener("input", () => {
 	const value = dialog_checkbox.checked ? 0 : 1
-	window.localStorage.setItem("SaSdialog", value)
+	setStorage("SaSdialog", value)
 })
 
 
