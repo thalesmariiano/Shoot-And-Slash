@@ -636,7 +636,8 @@ function playerActions(){
 		setTimeout(() => {
 			gameIsPaused = true
 			saveData()
-			switchScreen("die-screen", "hud-screen")
+			showUI("die-screen", "animate__fadeIn")
+			removeUI("hud-screen", "hidden")
 		}, 1500)
 	}
 }
