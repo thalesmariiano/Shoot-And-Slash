@@ -1,6 +1,9 @@
 
 const $ = element => document.querySelector(element)
 
+const setStorage = (storage, value) => localStorage.setItem(storage, value)
+const getStorage = storage => localStorage.getItem(storage)
+
 function spriteConverter(imgArray){
 	imgArray.forEach(spr => {
 		const img = new Image()
