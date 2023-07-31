@@ -79,6 +79,16 @@ close_skills.addEventListener("click", () => {
 	arcadeWave.waveTimer = 5
 })
 
+$("#delete-memory").addEventListener("click", () => {
+	const deletar = confirm("Tem certeza que deseja deletar?")
+	if(deletar){
+		localStorage.removeItem("SaSdialog")
+		localStorage.removeItem("SaS-News")
+		localStorage.removeItem("SaS-Arcade")
+		localStorage.removeItem("SaSControl")
+	}
+})
+
 
 if(parseFloat(getStorage("SaS-News")) != 1.2){
 	showUI("news-screen", "animate__bounceIn")	
