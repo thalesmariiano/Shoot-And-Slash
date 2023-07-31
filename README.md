@@ -8,7 +8,7 @@ Slash And Shoot é um jogo 2D estilo Hack And Slash em desenvolvimento.
 - Tailwind CSS (Estilização)
 - Javascript (Toda parte funcional e de renderização)
 
-- Animate Style (Animações de UIs)
+- Animate.css (Animações de UIs)
 https://animate.style 
 
 ## Design inicial de menus
