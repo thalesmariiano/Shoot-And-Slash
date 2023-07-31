@@ -1,17 +1,4 @@
 
-function switchScreen(screen1, screen2){
-	const screenIn = document.getElementById(screen1)
-	const screenOut = document.getElementById(screen2)
-
-	screenIn.classList.remove("hidden")
-
-	screenIn.classList.add("animate__animated", "animate__fadeIn")
-	screenIn.addEventListener("animationend", () => {
-		screenIn.classList.remove("animate__animated", "animate__fadeIn")
-	})
-	screenOut.classList.add("hidden")
-}
-
 function showUI(id, animation){
 	const ui = document.getElementById(id)
 
