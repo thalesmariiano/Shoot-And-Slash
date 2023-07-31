@@ -1,9 +1,8 @@
-if(!window.localStorage.getItem("SaSdialog")) window.localStorage.setItem("SaSdialog", 1)
-if(!window.localStorage.getItem("SaS-Arcade")) window.localStorage.setItem("SaS-Arcade", 0)
-if(!window.localStorage.getItem("SaS-News")) window.localStorage.setItem("SaS-Arcade", 0)
+if(!getStorage("SaSdialog")) setStorage("SaSdialog", 1)
+if(!getStorage("SaS-Arcade")) setStorage("SaS-Arcade", 0)
+if(!getStorage("SaS-News")) setStorage("SaS-Arcade", 0)
 
-
-document.querySelector("#arcade-record").innerHTML = `Recorde: ${window.localStorage.getItem("SaS-Arcade")}`
+document.querySelector("#arcade-record").innerHTML = `Recorde: ${getStorage("SaS-Arcade")}`
 
 var developerMode = false
 
@@ -776,9 +775,9 @@ function arcadeMode(){
 }
 
 function saveData(){
-	if(enemysKilled > parseInt(window.localStorage.getItem("SaS-Arcade"))){
-		window.localStorage.setItem("SaS-Arcade", enemysKilled)
-		document.querySelector("#arcade-record").innerHTML = `Recorde: ${window.localStorage.getItem("SaS-Arcade")}`
+	if(enemysKilled > parseInt(getStorage("SaS-Arcade"))){
+		setStorage("SaS-Arcade", enemysKilled)
+		document.querySelector("#arcade-record").innerHTML = `Recorde: ${getStorage("SaS-Arcade")}`
 	}
 }
 
@@ -917,9 +916,8 @@ function loop(){
 function init(){
 	gameIsPaused = false
 	loop()
-
-	const showDialog = window.localStorage.getItem("SaSdialog")
-	if(parseInt(showDialog)){
+	
+	if(parseInt(getStorage("SaSdialog"))){
 		dialog_container.classList.add("left-0")
 		dialog_container.classList.remove("-left-60")
 	}

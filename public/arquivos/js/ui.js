@@ -79,14 +79,13 @@ close_skills.addEventListener("click", () => {
 	arcadeWave.waveTimer = 5
 })
 
-const newsStoraged = window.localStorage.getItem("SaS-News")
 
-if(parseFloat(newsStoraged) != 1.2){
+if(parseFloat(getStorage("SaS-News")) != 1.2){
 	showUI("news-screen", "animate__bounceIn")	
 	$("body").style.overflow = "hidden"
 
 	close_news.addEventListener("click", () => {
-		window.localStorage.setItem("SaS-News", 1.2)
+		setStorage("SaS-News", 1.2)
 		removeUI("news-screen", "animate__bounceOut")
 		$("body").style.overflow = ""
 	})
