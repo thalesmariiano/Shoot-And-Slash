@@ -21,6 +21,13 @@ class Parallax {
 	}
 
 	update(){
+		const ratio = this.image.width / this.image.height
+		const newHeight = innerHeight
+		const newWidth = newHeight / ratio
+
+		this.width = newWidth + 500
+		this.height = newHeight
+
 		this.generateParallax()
 		this.drawParallax()
 	}
