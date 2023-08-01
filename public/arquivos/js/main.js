@@ -788,7 +788,9 @@ function saveData(){
 	if(parseInt(getStorage("SaS-Save"))){
 		if(enemysKilled > parseInt(getStorage("SaS-Arcade"))){
 			setStorage("SaS-Arcade", enemysKilled)
-			document.querySelector("#arcade-record").innerHTML = `Recorde: ${getStorage("SaS-Arcade")}`
+			
+			const arcade_kills = getStorage("SaS-Arcade") ? getStorage("SaS-Arcade") : 0
+			$("#arcade-record").innerHTML = `Recorde: ${arcade_kills}`
 		}
 	}
 	
