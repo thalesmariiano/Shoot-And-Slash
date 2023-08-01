@@ -80,13 +80,19 @@ close_skills.addEventListener("click", () => {
 })
 
 $("#delete-memory").addEventListener("click", () => {
-	const deletar = confirm("Tem certeza que deseja deletar? Todos os seus recordes e recursos salvos serão reiniciados!")
-	if(deletar){
-		setStorage("SaS-Dialog", 1)
-		setStorage("SaS-Arcade", 0)
-		setStorage("SaS-News", 0)
-		setStorage("SaS-Control", 1)
-	}
+	showUI("delete-history-dialog", "animate__fadeIn")
+})
+
+$("#confirm-delete").addEventListener("click", () => {
+	setStorage("SaS-Dialog", 1)
+	setStorage("SaS-Arcade", 0)
+	setStorage("SaS-News", 0)
+	setStorage("SaS-Control", 1)
+	removeUI("delete-history-dialog", "animate__fadeOut")
+})
+
+$("#cancel-delete").addEventListener("click", () => {
+	removeUI("delete-history-dialog", "animate__fadeOut")
 })
 
 $("#save-memory").addEventListener("click", () => {
