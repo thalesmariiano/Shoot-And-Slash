@@ -1,12 +1,12 @@
 
 const controlKey = {
-	left: null,
-	right: null,
-	jump: null,
-	jump_2: null
+	left: "KeyA",
+	right: "KeyD",
+	jump: "Space",
+	jump_2: "KeyW"
 }
 
-if(getStorage("SaS-Control") == 2){
+if(getStorage("SaS-Control") && getStorage("SaS-Control") == 2){
 	$("[data-control='2']").classList.remove("opacity-40", "hover:opacity-75")
 	$("[data-control='1']").classList.add("opacity-40", "hover:opacity-75")
 	controlKey.left   = "ArrowLeft"
@@ -25,29 +25,23 @@ if(getStorage("SaS-Control") == 2){
 
 const switchControls = (control, type) => {
 	if(type == 1){
-		if(getStorage("SaS-Control") == 2){
-			setStorage("SaS-Control", 1)
-			control.classList.remove("opacity-40", "hover:opacity-75")
-			$("[data-control='2']").classList.add("opacity-40", "hover:opacity-75")
-			controlKey.left   = "KeyA"
-			controlKey.right  = "KeyD"
-			controlKey.jump   = "Space"
-			controlKey.jump_2 = "KeyW"
-			dialogOpened = false
-		}
+		control.classList.remove("opacity-40", "hover:opacity-75")
+		$("[data-control='2']").classList.add("opacity-40", "hover:opacity-75")
+		controlKey.left   = "KeyA"
+		controlKey.right  = "KeyD"
+		controlKey.jump   = "Space"
+		controlKey.jump_2 = "KeyW"
+		if(getStorage("SaS-Control") == 2) setStorage("SaS-Control", 1)
 	}
 
 	if(type == 2){
-		if(getStorage("SaS-Control") == 1){
-			setStorage("SaS-Control", 2)
-			control.classList.remove("opacity-40", "hover:opacity-75")
-			$("[data-control='1']").classList.add("opacity-40", "hover:opacity-75")
-			controlKey.left   = "ArrowLeft"
-			controlKey.right  = "ArrowRight"
-			controlKey.jump   = "ArrowUp"
-			controlKey.jump_2 = "Space"
-			dialogOpened = false
-		}
+		control.classList.remove("opacity-40", "hover:opacity-75")
+		$("[data-control='1']").classList.add("opacity-40", "hover:opacity-75")
+		controlKey.left   = "ArrowLeft"
+		controlKey.right  = "ArrowRight"
+		controlKey.jump   = "ArrowUp"
+		controlKey.jump_2 = "Space"
+		if(getStorage("SaS-Control") == 1) setStorage("SaS-Control", 2)
 	}
 }
 
