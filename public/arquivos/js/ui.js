@@ -80,9 +80,12 @@ close_skills.addEventListener("click", () => {
 })
 
 $("#delete-memory").addEventListener("click", () => {
-	const deletar = confirm("Tem certeza que deseja deletar?")
+	const deletar = confirm("Tem certeza que deseja deletar? Todos os seus recordes e recursos salvos serão reiniciados!")
 	if(deletar){
-		deleteStorages()
+		setStorage("SaSdialog", 1)
+		setStorage("SaS-Arcade", 0)
+		setStorage("SaS-News", 0)
+		setStorage("SaSControl", 1)
 	}
 })
 
