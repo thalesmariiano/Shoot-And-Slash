@@ -88,11 +88,12 @@ $("#confirm-delete").addEventListener("click", () => {
 	setStorage("SaS-Arcade", 0)
 	setStorage("SaS-News", 0)
 	setStorage("SaS-Control", 1)
+	alert("Histórico deletado.")
 	removeUI("delete-history-dialog", "animate__fadeOut")
 })
 
 $("#cancel-delete").addEventListener("click", () => {
-	removeUI("delete-history-dialog", "animate__fadeOut")
+	removeUI("delete-history-dialog", "hidden")
 })
 
 $("#save-memory").addEventListener("click", () => {
