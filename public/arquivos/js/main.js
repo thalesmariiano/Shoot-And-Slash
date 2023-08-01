@@ -3,7 +3,6 @@ if(!getStorage("SaS-Save")) setStorage("SaS-Save", 1)
 
 if(parseInt(getStorage("SaS-Save"))){
 	$("#save-memory").setAttribute("checked", "")
-
 	createStorages()
 }else{
 	$("#save-memory").removeAttribute("checked", "")
