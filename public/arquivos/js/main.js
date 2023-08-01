@@ -63,10 +63,8 @@ const bullets_amount  = document.getElementById("bullets-amount")
 
 const souls_amount    = document.getElementById("souls-amount")
 
-// Dialog
-const dialog_container    = document.getElementById("dialog-container")
-const dialog_close_button = document.getElementById("close-dialog-button")
-const dialog_checkbox     = document.querySelector("[name=dontshow]")
+const close_guide    = document.getElementById("close-guide")
+const guide_checkbox = document.querySelector("input[type=checkbox][name=dontshowguide]")
 
 const health_container = document.getElementById("health-container")
 const health_bar       = document.getElementById("health-bar")
@@ -696,16 +694,10 @@ function update(){
 		playerActions()	
 	}
 
-
 	if(player.health < 20){
 		hud_screen.style.boxShadow = "inset 0 0 30px rgba(190, 0, 0, .7)"
 	}else{
 		hud_screen.style.boxShadow = "none"
-	}
-
-	if(gameIsPaused){
-		dialog_container.classList.remove("left-0")
-		dialog_container.classList.add("-left-60")
 	}
 
 	camera.update()
@@ -928,15 +920,7 @@ function loop(){
 
 function init(){
 	gameIsPaused = false
-	loop()
-
-	if(getStorage("SaS-Save")){
-		if(parseInt(getStorage("SaS-Dialog"))){
-			dialog_container.classList.add("left-0")
-			dialog_container.classList.remove("-left-60")
-		}
-	}
-		
+	loop()		
 }
 
 function continues(){
@@ -951,6 +935,7 @@ function pause(){
 	if(!gameIsPaused){
 		showUI("pause-screen", "animate__fadeIn")
 		removeUI("hud-screen", "hidden")
+		removeUI("guide-dialog", "hidden")
 		gameIsPaused = true
 	}
 }

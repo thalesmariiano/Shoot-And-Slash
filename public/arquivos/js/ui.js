@@ -14,6 +14,10 @@ arcade_mode_button.addEventListener("click", () => {
 
 	removeUI("uis-container", "animate__fadeOut")
 	showUI("hud-screen", "animate__fadeIn")
+
+	if(parseInt(getStorage("SaS-Dialog"))){
+		showUI("guide-dialog", "animate__slideInLeft")
+	}
 })
 
 play_button.addEventListener("click", () => {
@@ -41,6 +45,9 @@ continue_button.addEventListener("click", () => {
 	continues()
 	showUI("hud-screen", "animate__fadeIn")
 	removeUI("pause-screen", "hidden")
+	if(parseInt(getStorage("SaS-Dialog"))){
+		showUI("guide-dialog", "show")
+	}
 })
 
 restart_buttons.forEach(btn => {
@@ -61,13 +68,12 @@ back_to_menu_buttons.forEach(btn => {
 	})
 })
 
-dialog_close_button.addEventListener("click", () => {
-	dialog_container.classList.remove("left-0")
-	dialog_container.classList.add("-left-60")
+close_guide.addEventListener("click", () => {
+	removeUI("guide-dialog", "animate__slideOutLeft")
 })
 
-dialog_checkbox.addEventListener("input", () => {
-	const value = dialog_checkbox.checked ? 0 : 1
+guide_checkbox.addEventListener("input", () => {
+	const value = guide_checkbox.checked ? 0 : 1
 	if(parseInt(getStorage("SaS-Save"))) setStorage("SaS-Dialog", value)
 })
 
