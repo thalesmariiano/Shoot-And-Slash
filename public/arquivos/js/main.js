@@ -4,10 +4,7 @@ if(!getStorage("SaS-Save")) setStorage("SaS-Save", 1)
 if(parseInt(getStorage("SaS-Save"))){
 	$("#save-memory").setAttribute("checked", "")
 
-	if(!getStorage("SaSdialog")) setStorage("SaSdialog", 1)
-	if(!getStorage("SaS-Arcade")) setStorage("SaS-Arcade", 0)
-	if(!getStorage("SaS-News")) setStorage("SaS-News", 0)
-	if(!getStorage("SaSControl")) setStorage("SaSControl", 1)
+	createStorages()
 }else{
 	$("#save-memory").removeAttribute("checked", "")
 }
@@ -788,7 +785,7 @@ function saveData(){
 	if(parseInt(getStorage("SaS-Save"))){
 		if(enemysKilled > parseInt(getStorage("SaS-Arcade"))){
 			setStorage("SaS-Arcade", enemysKilled)
-			
+
 			const arcade_kills = getStorage("SaS-Arcade") ? getStorage("SaS-Arcade") : 0
 			$("#arcade-record").innerHTML = `Recorde: ${arcade_kills}`
 		}
