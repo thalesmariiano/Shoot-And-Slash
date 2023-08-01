@@ -82,16 +82,18 @@ close_skills.addEventListener("click", () => {
 $("#delete-memory").addEventListener("click", () => {
 	const deletar = confirm("Tem certeza que deseja deletar?")
 	if(deletar){
-		localStorage.removeItem("SaSdialog")
-		localStorage.removeItem("SaS-News")
-		localStorage.removeItem("SaS-Arcade")
-		localStorage.removeItem("SaSControl")
+		deleteStorages()
 	}
 })
 
 $("#save-memory").addEventListener("click", () => {
-	if($("#save-memory").checked) setStorage("SaS-Save", 1)
-	else setStorage("SaS-Save", 0)
+	if($("#save-memory").checked){
+		setStorage("SaS-Save", 1)
+		createStorages()
+	}else{
+		setStorage("SaS-Save", 0)
+		deleteStorages()
+	}
 })
 
 if(parseFloat(getStorage("SaS-News")) != 1.2){
