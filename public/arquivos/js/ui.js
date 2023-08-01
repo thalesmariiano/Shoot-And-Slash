@@ -89,6 +89,10 @@ $("#delete-memory").addEventListener("click", () => {
 	}
 })
 
+$("#save-memory").addEventListener("click", () => {
+	if($("#save-memory").checked) setStorage("SaS-Save", 1)
+	else setStorage("SaS-Save", 0)
+})
 
 if(parseFloat(getStorage("SaS-News")) != 1.2){
 	showUI("news-screen", "animate__bounceIn")	
