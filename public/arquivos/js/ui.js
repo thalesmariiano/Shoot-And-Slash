@@ -107,12 +107,12 @@ $("#save-memory").addEventListener("click", () => {
 })
 
 if(parseFloat(getStorage("SaS-News")) != 1.2){
-	showUI("news-screen", "animate__bounceIn")	
+	showUI("news-dialog", "animate__bounceIn")	
 	$("body").style.overflow = "hidden"
 
 	close_news.addEventListener("click", () => {
 		if(parseInt(getStorage("SaS-Save"))) setStorage("SaS-News", 1.2)
-		removeUI("news-screen", "animate__bounceOut")
+		removeUI("news-dialog", "animate__bounceOut")
 		$("body").style.overflow = ""
 	})
 }
