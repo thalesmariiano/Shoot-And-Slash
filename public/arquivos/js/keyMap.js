@@ -6,20 +6,20 @@ const controlKey = {
 	jump_2: null
 }
 
-if(getStorage("SaSControl") == 1){
-	$("[data-control='1']").classList.remove("opacity-40", "hover:opacity-75")
-	$("[data-control='2']").classList.add("opacity-40", "hover:opacity-75")
-	controlKey.left   = "KeyA"
-	controlKey.right  = "KeyD"
-	controlKey.jump   = "Space"
-	controlKey.jump_2 = "KeyW"
-}else{
+if(getStorage("SaSControl") == 2){
 	$("[data-control='2']").classList.remove("opacity-40", "hover:opacity-75")
 	$("[data-control='1']").classList.add("opacity-40", "hover:opacity-75")
 	controlKey.left   = "ArrowLeft"
 	controlKey.right  = "ArrowRight"
 	controlKey.jump   = "ArrowUp"
 	controlKey.jump_2 = "Space"
+}else{
+	$("[data-control='1']").classList.remove("opacity-40", "hover:opacity-75")
+	$("[data-control='2']").classList.add("opacity-40", "hover:opacity-75")
+	controlKey.left   = "KeyA"
+	controlKey.right  = "KeyD"
+	controlKey.jump   = "Space"
+	controlKey.jump_2 = "KeyW"
 }
 
 
