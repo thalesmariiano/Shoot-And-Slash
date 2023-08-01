@@ -1,11 +1,15 @@
 
-const save_allowed = $("#save-memory").checked
+if(!getStorage("SaS-Save")) setStorage("SaS-Save", 1)
 
-if(save_allowed){
+if(parseInt(getStorage("SaS-Save"))){
+	$("#save-memory").setAttribute("checked", "")
+
 	if(!getStorage("SaSdialog")) setStorage("SaSdialog", 1)
 	if(!getStorage("SaS-Arcade")) setStorage("SaS-Arcade", 0)
-	if(!getStorage("SaS-News")) setStorage("SaS-Arcade", 0)
+	if(!getStorage("SaS-News")) setStorage("SaS-News", 0)
 	if(!getStorage("SaSControl")) setStorage("SaSControl", 1)
+}else{
+	$("#save-memory").removeAttribute("checked", "")
 }
 
 document.querySelector("#arcade-record").innerHTML = `Recorde: ${getStorage("SaS-Arcade")}`
