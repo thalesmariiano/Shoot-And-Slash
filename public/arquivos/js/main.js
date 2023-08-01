@@ -785,7 +785,7 @@ function arcadeMode(){
 }
 
 function saveData(){
-	if(save_allowed){
+	if(parseInt(getStorage("SaS-Save"))){
 		if(enemysKilled > parseInt(getStorage("SaS-Arcade"))){
 			setStorage("SaS-Arcade", enemysKilled)
 			document.querySelector("#arcade-record").innerHTML = `Recorde: ${getStorage("SaS-Arcade")}`
@@ -930,10 +930,13 @@ function init(){
 	gameIsPaused = false
 	loop()
 
-	if(parseInt(getStorage("SaSdialog"))){
-		dialog_container.classList.add("left-0")
-		dialog_container.classList.remove("-left-60")
+	if(getStorage("SaS-Save")){
+		if(parseInt(getStorage("SaSdialog"))){
+			dialog_container.classList.add("left-0")
+			dialog_container.classList.remove("-left-60")
+		}
 	}
+		
 }
 
 function continues(){
