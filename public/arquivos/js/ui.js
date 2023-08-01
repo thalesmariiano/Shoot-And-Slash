@@ -68,7 +68,7 @@ dialog_close_button.addEventListener("click", () => {
 
 dialog_checkbox.addEventListener("input", () => {
 	const value = dialog_checkbox.checked ? 0 : 1
-	if(parseInt(getStorage("SaS-Save"))) setStorage("SaSdialog", value)
+	if(parseInt(getStorage("SaS-Save"))) setStorage("SaS-Dialog", value)
 })
 
 
@@ -82,7 +82,7 @@ close_skills.addEventListener("click", () => {
 $("#delete-memory").addEventListener("click", () => {
 	const deletar = confirm("Tem certeza que deseja deletar? Todos os seus recordes e recursos salvos serão reiniciados!")
 	if(deletar){
-		setStorage("SaSdialog", 1)
+		setStorage("SaS-Dialog", 1)
 		setStorage("SaS-Arcade", 0)
 		setStorage("SaS-News", 0)
 		setStorage("SaSControl", 1)

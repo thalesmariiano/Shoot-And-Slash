@@ -5,14 +5,14 @@ const setStorage = (storage, value) => localStorage.setItem(storage, value)
 const getStorage = storage => localStorage.getItem(storage)
 
 function createStorages(){
-	if(!getStorage("SaSdialog")) setStorage("SaSdialog", 1)
+	if(!getStorage("SaS-Dialog")) setStorage("SaS-Dialog", 1)
 	if(!getStorage("SaS-Arcade")) setStorage("SaS-Arcade", 0)
 	if(!getStorage("SaS-News")) setStorage("SaS-News", 0)
 	if(!getStorage("SaSControl")) setStorage("SaSControl", 1)
 }
 
 function deleteStorages(){
-	localStorage.removeItem("SaSdialog")
+	localStorage.removeItem("SaS-Dialog")
 	localStorage.removeItem("SaS-News")
 	localStorage.removeItem("SaS-Arcade")
 	localStorage.removeItem("SaSControl")

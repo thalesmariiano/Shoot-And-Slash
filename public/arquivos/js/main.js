@@ -1,3 +1,4 @@
+if(getStorage("SaSdialog")) localStorage.removeItem("SaSdialog") 
 
 if(!getStorage("SaS-Save")) setStorage("SaS-Save", 1)
 
@@ -929,7 +930,7 @@ function init(){
 	loop()
 
 	if(getStorage("SaS-Save")){
-		if(parseInt(getStorage("SaSdialog"))){
+		if(parseInt(getStorage("SaS-Dialog"))){
 			dialog_container.classList.add("left-0")
 			dialog_container.classList.remove("-left-60")
 		}
