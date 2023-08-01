@@ -68,7 +68,7 @@ dialog_close_button.addEventListener("click", () => {
 
 dialog_checkbox.addEventListener("input", () => {
 	const value = dialog_checkbox.checked ? 0 : 1
-	setStorage("SaSdialog", value)
+	if(parseInt(getStorage("SaS-Save"))) setStorage("SaSdialog", value)
 })
 
 
@@ -99,7 +99,7 @@ if(parseFloat(getStorage("SaS-News")) != 1.2){
 	$("body").style.overflow = "hidden"
 
 	close_news.addEventListener("click", () => {
-		setStorage("SaS-News", 1.2)
+		if(parseInt(getStorage("SaS-Save"))) setStorage("SaS-News", 1.2)
 		removeUI("news-screen", "animate__bounceOut")
 		$("body").style.overflow = ""
 	})
