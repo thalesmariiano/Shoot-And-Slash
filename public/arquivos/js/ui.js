@@ -85,7 +85,7 @@ $("#delete-memory").addEventListener("click", () => {
 		setStorage("SaS-Dialog", 1)
 		setStorage("SaS-Arcade", 0)
 		setStorage("SaS-News", 0)
-		setStorage("SaSControl", 1)
+		setStorage("SaS-Control", 1)
 	}
 })
 

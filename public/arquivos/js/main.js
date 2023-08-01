@@ -1,4 +1,5 @@
-if(getStorage("SaSdialog")) localStorage.removeItem("SaSdialog") 
+if(getStorage("SaSdialog")) localStorage.removeItem("SaSdialog")
+if(getStorage("SaSControl")) localStorage.removeItem("SaSControl")
 
 if(!getStorage("SaS-Save")) setStorage("SaS-Save", 1)
 

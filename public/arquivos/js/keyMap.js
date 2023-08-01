@@ -6,7 +6,7 @@ const controlKey = {
 	jump_2: null
 }
 
-if(getStorage("SaSControl") == 2){
+if(getStorage("SaS-Control") == 2){
 	$("[data-control='2']").classList.remove("opacity-40", "hover:opacity-75")
 	$("[data-control='1']").classList.add("opacity-40", "hover:opacity-75")
 	controlKey.left   = "ArrowLeft"
@@ -25,8 +25,8 @@ if(getStorage("SaSControl") == 2){
 
 const switchControls = (control, type) => {
 	if(type == 1){
-		if(getStorage("SaSControl") == 2){
-			setStorage("SaSControl", 1)
+		if(getStorage("SaS-Control") == 2){
+			setStorage("SaS-Control", 1)
 			control.classList.remove("opacity-40", "hover:opacity-75")
 			$("[data-control='2']").classList.add("opacity-40", "hover:opacity-75")
 			controlKey.left   = "KeyA"
@@ -38,8 +38,8 @@ const switchControls = (control, type) => {
 	}
 
 	if(type == 2){
-		if(getStorage("SaSControl") == 1){
-			setStorage("SaSControl", 2)
+		if(getStorage("SaS-Control") == 1){
+			setStorage("SaS-Control", 2)
 			control.classList.remove("opacity-40", "hover:opacity-75")
 			$("[data-control='1']").classList.add("opacity-40", "hover:opacity-75")
 			controlKey.left   = "ArrowLeft"
