@@ -11,6 +11,13 @@ function createStorages(){
 	if(!getStorage("SaSControl")) setStorage("SaSControl", 1)
 }
 
+function deleteStorages(){
+	localStorage.removeItem("SaSdialog")
+	localStorage.removeItem("SaS-News")
+	localStorage.removeItem("SaS-Arcade")
+	localStorage.removeItem("SaSControl")
+}
+
 function spriteConverter(imgArray){
 	imgArray.forEach(spr => {
 		const img = new Image()
