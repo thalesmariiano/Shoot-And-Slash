@@ -101,14 +101,26 @@ $("#cancel-delete").addEventListener("click", () => {
 	removeUI("delete-history-dialog", "hidden")
 })
 
-$("#save-memory").addEventListener("click", () => {
-	if($("#save-memory").checked){
+$("#save-memory").addEventListener("click", e => {
+	if(parseInt(getStorage("SaS-Save"))){
+		showUI("save-data-dialog", "animate__fadeIn")
+		$("#save-memory").checked = true
+	}else{
 		setStorage("SaS-Save", 1)
 		createStorages()
-	}else{
-		setStorage("SaS-Save", 0)
-		deleteStorages()
+		$("#save-memory").checked = true
 	}
+})
+
+$("#confirm-not-save").addEventListener("click", () => {
+	setStorage("SaS-Save", 0)
+	deleteStorages()
+	$("#save-memory").checked = false
+	removeUI("save-data-dialog", "animate__fadeOut")
+})
+
+$("#cancel-not-save").addEventListener("click", () => {
+	removeUI("save-data-dialog", "hidden")
 })
 
 if(parseFloat(getStorage("SaS-News")) != 1.2){
