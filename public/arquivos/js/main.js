@@ -4,10 +4,10 @@ if(getStorage("SaSControl")) localStorage.removeItem("SaSControl")
 if(!getStorage("SaS-Save")) setStorage("SaS-Save", 1)
 
 if(parseInt(getStorage("SaS-Save"))){
-	$("#save-memory").setAttribute("checked", "")
+	$("#save-memory").checked = true
 	createStorages()
 }else{
-	$("#save-memory").removeAttribute("checked", "")
+	$("#save-memory").checked = false
 }
 
 document.querySelector("#arcade-record").innerHTML = `Recorde: ${getStorage("SaS-Arcade")}`
