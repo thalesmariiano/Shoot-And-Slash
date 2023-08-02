@@ -414,6 +414,19 @@
 			</div>
 		</div>
 
+		<div id="save-data-dialog" class="fixed top-0 left-0 w-full h-full bg-neutral-900/75 flex justify-center items-center hidden">
+			<div class="w-[32rem] h-52 bg-neutral-400 p-2 rounded-xl border-2 border-white flex flex-col justify-between">
+				<div>
+					<p class="font-bold uppercase text-xl text-neutral-900">Não salvar informações?</p>
+					<p class="mx-1 mt-3 font-inter text-neutral-800 font-semibold leading-5">Tem certeza? Todo o seu histórico do jogo será deletado. E qualquer recorde que você tenha não será salvo.</p>
+				</div>
+				<div class="space-x-3">
+					<button id="confirm-not-save" class="px-5 py-1 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-all">Não salvar</button>
+					<button id="cancel-not-save" class="hover:text-neutral-200 transition-all">Salvar</button>
+				</div>
+			</div>
+		</div>
+
 		<p class="text-zinc-400/50 absolute top-5 right-5 font-bold">alpha 1.2</p>
 
 		<script src="arquivos/js/Classes/Entity.js"></script>
