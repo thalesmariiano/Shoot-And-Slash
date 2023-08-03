@@ -15,8 +15,8 @@ class Projectile {
 	}
 
 	draw(){
-		ctx.fillStyle = this.color
-		ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
+		buffer.fillStyle = this.color
+		buffer.fillRect(this.position.x, this.position.y, this.width, this.height)
 	}
 
 	update(){
