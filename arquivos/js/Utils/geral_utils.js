@@ -1,4 +1,31 @@
 
+const $ = element => document.querySelector(element)
+
+const setStorage = (storage, value) => localStorage.setItem(storage, value)
+const getStorage = storage => localStorage.getItem(storage)
+
+function createStorages(){
+	if(!getStorage("SaS-Dialog")) setStorage("SaS-Dialog", 1)
+	if(!getStorage("SaS-Arcade")) setStorage("SaS-Arcade", 0)
+	if(!getStorage("SaS-News")) setStorage("SaS-News", 0)
+	if(!getStorage("SaS-Control")) setStorage("SaS-Control", 1)
+}
+
+function deleteStorages(){
+	localStorage.removeItem("SaS-Dialog")
+	localStorage.removeItem("SaS-News")
+	localStorage.removeItem("SaS-Arcade")
+	localStorage.removeItem("SaS-Control")
+}
+
+function spriteConverter(imgArray){
+	imgArray.forEach(spr => {
+		const img = new Image()
+		img.src = spr.image
+		spr.image = img
+	})
+}
+
 function generateEnemys(amount, health){
 	const newMapSize = mapSize - 100
 	for(i = 0; i < amount; i++){

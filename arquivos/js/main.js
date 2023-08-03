@@ -1,11 +1,26 @@
-if(!window.localStorage.getItem("SaSdialog")) window.localStorage.setItem("SaSdialog", 1)
+if(getStorage("SaSdialog")) localStorage.removeItem("SaSdialog")
+if(getStorage("SaSControl")) localStorage.removeItem("SaSControl")
+
+if(!getStorage("SaS-Save")) setStorage("SaS-Save", 1)
+
+if(parseInt(getStorage("SaS-Save"))){
+	$("#save-memory").checked = true
+	createStorages()
+}else{
+	$("#save-memory").checked = false
+}
+
+document.querySelector("#arcade-record").innerHTML = `Recorde: ${getStorage("SaS-Arcade")}`
 
 var developerMode = false
 
 const canvas            = document.querySelector("canvas")
-const screens_container = document.querySelector("#screens-container")
+const display = canvas.getContext("2d", {alpha: false})
 
-const ctx = canvas.getContext("2d", {alpha: false})
+const cv = document.createElement("canvas")
+const buffer = cv.getContext('2d', {alpha: false})
+
+const screens_container = document.querySelector("#screens-container")
 
 const GRAVITY = 0.6
 
@@ -17,12 +32,7 @@ var keyRight,
     keyR = false
 
 var gameIsPaused = true
-var isIniting = false
-var onWaves = false
 
-var enemysCount = 0
-var gameWave = 0
-var timeBetweenWaves = 15
 var enemysKilled = 0
 
 var lockLeft,
@@ -53,10 +63,8 @@ const bullets_amount  = document.getElementById("bullets-amount")
 
 const souls_amount    = document.getElementById("souls-amount")
 
-// Dialog
-const dialog_container    = document.getElementById("dialog-container")
-const dialog_close_button = document.getElementById("close-dialog-button")
-const dialog_checkbox     = document.querySelector("[name=dontshow]")
+const close_guide    = document.getElementById("close-guide")
+const guide_checkbox = document.querySelector("input[type=checkbox][name=dontshowguide]")
 
 const health_container = document.getElementById("health-container")
 const health_bar       = document.getElementById("health-bar")
@@ -317,37 +325,13 @@ const enemy_sprites = [
 	}
 ]
 
+spriteConverter(enemy_sprites)
+spriteConverter(player_sprites)
+spriteConverter(itens_sprites.enemy_soul.sprites)
+spriteConverter(itens_sprites.life.sprites)
+spriteConverter(itens_sprites.ak47.sprites)
+
 const enemys = []
-
-enemy_sprites.forEach(spr => {
-	const img = new Image()
-	img.src = spr.image
-	spr.image = img
-})
-
-player_sprites.forEach(spr => {
-	const img = new Image()
-	img.src = spr.image
-	spr.image = img
-})
-
-itens_sprites.enemy_soul.sprites.forEach(spr => {
-	const img = new Image()
-	img.src = spr.image
-	spr.image = img
-})
-
-itens_sprites.life.sprites.forEach(spr => {
-	const img = new Image()
-	img.src = spr.image
-	spr.image = img
-})
-
-itens_sprites.ak47.sprites.forEach(spr => {
-	const img = new Image()
-	img.src = spr.image
-	spr.image = img
-})
 
 const player = new Player({position: {x: 127, y: 380}})
 player.setSprites(player_sprites)
@@ -437,10 +421,10 @@ skillsButton.forEach(button => {
 
 		if(isMaxLevel){
 			level_text.innerHTML = "Max"
-			level_text.classList.add("text-red-500")
+			level_text.style.color = "#f74a4a"
 
 			setTimeout(() => {
-				level_text.classList.remove("text-red-500")
+				level_text.style.color = ""
 				level_text.innerHTML = `Lv ${button.dataset.level}`		
 			}, 1000)
 			return
@@ -448,23 +432,23 @@ skillsButton.forEach(button => {
 
 		if(player.souls < skillPrice){
 			price_text.classList.add("animate__animated", "animate__shakeX")
-			price_text.classList.add("bg-red-500/75")
-			button.classList.add("border-red-500")
+			price_text.style.background = "#f74a4a"
+			button.style.border = "2px solid #f74a4a"
 
 			price_text.addEventListener("animationend", () => {
 				price_text.classList.remove("animate__animated", "animate__shakeX")
-				price_text.classList.remove("bg-red-500/75")
-				button.classList.remove("border-red-500")
+				price_text.style.background = ""
+				button.style.border = ""
 			})
 			return
 		}
 
-		price_text.classList.add("bg-green-700/75")
-		button.classList.add("border-green-700")
+		price_text.style.background = "green"
+		button.style.border = "2px solid green"
 
 		setTimeout(() => {
-			price_text.classList.remove("bg-green-700/75")
-			button.classList.remove("border-green-700")
+			price_text.style.background = ""
+			button.style.border = ""
 		}, 700)
 
 		player.souls -= skillPrice
@@ -512,23 +496,23 @@ itensButton.forEach(button => {
 
 		if(player.souls < skillPrice){
 			price_text.classList.add("animate__animated", "animate__shakeX")
-			price_text.classList.add("bg-red-500/75")
-			button.classList.add("border-red-500")
+			price_text.style.background = "#f74a4a"
+			button.style.border = "2px solid #f74a4a"
 
 			price_text.addEventListener("animationend", () => {
 				price_text.classList.remove("animate__animated", "animate__shakeX")
-				price_text.classList.remove("bg-red-500/75")
-				button.classList.remove("border-red-500")
+				price_text.style.background = ""
+				button.style.border = ""
 			})
 			return
 		}
 
-		price_text.classList.add("bg-green-700/75")
-		button.classList.add("border-green-700")
+		price_text.style.background = "green"
+		button.style.border = "2px solid green"
 
 		setTimeout(() => {
-			price_text.classList.remove("bg-green-700/75")
-			button.classList.remove("border-green-700")
+			price_text.style.background = ""
+			button.style.border = ""
 		}, 700)
 
 		player.souls -= skillPrice
@@ -646,12 +630,14 @@ function playerActions(){
 
 		player.velocity.x = 0
 
-		waves_count.innerHTML = `Onda: ${gameWave}`
+		waves_count.innerHTML = `Onda: ${arcadeWave.waveNumber}`
 		kills_count.innerHTML = `Abates: ${enemysKilled}`
 
 		setTimeout(() => {
 			gameIsPaused = true
-			switchScreen("die-screen", "hud-screen")
+			saveData()
+			showUI("die-screen", "animate__fadeIn")
+			removeUI("hud-screen", "hidden")
 		}, 1500)
 	}
 }
@@ -685,7 +671,7 @@ function holdingItem(){
 		const { item } = slot
 
 		if(item.type == "Weapon"){
-			weapon_status.classList.remove("text-slate-500")
+			weapon_status.style.color = ""
 		}
 
 		item.switchSprite(`ak47_${player.direction.toLowerCase()}`)
@@ -697,7 +683,7 @@ function holdingItem(){
 			item.position.y = player.position.y + itens_sprites.ak47.holding_position.y
 		}
 	}else{
-		weapon_status.classList.add("text-slate-500")
+		weapon_status.style.color = "#64748b"
 	}
 }
 
@@ -708,68 +694,114 @@ function update(){
 		playerActions()	
 	}
 
-
 	if(player.health < 20){
 		hud_screen.style.boxShadow = "inset 0 0 30px rgba(190, 0, 0, .7)"
 	}else{
 		hud_screen.style.boxShadow = "none"
 	}
 
-	if(gameIsPaused){
-		dialog_container.classList.remove("left-0")
-		dialog_container.classList.add("-left-60")
-
-		updateUI("skills", false)
-	}
-
 	camera.update()
 }
 
-function enemysWaves(){
-	if(!enemys.length && !isIniting){
-		onWaves = false
-		isIniting = true
+class EnemyWave {
+	constructor(count, health){
+		this.enemys = []
+		this.waveStarted = false
+		this.waveIsPlaying = false
+		this.waveNumber = 1
+		this.waveTimer = 15
+		this.enemysCount = count
+		this.enemyHealth = health
+	}
 
-		if(!onWaves && timeBetweenWaves >= 5){
-			updateUI("skills", true)	
-		}
+	restart(){
+		this.waveStarted = false
+		this.waveIsPlaying = false
+		this.waveNumber = 1
+		this.waveTimer = 15
+		this.enemysCount = 3
+		this.enemyHealth = 100
+		enemys.length = 0
+	}
 
-		const wavesTimer = setInterval(() => {
-			if(gameIsPaused){
-				clearInterval(wavesTimer)
-				return
-			}
-
-			waves_skills_timer.innerHTML = `${timeBetweenWaves}s`
-			if(timeBetweenWaves <= 5) waves_hud_timer.innerHTML = `${timeBetweenWaves}s`
-
-			if(!timeBetweenWaves){
-				gameWave++
-				enemysCount += 3
-				generateEnemys(enemysCount, 100)
-				updateUI("waves", true)
-				updateUI("timer", false)
-				updateUI("skills", false)
-				isIniting = false
-				onWaves = true
-				timeBetweenWaves = 15
-				setTimeout(() => updateUI("waves", false), 3000)
-				clearInterval(wavesTimer)
-			}else timeBetweenWaves--
-		}, 1000)
+	init(){
+		$("#waves-text").innerHTML = `Onda ${this.waveNumber}`
+		showUI("waves-container", "animate__fadeIn")
+		setTimeout(() => removeUI("waves-container", "animate__fadeOut"), 3000)
+		generateEnemys(this.enemysCount, this.enemyHealth)
 	}
 }
 
+const arcadeWave = new EnemyWave(3, 100)
+
+function arcadeMode(){
+	if(!arcadeWave.waveStarted && !arcadeWave.waveIsPlaying){
+		arcadeWave.waveStarted = true
+
+		if(arcadeWave.waveTimer >= 5) showUI("skills-screen", "animate__fadeIn")
+
+		const timer = setInterval(() => {
+			if(gameIsPaused){
+				clearInterval(timer)
+				return
+			}
+			arcadeWave.waveTimer--
+
+			$("#waves-skills-timer").innerHTML = `${arcadeWave.waveTimer}s`
+			if(arcadeWave.waveTimer <= 5) $("#waves-hud-timer").innerHTML = `${arcadeWave.waveTimer}s`
+
+			if(arcadeWave.waveTimer == 5){
+				showUI("waves-timer-container", "animate__fadeIn")
+				removeUI("skills-screen", "animate__fadeOut")
+			}
+
+			if(!arcadeWave.waveTimer){
+				arcadeWave.init()
+				arcadeWave.waveIsPlaying = true
+				removeUI("waves-timer-container", "animate__fadeOut")
+				clearInterval(timer)
+			}
+		}, 1000)
+	}
+
+	if(!enemys.length && arcadeWave.waveIsPlaying){
+		arcadeWave.waveTimer = 15
+		$("#waves-skills-timer").innerHTML = `${arcadeWave.waveTimer}s`
+		arcadeWave.waveIsPlaying = false
+		arcadeWave.waveStarted = false
+		arcadeWave.waveNumber++
+		arcadeWave.enemysCount += 3
+	}
+}
+
+function saveData(){
+	if(parseInt(getStorage("SaS-Save"))){
+		if(enemysKilled > parseInt(getStorage("SaS-Arcade"))){
+			setStorage("SaS-Arcade", enemysKilled)
+
+			const arcade_kills = getStorage("SaS-Arcade") ? getStorage("SaS-Arcade") : 0
+			$("#arcade-record").innerHTML = `Recorde: ${arcade_kills}`
+		}
+	}
+	
+}
+
+const back = new Parallax(parallax_back, 7)
+const middle = new Parallax(parallax_middle, 4)
+const front = new Parallax(parallax_front, 2)
+
 function render(){
-	ctx.save()
-	ctx.clearRect(0, 0, canvas.width, canvas.height)
+	display.save()
+	display.clearRect(0, 0, canvas.width, canvas.height)
+	buffer.save()
+	buffer.clearRect(0, 0, canvas.width, canvas.height)
 
 	/* PARALLAX */
-	ctx.drawImage(parallax_back, Math.floor(-camera.x)/7, 0, 2000, 700)							
-	ctx.drawImage(parallax_middle, Math.floor(-camera.x)/4, 0, 2000, 700)				
-	ctx.drawImage(parallax_front, Math.floor(-camera.x)/2, 0, 3100, 770)				
+	back.update()
+	middle.update()
+	front.update()			
 
-	ctx.translate(
+	buffer.translate(
 		Math.floor(-camera.x),
 		Math.floor(-camera.y)
 	)
@@ -806,14 +838,15 @@ function render(){
 		}
 	})
 
-	enemysWaves()
+	// enemysWaves()
+	arcadeMode()
 
 	playebleMapBlocks.forEach(block => {
 		const {top, bottom, left, right} = detectInArea(camera_position, block, 300, (canvas.height/2), 300, (canvas.width/2) + 50, (canvas.width/2))
 		const blockInArea = top || bottom || right || left
 
 		if(blockInArea){
-			ctx.drawImage(tilemap, block.imgX, block.imgY, 32, 32, block.position.x, block.position.y, block.width, block.height)				
+			buffer.drawImage(tilemap, block.imgX, block.imgY, 32, 32, block.position.x, block.position.y, block.width, block.height)				
 			basicCollision(player, block)
 		}
 	})
@@ -870,7 +903,9 @@ function render(){
 		}
 	})
 
-	ctx.restore()
+	display.drawImage(cv, 0, 0)
+	display.restore()
+	buffer.restore()
 
 }
 
@@ -885,41 +920,29 @@ function loop(){
 
 function init(){
 	gameIsPaused = false
-	loop()
-
-	const showDialog = window.localStorage.getItem("SaSdialog")
-	if(parseInt(showDialog)){
-		dialog_container.classList.add("left-0")
-		dialog_container.classList.remove("-left-60")
-	}
+	loop()		
 }
 
 function continues(){
 	if(gameIsPaused){
-		isIniting = false
+		arcadeWave.waveStarted = false
 		gameIsPaused = false
 		loop()
-		switchScreen("hud-screen", "pause-screen")
-
-		if(!onWaves && timeBetweenWaves >= 5){
-			updateUI("skills", true)
-		}
 	}
 }
 
 function pause(){
 	if(!gameIsPaused){
-		switchScreen("pause-screen", "hud-screen")
+		showUI("pause-screen", "animate__fadeIn")
+		removeUI("hud-screen", "hidden")
+		removeUI("guide-dialog", "hidden")
 		gameIsPaused = true
 	}
 }
 
 function restart(){
-	isIniting = false
-	onWaves = false
-	timeBetweenWaves = 15
+	arcadeWave.restart()
 	enemys.length = 0
-	gameWave = 0
 
 	player.inventory.forEach(slot => {
 		slot.item = null
@@ -957,27 +980,24 @@ function restart(){
 		}
 	}
 
-	updateUI("timer", false)
+	removeUI("waves-timer-container", "hidden")
 	updateUI("icon", "")
 
-	enemysCount = 0
 	enemysKilled = 0
 	bullets_amount.innerHTML = 0
 	munition_amount.innerHTML = 0
 	souls_amount.innerHTML = 0
 	weapon_status.classList.add("hidden")
+
+	saveData()
 
 	player.restart()
 	init()
 }
 
 function destroy(){
+	arcadeWave.restart()
 	gameIsPaused = true
-	isIniting = false
-	onWaves = false
-	enemys.length = 0
-	enemysCount = 0
-	timeBetweenWaves = 15
 
 	player.inventory.forEach(slot => {
 		slot.item = null
@@ -1015,24 +1035,26 @@ function destroy(){
 		}
 	}
 
-	updateUI("timer", false)
+	removeUI("waves-timer-container", "hidden")
 	updateUI("icon", "")
 
-	gameWave = 0
 	enemysKilled = 0
 	bullets_amount.innerHTML = 0
 	munition_amount.innerHTML = 0
 	souls_amount.innerHTML = 0
 	weapon_status.classList.add("hidden")
 
+	saveData()
+
 	player.restart()
-	ctx.clearRect(0, 0, canvas.width, canvas.height)
+	buffer.clearRect(0, 0, canvas.width, canvas.height)
 }
 
 const resizeAspectRatio = () => {
-	ctx.canvas.width = window.innerWidth
-	ctx.canvas.height = window.innerHeight
-	ctx.imageSmoothingEnabled = false
+	display.canvas.width = cv.width = window.innerWidth
+	display.canvas.height = cv.height = window.innerHeight
+	display.imageSmoothingEnabled = false
+	buffer.imageSmoothingEnabled = false
 }
 resizeAspectRatio()
 

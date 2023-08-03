@@ -3,104 +3,149 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="shortcut icon" href="arquivos/assets/logo_icon.ico"/>
-		<link rel="stylesheet" type="text/css" href="arquivos/css/style.css">
+		<link rel="shortcut icon" href="arquivos/assets/sas_icon.png"/>
 		<meta name="description" content="Shoot And Slash é um classico jogo Hack And Slash no qual você tem que derrotar ordas de inimigos e ir melhorando seus equipamentos de acordo com que a dificuldade eleva.">
   		<meta name="keywords" content="Jogos, jogo, Offline, Hack And Slash, games, game, offline, thales mariano, thales, indie">
   		<meta name="author" content="Thales Mariano">
 
-		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1017845986794503" crossorigin="anonymous"></script>
-
   		<!-- TAILWIND CSS -->
-		<script src="https://cdn.tailwindcss.com"></script>
+  		<link rel="stylesheet" href="arquivos/css/styles.css">
+
+  		<!-- <script src="https://cdn.tailwindcss.com"></script> -->
+
+  		<style>
+  			.animate__animated.animate__fadeIn {
+			  --animate-duration: 1s;
+			}
+  		</style>
 
 		<!-- Animate CSS -->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+		<link rel="stylesheet" href="http
+		s://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
 		<title>Shoot And Slash - Jogo 2D estilo hack and slash</title>
 	</head>
-	<body>
-		
+	<body class="text-white overflow-hidden">
 		<main id="container" class="flex justify-center items-center relative min-h-screen">
 			<canvas>O seu navegador não suporta o canvas.</canvas>
 
 			<div id="screens-container" class="absolute w-full h-full">
-				<section id="start-screen" class="w-full h-full">
-					<div id="start-container" class="flex justify-center items-center w-full h-full">
-						<div class="flex flex-col gap-10 justify-between items-center w-full max-h-[888px]">
-							<div id="logo-container">
-								<img id="logo" src="arquivos/assets/logo.png" alt="Shoot And Slash">
-							</div>
-
-							<nav>
-								<div class="text-center">
-									<button id="play-button" class="btn-default w-48 py-1.5 mx-5 my-2 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300">Jogar</button>
-									<button id="options-button" class="btn-default w-48 py-1.5 mx-5 my-2 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300">Opções</button>
+				<div id="uis-container" class="w-full h-full bg-gradient-to-tr from-neutral-900 to-neutral-800">
+					<section id="start-screen" class="w-full h-full">
+						<div id="start-container" class="flex justify-center items-center w-full h-full">
+							<div class="flex flex-col gap-10 justify-between items-center w-full max-h-[888px]">
+								<div id="logo-container" class="max-w-[25rem]">
+									<img src="arquivos/assets/sas_logo.png" alt="Shoot And Slash">
 								</div>
-							</nav>
 
-							<div id="credits-container">
-								<p class="text-center text-sm">Este jogo está em <strong>Alpha</strong>, e não representa a sua versão final.<br>
-								<p class="text-center text-sm">Tem uma sugestão ou encontrou algum bug? <a href="https://twitter.com/somenteumcara" target="_blank" class="text-stone-200 underline hover:text-teal-500">Mande aqui!</a></p>
-								<p class="text-center text-sm">Este é um projeto de código aberto: <a href="https://github.com/thalesmariiano/shoot-and-slash" target="_blank" class="text-stone-200 underline hover:text-teal-500">Veja aqui</a>!</p>
+								<nav>
+									<div class="text-center">
+										<button id="play-button" class="font-inter w-48 py-1.5 mx-5 my-2 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400">Jogar</button>
+										<button id="options-button" class="font-inter w-48 py-1.5 mx-5 my-2 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400">Opções</button>
+									</div>
+								</nav>
+
+								<div id="credits-container">
+									<p class="font-inter text-zinc-400 text-center text-sm">Este jogo está em <strong>Alpha</strong>, e não representa a sua versão final.</p>
+									<p class="font-inter text-zinc-400 text-center text-sm">Tem uma sugestão ou encontrou algum bug? <a href="https://twitter.com/dev_thales" target="_blank" class="text-zinc-300 underline hover:text-teal-500">Mande aqui!</a></p>
+									<p class="font-inter text-zinc-400 text-center text-sm">Este é um projeto de código aberto: <a href="https://github.com/thalesmariiano/shoot-and-slash" target="_blank" class="text-zinc-300 underline hover:text-teal-500">Veja aqui</a>!</p>
+								</div>
+
+								<div>
+									<a href="https://thalesdeveloper.com.br" target="_blank">
+										<span class="text-xs text-zinc-400">Made by</span>
+										<img class="w-36 brightness-75" src="arquivos/assets/thalesdeveloper_logo.png">
+									</a>
+								</div>
 							</div>
 						</div>
-					</div>
-				</section>
-				<section id="options-screen" class="w-full h-full hidden">
-						<div id="option-container" class="flex flex-col justify-center items-center w-full h-full">
+					</section>
+					<section id="gamemodes-screen" class="w-full h-full hidden">
+						<div class="w-full h-full flex flex-col justify-evenly items-center">
+							<h1 class="text-center uppercase font-righteous font-bold text-4xl">Modos de jogo</h1>
+							<div class="flex gap-7">
+								<div class="w-64 h-80 bg-neutral-600 relative border-4 border-neutral-400 rounded-lg cursor-not-allowed opacity-20">
+									<div class="flex justify-center items-center w-full h-full rounded-lg">
+										
+									</div>
+									<div class="w-full bg-gradient-to-t from-neutral-800 py-4 text-center absolute bottom-0 rounded-b-lg">
+										<p class="font-inter text-xl uppercase font-bold">História</p>
+										<p class="font-inter text-sm">Em breve</p>
+									</div>
+								</div>
+								<div id="arcade-mode-button" class="w-64 h-80 group bg-neutral-600 relative border-4 border-neutral-500 rounded-lg  hover:scale-105 hover:border-white transition cursor-pointer">
+									<div class="flex justify-center items-center w-full h-full">
+										<img class="w-full h-full contrast-75 group-hover:contrast-100 rounded-lg" src="arquivos/assets/banner/arcade_banner.png">
+									</div>
+									<div class="w-full bg-gradient-to-t from-neutral-800 py-4 text-center absolute bottom-0 rounded-b-lg">
+										<p class="font-inter text-xl uppercase font-bold text-shadow">Arcade</p>
+										<p id="arcade-record" class="font-inter text-sm text-neutral-400 text-shadow">Recorde: 0</p>
+									</div>
+								</div>
+								<div class="w-64 h-80 bg-neutral-600 relative border-4 border-neutral-400 rounded-lg cursor-not-allowed opacity-20">
+									<div class="flex justify-center items-center w-full h-full rounded-lg">
+										
+									</div>
+									<div class="w-full bg-gradient-to-t from-neutral-800 py-4 text-center absolute bottom-0 rounded-b-lg">
+										<p class="font-inter text-xl uppercase font-bold">Multiplayer</p>
+										<p class="font-inter text-sm">Em breve</p>
+									</div>
+								</div>
+							</div>
+							<button id="backToGm-button" class="font-inter w-48 py-1.5 mx-5 my-2 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400">Voltar</button>
+						</div>
+					</section>
+					<section id="options-screen" class="w-full h-full hidden">
+						<div id="option-container" class="w-full h-full flex flex-col justify-center items-center gap-y-12">
 							<div class="title-container">
-								<h2 class="title">Opções</h2>
+								<h2 class="font-bold font-righteous text-5xl uppercase underline">Opções</h2>
 							</div>
-							<div id="switch-controls" class="my-7">
-								<div id="controls-visual" class="flex items-end">
-									<div class="flex flex-col justify-center items-center">
-										<div id="type-1" class="w-[152px] p-2 m-2 flex flex-col justify-center items-center cursor-pointer opacity-50 hover:opacity-75" data-control="1" onclick="switchControls(this, 1)">
-											<div class="flex">
-												<div class="w-10 h-10"></div>
-												<div class="w-10 h-10 mb-2 text-black font-bold text-2xl flex justify-center items-center bg-white rounded-xl shadow-[0_3px_0_0_rgba(120,120,120,1)]">W</div>
-												<div class="w-10 h-10"></div>
-											</div>
-											<div class="flex">
-												<div class="w-10 h-10 flex text-black font-bold text-2xl justify-center items-center bg-white rounded-xl shadow-[0_3px_0_0_rgba(120,120,120,1)]">A</div>
-												<div class="w-10 h-10 mx-2 text-black font-bold text-2xl flex justify-center items-center bg-white rounded-xl shadow-[0_3px_0_0_rgba(120,120,120,1)]">S</div>
-												<div class="w-10 h-10 text-black font-bold text-2xl flex justify-center items-center bg-white rounded-xl shadow-[0_3px_0_0_rgba(120,120,120,1)]">D</div>
-											</div>
-											<div class="w-full">
-												<div class="w-full h-9 mt-3 bg-white text-black font-bold text-xl flex justify-center items-center rounded-xl shadow-[0_3px_0_0_rgba(120,120,120,1)]">SPACE</div>
+							<div class="space-y-5">
+								<div id="switch-controls">
+									<p class="font-bold font-inter text-lg">Controles</p>
+									<div id="controls-visual" class="flex justify-end mt-1">
+										<div class="flex justify-center items-center">
+											<div id="type-1" class="flex justify-center items-center cursor-pointer opacity-40 hover:opacity-75" data-control="1" onclick="switchControls(this, 1)">
+												<img class="w-28" src="arquivos/assets/wasd_icon.png">
 											</div>
 										</div>
-										<div>
-											<p>WASD</p>
+										<div class="flex flex-col justify-center items-center">
+											<div id="type-2" class="flex justify-center items-center cursor-pointer opacity-40 hover:opacity-75" data-control="2" onclick="switchControls(this, 2)">
+												<img class="w-28" src="arquivos/assets/arrows_icon.png">
+											</div>
 										</div>
 									</div>
-									<div class="flex flex-col justify-center items-center">
-										<div id="type-2" class="p-2 m-2 flex flex-col justify-center items-center cursor-pointer opacity-50 hover:opacity-100" data-control="2" onclick="switchControls(this, 2)">
-											<div class="flex">
-												<div class="w-10 h-10"></div>
-												<div class="w-10 h-10 mb-2 text-black font-bold text-2xl flex justify-center items-center bg-white rounded-xl shadow-[0_3px_0_0_rgba(120,120,120,1)]"><img class="w-8 h-8" src="arquivos/assets/icons/arrow-up.svg" alt="Seta pra cima"></div>
-												<div class="w-10 h-10"></div>
+								</div>
+								<hr/>
+								<div id="memory">
+									<div class="flex flex-col justify-center items-start gap-y-3">
+										<div>
+											<div class="flex items-center">
+												<p class="font-bold font-inter text-lg">Informações</p>
+												<div class="w-4 h-4 bg-neutral-700 flex justify-center items-center rounded-full ml-2 text-zinc-500 text-sm cursor-pointer relative hover:border hover:border-black hover:bg-neutral-900 hover:text-white group">?
+													<div class="absolute -top-24 left-5 w-56 bg-neutral-900 rounded-lg border border-black p-2 shadow-lg hidden group-hover:flex">
+														<p class="text-center text-white leading-5 font-inter">Para uma melhor experiência, precisamos salvar algumas informações. Não se preocupe, nada sai do seu navegador.</p>
+													</div>
+												</div>
 											</div>
-											<div class="flex">
-												<div class="w-10 h-10 flex text-black font-bold text-2xl justify-center items-center bg-white rounded-xl shadow-[0_3px_0_0_rgba(120,120,120,1)]"><img class="w-8 h-8" src="arquivos/assets/icons/arrow-left.svg" alt="Seta pra esquerda"></div>
-												<div class="w-10 h-10 mx-2 text-black font-bold text-2xl flex justify-center items-center bg-white rounded-xl shadow-[0_3px_0_0_rgba(120,120,120,1)]"><img class="w-8 h-8" src="arquivos/assets/icons/arrow-down.svg" alt="Seta pra baixo"></div>
-												<div class="w-10 h-10 text-black font-bold text-2xl flex justify-center items-center bg-white rounded-xl shadow-[0_3px_0_0_rgba(120,120,120,1)]"><img class="w-8 h-8" src="arquivos/assets/icons/arrow-right.svg" alt="Seta pra direita"></div>
-											</div>
-											<div class="w-full">
-												<div class="w-full h-9 mt-3 bg-white text-black font-bold text-xl flex justify-center items-center rounded-xl shadow-[0_3px_0_0_rgba(120,120,120,1)]">SPACE</div>
-											</div>
+											<label class="text-zinc-300 ml-1 cursor-pointer">
+												<input id="save-memory" class="translate-y-[2px] cursor-pointer" type="checkbox">
+												Salvar
+											</label>
 										</div>
 										<div>
-											<p>SETAS</p>
+											<p class="font-bold font-inter text-lg">Histórico do jogo</p>
+											<button id="delete-memory" class="bg-red-800 mt-1 ml-1 text-zinc-300 font-inter px-5 rounded-lg hover:bg-red-900">Deletar</button>
 										</div>
 									</div>
 								</div>
 							</div>
-							<button id="backToMenuOptions-button" class="btn-default w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300">Voltar</button>
+							<button id="backToMenuOptions-button" class="font-inter w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400">Voltar</button>
 						</div>
-				</section>
+					</section>
+				</div> 
 				<section id="hud-screen" class="w-full h-full relative p-5 transition-all duration-500 hidden">
-					<div id="hud-container" class="w-full">
+					<div id="hud-container" class="w-full h-[70px] flex justify-start items-center p-[5px]">
 						<div id="weapon-icon-container" class="relative">
 							<div id="weapon-icon" class="w-16 h-16 border-4 border-black rounded-xl bg-neutral-500/75 flex justify-center items-center">
 								<img id="weapon-icon-img" class="-rotate-45" src="arquivos/assets/null.png">
@@ -109,10 +154,10 @@
 								<span id="bullets-amount">0</span>/<span id="munition-amount">0</span>
 							</p>
 						</div>
-						<div id="status-container">
-							<div id="health-container">
-								<div id="health-amount"></div>
-								<div id="health-bar">
+						<div class="flex flex-col justify-start h-full pl-[5px]">
+							<div id="health-container" class="w-[100px] h-[21px] mt-[5px] bg-[#999] border-y-[1.5px] border-black relative">
+								<div id="health-amount" class="w-full h-full bg-red-700 transition-all duration-200"></div>
+								<div id="health-bar" class="flex h-full absolute top-0 left-0">
 									<div class="health-points"></div>
 									<div class="health-points"></div>
 									<div class="health-points"></div>
@@ -125,7 +170,7 @@
 									<div class="health-points"></div>
 								</div>
 							</div>
-							<div id="inventory-status">
+							<div id="inventory-status" class="pt-[5px]">
 								<div class="flex items-center">
 									<img class="w-6 h-6 drop-shadow" src="arquivos/assets/icons/soul_icon.png">
 									<p id="souls-amount" class="text-shadow font-bold mt-1">0</p>
@@ -133,23 +178,120 @@
 							</div>
 						</div>
 					</div>
-					<div id="waves-container" class="w-full absolute top-32 left-0 transition-all duration-500 opacity-0 hidden">
+					<div id="waves-container" class="w-full absolute top-32 left-0 hidden">
 						<div class="w-full text-center py-2 bg-neutral-900/75">
 							<p id="waves-text" class="font-bold uppercase text-3xl">Onda 1</p>
 						</div>
 					</div>
-					<div id="waves-timer-container" class="w-full flex flex-col items-center absolute top-32 left-0 transition-all duration-500 opacity-0 hidden">
+					<div id="waves-timer-container" class="w-full flex flex-col items-center absolute top-32 left-0 hidden">
 						<p class="text-shadow text-xl font-bold">Começa em:</p>
 						<div class="w-16 flex justify-center items-center">
 							<img class="w-6 h-6 mr-1 drop-shadow" src="arquivos/assets/icons/clock_icon.png">
 							<p id="waves-hud-timer" class="text-shadow text-lg font-semibold">5s</p>
 						</div>
 					</div>
+					<div id="skills-screen" class="w-full h-full absolute top-0 left-0 hidden">
+						<div id="skills-container" class="w-full h-full flex justify-center items-center bg-neutral-900/75">
+							<div class="w-[32rem] h-[27rem] p-2 relative flex flex-col justify-between bg-neutral-400 border-2 border-white rounded-xl">
+								<div class="w-16 absolute -top-0 -right-20 flex justify-center items-center py-1 bg-neutral-400/50 border-[1.5px] border-white rounded-xl">
+									<img class="w-5 h-5 mr-1" src="arquivos/assets/icons/clock_icon.png">
+									<p id="waves-skills-timer" class="font-semibold">15s</p>
+								</div>
+								<div>
+									<p class="uppercase text-2xl text-center text-neutral-800 font-bold">Habilidades</p>
+									<div id="skills" class="mt-1 flex justify-center gap-2">
+										<div class="flex flex-col items-center">
+											<button title="Vida" class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="health" data-level="1" data-max="20" data-price="5">
+												<div class="w-full h-full flex flex-col justify-between">
+													<img class="mx-auto w-10 h-10" src="arquivos/assets/icons/life_icon.png" alt="Vida">
+													<p class="font-bold mx-auto transition-all duration-200">Lv 1</p>
+												</div>
+											</button>
+											<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1">5 Almas</p>
+										</div>
+										<div class="flex flex-col items-center">
+											<button title="Velocidade" class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="speed" data-level="1" data-max="5" data-price="5">
+												<div class="w-full h-full flex flex-col justify-between">
+													<img class="mx-auto w-10 h-10" src="arquivos/assets/icons/speed_icon.png" alt="Velocidade">
+													<p class="font-bold mx-auto transition-all duration-200">Lv 1</p>
+												</div>
+											</button>
+											<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1">5 Almas</p>
+										</div>
+										<div class="flex flex-col items-center">
+											<button title="Força" class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="strength" data-level="1" data-max="20" data-price="5">
+												<div class="w-full h-full flex flex-col justify-between">
+													<img class="mx-auto w-10 h-10" src="arquivos/assets/icons/strength_icon.png" alt="Força">
+													<p class="font-bold mx-auto transition-all duration-200">Lv 1</p>
+												</div>
+											</button>
+											<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1">5 Almas</p>
+										</div>
+										<div class="flex flex-col items-center">
+											<button title="Velocidade de Ataque" class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="attackspeed" data-level="1" data-max="2" data-price="10">
+												<div class="w-full h-full flex flex-col justify-between">
+													<img class="mx-auto w-10 h-10" src="arquivos/assets/icons/attack_speed_icon.png" alt="Velocidade de Ataque">
+													<p class="font-bold mx-auto transition-all duration-200">Lv 1</p>
+												</div>
+											</button>
+											<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1">10 Almas</p>
+										</div>
+										<div class="flex flex-col items-center">
+											<button title="Dropar mais loot" class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="loot" data-level="1" data-max="7" data-price="10">
+												<div class="w-full h-full flex flex-col justify-between">
+													<img class="mx-auto w-14 h-10" src="arquivos/assets/icons/loot_icon.png" alt="Loot">
+													<p class="font-bold mx-auto transition-all duration-200">Lv 1</p>
+												</div>
+											</button>
+											<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1">10 Almas</p>
+										</div>
+									</div>
+									<div class="mt-5">
+										<p class="uppercase text-2xl text-center text-neutral-800 font-bold">Armas</p>
+										<div id="itens" class="mt-1 flex justify-center gap-2">
+											<div class="flex flex-col items-center">
+												<button title="AK-47" class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-item="ak47" data-price="50">
+													<div class="w-full h-full flex flex-col justify-center">
+														<img class="mx-auto -rotate-45" src="arquivos/assets/itens/ak47.png">
+													</div>
+												</button>
+												<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1">50 Almas</p>
+											</div>
+											<button class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 rounded-xl border-2 border-neutral-300 cursor-not-allowed opacity-50">
+												<div class="w-full h-full flex items-center">
+													
+												</div>
+											</button>
+											<button class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 rounded-xl border-2 border-neutral-300 cursor-not-allowed opacity-50">
+												<div class="w-full h-full flex items-center">
+													
+												</div>
+											</button>
+											<button class="w-20 h-20 p-1 my-2 text-left bg-neutral-500  rounded-xl border-2 border-neutral-300 cursor-not-allowed opacity-50">
+												<div class="w-full h-full flex items-center">
+													
+												</div>
+											</button>
+											<button class="w-20 h-20 p-1 my-2 text-left bg-neutral-500  rounded-xl border-2 border-neutral-300 cursor-not-allowed opacity-50">
+												<div class="w-full h-full flex items-center">
+													
+												</div>
+											</button>
+										</div>
+									</div>
+								</div>
+
+								<div>
+									<button id="close-skills" class="px-3 py-1 bg-red-800">Fechar</button>
+								</div>
+							</div>
+						</div>
+					</div>
 				</section>
 				<section id="die-screen" class="w-full h-full hidden">
 					<div id="die-container" class="flex flex-col justify-center items-center w-full h-full bg-neutral-900/75">
 						<div class="title-container">
-							<h2 class="title">Você morreu</h2>
+							<h2 class="font-bold font-righteous text-5xl uppercase">Você morreu</h2>
 						</div>
 						<div class="my-5">
 							<div class="text-center">
@@ -159,8 +301,8 @@
 						</div>
 						<nav class="menu mt-1">
 							<div class="menu-container flex flex-col gap-3">
-								<button id="restart-button" class="restart-btns btn-default w-48 py-1.5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300" data-screen="die-screen">Reiniciar</button>
-								<button id="backToMenu-button" class="back-to-menu-btns btn-default w-48 py-1.5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300" data-screen="die-screen">Menu</button>
+								<button id="restart-button" class="restart-btns font-inter w-48 py-1.5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400" data-screen="die-screen">Reiniciar</button>
+								<button id="backToMenu-button" class="back-to-menu-btns font-inter w-48 py-1.5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400" data-screen="die-screen">Menu</button>
 							</div>
 						</nav>
 					</div>
@@ -168,111 +310,14 @@
 				<section id="pause-screen" class="w-full h-full hidden">
 					<div id="pause-container" class="flex flex-col justify-center items-center w-full h-full bg-neutral-900/75">
 						<div class="title-container">
-							<h2 class="title">Jogo pausado!</h2>
+							<h2 class="font-bold font-righteous text-5xl uppercase">Jogo pausado!</h2>
 						</div>
 
 						<nav class="menu mt-10">
 							<div class="menu-container flex flex-col gap-3">
-								<button id="continue-button" class="btn-default w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300">Continuar</button>
-								<button id="restart-button-2" class="restart-btns btn-default w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300" data-screen="pause-screen">Reiniciar</button>
-								<button class="back-to-menu-btns btn-default w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-300" data-screen="pause-screen">Menu</button>
-							</div>
-						</div>
-					</div>
-				</section>
-				<section id="skills-screen" class="w-full h-full absolute transition-all duration-500 opacity-0 hidden">
-					<div id="skills-container" class="w-full h-full flex justify-center items-center bg-neutral-900/75">
-						<div class="w-[32rem] h-[27rem] p-2 relative flex flex-col justify-between bg-neutral-400 border-2 border-white rounded-xl">
-							<div class="w-16 absolute -top-0 -right-20 flex justify-center items-center py-1 bg-neutral-400/50 border-[1.5px] border-white rounded-xl">
-								<img class="w-5 h-5 mr-1" src="arquivos/assets/icons/clock_icon.png">
-								<p id="waves-skills-timer" class="font-semibold">15s</p>
-							</div>
-							<div>
-								<p class="uppercase text-2xl text-center text-neutral-800 font-bold">Habilidades</p>
-								<div id="skills" class="mt-1 flex justify-center gap-2">
-									<div class="flex flex-col items-center">
-										<button title="Vida" class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="health" data-level="1" data-max="20" data-price="5">
-											<div class="w-full h-full flex flex-col justify-between">
-												<img class="mx-auto w-10 h-10" src="arquivos/assets/icons/life_icon.png" alt="Vida">
-												<p class="font-bold mx-auto transition-all duration-200">Lv 1</p>
-											</div>
-										</button>
-										<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1">5 Almas</p>
-									</div>
-									<div class="flex flex-col items-center">
-										<button title="Velocidade" class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="speed" data-level="1" data-max="5" data-price="5">
-											<div class="w-full h-full flex flex-col justify-between">
-												<img class="mx-auto w-10 h-10" src="arquivos/assets/icons/speed_icon.png" alt="Velocidade">
-												<p class="font-bold mx-auto transition-all duration-200">Lv 1</p>
-											</div>
-										</button>
-										<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1">5 Almas</p>
-									</div>
-									<div class="flex flex-col items-center">
-										<button title="Força" class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="strength" data-level="1" data-max="20" data-price="5">
-											<div class="w-full h-full flex flex-col justify-between">
-												<img class="mx-auto w-10 h-10" src="arquivos/assets/icons/strength_icon.png" alt="Força">
-												<p class="font-bold mx-auto transition-all duration-200">Lv 1</p>
-											</div>
-										</button>
-										<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1">5 Almas</p>
-									</div>
-									<div class="flex flex-col items-center">
-										<button title="Velocidade de Ataque" class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="attackspeed" data-level="1" data-max="2" data-price="10">
-											<div class="w-full h-full flex flex-col justify-between">
-												<img class="mx-auto w-10 h-10" src="arquivos/assets/icons/attack_speed_icon.png" alt="Velocidade de Ataque">
-												<p class="font-bold mx-auto transition-all duration-200">Lv 1</p>
-											</div>
-										</button>
-										<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1">10 Almas</p>
-									</div>
-									<div class="flex flex-col items-center">
-										<button title="Dropar mais loot" class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="loot" data-level="1" data-max="7" data-price="10">
-											<div class="w-full h-full flex flex-col justify-between">
-												<img class="mx-auto w-14 h-10" src="arquivos/assets/icons/loot_icon.png" alt="Loot">
-												<p class="font-bold mx-auto transition-all duration-200">Lv 1</p>
-											</div>
-										</button>
-										<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1">10 Almas</p>
-									</div>
-								</div>
-								<div class="mt-5">
-									<p class="uppercase text-2xl text-center text-neutral-800 font-bold">Armas</p>
-									<div id="itens" class="mt-1 flex justify-center gap-2">
-										<div class="flex flex-col items-center">
-											<button title="AK-47" class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-item="ak47" data-price="50">
-												<div class="w-full h-full flex flex-col justify-center">
-													<img class="mx-auto -rotate-45" src="arquivos/assets/itens/ak47.png">
-												</div>
-											</button>
-											<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1">50 Almas</p>
-										</div>
-										<button class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 rounded-xl border-2 border-neutral-300 cursor-not-allowed opacity-50">
-											<div class="w-full h-full flex items-center">
-												
-											</div>
-										</button>
-										<button class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 rounded-xl border-2 border-neutral-300 cursor-not-allowed opacity-50">
-											<div class="w-full h-full flex items-center">
-												
-											</div>
-										</button>
-										<button class="w-20 h-20 p-1 my-2 text-left bg-neutral-500  rounded-xl border-2 border-neutral-300 cursor-not-allowed opacity-50">
-											<div class="w-full h-full flex items-center">
-												
-											</div>
-										</button>
-										<button class="w-20 h-20 p-1 my-2 text-left bg-neutral-500  rounded-xl border-2 border-neutral-300 cursor-not-allowed opacity-50">
-											<div class="w-full h-full flex items-center">
-												
-											</div>
-										</button>
-									</div>
-								</div>
-							</div>
-
-							<div>
-								<button id="close-skills" class="px-3 py-1 bg-red-800">Fechar</button>
+								<button id="continue-button" class="font-inter w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400">Continuar</button>
+								<button id="restart-button-2" class="restart-btns font-inter w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400" data-screen="pause-screen">Reiniciar</button>
+								<button class="back-to-menu-btns font-inter w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400" data-screen="pause-screen">Menu</button>
 							</div>
 						</div>
 					</div>
@@ -280,7 +325,39 @@
 			</div>
 		</main>
 
-		<div id="dialog-container" class="absolute -left-60 top-32 transition-all duration-500">
+		<div id="news-dialog" class="w-full h-screen flex justify-center items-center absolute top-0 left-0 hidden">
+			<div class="w-[32rem] h-[27rem] flex flex-col p-3 bg-neutral-400 border-2 border-white rounded-xl">
+				<div>
+					<h1 class="text-center pb-2 font-righteous uppercase font-bold text-2xl text-neutral-800">Atualização - <span class="text-black">Alpha 1.2</span></h1>
+				</div>
+				<div class="h-full flex flex-col justify-between mt-2">
+					<div >
+						<div>
+							<h2 class="text-black uppercase font-inter font-bold underline text-lg mb-1">Correções</h2>
+							<ul class="list-disc pl-5">
+								<li class="font-inter font-semibold text-neutral-800">Bugs onde o parallax mostrava o fim do sprite horizontal e verticalmente.</li>
+								<li class="font-inter font-semibold text-neutral-800">Otimizações de código.</li>
+							</ul>
+						</div>
+						<div class="mt-3">
+							<h2 class="text-black uppercase font-inter font-bold underline text-lg mb-1">Novidades</h2>
+							<ul class="list-disc pl-5">
+								<li class="font-inter font-semibold text-neutral-800">Tela de novidades <span class="text-neutral-700">(Sim, essa aqui mesmo)</span>.</li>
+								<li class="font-inter font-semibold text-neutral-800">Transições entre telas.</li>
+								<li class="font-inter font-semibold text-neutral-800">Nova tela de modos de jogo.</li>
+								<li class="font-inter font-semibold text-neutral-800">Layouts atualizados.</li>
+								<li class="font-inter font-semibold text-neutral-800">Preparativos para a expanção do jogo.</li>
+							</ul>
+						</div>
+					</div>
+					<div>
+						<button id="close-news" class="font-inter font-bold px-5 py-1 bg-green-700 rounded-xl hover:bg-green-800">Ai sim!</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="guide-dialog" class="absolute top-32 transition-all duration-500 hidden">
 			<div id="dialog" class="w-60 h-96 bg-neutral-700/75 rounded-tr-xl rounded-br-xl p-2 flex flex-col justify-between">
 				<div>
 					<p class="mb-2 text-center text-xl font-bold text-slate-200">Controles</p>
@@ -317,12 +394,40 @@
 				<div class="flex justify-between">
 					<div class="flex items-center">
 						<p class="text-xs mr-1">Não mostrar novamente</p>
-						<input type="checkbox" name="dontshow">
+						<input type="checkbox" name="dontshowguide">
 					</div>
-					<button id="close-dialog-button" class="px-2 bg-red-600 text-lg rounded">Fechar</button>
+					<button id="close-guide" class="px-2 bg-red-600 text-lg rounded">Fechar</button>
 				</div>
 			</div>
 		</div>
+
+		<div id="delete-history-dialog" class="fixed top-0 left-0 w-full h-full bg-neutral-900/75 flex justify-center items-center hidden">
+			<div class="w-[32rem] h-52 bg-neutral-400 p-2 rounded-xl border-2 border-white flex flex-col justify-between">
+				<div>
+					<p class="font-bold uppercase text-xl text-neutral-900">Deletar Histórico</p>
+					<p class="mx-1 mt-3 font-inter text-neutral-800 font-semibold leading-5">Tem certeza? Todo o histórico do jogo será reiniciado, e todos os seus recordes salvos serão perdidos!</p>
+				</div>
+				<div>
+					<button id="cancel-delete" class="px-5 py-1 font-bold font-inter bg-green-600 text-white rounded-xl hover:bg-green-700 transition-all">Cancelar</button>
+					<button id="confirm-delete" class="px-4 py-1 font-bold font-inter text-red-600 underline hover:text-red-700 transition-all">Deletar</button>
+				</div>
+			</div>
+		</div>
+
+		<div id="save-data-dialog" class="fixed top-0 left-0 w-full h-full bg-neutral-900/75 flex justify-center items-center hidden">
+			<div class="w-[32rem] h-52 bg-neutral-400 p-2 rounded-xl border-2 border-white flex flex-col justify-between">
+				<div>
+					<p class="font-bold uppercase text-xl text-neutral-900">Não salvar informações?</p>
+					<p class="mx-1 mt-3 font-inter text-neutral-800 font-semibold leading-5">Tem certeza? Todo o seu histórico do jogo será deletado. E qualquer recorde que você tenha não será salvo.</p>
+				</div>
+				<div>
+					<button id="cancel-not-save" class="px-5 py-1 font-bold font-inter bg-green-600 text-white rounded-xl hover:bg-green-700 transition-all">Salvar</button>
+					<button id="confirm-not-save" class="px-4 py-1 font-bold font-inter text-red-600 underline hover:text-red-700 transition-all">Não salvar</button>
+				</div>
+			</div>
+		</div>
+
+		<p class="text-zinc-400/50 absolute top-5 right-5 font-bold">alpha 1.2</p>
 
 		<script src="arquivos/js/Classes/Entity.js"></script>
 		<script src="arquivos/js/Classes/Player.js"></script>
@@ -331,6 +436,7 @@
 		<script src="arquivos/js/Classes/Projectile.js"></script>
 		<script src="arquivos/js/Classes/Enemy.js"></script>
 		<script src="arquivos/js/Classes/Camera.js"></script>
+		<script src="arquivos/js/Classes/Parallax.js"></script>
 		<script src="arquivos/js/collide.js"></script>
 		<script src="arquivos/js/Utils/collision_utils.js"></script>
 		<script src="arquivos/js/Utils/ui_utils.js"></script>
