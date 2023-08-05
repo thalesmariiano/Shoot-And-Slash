@@ -123,12 +123,12 @@ $("#cancel-not-save").addEventListener("click", () => {
 	removeUI("save-data-dialog", "hidden")
 })
 
-if(parseFloat(getStorage("SaS-News")) != 1.2){
+if(parseFloat(getStorage("SaS-News")) != 1.3){
 	showUI("news-dialog", "animate__bounceIn")	
 	$("body").style.overflow = "hidden"
 
 	close_news.addEventListener("click", () => {
-		if(parseInt(getStorage("SaS-Save"))) setStorage("SaS-News", 1.2)
+		if(parseInt(getStorage("SaS-Save"))) setStorage("SaS-News", 1.3)
 		removeUI("news-dialog", "animate__bounceOut")
 		$("body").style.overflow = ""
 	})
