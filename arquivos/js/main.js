@@ -548,6 +548,14 @@ function playerAnimations(){
 	if(player.velocity.y > 0){
 		player.switchSprite(`fall_${player.direction.toLowerCase()}`)		
 	}
+
+	if(!keyUp && player.isRunning && !player.isFalling){
+		player.switchSprite(`run_${player.direction.toLowerCase()}`)
+	}
+
+	if(player.receiveDamage && !player.isAttacking){
+		player.switchSprite(`take-hit_${player.direction.toLowerCase()}`)
+	}
 }
 
 function playerActions(){
@@ -580,26 +588,16 @@ function playerActions(){
 			player.velocity.x = -player.speed
 			player.direction = "LEFT"
 			lockRight = true
-			if(!player.isFalling){
-				player.switchSprite(`run_${player.direction.toLowerCase()}`)
-			}
 		}
 		if(keyRight && !lockRight){
 			player.velocity.x = player.speed
 			player.direction = "RIGHT"
 			lockLeft = true
-			if(!player.isFalling){
-				player.switchSprite(`run_${player.direction.toLowerCase()}`)
-			}
 		}
 		player.isRunning = true
 	}else{
 		player.isRunning = false
 		player.velocity.x = 0
-	}
-
-	if(player.receiveDamage && !player.isAttacking){
-		player.switchSprite(`take-hit_${player.direction.toLowerCase()}`)
 	}
 
 	// Player atacando
