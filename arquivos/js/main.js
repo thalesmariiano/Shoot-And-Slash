@@ -556,6 +556,10 @@ function playerAnimations(){
 	if(player.receiveDamage && !player.isAttacking){
 		player.switchSprite(`take-hit_${player.direction.toLowerCase()}`)
 	}
+
+	if(player.isDead){
+		player.switchSprite(`death_${player.direction.toLowerCase()}`)
+	}
 }
 
 function playerActions(){
@@ -632,11 +636,6 @@ function playerActions(){
 
 	if(player.health <= 0){
 		player.isDead = true
-	}
-
-	if(player.isDead){
-		player.switchSprite(`death_${player.direction.toLowerCase()}`)
-
 		player.velocity.x = 0
 
 		waves_count.innerHTML = `Onda: ${arcadeWave.waveNumber}`
