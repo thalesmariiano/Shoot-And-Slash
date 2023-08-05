@@ -536,11 +536,24 @@ function buyItens(item){
 	}
 }
 
+function playerAnimations(){
+	if(player.isIdle){
+		player.switchSprite(`idle_${player.direction.toLowerCase()}`)		
+	}
+
+	if(keyUp && !player.isFalling){
+		player.switchSprite(`jump_${player.direction.toLowerCase()}`)
+	}
+
+	if(player.velocity.y > 0){
+		player.switchSprite(`fall_${player.direction.toLowerCase()}`)		
+	}
+}
+
 function playerActions(){
 
 	// Player parado
 	if(!keyUp && !player.isRunning && !player.isAttacking && !player.receiveDamage && !player.isFalling){
-		player.switchSprite(`idle_${player.direction.toLowerCase()}`)
 		player.isIdle = true
 	}else{
 		player.isIdle = false
@@ -549,14 +562,12 @@ function playerActions(){
 	// Player caindo
 	if(player.velocity.y > 0){
 		player.receiveDamage = false
-		player.switchSprite(`fall_${player.direction.toLowerCase()}`)
 		player.isFalling = true
 	}
 
 	// Player pulando
 	if(keyUp){
 		if(!player.isFalling){
-			player.switchSprite(`jump_${player.direction.toLowerCase()}`)
 			player.velocity.y = player.jump
 			player.isFalling = true
 		}
@@ -691,6 +702,7 @@ function update(){
 	holdingItem()
 
 	if(!player.isDead){
+		playerAnimations()
 		playerActions()	
 	}
 
