@@ -54,11 +54,11 @@ class Player extends Entity {
 		if(this.framesElapsed % this.framesHold === 0){
 			this.currentFrames++
 			if(this.currentFrames >= this.spriteFrames){
-				if(this.sprInfo.name == `death_${this.direction.toLowerCase()}`){
+				if(this.sprInfo.name == `death_${this.direction}`){
 					this.endAnimation = true
 					return
 				}
-				if(this.sprInfo.name == `attack_${this.attackSprite}_${this.direction.toLowerCase()}`){
+				if(this.sprInfo.name == `attack_${this.attackSprite}_${this.direction}`){
 					if(this.attackSprite == 1){
 						this.attackSprite = 2
 					}else{
@@ -66,7 +66,7 @@ class Player extends Entity {
 					}
 					this.isAttacking = false
 				}
-				if(this.sprInfo.name == `take_hit_${this.direction.toLowerCase()}`){
+				if(this.sprInfo.name == `take_hit_${this.direction}`){
 					this.receiveDamage = false
 				}
 
@@ -91,7 +91,7 @@ class Player extends Entity {
 	}
 
 	swordAttack(){
-		if(this.currentFrames == 4 && this.sprInfo.name == `attack_${this.attackSprite}_${this.direction.toLowerCase()}`){
+		if(this.currentFrames == 4 && this.sprInfo.name == `attack_${this.attackSprite}_${this.direction}`){
 
 			enemys.forEach(enemy => {
 				if(!enemy.isDead){

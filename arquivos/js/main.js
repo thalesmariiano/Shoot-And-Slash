@@ -538,27 +538,27 @@ function buyItens(item){
 
 function playerAnimations(){
 	if(player.isIdle && !player.isDead){
-		player.switchSprite(`idle_${player.direction.toLowerCase()}`)		
+		player.switchSprite(`idle_${player.direction}`)		
 	}
 
 	if(keyUp && !player.isDead && !player.isFalling){
-		player.switchSprite(`jump_${player.direction.toLowerCase()}`)
+		player.switchSprite(`jump_${player.direction}`)
 	}
 
 	if(player.velocity.y > 0 && !player.isDead){
-		player.switchSprite(`fall_${player.direction.toLowerCase()}`)		
+		player.switchSprite(`fall_${player.direction}`)		
 	}
 
 	if(!keyUp && !player.isDead && player.isRunning && !player.isFalling){
-		player.switchSprite(`run_${player.direction.toLowerCase()}`)
+		player.switchSprite(`run_${player.direction}`)
 	}
 
 	if(player.receiveDamage && !player.isDead && !player.isAttacking){
-		player.switchSprite(`take_hit_${player.direction.toLowerCase()}`)
+		player.switchSprite(`take_hit_${player.direction}`)
 	}
 
 	if(player.isDead){
-		player.switchSprite(`death_${player.direction.toLowerCase()}`)
+		player.switchSprite(`death_${player.direction}`)
 	}
 }
 
@@ -612,12 +612,12 @@ function playerActions(){
 				bullets_amount.innerHTML = item.bulletsAmount
 			}
 		}else if(!player.isFalling && !player.isRunning){
-			player.switchSprite(`attack_${player.attackSprite}_${player.direction.toLowerCase()}`)
+			player.switchSprite(`attack_${player.attackSprite}_${player.direction}`)
 			player.isAttacking = true
 		}
 	}
 
-	if(player.isAttacking && player.sprInfo.name != `attack_${player.attackSprite}_${player.direction.toLowerCase()}`){
+	if(player.isAttacking && player.sprInfo.name != `attack_${player.attackSprite}_${player.direction}`){
 		player.isAttacking = false
 	}
 
@@ -680,7 +680,7 @@ function holdingItem(){
 			weapon_status.style.color = ""
 		}
 
-		item.switchSprite(`ak47_${player.direction.toLowerCase()}`)
+		item.switchSprite(`ak47_${player.direction}`)
 		if(player.direction == "LEFT"){
 			item.position.x = player.position.x - itens_sprites.ak47.holding_position_left.x
 			item.position.y = player.position.y + itens_sprites.ak47.holding_position_left.y
