@@ -843,7 +843,6 @@ function render(){
 		}
 	})
 
-	// enemysWaves()
 	// arcadeMode()
 
 	playebleMapBlocks.forEach(block => {
