@@ -30,7 +30,7 @@ class Enemy extends Entity {
 		if(this.framesElapsed % this.framesHold === 0){
 			this.currentFrames++
 			if(this.currentFrames >= this.spriteFrames){
-				if(this.sprInfo.name == `dead_${this.direction.toLowerCase()}`){
+				if(this.sprInfo.name == `dead_${this.direction}`){
 					this.endAnimation = true
 
 					if((Math.floor(Math.random() * 100) + 1) < player.dropLuck){
@@ -67,7 +67,7 @@ class Enemy extends Entity {
 		if(player.direction == "right") this.velocity.x = Math.floor(Math.random() * 5 - 2) + 1
 		else if(player.direction == "left") this.velocity.x = -Math.floor(Math.random() * 5 - 2) + 1
 
-		this.switchSprite(`take_hit_${this.direction.toLowerCase()}`)
+		this.switchSprite(`take_hit_${this.direction}`)
 		setTimeout(() => {
 			this.velocity.x = 0
 			this.receiveDamage = false
@@ -133,7 +133,7 @@ class Enemy extends Entity {
 			this.isAttacking = false
 		}
 
-		if(this.currentFrames == 4 && this.sprInfo.name == `attack_${this.attack}_${this.direction.toLowerCase()}`){
+		if(this.currentFrames == 4 && this.sprInfo.name == `attack_${this.attack}_${this.direction}`){
 			const { side } = collide(this.sword, player)
 			const sword_collide = side.top || side.bottom || side.left || side.right
 
@@ -163,7 +163,7 @@ class Enemy extends Entity {
 			this.isRunningAttacking = false
 		}
 
-		if(this.currentFrames == 4 && this.sprInfo.name == `attack_run_${this.direction.toLowerCase()}`){
+		if(this.currentFrames == 4 && this.sprInfo.name == `attack_run_${this.direction}`){
 			const { side } = collide(this.sword, player)
 			const sword_collide = side.top || side.bottom || side.left || side.right
 
@@ -186,19 +186,19 @@ class Enemy extends Entity {
 		
 
 		if(!this.isChasingPlayer && !this.isDead && !this.isAttacking && !this.receiveDamage){
-			this.switchSprite(`idle_${this.direction.toLowerCase()}`)
+			this.switchSprite(`idle_${this.direction}`)
 		}
 
 		if(this.isChasingPlayer && !this.isDead && !this.isAttacking && !this.receiveDamage){
 			if(this.isRunningAttacking && player.isRunning){
-				this.switchSprite(`attack_run_${this.direction.toLowerCase()}`)
+				this.switchSprite(`attack_run_${this.direction}`)
 			}else{
-				this.switchSprite(`run_${this.direction.toLowerCase()}`)
+				this.switchSprite(`run_${this.direction}`)
 			}
 		}
 
 		if(this.isAttacking && !this.isDead && !this.receiveDamage){
-			this.switchSprite(`attack_${this.attack}_${this.direction.toLowerCase()}`)
+			this.switchSprite(`attack_${this.attack}_${this.direction}`)
 		}
 
 		if(this.health <= 0){
@@ -207,7 +207,7 @@ class Enemy extends Entity {
 
 		if(this.isDead){
 			this.velocity.x = 0
-			this.switchSprite(`dead_${this.direction.toLowerCase()}`)
+			this.switchSprite(`dead_${this.direction}`)
 		}
 
 		this.position.x += this.velocity.x
