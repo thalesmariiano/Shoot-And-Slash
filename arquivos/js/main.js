@@ -578,7 +578,7 @@ function playerActions(){
 	}
 
 	// Player pulando
-	if(keyUp && !player.isFalling){
+	if(keyUp && !player.isDead && !player.isFalling){
 		player.velocity.y = player.jump
 		player.isFalling = true
 	}
@@ -603,7 +603,7 @@ function playerActions(){
 	}
 
 	// Player atacando
-	if(keyEnter){
+	if(keyEnter && !player.isDead){
 		const slot = player.getHoldingItem()
 		if(slot){
 			const { item } = slot
