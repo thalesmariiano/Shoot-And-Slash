@@ -588,12 +588,12 @@ function playerActions(){
 		player.receiveDamage = false
 		if(keyLeft && !lockLeft){
 			player.velocity.x = -player.speed
-			player.direction = "LEFT"
+			player.direction = "left"
 			lockRight = true
 		}
 		if(keyRight && !lockRight){
 			player.velocity.x = player.speed
-			player.direction = "RIGHT"
+			player.direction = "right"
 			lockLeft = true
 		}
 		player.isRunning = true
