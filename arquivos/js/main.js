@@ -537,23 +537,23 @@ function buyItens(item){
 }
 
 function playerAnimations(){
-	if(player.isIdle){
+	if(player.isIdle && !player.isDead){
 		player.switchSprite(`idle_${player.direction.toLowerCase()}`)		
 	}
 
-	if(keyUp && !player.isFalling){
+	if(keyUp && !player.isDead && !player.isFalling){
 		player.switchSprite(`jump_${player.direction.toLowerCase()}`)
 	}
 
-	if(player.velocity.y > 0){
+	if(player.velocity.y > 0 && !player.isDead){
 		player.switchSprite(`fall_${player.direction.toLowerCase()}`)		
 	}
 
-	if(!keyUp && player.isRunning && !player.isFalling){
+	if(!keyUp && !player.isDead && player.isRunning && !player.isFalling){
 		player.switchSprite(`run_${player.direction.toLowerCase()}`)
 	}
 
-	if(player.receiveDamage && !player.isAttacking){
+	if(player.receiveDamage && !player.isDead && !player.isAttacking){
 		player.switchSprite(`take-hit_${player.direction.toLowerCase()}`)
 	}
 
