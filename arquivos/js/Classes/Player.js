@@ -66,7 +66,7 @@ class Player extends Entity {
 					}
 					this.isAttacking = false
 				}
-				if(this.sprInfo.name == `take-hit_${this.direction.toLowerCase()}`){
+				if(this.sprInfo.name == `take_hit_${this.direction.toLowerCase()}`){
 					this.receiveDamage = false
 				}
 

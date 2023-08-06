@@ -147,14 +147,14 @@ const player_sprites = [
 		hold: 6
 	},
 	{
-		name: "take-hit_right",
-		image: "arquivos/assets/player/take-hit.png",
+		name: "take_hit_right",
+		image: "arquivos/assets/player/take_hit.png",
 		frames: 4,
 		hold: 8
 	},
 	{
-		name: "take-hit_left",
-		image: "arquivos/assets/player/take-hit_left.png",
+		name: "take_hit_left",
+		image: "arquivos/assets/player/take_hit_left.png",
 		frames: 4,
 		hold: 8
 	},
@@ -554,7 +554,7 @@ function playerAnimations(){
 	}
 
 	if(player.receiveDamage && !player.isDead && !player.isAttacking){
-		player.switchSprite(`take-hit_${player.direction.toLowerCase()}`)
+		player.switchSprite(`take_hit_${player.direction.toLowerCase()}`)
 	}
 
 	if(player.isDead){
