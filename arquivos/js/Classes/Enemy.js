@@ -64,8 +64,8 @@ class Enemy extends Entity {
 			this.isFalling = true
 		}
 		
-		if(player.direction == "RIGHT") this.velocity.x = Math.floor(Math.random() * 5 - 2) + 1
-		else if(player.direction == "LEFT") this.velocity.x = -Math.floor(Math.random() * 5 - 2) + 1
+		if(player.direction == "right") this.velocity.x = Math.floor(Math.random() * 5 - 2) + 1
+		else if(player.direction == "left") this.velocity.x = -Math.floor(Math.random() * 5 - 2) + 1
 
 		this.switchSprite(`take_hit_${this.direction.toLowerCase()}`)
 		setTimeout(() => {
@@ -79,11 +79,11 @@ class Enemy extends Entity {
 
 		if(view_distance.left && !this.isAttacking && !player.isDead && !this.isDead){
 			this.velocity.x = -this.speed
-			this.direction = "LEFT"
+			this.direction = "left"
 			this.isChasingPlayer = true
 		}else if(view_distance.right && !this.isAttacking && !player.isDead && !this.isDead){
 			this.velocity.x = this.speed
-			this.direction = "RIGHT"
+			this.direction = "right"
 			this.isChasingPlayer = true
 		}else{
 			this.velocity.x = 0
@@ -91,9 +91,9 @@ class Enemy extends Entity {
 		}	
 
 		if(developerMode){
-			if(this.direction == "LEFT"){
+			if(this.direction == "left"){
 				ctx.fillRect(this.position.x - 500 + this.width, this.position.y + 30, 500, 10)
-			}else if(this.direction == "RIGHT"){
+			}else if(this.direction == "left"){
 				ctx.fillRect(this.position.x, this.position.y + 30, 500, 10)
 			}
 		}		
@@ -117,7 +117,7 @@ class Enemy extends Entity {
 			this.sword.height = 65	
 			this.sword.position.y = this.position.y - 20
 			this.sword.position.x = this.position.x - 73
-			this.direction = "LEFT"
+			this.direction = "left"
 			this.isAttacking = true
 		}else if(attack_distance.right && !player.isDead && !this.isDead){
 			this.velocity.x = 0
@@ -127,7 +127,7 @@ class Enemy extends Entity {
 			this.sword.height = 65	
 			this.sword.position.x = this.position.x + 117
 			this.sword.position.y = this.position.y - 20
-			this.direction = "RIGHT"
+			this.direction = "right"
 			this.isAttacking = true
 		}else{
 			this.isAttacking = false
