@@ -612,12 +612,12 @@ function playerActions(){
 				bullets_amount.innerHTML = item.bulletsAmount
 			}
 		}else if(!player.isFalling && !player.isRunning){
-			player.switchSprite(`attack_${player.attack}_${player.direction.toLowerCase()}`)
+			player.switchSprite(`attack_${player.attackSprite}_${player.direction.toLowerCase()}`)
 			player.isAttacking = true
 		}
 	}
 
-	if(player.isAttacking && player.sprInfo.name != `attack_${player.attack}_${player.direction.toLowerCase()}`){
+	if(player.isAttacking && player.sprInfo.name != `attack_${player.attackSprite}_${player.direction.toLowerCase()}`){
 		player.isAttacking = false
 	}
 

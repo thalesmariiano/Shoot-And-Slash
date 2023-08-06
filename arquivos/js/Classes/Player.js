@@ -27,7 +27,7 @@ class Player extends Entity {
 			y: 143
 		}
 		this.attDamage = 5
-		this.attack = 1
+		this.attackSprite = 1
 		this.sword = {
 			width: 100,
 			height: 50,
@@ -46,7 +46,7 @@ class Player extends Entity {
 
 	animation(){
 
-		if(this.sprInfo && this.attackSpeedMax && this.sprInfo.name == `attack_${this.attack}_${this.direction.toLowerCase()}`){
+		if(this.sprInfo && this.attackSpeedMax && this.sprInfo.name == `attack_${this.attackSprite}_${this.direction.toLowerCase()}`){
 			this.framesHold = 5
 		}
 
@@ -58,11 +58,11 @@ class Player extends Entity {
 					this.endAnimation = true
 					return
 				}
-				if(this.sprInfo.name == `attack_${this.attack}_${this.direction.toLowerCase()}`){
-					if(this.attack == 1){
-						this.attack = 2
+				if(this.sprInfo.name == `attack_${this.attackSprite}_${this.direction.toLowerCase()}`){
+					if(this.attackSprite == 1){
+						this.attackSprite = 2
 					}else{
-						this.attack = 1
+						this.attackSprite = 1
 					}
 					this.isAttacking = false
 				}
@@ -91,7 +91,7 @@ class Player extends Entity {
 	}
 
 	swordAttack(){
-		if(this.currentFrames == 4 && this.sprInfo.name == `attack_${this.attack}_${this.direction.toLowerCase()}`){
+		if(this.currentFrames == 4 && this.sprInfo.name == `attack_${this.attackSprite}_${this.direction.toLowerCase()}`){
 
 			enemys.forEach(enemy => {
 				if(!enemy.isDead){
