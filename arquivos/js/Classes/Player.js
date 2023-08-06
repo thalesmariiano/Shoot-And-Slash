@@ -102,8 +102,8 @@ class Player extends Entity {
 				}
 			})
 
-			if(this.direction == "RIGHT") this.sword.position.x = this.position.x + 110
-			else if(this.direction == "LEFT") this.sword.position.x = this.position.x - 150
+			if(this.direction == "right") this.sword.position.x = this.position.x + 110
+			else if(this.direction == "left") this.sword.position.x = this.position.x - 150
 
 			this.sword.position.y = this.position.y + 15
 
@@ -124,7 +124,7 @@ class Player extends Entity {
 		this.isDead = false
 		this.framesHold = 5
 		this.framesElapsed = 0
-		this.direction = "RIGHT"
+		this.direction = "right"
 		this.switchSprite("idle_right")
 		this.endAnimation = false
 		this.position.x = this.initial_position.x
