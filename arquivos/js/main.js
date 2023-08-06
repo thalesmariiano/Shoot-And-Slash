@@ -578,11 +578,9 @@ function playerActions(){
 	}
 
 	// Player pulando
-	if(keyUp){
-		if(!player.isFalling){
-			player.velocity.y = player.jump
-			player.isFalling = true
-		}
+	if(keyUp && !player.isFalling){
+		player.velocity.y = player.jump
+		player.isFalling = true
 	}
 
 	// Player andando para esquerda ou direita
@@ -698,10 +696,8 @@ function holdingItem(){
 function update(){
 	holdingItem()
 
-	if(!player.isDead){
-		playerAnimations()
-		playerActions()	
-	}
+	playerAnimations()
+	playerActions()	
 
 	if(player.health < 20){
 		hud_screen.style.boxShadow = "inset 0 0 30px rgba(190, 0, 0, .7)"
@@ -848,7 +844,7 @@ function render(){
 	})
 
 	// enemysWaves()
-	arcadeMode()
+	// arcadeMode()
 
 	playebleMapBlocks.forEach(block => {
 		const {top, bottom, left, right} = detectInArea(camera_position, block, 300, (canvas.height/2), 300, (canvas.width/2) + 50, (canvas.width/2))
