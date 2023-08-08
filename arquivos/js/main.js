@@ -562,6 +562,9 @@ function playerAnimations(){
 	}
 }
 
+const audio = new Audio('arquivos/assets/audio/sword_whoosh_3.mp3')
+const audio2 = new Audio('arquivos/assets/audio/sword_whoosh_2.mp3')
+
 function playerActions(){
 
 	// Player parado
@@ -616,6 +619,24 @@ function playerActions(){
 			player.isAttacking = true
 		}
 	}
+
+	if(player.sprInfo.name == `attack_1_${player.direction}`){
+		if(player.currentFrames == 3){
+			audio.play()
+		}
+		if(player.currentFrames >= player.spriteFrames){
+			audio.pause()
+		}
+	}
+	if(player.sprInfo.name == `attack_2_${player.direction}`){
+		if(player.currentFrames == 3){
+			audio2.play()
+		}
+		if(player.currentFrames >= player.spriteFrames){
+			audio2.pause()
+		}
+	}
+		
 
 	if(player.isAttacking && player.sprInfo.name != `attack_${player.attackSprite}_${player.direction}`){
 		player.isAttacking = false
@@ -843,7 +864,7 @@ function render(){
 		}
 	})
 
-	// arcadeMode()
+	arcadeMode()
 
 	playebleMapBlocks.forEach(block => {
 		const {top, bottom, left, right} = detectInArea(camera_position, block, 300, (canvas.height/2), 300, (canvas.width/2) + 50, (canvas.width/2))
