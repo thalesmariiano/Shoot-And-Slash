@@ -702,10 +702,10 @@ function holdingItem(){
 		}
 
 		item.switchSprite(`ak47_${player.direction}`)
-		if(player.direction == "LEFT"){
+		if(player.direction == "left"){
 			item.position.x = player.position.x - itens_sprites.ak47.holding_position_left.x
 			item.position.y = player.position.y + itens_sprites.ak47.holding_position_left.y
-		}else if(player.direction == "RIGHT"){
+		}else if(player.direction == "right"){
 			item.position.x = player.position.x + itens_sprites.ak47.holding_position.x
 			item.position.y = player.position.y + itens_sprites.ak47.holding_position.y
 		}
