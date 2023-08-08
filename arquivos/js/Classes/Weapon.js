@@ -27,9 +27,9 @@ class Weapon extends Item {
 	}
 
 	animate(){
-		if(player.direction == "LEFT"){
+		if(player.direction == "left"){
 			this.position.x = player.position.x - Math.floor(Math.random() * (20 - 25) + 20)
-		}else if(player.direction == "RIGHT"){
+		}else if(player.direction == "right"){
 			this.position.x = player.position.x + Math.floor(Math.random() * (50 - 55) + 50)			
 		}
 		this.position.y = player.position.y + Math.floor(Math.random() * (30 - 31) + 30)
@@ -70,9 +70,9 @@ class Weapon extends Item {
 						y: Math.random() * (.5 - -.5) + -.5 
 					}
 
-					if(player.direction == "LEFT"){
+					if(player.direction == "left"){
 						velocity.x = -20
-					}else if(player.direction == "RIGHT"){
+					}else if(player.direction == "right"){
 						position.x += 50
 						velocity.x = 20
 					}
