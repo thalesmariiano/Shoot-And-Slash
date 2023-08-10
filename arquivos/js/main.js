@@ -564,6 +564,7 @@ function playerAnimations(){
 
 const audio = new Audio('arquivos/assets/audio/sword_whoosh_3.mp3')
 const audio2 = new Audio('arquivos/assets/audio/sword_whoosh_2.mp3')
+const skeleton_hit_sound = new Audio('arquivos/assets/audio/skeleton_hit_2.mp3')
 
 function playerActions(){
 
