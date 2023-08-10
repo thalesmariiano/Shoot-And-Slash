@@ -99,6 +99,7 @@ class Player extends Entity {
 					const sword_collide = side.top || side.bottom || side.left || side.right
 
 					sword_collide ? enemy.takeHit(this.attDamage) : enemy.receiveDamage = false
+					if(sword_collide) skeleton_hit_sound.play()
 				}
 			})
 
