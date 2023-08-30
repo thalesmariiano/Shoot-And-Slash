@@ -51,6 +51,10 @@ class Entity {
 		this.type = "Entity"
 		this.direction = "right"
 		this.entityType = null
+		//
+		this.entityEvents = {
+			"animationend": []
+		}
 	}
 
 	setSprites(sprArray){
@@ -68,6 +72,28 @@ class Entity {
 		
 		if(spr != this.sprInfo) this.currentFrames = 0	
 		this.sprInfo = spr
+	}
+
+	animation(){
+		this.framesElapsed++
+		if(this.framesElapsed % this.framesHold === 0){
+			this.currentFrames++
+			if(this.currentFrames >= this.spriteFrames){
+				this.callEvent("animationend", this.sprInfo)
+				this.currentFrames = 0
+			}
+		}
+		this.imgX = this.frameSizeX*this.currentFrames
+	}
+
+	callEvent(eventType, eventData){
+		this.entityEvents[eventType][0](eventData)
+	}
+
+	on(eventType, listener){
+		if(!this.entityEvents[eventType].length){
+			this.entityEvents[eventType].push(listener)
+		}
 	}
 
 	draw(){
