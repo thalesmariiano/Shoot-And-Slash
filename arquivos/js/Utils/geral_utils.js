@@ -138,3 +138,14 @@ function generateTerrain(mapArray, outputArray){
 		}
 	}
 }
+
+function saveArcadeData(){
+	if(parseInt(getStorage("SaS-Save"))){
+		if(enemysKilled > parseInt(getStorage("SaS-Arcade"))){
+			setStorage("SaS-Arcade", enemysKilled)
+
+			const arcade_kills = getStorage("SaS-Arcade") ? getStorage("SaS-Arcade") : 0
+			$("#arcade-record").innerHTML = `Recorde: ${arcade_kills}`
+		}
+	}
+}

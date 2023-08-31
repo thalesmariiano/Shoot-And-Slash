@@ -732,7 +732,7 @@ function update(){
 
 		setTimeout(() => {
 			gameIsPaused = true
-			saveData()
+			saveArcadeData()
 			showUI("die-screen", "animate__fadeIn")
 			removeUI("hud-screen", "hidden")
 		}, 1500)
@@ -810,18 +810,6 @@ function arcadeMode(){
 		arcadeWave.waveNumber++
 		arcadeWave.enemysCount += 3
 	}
-}
-
-function saveData(){
-	if(parseInt(getStorage("SaS-Save"))){
-		if(enemysKilled > parseInt(getStorage("SaS-Arcade"))){
-			setStorage("SaS-Arcade", enemysKilled)
-
-			const arcade_kills = getStorage("SaS-Arcade") ? getStorage("SaS-Arcade") : 0
-			$("#arcade-record").innerHTML = `Recorde: ${arcade_kills}`
-		}
-	}
-	
 }
 
 const back = new Parallax(parallax_back, 7)
@@ -1026,7 +1014,7 @@ function restart(){
 	souls_amount.innerHTML = 0
 	weapon_status.classList.add("hidden")
 
-	saveData()
+	saveArcadeData()
 
 	player.restart()
 	init()
@@ -1081,7 +1069,7 @@ function destroy(){
 	souls_amount.innerHTML = 0
 	weapon_status.classList.add("hidden")
 
-	saveData()
+	saveArcadeData()
 
 	player.restart()
 	buffer.clearRect(0, 0, canvas.width, canvas.height)
