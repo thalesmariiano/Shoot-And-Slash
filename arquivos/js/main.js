@@ -572,6 +572,10 @@ function playerAnimations(){
 		if(e.name == `death_${player.direction}`){
 			player.stopAnimation = true
 		}
+
+		if(e.name == `take_hit_${player.direction}`){
+			player.receiveDamage = false
+		}
 	})
 
 }
