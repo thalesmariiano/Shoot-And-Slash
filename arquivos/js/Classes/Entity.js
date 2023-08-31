@@ -53,7 +53,8 @@ class Entity {
 		this.entityType = null
 		//
 		this.entityEvents = {
-			"animationend": []
+			"animationend": [],
+			"animation": []
 		}
 	}
 
@@ -78,6 +79,7 @@ class Entity {
 		this.framesElapsed++
 		if(this.framesElapsed % this.framesHold === 0){
 			this.currentFrames++
+			this.callEvent("animation", {animation: this.sprInfo, frame: this.currentFrames, frameHold: this.framesHold, loopFrame: this.framesElapsed})
 			if(this.currentFrames >= this.spriteFrames){
 				this.callEvent("animationend", this.sprInfo)
 				if(this.stopAnimation) return
