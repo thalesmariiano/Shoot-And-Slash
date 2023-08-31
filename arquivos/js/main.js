@@ -572,6 +572,7 @@ player.on("animationend", animation => {
 	}else if(animation.name == `attack_2_${player.direction}`){
 		player.attackSprite = 1
 	}
+	player.isAttacking = false
 
 	if(animation.name == `death_${player.direction}`){
 		player.stopAnimation = true
@@ -579,6 +580,19 @@ player.on("animationend", animation => {
 
 	if(animation.name == `take_hit_${player.direction}`){
 		player.receiveDamage = false
+	}
+})
+
+player.on("animation", ({frame, animation}) => {
+	if(animation.name == `attack_1_${player.direction}`){
+		if(frame == 3){
+			audio.play()
+		}
+	}
+	if(animation.name == `attack_2_${player.direction}`){
+		if(frame == 3){
+			audio2.play()
+		}
 	}
 })
 
@@ -637,23 +651,6 @@ function playerActions(){
 			}
 		}else if(!player.isFalling && !player.isRunning){
 			player.isAttacking = true
-		}
-	}
-
-	if(player.sprInfo.name == `attack_1_${player.direction}`){
-		if(player.currentFrames == 3){
-			audio.play()
-		}
-		if(player.currentFrames >= player.spriteFrames){
-			audio.pause()
-		}
-	}
-	if(player.sprInfo.name == `attack_2_${player.direction}`){
-		if(player.currentFrames == 3){
-			audio2.play()
-		}
-		if(player.currentFrames >= player.spriteFrames){
-			audio2.pause()
 		}
 	}
 
