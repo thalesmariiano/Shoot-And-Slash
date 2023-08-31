@@ -560,18 +560,17 @@ function playerAnimations(){
 	if(player.isDead){
 		player.switchSprite(`death_${player.direction}`)
 	}
-}
 
-player.on("animationend", e => {
-	if(player.sprInfo.name == `attack_${player.attackSprite}_${player.direction}`){
-		if(player.attackSprite == 1){
+	player.on("animationend", e => {
+		if(e.name == `attack_1_${player.direction}`){
 			player.attackSprite = 2
-		}else{
+		}else if(e.name == `attack_2_${player.direction}`){
 			player.attackSprite = 1
 		}
 		player.isAttacking = false
-	}
-})
+	})
+
+}
 
 const audio = new Audio('arquivos/assets/audio/sword_whoosh_3.mp3')
 const audio2 = new Audio('arquivos/assets/audio/sword_whoosh_2.mp3')
