@@ -568,6 +568,10 @@ function playerAnimations(){
 			player.attackSprite = 1
 		}
 		player.isAttacking = false
+
+		if(e.name == `death_${player.direction}`){
+			player.stopAnimation = true
+		}
 	})
 
 }
