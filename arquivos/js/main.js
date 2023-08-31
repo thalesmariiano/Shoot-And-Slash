@@ -560,25 +560,24 @@ function playerAnimations(){
 	if(player.isDead){
 		player.switchSprite(`death_${player.direction}`)
 	}
-
-	player.on("animationend", e => {
-		if(e.name == `attack_1_${player.direction}`){
-			player.attackSprite = 2
-		}else if(e.name == `attack_2_${player.direction}`){
-			player.attackSprite = 1
-		}
-		player.isAttacking = false
-
-		if(e.name == `death_${player.direction}`){
-			player.stopAnimation = true
-		}
-
-		if(e.name == `take_hit_${player.direction}`){
-			player.receiveDamage = false
-		}
-	})
-
 }
+
+player.on("animationend", animation => {
+	if(animation.name == `attack_1_${player.direction}`){
+		player.attackSprite = 2
+	}else if(animation.name == `attack_2_${player.direction}`){
+		player.attackSprite = 1
+	}
+	player.isAttacking = false
+
+	if(animation.name == `death_${player.direction}`){
+		player.stopAnimation = true
+	}
+
+	if(animation.name == `take_hit_${player.direction}`){
+		player.receiveDamage = false
+	}
+})
 
 const audio = new Audio('arquivos/assets/audio/sword_whoosh_3.mp3')
 const audio2 = new Audio('arquivos/assets/audio/sword_whoosh_2.mp3')
