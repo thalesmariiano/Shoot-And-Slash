@@ -723,7 +723,7 @@ function update(){
 		hud_screen.style.boxShadow = "none"
 	}
 
-	if(player.health <= 0){
+	if(player.health <= 0 && !player.isDead){
 		player.isDead = true
 		player.velocity.x = 0
 
