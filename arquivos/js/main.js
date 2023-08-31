@@ -557,7 +557,7 @@ function playerAnimations(){
 		player.switchSprite(`take_hit_${player.direction}`)
 	}
 
-	if(player.isAttacking){
+	if(player.isAttacking && !player.isRunning){
 		player.switchSprite(`attack_${player.attackSprite}_${player.direction}`)
 	}
 
