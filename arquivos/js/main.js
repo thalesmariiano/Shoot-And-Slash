@@ -557,6 +557,10 @@ function playerAnimations(){
 		player.switchSprite(`take_hit_${player.direction}`)
 	}
 
+	if(player.isAttacking){
+		player.switchSprite(`attack_${player.attackSprite}_${player.direction}`)
+	}
+
 	if(player.isDead){
 		player.switchSprite(`death_${player.direction}`)
 	}
@@ -568,7 +572,6 @@ player.on("animationend", animation => {
 	}else if(animation.name == `attack_2_${player.direction}`){
 		player.attackSprite = 1
 	}
-	player.isAttacking = false
 
 	if(animation.name == `death_${player.direction}`){
 		player.stopAnimation = true
@@ -633,7 +636,6 @@ function playerActions(){
 				bullets_amount.innerHTML = item.bulletsAmount
 			}
 		}else if(!player.isFalling && !player.isRunning){
-			player.switchSprite(`attack_${player.attackSprite}_${player.direction}`)
 			player.isAttacking = true
 		}
 	}
@@ -653,11 +655,6 @@ function playerActions(){
 		if(player.currentFrames >= player.spriteFrames){
 			audio2.pause()
 		}
-	}
-		
-
-	if(player.isAttacking && player.sprInfo.name != `attack_${player.attackSprite}_${player.direction}`){
-		player.isAttacking = false
 	}
 
 	// Recarregar Arma
@@ -736,7 +733,7 @@ function update(){
 	holdingItem()
 
 	playerAnimations()
-	playerActions()	
+	playerActions()
 
 	if(player.health < 20){
 		hud_screen.style.boxShadow = "inset 0 0 30px rgba(190, 0, 0, .7)"
