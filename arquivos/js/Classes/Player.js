@@ -127,7 +127,7 @@ class Player extends Entity {
 		this.framesElapsed = 0
 		this.direction = "right"
 		this.switchSprite("idle_right")
-		this.endAnimation = false
+		this.stopAnimation = false
 		this.position.x = this.initial_position.x
 		this.position.y = this.initial_position.y
 		this.souls = 0
@@ -138,7 +138,7 @@ class Player extends Entity {
 
 	update(){
 		this.draw()
-		if(!this.endAnimation) this.animation()
+		if(!this.stopAnimation) this.animation()
 		this.swordAttack()
 
 		this.position.x += this.velocity.x
