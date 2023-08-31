@@ -600,7 +600,7 @@ const audio = new Audio('arquivos/assets/audio/sword_whoosh_3.mp3')
 const audio2 = new Audio('arquivos/assets/audio/sword_whoosh_2.mp3')
 const skeleton_hit_sound = new Audio('arquivos/assets/audio/skeleton_hit_2.mp3')
 
-function playerActions(){
+function playerMovement(){
 
 	// Player parado
 	if(!keyUp && !player.isRunning && !player.isAttacking && !player.receiveDamage && !player.isFalling){
@@ -664,21 +664,6 @@ function playerActions(){
 			}
 		}
 	}
-
-	if(player.health <= 0){
-		player.isDead = true
-		player.velocity.x = 0
-
-		waves_count.innerHTML = `Onda: ${arcadeWave.waveNumber}`
-		kills_count.innerHTML = `Abates: ${enemysKilled}`
-
-		setTimeout(() => {
-			gameIsPaused = true
-			saveData()
-			showUI("die-screen", "animate__fadeIn")
-			removeUI("hud-screen", "hidden")
-		}, 1500)
-	}
 }
 
 function selectSlot(id){
@@ -730,12 +715,27 @@ function update(){
 	holdingItem()
 
 	playerAnimations()
-	playerActions()
+	playerMovement()
 
 	if(player.health < 20){
 		hud_screen.style.boxShadow = "inset 0 0 30px rgba(190, 0, 0, .7)"
 	}else{
 		hud_screen.style.boxShadow = "none"
+	}
+
+	if(player.health <= 0){
+		player.isDead = true
+		player.velocity.x = 0
+
+		waves_count.innerHTML = `Onda: ${arcadeWave.waveNumber}`
+		kills_count.innerHTML = `Abates: ${enemysKilled}`
+
+		setTimeout(() => {
+			gameIsPaused = true
+			saveData()
+			showUI("die-screen", "animate__fadeIn")
+			removeUI("hud-screen", "hidden")
+		}, 1500)
 	}
 
 	camera.update()
