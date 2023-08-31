@@ -90,7 +90,9 @@ class Entity {
 	}
 
 	callEvent(eventType, eventData){
-		this.entityEvents[eventType][0](eventData)
+		if(this.entityEvents[eventType][0]){
+			this.entityEvents[eventType][0](eventData)
+		}
 	}
 
 	on(eventType, listener){
