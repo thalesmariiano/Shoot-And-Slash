@@ -24,7 +24,7 @@ class Entity {
 		this.spriteFrames = 0
 		this.framesElapsed = 0
 		this.framesHold = 5
-		this.endAnimation = false
+		this.stopAnimation = false
 		this.offest = {
 			x: 0,
 			y: 0
@@ -80,6 +80,7 @@ class Entity {
 			this.currentFrames++
 			if(this.currentFrames >= this.spriteFrames){
 				this.callEvent("animationend", this.sprInfo)
+				if(this.stopAnimation) return
 				this.currentFrames = 0
 			}
 		}
