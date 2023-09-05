@@ -44,38 +44,6 @@ class Player extends Entity {
 		this.entityType = "Player"
 	}
 
-	// animation(){
-
-	// 	if(this.sprInfo && this.attackSpeedMax && this.sprInfo.name == `attack_${this.attackSprite}_${this.direction.toLowerCase()}`){
-	// 		this.framesHold = 5
-	// 	}
-
-	// 	this.framesElapsed++
-	// 	if(this.framesElapsed % this.framesHold === 0){
-	// 		this.currentFrames++
-	// 		if(this.currentFrames >= this.spriteFrames){
-	// 			if(this.sprInfo.name == `death_${this.direction}`){
-	// 				this.endAnimation = true
-	// 				return
-	// 			}
-	// 			if(this.sprInfo.name == `attack_${this.attackSprite}_${this.direction}`){
-	// 				if(this.attackSprite == 1){
-	// 					this.attackSprite = 2
-	// 				}else{
-	// 					this.attackSprite = 1
-	// 				}
-	// 				this.isAttacking = false
-	// 			}
-	// 			if(this.sprInfo.name == `take_hit_${this.direction}`){
-	// 				this.receiveDamage = false
-	// 			}
-
-	// 			this.currentFrames = 0
-	// 		}
-	// 	}
-	// 	this.imgX = this.frameSizeX*this.currentFrames
-	// }
-
 	getInventory(id){
 		return this.inventory.find(i => i.id == id)
 	}
