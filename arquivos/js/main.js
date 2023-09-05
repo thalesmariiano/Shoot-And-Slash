@@ -557,6 +557,12 @@ function playerAnimations(){
 	}
 }
 
+/* TESTING PLAYER SOUNDS */
+
+const audio = new Audio('arquivos/assets/audio/sword_whoosh_3.mp3')
+const audio2 = new Audio('arquivos/assets/audio/sword_whoosh_2.mp3')
+const skeleton_hit_sound = new Audio('arquivos/assets/audio/skeleton_hit_2.mp3')
+
 player.on("animation", ({frame, animation}) => {
 	if(animation.name == `attack_1_${player.direction}`){
 		if(frame == 3){
@@ -570,9 +576,7 @@ player.on("animation", ({frame, animation}) => {
 	}
 })
 
-const audio = new Audio('arquivos/assets/audio/sword_whoosh_3.mp3')
-const audio2 = new Audio('arquivos/assets/audio/sword_whoosh_2.mp3')
-const skeleton_hit_sound = new Audio('arquivos/assets/audio/skeleton_hit_2.mp3')
+/* =============== */
 
 function playerMovement(){
 
@@ -868,7 +872,6 @@ function render(){
 	display.drawImage(cv, 0, 0)
 	display.restore()
 	buffer.restore()
-
 }
 
 function loop(){
