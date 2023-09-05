@@ -649,7 +649,7 @@ function playerMovement(){
 	}
 }
 
-function selectSlot(id){
+function selectPlayerSlot(id){
 	const inventory = player.getInventory(id)
 	
 	if(inventory.item){
@@ -668,7 +668,6 @@ function selectSlot(id){
 		
 		weapon_icon.classList.remove("border-neutral-300")
 		weapon_icon.classList.add("border-black")
-		// updateUI("icon", "")
 	}
 }
 

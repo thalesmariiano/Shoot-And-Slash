@@ -73,13 +73,13 @@ function keyDownHandler(e){
 			pause()
 			break
 		case "Digit1":
-			selectSlot(1)
+			selectPlayerSlot(1)
 			break
 		case "Digit2":
-			selectSlot(2)
+			selectPlayerSlot(2)
 			break
 		case "Digit3":
-			selectSlot(3)
+			selectPlayerSlot(3)
 			break
 	}
 }
