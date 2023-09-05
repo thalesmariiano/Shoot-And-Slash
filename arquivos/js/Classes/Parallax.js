@@ -1,7 +1,7 @@
 
 class Parallax {
-	constructor(image, velocity){
-		this.image = image
+	constructor(image, {velocity}){
+		this.image = spriteConverter(image)
 		this.velocity = velocity
 		this.width = 1000
 		this.height = 700

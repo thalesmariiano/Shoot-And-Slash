@@ -41,17 +41,9 @@ var lockLeft,
 const tilemap = new Image()
 tilemap.src   = "arquivos/assets/map/tilemap.png"
 
-const parallax_back = new Image()
-parallax_back.src   = "arquivos/assets/map/parallax-forest-back.png"
-
-const parallax_light = new Image()
-parallax_light.src   = "arquivos/assets/map/parallax-forest-lights.png"
-
-const parallax_middle = new Image()
-parallax_middle.src   = "arquivos/assets/map/parallax-forest-middle-trees.png"
-
-const parallax_front = new Image()
-parallax_front.src   = "arquivos/assets/map/parallax-forest-front-trees.png"
+const parallax_back = new Parallax("arquivos/assets/map/parallax-forest-back.png", {velocity: 7})
+const parallax_middle = new Parallax("arquivos/assets/map/parallax-forest-middle-trees.png", {velocity: 4})
+const parallax_front = new Parallax("arquivos/assets/map/parallax-forest-front-trees.png", {velocity: 2})
 
 const hud_screen      = document.getElementById("hud-screen")
 const weapon_icon     = document.getElementById("weapon-icon")
@@ -732,10 +724,6 @@ function arcadeMode(){
 	}
 }
 
-const back = new Parallax(parallax_back, 7)
-const middle = new Parallax(parallax_middle, 4)
-const front = new Parallax(parallax_front, 2)
-
 function update(){
 	playerHoldItem()
 	playerAnimations()
@@ -772,9 +760,9 @@ function render(){
 	buffer.clearRect(0, 0, canvas.width, canvas.height)
 
 	/* PARALLAX */
-	back.update()
-	middle.update()
-	front.update()			
+	parallax_back.update()
+	parallax_middle.update()
+	parallax_front.update()			
 
 	buffer.translate(
 		Math.floor(-camera.x),
