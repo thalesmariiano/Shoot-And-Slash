@@ -53,7 +53,6 @@ parallax_middle.src   = "arquivos/assets/map/parallax-forest-middle-trees.png"
 const parallax_front = new Image()
 parallax_front.src   = "arquivos/assets/map/parallax-forest-front-trees.png"
 
-
 const hud_screen      = document.getElementById("hud-screen")
 const weapon_icon     = document.getElementById("weapon-icon")
 const weapon_icon_img = document.getElementById("weapon-icon-img")
@@ -691,35 +690,6 @@ function playerHoldItem(){
 	}
 }
 
-function update(){
-	playerHoldItem()
-	playerAnimations()
-	playerMovement()
-
-	if(player.health < 20){
-		hud_screen.style.boxShadow = "inset 0 0 30px rgba(190, 0, 0, .7)"
-	}else{
-		hud_screen.style.boxShadow = "none"
-	}
-
-	if(player.health <= 0 && !player.isDead){
-		player.isDead = true
-		player.velocity.x = 0
-
-		waves_count.innerHTML = `Onda: ${arcadeWave.waveNumber}`
-		kills_count.innerHTML = `Abates: ${enemysKilled}`
-
-		setTimeout(() => {
-			gameIsPaused = true
-			saveArcadeData()
-			showUI("die-screen", "animate__fadeIn")
-			removeUI("hud-screen", "hidden")
-		}, 1500)
-	}
-
-	camera.update()
-}
-
 const arcadeWave = new EnemyWave(3, 100)
 
 function arcadeMode(){
@@ -765,6 +735,35 @@ function arcadeMode(){
 const back = new Parallax(parallax_back, 7)
 const middle = new Parallax(parallax_middle, 4)
 const front = new Parallax(parallax_front, 2)
+
+function update(){
+	playerHoldItem()
+	playerAnimations()
+	playerMovement()
+
+	if(player.health < 20){
+		hud_screen.style.boxShadow = "inset 0 0 30px rgba(190, 0, 0, .7)"
+	}else{
+		hud_screen.style.boxShadow = "none"
+	}
+
+	if(player.health <= 0 && !player.isDead){
+		player.isDead = true
+		player.velocity.x = 0
+
+		waves_count.innerHTML = `Onda: ${arcadeWave.waveNumber}`
+		kills_count.innerHTML = `Abates: ${enemysKilled}`
+
+		setTimeout(() => {
+			gameIsPaused = true
+			saveArcadeData()
+			showUI("die-screen", "animate__fadeIn")
+			removeUI("hud-screen", "hidden")
+		}, 1500)
+	}
+
+	camera.update()
+}
 
 function render(){
 	display.save()
