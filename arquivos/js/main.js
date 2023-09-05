@@ -672,22 +672,20 @@ function selectSlot(id){
 	}
 }
 
-function holdingItem(){
+function playerHoldItem(){
 	const slot = player.getHoldingItem()
 	if(slot){
-		const { item } = slot
+		const item = slot.item
 
-		if(item.type == "Weapon"){
-			weapon_status.style.color = ""
-		}
-
+		weapon_status.style.color = ""
 		item.switchSprite(`ak47_${player.direction}`)
+
 		if(player.direction == "left"){
-			item.position.x = player.position.x - itens_sprites.ak47.holding_position_left.x
-			item.position.y = player.position.y + itens_sprites.ak47.holding_position_left.y
+			item.position.x = player.position.x - 30
+			item.position.y = player.position.y + 30
 		}else if(player.direction == "right"){
-			item.position.x = player.position.x + itens_sprites.ak47.holding_position.x
-			item.position.y = player.position.y + itens_sprites.ak47.holding_position.y
+			item.position.x = player.position.x + 55
+			item.position.y = player.position.y + 30
 		}
 	}else{
 		weapon_status.style.color = "#64748b"
@@ -695,8 +693,7 @@ function holdingItem(){
 }
 
 function update(){
-	holdingItem()
-
+	playerHoldItem()
 	playerAnimations()
 	playerMovement()
 
