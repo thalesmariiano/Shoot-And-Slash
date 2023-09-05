@@ -566,23 +566,6 @@ function playerAnimations(){
 	}
 }
 
-player.on("animationend", animation => {
-	if(animation.name == `attack_1_${player.direction}`){
-		player.attackSprite = 2
-	}else if(animation.name == `attack_2_${player.direction}`){
-		player.attackSprite = 1
-	}
-	player.isAttacking = false
-
-	if(animation.name == `death_${player.direction}`){
-		player.stopAnimation = true
-	}
-
-	if(animation.name == `take_hit_${player.direction}`){
-		player.receiveDamage = false
-	}
-})
-
 player.on("animation", ({frame, animation}) => {
 	if(animation.name == `attack_1_${player.direction}`){
 		if(frame == 3){

@@ -119,6 +119,23 @@ class Player extends Entity {
 		updateUI("healthbar", this.health)
 	}
 
+	onAnimationEnd(animation){
+		if(animation.name == `attack_1_${this.direction}`){
+			this.attackSprite = 2
+		}else if(animation.name == `attack_2_${this.direction}`){
+			this.attackSprite = 1
+		}
+		this.isAttacking = false
+
+		if(animation.name == `death_${this.direction}`){
+			this.stopAnimation = true
+		}
+
+		if(animation.name == `take_hit_${this.direction}`){
+			this.receiveDamage = false
+		}
+	}
+
 	restart(){
 		this.maxHealth = this.health = 100
 		this.receiveLife(1000)

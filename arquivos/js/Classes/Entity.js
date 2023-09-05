@@ -81,6 +81,7 @@ class Entity {
 			this.currentFrames++
 			this.callEvent("animation", {animation: this.sprInfo, frame: this.currentFrames, frameHold: this.framesHold, loopFrame: this.framesElapsed})
 			if(this.currentFrames >= this.spriteFrames){
+				this.onAnimationEnd(this.sprInfo)
 				this.callEvent("animationend", this.sprInfo)
 				if(this.stopAnimation) return
 				this.currentFrames = 0
@@ -99,6 +100,9 @@ class Entity {
 		if(!this.entityEvents[eventType].length){
 			this.entityEvents[eventType].push(listener)
 		}
+	}
+
+	onAnimationEnd(){
 	}
 
 	draw(){
