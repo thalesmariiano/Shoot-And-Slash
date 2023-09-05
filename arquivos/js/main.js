@@ -10,40 +10,17 @@ if(parseInt(getStorage("SaS-Save"))){
 	$("#save-memory").checked = false
 }
 
-document.querySelector("#arcade-record").innerHTML = `Recorde: ${getStorage("SaS-Arcade")}`
+$("#arcade-record").innerHTML = `Recorde: ${getStorage("SaS-Arcade")}`
 
 var developerMode = false
 
-const canvas            = document.querySelector("canvas")
+const canvas  = document.querySelector("canvas")
 const display = canvas.getContext("2d", {alpha: false})
 
-const cv = document.createElement("canvas")
+const cv     = document.createElement("canvas")
 const buffer = cv.getContext('2d', {alpha: false})
 
 const screens_container = document.querySelector("#screens-container")
-
-const GRAVITY = 0.6
-
-var keyRight,
-    keyLeft,
-    keyUp,
-    keyDown,
-    keyEnter,
-    keyR = false
-
-var gameIsPaused = true
-
-var enemysKilled = 0
-
-var lockLeft,
-    lockRight = false
-
-const tilemap = new Image()
-tilemap.src   = "arquivos/assets/map/tilemap.png"
-
-const parallax_back = new Parallax("arquivos/assets/map/parallax-forest-back.png", {velocity: 7})
-const parallax_middle = new Parallax("arquivos/assets/map/parallax-forest-middle-trees.png", {velocity: 4})
-const parallax_front = new Parallax("arquivos/assets/map/parallax-forest-front-trees.png", {velocity: 2})
 
 const hud_screen      = document.getElementById("hud-screen")
 const weapon_icon     = document.getElementById("weapon-icon")
@@ -70,6 +47,29 @@ const waves_hud_timer    = document.getElementById("waves-hud-timer")
 const close_skills = document.getElementById("close-skills")
 const skillsButton = document.querySelectorAll("[data-skill]")
 const itensButton  = document.querySelectorAll("[data-item]")
+
+const GRAVITY = 0.6
+
+var keyRight,
+    keyLeft,
+    keyUp,
+    keyDown,
+    keyEnter,
+    keyR = false
+
+var gameIsPaused = true
+
+var enemysKilled = 0
+
+var lockLeft,
+    lockRight = false
+
+const tilemap = new Image()
+tilemap.src   = "arquivos/assets/map/tilemap.png"
+
+const parallax_back = new Parallax("arquivos/assets/map/parallax-forest-back.png", {velocity: 7})
+const parallax_middle = new Parallax("arquivos/assets/map/parallax-forest-middle-trees.png", {velocity: 4})
+const parallax_front = new Parallax("arquivos/assets/map/parallax-forest-front-trees.png", {velocity: 2})
 
 const player_sprites = [
 	{
