@@ -19,11 +19,17 @@ function deleteStorages(){
 }
 
 function spriteConverter(imgArray){
-	imgArray.forEach(spr => {
+	if(Array.isArray(imgArray)){
+		imgArray.forEach(spr => {
+			const img = new Image()
+			img.src = spr.image
+			spr.image = img
+		})
+	}else{
 		const img = new Image()
-		img.src = spr.image
-		spr.image = img
-	})
+		img.src = imgArray
+		return img
+	}
 }
 
 function generateEnemys(amount, health){
