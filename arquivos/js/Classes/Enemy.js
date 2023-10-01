@@ -25,35 +25,23 @@ class Enemy extends Entity {
 		this.entityType = "Enemy"
 	}
 
-	animation(){
-		this.framesElapsed++
-		if(this.framesElapsed % this.framesHold === 0){
-			this.currentFrames++
-			if(this.currentFrames >= this.spriteFrames){
-				if(this.sprInfo.name == `dead_${this.direction}`){
-					this.endAnimation = true
+	onAnimationEnd(animation){
+		if(animation.name == `dead_${this.direction}`){
+			this.stopAnimation = true
 
-					if((Math.floor(Math.random() * 100) + 1) < player.dropLuck){
-						const soul = new Item({
-							itemType: "soul",
-							position: {
-								x: this.position.x + this.width/2,
-								y: this.position.y + this.height/2
-							}
-						})
-						soul.setSprites(itens_sprites.enemy_soul.sprites)
-						itensArray.push(soul)
+			if((Math.floor(Math.random() * 100) + 1) < player.dropLuck){
+				const soul = new Item({
+					itemType: "soul",
+					position: {
+						x: this.position.x + this.width/2,
+						y: this.position.y + this.height/2
 					}
-
-					enemysKilled++
-					setTimeout(() => this.visible = false, 3000)
-
-					return
-				}
-				this.currentFrames = 0
+				})
+				soul.setSprites(itens_sprites.enemy_soul.sprites)
+				itensArray.push(soul)
 			}
+			setTimeout(() => this.visible = false, 3000)
 		}
-		this.imgX = this.frameSizeX*this.currentFrames
 	}
 
 	takeHit(dmg, direction){
@@ -176,7 +164,7 @@ class Enemy extends Entity {
 
 	update(){
 		// this.draw()
-		if(!this.endAnimation) this.animation()
+		if(!this.stopAnimation) this.animation()
 
 		if(!this.receiveDamage){
 			this.chasePlayer()
@@ -201,11 +189,10 @@ class Enemy extends Entity {
 			this.switchSprite(`attack_${this.attack}_${this.direction}`)
 		}
 
-		if(this.health <= 0){
+		if(this.health <= 0 && !this.isDead){
 			this.isDead = true
-		}
 
-		if(this.isDead){
+			enemysKilled++
 			this.velocity.x = 0
 			this.switchSprite(`dead_${this.direction}`)
 		}
