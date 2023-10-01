@@ -80,9 +80,9 @@ class Enemy extends Entity {
 
 		if(developerMode){
 			if(this.direction == "left"){
-				ctx.fillRect(this.position.x - 500 + this.width, this.position.y + 30, 500, 10)
-			}else if(this.direction == "left"){
-				ctx.fillRect(this.position.x, this.position.y + 30, 500, 10)
+				buffer.fillRect(this.position.x - 500 + this.width, this.position.y + 30, 500, 10)
+			}else if(this.direction == "right"){
+				buffer.fillRect(this.position.x, this.position.y + 30, 500, 10)
 			}
 		}		
 	}
