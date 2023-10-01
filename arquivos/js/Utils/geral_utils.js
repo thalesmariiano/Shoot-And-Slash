@@ -50,7 +50,14 @@ function detectInArea(entity, target, areaTotal, topArea, bottomArea, leftArea, 
 		bottom: false,
 		left: false,
 		right: false,
-		distance
+		distance,
+		area_total: areaTotal
+		area: {
+			top_area: topArea,
+			bottom_area: bottomArea,
+			left_area: leftArea,
+			right_area: rightArea
+		}
 	}
 
 	const top    = topArea ? topArea : areaTotal
