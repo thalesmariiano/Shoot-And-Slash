@@ -136,7 +136,7 @@ class Enemy extends Entity {
 		this.attack(`attack_${this.attackSprite}_${this.direction}`, 2)
 	}
 
-	runningSwordAttack(){
+	chaseAttack(){
 		const attack_run_distance = detectInArea(this, player, 200)
 
 		if(attack_run_distance.left && !player.isDead && !this.isDead){
@@ -165,7 +165,7 @@ class Enemy extends Entity {
 		if(!this.receiveDamage){
 			this.chasePlayer()
 			this.swordAttack()
-			this.runningSwordAttack()
+			this.chaseAttack()
 		}
 		
 
