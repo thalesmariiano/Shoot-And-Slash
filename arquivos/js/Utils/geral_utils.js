@@ -51,7 +51,7 @@ function detectInArea(entity, target, areaTotal, topArea, bottomArea, leftArea, 
 		left: false,
 		right: false,
 		distance,
-		area_total: areaTotal
+		area_total: areaTotal,
 		area: {
 			top_area: topArea,
 			bottom_area: bottomArea,
