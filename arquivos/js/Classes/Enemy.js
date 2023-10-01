@@ -19,7 +19,7 @@ class Enemy extends Entity {
 				y: 0
 			}
 		}
-		this.attack = 1
+		this.attackSprite = 1
 		this.entitySizeX = 240
 		this.entitySizeY = 240
 		this.entityType = "Enemy"
@@ -63,13 +63,13 @@ class Enemy extends Entity {
 	}
 
 	chasePlayer(){
-		const view_distance = detectInArea(this, player, 500)
+		const view_player_in = detectInArea(this, player, 500)
 
-		if(view_distance.left && !this.isAttacking && !player.isDead && !this.isDead){
+		if(view_player_in.left && !this.isAttacking && !player.isDead){
 			this.velocity.x = -this.speed
 			this.direction = "left"
 			this.isChasingPlayer = true
-		}else if(view_distance.right && !this.isAttacking && !player.isDead && !this.isDead){
+		}else if(view_player_in.right && !this.isAttacking && !player.isDead){
 			this.velocity.x = this.speed
 			this.direction = "right"
 			this.isChasingPlayer = true
@@ -85,6 +85,18 @@ class Enemy extends Entity {
 				buffer.fillRect(this.position.x, this.position.y + 30, 500, 10)
 			}
 		}		
+	}
+
+	attack(animation, dmg){
+		if(this.currentFrames == 4 && this.sprInfo.name == animation){
+			const { side } = collide(this.sword, player)
+			const sword_collide = side.top || side.bottom || side.left || side.right
+
+			sword_collide ? player.takeHit(dmg) : player.receiveDamage = false
+
+			// ctx.fillStyle = "red"
+			// ctx.fillRect(this.sword.position.x, this.sword.position.y, this.sword.width, this.sword.height)
+		}
 	}
 
 	swordAttack(){
@@ -121,15 +133,7 @@ class Enemy extends Entity {
 			this.isAttacking = false
 		}
 
-		if(this.currentFrames == 4 && this.sprInfo.name == `attack_${this.attack}_${this.direction}`){
-			const { side } = collide(this.sword, player)
-			const sword_collide = side.top || side.bottom || side.left || side.right
-
-			sword_collide ? player.takeHit(2) : player.receiveDamage = false
-
-			// ctx.fillStyle = "red"
-			// ctx.fillRect(this.sword.position.x, this.sword.position.y, this.sword.width, this.sword.height)
-		}
+		this.attack(`attack_${this.attackSprite}_${this.direction}`, 2)
 	}
 
 	runningSwordAttack(){
@@ -151,15 +155,7 @@ class Enemy extends Entity {
 			this.isRunningAttacking = false
 		}
 
-		if(this.currentFrames == 4 && this.sprInfo.name == `attack_run_${this.direction}`){
-			const { side } = collide(this.sword, player)
-			const sword_collide = side.top || side.bottom || side.left || side.right
-
-			sword_collide ? player.takeHit(1.5) : player.receiveDamage = false
-
-			// ctx.fillStyle = "red"
-			// ctx.fillRect(this.sword.position.x, this.sword.position.y, this.sword.width, this.sword.height)
-		}
+		this.attack(`attack_run_${this.direction}`, 1.5)
 	}
 
 	update(){
@@ -186,7 +182,7 @@ class Enemy extends Entity {
 		}
 
 		if(this.isAttacking && !this.isDead && !this.receiveDamage){
-			this.switchSprite(`attack_${this.attack}_${this.direction}`)
+			this.switchSprite(`attack_${this.attackSprite}_${this.direction}`)
 		}
 
 		if(this.health <= 0 && !this.isDead){
