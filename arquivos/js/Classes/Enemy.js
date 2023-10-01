@@ -62,15 +62,73 @@ class Enemy extends Entity {
 		}, 700)
 	}
 
+	detectPlayer(){
+		const isFarAway = detectInArea(this, player, 500)
+		const chaseAttack = detectInArea(this, player, 200)
+		const isClose = detectInArea(this, player, 100)
+		const isTooClose = detectInArea(this, player, 80)
+
+		if(isFarAway.left && !isClose.left && !isTooClose.left){
+			this.direction = 'left'
+			this.isChasingPlayer = true
+			if(chaseAttack.left){
+				this.isRunningAttacking = true
+				buffer.fillStyle = 'blue'
+			}else{
+				this.isRunningAttacking = false
+			}
+		}else if(isFarAway.right && !isClose.right && !isTooClose.right){
+			this.direction = 'right'
+			this.isChasingPlayer = true
+
+			if(chaseAttack.right){
+				this.isRunningAttacking = true
+				buffer.fillStyle = 'blue'
+			}else{
+				this.isRunningAttacking = false
+			}
+		}else{
+			this.isChasingPlayer = false
+		}
+
+		if(isClose.left && !isTooClose.left){
+			this.direction = 'left'
+			this.isAttacking = true
+			buffer.fillStyle = "green"
+		}else if(isClose.right && !isTooClose.right){
+			this.direction = 'right'
+			this.isAttacking = true
+			buffer.fillStyle = "green"
+		}else{
+			this.isAttacking = false
+		}
+
+		if(isTooClose.left){
+			this.direction = 'left'
+			buffer.fillStyle = 'red'
+		}else if(isTooClose.right){
+			this.direction = 'right'
+			buffer.fillStyle = 'red'
+		}
+
+		if(developerMode){
+			if(this.direction == "left"){
+				buffer.fillRect(this.position.x - 500 + this.width, this.position.y + 30, 500, 10)
+			}else if(this.direction == "right"){
+				buffer.fillRect(this.position.x, this.position.y + 30, 500, 10)
+			}
+		}	
+	}
+
 	chasePlayer(){
 		const view_player_in = detectInArea(this, player, 500)
 
 		if(view_player_in.left && !this.isAttacking && !player.isDead){
-			this.velocity.x = -this.speed
+			// this.velocity.x = -this.speed
 			this.direction = "left"
 			this.isChasingPlayer = true
 		}else if(view_player_in.right && !this.isAttacking && !player.isDead){
-			this.velocity.x = this.speed
+			// this.velocity.x = this.speed
 			this.direction = "right"
 			this.isChasingPlayer = true
 		}else{
@@ -163,10 +221,11 @@ class Enemy extends Entity {
 		if(!this.stopAnimation) this.animation()
 
 		if(!this.receiveDamage){
-			this.chasePlayer()
-			this.swordAttack()
-			this.chaseAttack()
+			// this.chasePlayer()
+			// this.swordAttack()
+			// this.chaseAttack()
 		}
+		this.detectPlayer()
 		
 
 		if(!this.isChasingPlayer && !this.isDead && !this.isAttacking && !this.receiveDamage){
