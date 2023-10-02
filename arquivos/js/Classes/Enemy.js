@@ -95,14 +95,28 @@ class Enemy extends Entity {
 			this.isAttacking = true
 			this.velocity.x = 0
 			this.isRunning = false
+
+			// sword config for close attack
+			this.sword.width = 25
+			this.sword.height = 65	
+			this.sword.position.y = this.position.y - 20
+			this.sword.position.x = this.position.x - 73
 		}else if(playerDirection == 'right'){
 			this.direction = 'right'
 			this.isAttacking = true
 			this.velocity.x = 0
 			this.isRunning = false
+
+			// sword config for close attack
+			this.sword.width = 25
+			this.sword.height = 65	
+			this.sword.position.x = this.position.x + 117
+			this.sword.position.y = this.position.y - 20
 		}else{
 			this.isAttacking = false
 		}
+
+		this.attack(`attack_${this.attackSprite}_${this.direction}`, 2)
 	}
 
 	fallback(playerDirection){
