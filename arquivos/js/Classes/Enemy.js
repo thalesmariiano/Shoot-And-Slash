@@ -225,6 +225,11 @@ class Enemy extends Entity {
 
 		if(!this.isDead && !this.receiveDamage && !player.isDead){
 			this.detectPlayer()
+		}else{
+			this.isAttacking = false
+			this.isRunningAttacking = false
+			this.isRunning = false
+			this.isChasingPlayer = false
 		}
 		
 		if(!this.isChasingPlayer && !this.isRunning && !this.isDead && !this.isAttacking && !this.receiveDamage){
