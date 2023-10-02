@@ -316,7 +316,95 @@ const skeleton_warrior_sprites = [
 	}
 ]
 
+const skeleton_spearman_sprites = [
+	{
+		name: "idle_right",
+		image: "arquivos/assets/skeleton_spearman/idle_right.png",
+		frames: 7
+	},
+	{
+		name: "idle_left",
+		image: "arquivos/assets/skeleton_spearman/idle_left.png",
+		frames: 7
+	},
+	{
+		name: "run_right",
+		image: "arquivos/assets/skeleton_spearman/run_right.png",
+		frames: 6
+	},
+	{
+		name: "run_left",
+		image: "arquivos/assets/skeleton_spearman/run_left.png",
+		frames: 6
+	},
+	{
+		name: "walk_right",
+		image: "arquivos/assets/skeleton_spearman/walk_right.png",
+		frames: 7
+	},
+	{
+		name: "walk_left",
+		image: "arquivos/assets/skeleton_spearman/walk_left.png",
+		frames: 7
+	},
+	{
+		name: "run_attack_right",
+		image: "arquivos/assets/skeleton_spearman/run_attack_right.png",
+		frames: 5
+	},
+	{
+		name: "run_attack_left",
+		image: "arquivos/assets/skeleton_spearman/run_attack_left.png",
+		frames: 5
+	},
+	{
+		name: "attack_1_right",
+		image: "arquivos/assets/skeleton_spearman/attack_1_right.png",
+		frames: 4,
+		hold: 6
+	},
+	{
+		name: "attack_1_left",
+		image: "arquivos/assets/skeleton_spearman/attack_1_left.png",
+		frames: 4,
+		hold: 6
+	},
+	{
+		name: "attack_2_right",
+		image: "arquivos/assets/skeleton_spearman/attack_2_right.png",
+		frames: 4
+	},
+	{
+		name: "attack_2_left",
+		image: "arquivos/assets/skeleton_spearman/attack_2_left.png",
+		frames: 4
+	},
+	{
+		name: "take_hit_right",
+		image: "arquivos/assets/skeleton_spearman/hit_right.png",
+		frames: 3
+	},
+	{
+		name: "take_hit_left",
+		image: "arquivos/assets/skeleton_spearman/hit_left.png",
+		frames: 3
+	},
+	{
+		name: "dead_right",
+		image: "arquivos/assets/skeleton_spearman/dead_right.png",
+		frames: 5,
+		hold: 6
+	},
+	{
+		name: "dead_left",
+		image: "arquivos/assets/skeleton_spearman/dead_left.png",
+		frames: 5,
+		hold: 6
+	}
+]
+
 spriteConverter(skeleton_warrior_sprites)
+spriteConverter(skeleton_spearman_sprites)
 spriteConverter(player_sprites)
 spriteConverter(itens_sprites.enemy_soul.sprites)
 spriteConverter(itens_sprites.life.sprites)
