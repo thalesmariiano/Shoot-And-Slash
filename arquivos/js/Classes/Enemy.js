@@ -105,6 +105,18 @@ class Enemy extends Entity {
 		}
 	}
 
+	fallback(playerDirection){
+		if(playerDirection == 'left'){
+			this.direction = 'right'
+			this.velocity.x = this.speed + 1
+			this.isRunning = true
+		}else if(playerDirection == 'right'){
+			this.direction = 'left'
+			this.velocity.x = -(this.speed + 1)
+			this.isRunning = true
+		}
+	}
+
 	detectPlayer(){
 		const isFarAway = detectInArea(this, player, 500)
 		const chaseAttack = detectInArea(this, player, 200)
@@ -143,16 +155,10 @@ class Enemy extends Entity {
 
 		if(isTooClose.left || isTooClose.bottom){
 			buffer.fillStyle = 'red'
-
-			this.direction = 'right'
-			this.velocity.x = this.speed + 1
-			this.isRunning = true
+			this.fallback('left')
 		}else if(isTooClose.right || isTooClose.bottom){
 			buffer.fillStyle = 'red'
-
-			this.direction = 'left'
-			this.velocity.x = -(this.speed + 1)
-			this.isRunning = true
+			this.fallback('right')
 		}
 
 		if(developerMode){
