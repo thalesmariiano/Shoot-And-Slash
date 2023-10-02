@@ -69,6 +69,10 @@ class SkeletonSpearman extends Enemy {
 			setTimeout(() => this.visible = false, 3000)
 		}
 
+		if(animation.name == `run_attack_${this.direction}`){
+			this.isChargeAttack = false
+		}
+
 		if(animation.name == `attack_1_${this.direction}`){
 			this.attackSprite = 2
 		}else if(animation.name == `attack_2_${this.direction}`){
@@ -109,7 +113,7 @@ class SkeletonSpearman extends Enemy {
 
 			enemysKilled++
 			this.velocity.x = 0
-			this.switchSprite(`fall_{this.direction}`)
+			this.switchSprite(`fall_${this.direction}`)
 		}
 
 		this.position.x += this.velocity.x

@@ -3,11 +3,5 @@ class SkeletonWarrior extends Enemy {
 		super({color, health, position})
 	}
 
-	onAnimationEnd(animation){
-		if(animation.name == `dead_${this.direction}`){
-			this.stopAnimation = true
-			this.dropItem()
-			setTimeout(() => this.visible = false, 3000)
-		}
-	}
+	// Código do Skeleton Warrior é extendido do Enemy
 }
