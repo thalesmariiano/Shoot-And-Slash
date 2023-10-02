@@ -602,12 +602,12 @@ function playerMovement(){
 	// Player andando para esquerda ou direita
 	if(keyLeft || keyRight){
 		player.receiveDamage = false
-		if(keyLeft && !lockLeft){
+		if(keyLeft && !lockLeft && !player.isDead){
 			player.velocity.x = -player.speed
 			player.direction = "left"
 			lockRight = true
 		}
-		if(keyRight && !lockRight){
+		if(keyRight && !lockRight && !player.isDead){
 			player.velocity.x = player.speed
 			player.direction = "right"
 			lockLeft = true
