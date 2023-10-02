@@ -28,19 +28,22 @@ class Enemy extends Entity {
 	onAnimationEnd(animation){
 		if(animation.name == `dead_${this.direction}`){
 			this.stopAnimation = true
-
-			if((Math.floor(Math.random() * 100) + 1) < player.dropLuck){
-				const soul = new Item({
-					itemType: "soul",
-					position: {
-						x: this.position.x + this.width/2,
-						y: this.position.y + this.height/2
-					}
-				})
-				soul.setSprites(itens_sprites.enemy_soul.sprites)
-				itensArray.push(soul)
-			}
+			this.dropItem()
 			setTimeout(() => this.visible = false, 3000)
+		}
+	}
+
+	dropItem(){	
+		if((Math.floor(Math.random() * 100) + 1) < player.dropLuck){
+			const soul = new Item({
+				itemType: "soul",
+				position: {
+					x: this.position.x + this.width/2,
+					y: this.position.y + this.height/2
+				}
+			})
+			soul.setSprites(itens_sprites.enemy_soul.sprites)
+			itensArray.push(soul)
 		}
 	}
 
@@ -100,7 +103,7 @@ class Enemy extends Entity {
 			this.isRunningAttacking = false
 		}
 
-		this.attack(`run_attack_${this.direction}`, 1.5)
+		this.attack(`run_attack_${this.direction}`, 1.5, 4)
 	}
 
 	closeAttack(playerDirection){
@@ -130,7 +133,7 @@ class Enemy extends Entity {
 			this.isAttacking = false
 		}
 
-		this.attack(`attack_${this.attackSprite}_${this.direction}`, 2)
+		this.attack(`attack_${this.attackSprite}_${this.direction}`, 2, 4)
 	}
 
 	fallback(playerDirection){
@@ -145,8 +148,8 @@ class Enemy extends Entity {
 		}
 	}
 
-	attack(animation, dmg){
-		if(this.currentFrames == 4 && this.sprInfo.name == animation){
+	attack(animation, dmg, frame){
+		if(this.currentFrames == frame && this.sprInfo.name == animation){
 			const { side } = collide(this.sword, player)
 			const sword_collide = side.top || side.bottom || side.left || side.right
 

@@ -6,18 +6,7 @@ class SkeletonWarrior extends Enemy {
 	onAnimationEnd(animation){
 		if(animation.name == `dead_${this.direction}`){
 			this.stopAnimation = true
-
-			if((Math.floor(Math.random() * 100) + 1) < player.dropLuck){
-				const soul = new Item({
-					itemType: "soul",
-					position: {
-						x: this.position.x + this.width/2,
-						y: this.position.y + this.height/2
-					}
-				})
-				soul.setSprites(itens_sprites.enemy_soul.sprites)
-				itensArray.push(soul)
-			}
+			this.dropItem()
 			setTimeout(() => this.visible = false, 3000)
 		}
 	}
