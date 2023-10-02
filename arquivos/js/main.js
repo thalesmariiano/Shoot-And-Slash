@@ -12,7 +12,7 @@ if(parseInt(getStorage("SaS-Save"))){
 
 $("#arcade-record").innerHTML = `Recorde: ${getStorage("SaS-Arcade")}`
 
-var developerMode = true
+var developerMode = false
 
 const canvas  = document.querySelector("canvas")
 const display = canvas.getContext("2d", {alpha: false})
@@ -251,13 +251,13 @@ const skeleton_warrior_sprites = [
 		frames: 7
 	},
 	{
-		name: "attack_run_right",
-		image: "arquivos/assets/skeleton_warrior/attack_run_right.png",
+		name: "run_attack_right",
+		image: "arquivos/assets/skeleton_warrior/run_attack_right.png",
 		frames: 7
 	},
 	{
-		name: "attack_run_left",
-		image: "arquivos/assets/skeleton_warrior/attack_run_left.png",
+		name: "run_attack_left",
+		image: "arquivos/assets/skeleton_warrior/run_attack_left.png",
 		frames: 7
 	},
 	{
@@ -990,9 +990,11 @@ function init(){
 	loop()
 
 	if(developerMode){
-		const enemy = new SkeletonSpearman({color: "red", health: 100, position: {x: 700, y: 400}})
-		enemy.setSprites(skeleton_spearman_sprites)
-		enemys.push(enemy)
+		const enemy1 = new SkeletonSpearman({color: "red", health: 100, position: {x: 700, y: 400}})
+		enemy1.setSprites(skeleton_spearman_sprites)
+		const enemy2 = new SkeletonWarrior({color: "red", health: 100, position: {x: 600, y: 400}})
+		enemy2.setSprites(skeleton_warrior_sprites)
+		enemys.push(enemy1, enemy2)
 	}		
 }
 
