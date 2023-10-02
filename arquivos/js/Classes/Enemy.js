@@ -100,7 +100,7 @@ class Enemy extends Entity {
 			this.isRunningAttacking = false
 		}
 
-		this.attack(`attack_run_${this.direction}`, 1.5)
+		this.attack(`run_attack_${this.direction}`, 1.5)
 	}
 
 	closeAttack(playerDirection){
@@ -238,7 +238,7 @@ class Enemy extends Entity {
 
 		if(this.isChasingPlayer && !this.isDead && !this.isAttacking && !this.receiveDamage){
 			if(this.isRunningAttacking && player.isRunning){
-				this.switchSprite(`attack_run_${this.direction}`)
+				this.switchSprite(`run_attack_${this.direction}`)
 			}else{
 				this.switchSprite(`run_${this.direction}`)
 			}
