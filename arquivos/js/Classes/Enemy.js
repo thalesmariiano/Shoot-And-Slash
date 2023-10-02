@@ -145,6 +145,18 @@ class Enemy extends Entity {
 		}
 	}
 
+	attack(animation, dmg){
+		if(this.currentFrames == 4 && this.sprInfo.name == animation){
+			const { side } = collide(this.sword, player)
+			const sword_collide = side.top || side.bottom || side.left || side.right
+
+			sword_collide ? player.takeHit(dmg) : player.receiveDamage = false
+
+			// ctx.fillStyle = "red"
+			// ctx.fillRect(this.sword.position.x, this.sword.position.y, this.sword.width, this.sword.height)
+		}
+	}
+
 	detectPlayer(){
 		const isFarAway = detectInArea(this, player, 500)
 		const chaseAttack = detectInArea(this, player, 200)
@@ -198,28 +210,14 @@ class Enemy extends Entity {
 		}	
 	}
 
-	attack(animation, dmg){
-		if(this.currentFrames == 4 && this.sprInfo.name == animation){
-			const { side } = collide(this.sword, player)
-			const sword_collide = side.top || side.bottom || side.left || side.right
-
-			sword_collide ? player.takeHit(dmg) : player.receiveDamage = false
-
-			// ctx.fillStyle = "red"
-			// ctx.fillRect(this.sword.position.x, this.sword.position.y, this.sword.width, this.sword.height)
-		}
-	}
-
 	update(){
 		// this.draw()
 		if(!this.stopAnimation) this.animation()
 
-		if(!this.receiveDamage){
-			
+		if(!this.isDead && !this.receiveDamage && !player.isDead){
+			this.detectPlayer()
 		}
-		this.detectPlayer()
 		
-
 		if(!this.isChasingPlayer && !this.isRunning && !this.isDead && !this.isAttacking && !this.receiveDamage){
 			this.switchSprite(`idle_${this.direction}`)
 		}
