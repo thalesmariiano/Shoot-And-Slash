@@ -79,6 +79,16 @@ class Enemy extends Entity {
 		}
 	}
 
+	runningAtack(direction){
+		if(direction == 'left'){
+			this.isRunningAttacking = true
+		}else if(direction == 'right'){
+			this.isRunningAttacking = true
+		}else{
+			this.isRunningAttacking = false
+		}
+	}
+
 	detectPlayer(){
 		const isFarAway = detectInArea(this, player, 500)
 		const chaseAttack = detectInArea(this, player, 200)
@@ -88,18 +98,18 @@ class Enemy extends Entity {
 		if(isFarAway.left && !isClose.left && !isTooClose.left && !isTooClose.bottom){
 			this.chasePlayer('left')
 			if(chaseAttack.left){
-				this.isRunningAttacking = true
+				this.runningAtack('left')
 				buffer.fillStyle = 'blue'
 			}else{
-				this.isRunningAttacking = false
+				this.runningAtack(' ')
 			}
 		}else if(isFarAway.right && !isClose.right && !isTooClose.right && !isTooClose.bottom){
 			this.chasePlayer('right')
 			if(chaseAttack.right){
-				this.isRunningAttacking = true
+				this.runningAtack('right')
 				buffer.fillStyle = 'blue'
 			}else{
-				this.isRunningAttacking = false
+				this.runningAtack(' ')
 			}
 		}else{
 			this.chasePlayer(' ')
