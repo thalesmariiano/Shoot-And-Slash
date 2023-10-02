@@ -163,8 +163,11 @@ class Enemy extends Entity {
 		const isClose = detectInArea(this, player, 100)
 		const isTooClose = detectInArea(this, player, 80, 0, 200, 0, 0)
 
+		// Detectar player longe
 		if(isFarAway.left && !isClose.left && !isTooClose.left && !isTooClose.bottom){
 			this.chasePlayer('left')
+
+			// Caso player esteja perto e correndo, ataque correndo
 			if(chaseAttack.left){
 				this.runningAtack('left')
 				buffer.fillStyle = 'blue'
@@ -173,6 +176,8 @@ class Enemy extends Entity {
 			}
 		}else if(isFarAway.right && !isClose.right && !isTooClose.right && !isTooClose.bottom){
 			this.chasePlayer('right')
+
+			// Caso player esteja perto e correndo, ataque correndo
 			if(chaseAttack.right){
 				this.runningAtack('right')
 				buffer.fillStyle = 'blue'
@@ -183,6 +188,7 @@ class Enemy extends Entity {
 			this.chasePlayer(' ')
 		}
 
+		// Quando player estever perto, ataque
 		if(isClose.left && !isTooClose.left){
 			this.closeAttack('left')
 			buffer.fillStyle = "green"
@@ -193,6 +199,7 @@ class Enemy extends Entity {
 			this.closeAttack(' ')
 		}
 
+		// Caso player esteja perto demais, recue
 		if(isTooClose.left || isTooClose.bottom){
 			buffer.fillStyle = 'red'
 			this.fallback('left')
