@@ -152,8 +152,10 @@ class Enemy extends Entity {
 
 			sword_collide ? player.takeHit(dmg) : player.receiveDamage = false
 
-			// ctx.fillStyle = "red"
-			// ctx.fillRect(this.sword.position.x, this.sword.position.y, this.sword.width, this.sword.height)
+			if(developerMode){
+				buffer.fillStyle = "red"
+				buffer.fillRect(this.sword.position.x, this.sword.position.y, this.sword.width, this.sword.height)
+			}
 		}
 	}
 

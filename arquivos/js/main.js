@@ -805,7 +805,9 @@ function render(){
 		}
 	})
 
-	arcadeMode()
+	if(!developerMode){
+		arcadeMode()		
+	}
 
 	playebleMapBlocks.forEach(block => {
 		const {top, bottom, left, right} = detectInArea(camera_position, block, 300, (canvas.height/2), 300, (canvas.width/2) + 50, (canvas.width/2))
@@ -885,7 +887,13 @@ function loop(){
 
 function init(){
 	gameIsPaused = false
-	loop()		
+	loop()
+
+	if(developerMode){
+		const enemy = new Enemy({color: "red", health: 100, position: {x: 700, y: 400}})
+		enemy.setSprites(enemy_sprites)
+		enemys.push(enemy)
+	}		
 }
 
 function continues(){
