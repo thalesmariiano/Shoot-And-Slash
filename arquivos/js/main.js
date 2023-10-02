@@ -219,104 +219,104 @@ const itens_sprites = {
 	}
 }
 
-const enemy_sprites = [
+const skeleton_warrior_sprites = [
 	{
 		name: "idle_right",
-		image: "arquivos/assets/enemys/skeleton_idle.png",
+		image: "arquivos/assets/skeleton_warrior/idle_right.png",
 		frames: 7
 	},
 	{
 		name: "idle_left",
-		image: "arquivos/assets/enemys/skeleton_idle_left.png",
+		image: "arquivos/assets/skeleton_warrior/idle_left.png",
 		frames: 7
 	},
 	{
 		name: "run_right",
-		image: "arquivos/assets/enemys/skeleton_run.png",
+		image: "arquivos/assets/skeleton_warrior/run_right.png",
 		frames: 8
 	},
 	{
 		name: "run_left",
-		image: "arquivos/assets/enemys/skeleton_run_left.png",
+		image: "arquivos/assets/skeleton_warrior/run_left.png",
 		frames: 8
 	},
 	{
 		name: "walk_right",
-		image: "arquivos/assets/enemys/skeleton_walk.png",
+		image: "arquivos/assets/skeleton_warrior/walk_right.png",
 		frames: 7
 	},
 	{
 		name: "walk_left",
-		image: "arquivos/assets/enemys/skeleton_walk_left.png",
+		image: "arquivos/assets/skeleton_warrior/walk_left.png",
 		frames: 7
 	},
 	{
 		name: "attack_run_right",
-		image: "arquivos/assets/enemys/skeleton_attack_run.png",
+		image: "arquivos/assets/skeleton_warrior/attack_run_right.png",
 		frames: 7
 	},
 	{
 		name: "attack_run_left",
-		image: "arquivos/assets/enemys/skeleton_attack_run_left.png",
+		image: "arquivos/assets/skeleton_warrior/attack_run_left.png",
 		frames: 7
 	},
 	{
 		name: "attack_1_right",
-		image: "arquivos/assets/enemys/skeleton_attack_1.png",
+		image: "arquivos/assets/skeleton_warrior/attack_1_right.png",
 		frames: 5,
 		hold: 6
 	},
 	{
 		name: "attack_1_left",
-		image: "arquivos/assets/enemys/skeleton_attack_1_left.png",
+		image: "arquivos/assets/skeleton_warrior/attack_1_left.png",
 		frames: 5,
 		hold: 6
 	},
 	{
 		name: "attack_2_right",
-		image: "arquivos/assets/enemys/skeleton_attack_2.png",
+		image: "arquivos/assets/skeleton_warrior/attack_2_right.png",
 		frames: 6
 	},
 	{
 		name: "attack_2_left",
-		image: "arquivos/assets/enemys/skeleton_attack_2_left.png",
+		image: "arquivos/assets/skeleton_warrior/attack_2_left.png",
 		frames: 6
 	},
 	{
 		name: "attack_3_right",
-		image: "arquivos/assets/enemys/skeleton_attack_3.png",
+		image: "arquivos/assets/skeleton_warrior/attack_3_right.png",
 		frames: 4
 	},
 	{
 		name: "attack_3_left",
-		image: "arquivos/assets/enemys/skeleton_attack_3_left.png",
+		image: "arquivos/assets/skeleton_warrior/attack_3_left.png",
 		frames: 4
 	},
 	{
 		name: "take_hit_right",
-		image: "arquivos/assets/enemys/skeleton_hit.png",
+		image: "arquivos/assets/skeleton_warrior/hit_right.png",
 		frames: 2
 	},
 	{
 		name: "take_hit_left",
-		image: "arquivos/assets/enemys/skeleton_hit_left.png",
+		image: "arquivos/assets/skeleton_warrior/hit_left.png",
 		frames: 2
 	},
 	{
 		name: "dead_right",
-		image: "arquivos/assets/enemys/skeleton_dead.png",
+		image: "arquivos/assets/skeleton_warrior/dead_right.png",
 		frames: 4,
 		hold: 6
 	},
 	{
 		name: "dead_left",
-		image: "arquivos/assets/enemys/skeleton_dead_left.png",
+		image: "arquivos/assets/skeleton_warrior/dead_left.png",
 		frames: 4,
 		hold: 6
 	}
 ]
 
-spriteConverter(enemy_sprites)
+spriteConverter(skeleton_warrior_sprites)
 spriteConverter(player_sprites)
 spriteConverter(itens_sprites.enemy_soul.sprites)
 spriteConverter(itens_sprites.life.sprites)
@@ -891,7 +891,7 @@ function init(){
 
 	if(developerMode){
 		const enemy = new Enemy({color: "red", health: 100, position: {x: 700, y: 400}})
-		enemy.setSprites(enemy_sprites)
+		enemy.setSprites(skeleton_warrior_sprites)
 		enemys.push(enemy)
 	}		
 }
