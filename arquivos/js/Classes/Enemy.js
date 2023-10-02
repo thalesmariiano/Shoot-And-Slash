@@ -198,31 +198,6 @@ class Enemy extends Entity {
 		}	
 	}
 
-	// chasePlayer(){
-	// 	const view_player_in = detectInArea(this, player, 500)
-
-	// 	if(view_player_in.left && !this.isAttacking && !player.isDead){
-	// 		// this.velocity.x = -this.speed
-	// 		this.direction = "left"
-	// 		this.isChasingPlayer = true
-	// 	}else if(view_player_in.right && !this.isAttacking && !player.isDead){
-	// 		// this.velocity.x = this.speed
-	// 		this.direction = "right"
-	// 		this.isChasingPlayer = true
-	// 	}else{
-	// 		this.velocity.x = 0
-	// 		this.isChasingPlayer = false
-	// 	}	
-
-	// 	if(developerMode){
-	// 		if(this.direction == "left"){
-	// 			buffer.fillRect(this.position.x - 500 + this.width, this.position.y + 30, 500, 10)
-	// 		}else if(this.direction == "right"){
-	// 			buffer.fillRect(this.position.x, this.position.y + 30, 500, 10)
-	// 		}
-	// 	}		
-	// }
-
 	attack(animation, dmg){
 		if(this.currentFrames == 4 && this.sprInfo.name == animation){
 			const { side } = collide(this.sword, player)
@@ -235,73 +210,12 @@ class Enemy extends Entity {
 		}
 	}
 
-	// swordAttack(){
-	// 	const attack_distance = detectInArea(this, player, 100)
-	// 	const distance_to_fallback = detectInArea(this, player, 80)
-
-	// 	if(distance_to_fallback.left && !player.isDead && !this.isDead){
-	// 		this.position.x += this.speed
-	// 	}else if(distance_to_fallback.right && !player.isDead && !this.isDead){
-	// 		this.position.x -= this.speed
-	// 	}
-
-	// 	if(attack_distance.left && !player.isDead && !this.isDead){
-	// 		this.velocity.x = 0
-	// 		this.isChasingPlayer = false
-
-	// 		this.sword.width = 25
-	// 		this.sword.height = 65	
-	// 		this.sword.position.y = this.position.y - 20
-	// 		this.sword.position.x = this.position.x - 73
-	// 		this.direction = "left"
-	// 		this.isAttacking = true
-	// 	}else if(attack_distance.right && !player.isDead && !this.isDead){
-	// 		this.velocity.x = 0
-	// 		this.isChasingPlayer = false
-
-	// 		this.sword.width = 25
-	// 		this.sword.height = 65	
-	// 		this.sword.position.x = this.position.x + 117
-	// 		this.sword.position.y = this.position.y - 20
-	// 		this.direction = "right"
-	// 		this.isAttacking = true
-	// 	}else{
-	// 		this.isAttacking = false
-	// 	}
-
-	// 	this.attack(`attack_${this.attackSprite}_${this.direction}`, 2)
-	// }
-
-	// chaseAttack(){
-	// 	const attack_run_distance = detectInArea(this, player, 200)
-
-	// 	if(attack_run_distance.left && !player.isDead && !this.isDead){
-	// 		this.sword.width = 50
-	// 		this.sword.height = 25
-	// 		this.sword.position.x = this.position.x - 80
-	// 		this.sword.position.y = this.position.y + 45
-	// 		this.isRunningAttacking = true
-	// 	}else if(attack_run_distance.right && !player.isDead && !this.isDead){
-	// 		this.sword.width = 50
-	// 		this.sword.height = 25
-	// 		this.sword.position.x = this.position.x + 100
-	// 		this.sword.position.y = this.position.y + 45
-	// 		this.isRunningAttacking = true
-	// 	}else{
-	// 		this.isRunningAttacking = false
-	// 	}
-
-	// 	this.attack(`attack_run_${this.direction}`, 1.5)
-	// }
-
 	update(){
 		// this.draw()
 		if(!this.stopAnimation) this.animation()
 
 		if(!this.receiveDamage){
-			// this.chasePlayer()
-			// this.swordAttack()
-			// this.chaseAttack()
+			
 		}
 		this.detectPlayer()
 		
