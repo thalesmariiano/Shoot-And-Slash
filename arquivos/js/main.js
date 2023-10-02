@@ -390,16 +390,28 @@ const skeleton_spearman_sprites = [
 		frames: 3
 	},
 	{
+		name: "fall_right",
+		image: "arquivos/assets/skeleton_spearman/fall_right.png",
+		frames: 6,
+		hold: 9
+	},
+	{
+		name: "fall_left",
+		image: "arquivos/assets/skeleton_spearman/fall_left.png",
+		frames: 6,
+		hold: 9
+	},
+	{
 		name: "dead_right",
 		image: "arquivos/assets/skeleton_spearman/dead_right.png",
 		frames: 5,
-		hold: 6
+		hold: 9
 	},
 	{
 		name: "dead_left",
 		image: "arquivos/assets/skeleton_spearman/dead_left.png",
 		frames: 5,
-		hold: 6
+		hold: 9
 	}
 ]
 
