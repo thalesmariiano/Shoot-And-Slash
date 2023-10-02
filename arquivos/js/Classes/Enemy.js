@@ -81,12 +81,26 @@ class Enemy extends Entity {
 
 	runningAtack(direction){
 		if(direction == 'left'){
+			// sword config for running Attack
+			this.sword.width = 50
+			this.sword.height = 25
+			this.sword.position.x = this.position.x - 80
+			this.sword.position.y = this.position.y + 45
+
 			this.isRunningAttacking = true
 		}else if(direction == 'right'){
+			// sword config for running Attack
+			this.sword.width = 50
+			this.sword.height = 25
+			this.sword.position.x = this.position.x + 100
+			this.sword.position.y = this.position.y + 45
+
 			this.isRunningAttacking = true
 		}else{
 			this.isRunningAttacking = false
 		}
+
+		this.attack(`attack_run_${this.direction}`, 1.5)
 	}
 
 	closeAttack(playerDirection){
