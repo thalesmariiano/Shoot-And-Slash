@@ -4,8 +4,7 @@ class Enemy extends Entity {
 		super({color, position})
 		
 		this.speed = 3.5
-		this.isChasingPlayer = false
-		this.isRunningAttacking = false
+		this.isChargeAttack = false
 		this.health = health
 		this.offest = {
 			x: 90,
@@ -23,6 +22,12 @@ class Enemy extends Entity {
 		this.entitySizeX = 240
 		this.entitySizeY = 240
 		this.entityType = "Enemy"
+
+		this.farDist = 500
+		this.chargeDist = 200
+		this.closeDist = 100
+		this.tooCloseDistX = 80
+		this.tooCloseDistY = 200
 	}
 
 	onAnimationEnd(animation){
@@ -30,6 +35,10 @@ class Enemy extends Entity {
 			this.stopAnimation = true
 			this.dropItem()
 			setTimeout(() => this.visible = false, 3000)
+		}
+
+		if(animation.name == `run_attack_${this.direction}`){
+			this.isChargeAttack = false
 		}
 	}
 
@@ -68,42 +77,38 @@ class Enemy extends Entity {
 	chasePlayer(playerDirection){
 		if(playerDirection == 'left'){
 			this.direction = 'left'
-			this.isChasingPlayer = true
 			this.velocity.x = -this.speed
-			this.isRunning = false
+			this.isRunning = true
 		}else if(playerDirection == 'right'){
 			this.direction = 'right'
-			this.isChasingPlayer = true
 			this.velocity.x = this.speed
-			this.isRunning = false
+			this.isRunning = true
 		}else{
 			this.velocity.x = 0
-			this.isChasingPlayer = false
+			this.isRunning = false
 		}
 	}
 
-	runningAtack(direction){
+	chargeAttack(direction){
 		if(direction == 'left'){
 			// sword config for running Attack
 			this.sword.width = 50
 			this.sword.height = 25
 			this.sword.position.x = this.position.x - 80
 			this.sword.position.y = this.position.y + 45
-
-			this.isRunningAttacking = true
+			this.isChargeAttack = true
 		}else if(direction == 'right'){
 			// sword config for running Attack
 			this.sword.width = 50
 			this.sword.height = 25
 			this.sword.position.x = this.position.x + 100
 			this.sword.position.y = this.position.y + 45
-
-			this.isRunningAttacking = true
+			this.isChargeAttack = true
 		}else{
-			this.isRunningAttacking = false
+			this.isChargeAttack = false
 		}
 
-		this.attack(`run_attack_${this.direction}`, 1.5, 4)
+		this.attack(`run_attack_${this.direction}`, 7, 4)
 	}
 
 	closeAttack(playerDirection){
@@ -112,6 +117,7 @@ class Enemy extends Entity {
 			this.isAttacking = true
 			this.velocity.x = 0
 			this.isRunning = false
+			this.isChargeAttack = false
 
 			// sword config for close attack
 			this.sword.width = 25
@@ -123,6 +129,7 @@ class Enemy extends Entity {
 			this.isAttacking = true
 			this.velocity.x = 0
 			this.isRunning = false
+			this.isChargeAttack = false
 
 			// sword config for close attack
 			this.sword.width = 25
@@ -163,34 +170,26 @@ class Enemy extends Entity {
 	}
 
 	detectPlayer(){
-		const isFarAway = detectInArea(this, player, 500)
-		const chaseAttack = detectInArea(this, player, 200)
-		const isClose = detectInArea(this, player, 100)
-		const isTooClose = detectInArea(this, player, 80, 0, 200, 0, 0)
+		const isFarAway = detectInArea(this, player, this.farDist)
+		const closeToCharge = detectInArea(this, player, this.chargeDist)
+		const isClose = detectInArea(this, player, this.closeDist)
+		const isTooClose = detectInArea(this, player, this.tooCloseDistX, 0, this.tooCloseDistY, 0, 0)
 
 		// Detectar player longe
 		if(isFarAway.left && !isClose.left && !isTooClose.left && !isTooClose.bottom){
 			this.chasePlayer('left')
-
-			// Caso player esteja perto e correndo, ataque correndo
-			if(chaseAttack.left){
-				this.runningAtack('left')
-				buffer.fillStyle = 'blue'
-			}else{
-				this.runningAtack(' ')
-			}
 		}else if(isFarAway.right && !isClose.right && !isTooClose.right && !isTooClose.bottom){
 			this.chasePlayer('right')
-
-			// Caso player esteja perto e correndo, ataque correndo
-			if(chaseAttack.right){
-				this.runningAtack('right')
-				buffer.fillStyle = 'blue'
-			}else{
-				this.runningAtack(' ')
-			}
 		}else{
 			this.chasePlayer(' ')
+		}
+
+		if(closeToCharge.left && !player.isRunning){
+			this.chargeAttack('left')
+		}else if(closeToCharge.right && !player.isRunning){
+			this.chargeAttack('right')
+		}else{
+			this.chargeAttack(' ')
 		}
 
 		// Quando player estever perto, ataque
@@ -230,25 +229,20 @@ class Enemy extends Entity {
 			this.detectPlayer()
 		}else{
 			this.isAttacking = false
-			this.isRunningAttacking = false
+			this.isChargeAttack = false
 			this.isRunning = false
-			this.isChasingPlayer = false
 		}
 		
-		if(!this.isChasingPlayer && !this.isRunning && !this.isDead && !this.isAttacking && !this.receiveDamage){
+		if(!this.isChargeAttack && !this.isRunning && !this.isDead && !this.isAttacking && !this.receiveDamage){
 			this.switchSprite(`idle_${this.direction}`)
 		}
 
-		if(this.isChasingPlayer && !this.isDead && !this.isAttacking && !this.receiveDamage){
-			if(this.isRunningAttacking && player.isRunning){
-				this.switchSprite(`run_attack_${this.direction}`)
-			}else{
-				this.switchSprite(`run_${this.direction}`)
-			}
+		if(this.isRunning && !this.isChargeAttack && !this.isDead && !this.isAttacking && !this.receiveDamage){
+			this.switchSprite(`run_${this.direction}`)
 		}
 
-		if(this.isRunning && !this.isDead && !this.isAttacking){
-			this.switchSprite(`run_${this.direction}`)
+		if(this.isChargeAttack && !player.isRunning && !this.isAttacking){
+			this.switchSprite(`run_attack_${this.direction}`)
 		}
 
 		if(this.isAttacking && !this.isDead && !this.receiveDamage){
