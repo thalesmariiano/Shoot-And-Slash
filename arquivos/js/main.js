@@ -12,7 +12,7 @@ if(parseInt(getStorage("SaS-Save"))){
 
 $("#arcade-record").innerHTML = `Recorde: ${getStorage("SaS-Arcade")}`
 
-var developerMode = false
+var developerMode = true
 
 const canvas  = document.querySelector("canvas")
 const display = canvas.getContext("2d", {alpha: false})
@@ -978,8 +978,8 @@ function init(){
 	loop()
 
 	if(developerMode){
-		const enemy = new Enemy({color: "red", health: 100, position: {x: 700, y: 400}})
-		enemy.setSprites(skeleton_warrior_sprites)
+		const enemy = new SkeletonSpearman({color: "red", health: 100, position: {x: 700, y: 400}})
+		enemy.setSprites(skeleton_spearman_sprites)
 		enemys.push(enemy)
 	}		
 }
