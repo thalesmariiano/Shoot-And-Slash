@@ -75,8 +75,10 @@ class SkeletonSpearman extends Enemy {
 
 		if(animation.name == `attack_1_${this.direction}`){
 			this.attackSprite = 2
+			this.entityAttacked = false
 		}else if(animation.name == `attack_2_${this.direction}`){
 			this.attackSprite = 1
+			this.entityAttacked = false
 		}
 	}
 
@@ -106,6 +108,12 @@ class SkeletonSpearman extends Enemy {
 
 		if(this.isAttacking && !this.isDead && !this.receiveDamage){
 			this.switchSprite(`attack_${this.attackSprite}_${this.direction}`)
+		}
+
+		if(this.sprInfo.name == `run_attack_${this.direction}`){
+			if(this.currentFrames == 3){
+				this.entityAttacked = false
+			}
 		}
 
 		if(this.health <= 0 && !this.isDead){

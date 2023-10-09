@@ -37,6 +37,10 @@ class Enemy extends Entity {
 			setTimeout(() => this.visible = false, 3000)
 		}
 
+		if(animation.name == `attack_${this.attackSprite}_${this.direction}`){
+			this.entityAttacked = false			
+		}
+
 		if(animation.name == `run_attack_${this.direction}`){
 			this.isChargeAttack = false
 		}
@@ -57,6 +61,7 @@ class Enemy extends Entity {
 	}
 
 	takeHit(dmg, direction){
+		console.log('dano: ', dmg)
 		this.health += -dmg
 		this.receiveDamage = true
 		if(!this.isFalling && !this.isDead && this.receiveDamage){
@@ -160,7 +165,10 @@ class Enemy extends Entity {
 			const { side } = collide(this.sword, player)
 			const sword_collide = side.top || side.bottom || side.left || side.right
 
-			sword_collide ? player.takeHit(dmg) : player.receiveDamage = false
+			if(sword_collide && !this.entityAttacked){
+				this.entityAttacked = true
+				player.takeHit(dmg)
+			}
 
 			if(developerMode){
 				buffer.fillStyle = "red"
@@ -247,6 +255,12 @@ class Enemy extends Entity {
 
 		if(this.isAttacking && !this.isDead && !this.receiveDamage){
 			this.switchSprite(`attack_${this.attackSprite}_${this.direction}`)
+		}
+
+		if(this.sprInfo.name == `run_attack_${this.direction}`){
+			if(this.currentFrames == 5){
+				this.entityAttacked = false
+			}
 		}
 
 		if(this.health <= 0 && !this.isDead){

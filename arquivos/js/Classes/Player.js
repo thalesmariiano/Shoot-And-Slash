@@ -66,8 +66,13 @@ class Player extends Entity {
 					const { side } = collide(this.sword, enemy)
 					const sword_collide = side.top || side.bottom || side.left || side.right
 
-					sword_collide ? enemy.takeHit(this.attDamage) : enemy.receiveDamage = false
-					if(sword_collide) skeleton_hit_sound.play()
+					if(sword_collide && !this.entityAttacked){
+						this.entityAttacked = true
+						enemy.takeHit(this.attDamage)
+						skeleton_hit_sound.play()
+					}else{
+						enemy.receiveDamage = false
+					}
 				}
 			})
 
@@ -78,10 +83,13 @@ class Player extends Entity {
 
 			// ctx.fillStyle = "red"
 			// ctx.fillRect(this.sword.position.x, this.sword.position.y, this.sword.width, this.sword.height)
+		}else{
+			this.entityAttacked = false
 		}
 	}
 
 	takeHit(damage_taken){
+		console.log('Dano: ', damage_taken)
 		this.health -= damage_taken
 		this.receiveDamage = true
 		updateUI("healthbar", this.health)
