@@ -40,6 +40,7 @@ class Entity {
 		this.isShooting = false
 		this.isDead = false
 		this.receiveDamage = false
+		this.entityAttacked = false
 		//
 		this.health = 100
 		this.maxHealth = 100
