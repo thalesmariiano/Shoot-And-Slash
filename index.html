@@ -20,7 +20,7 @@
 			}
   		</style>
 
-  		<!-- <script src="https://cdn.tailwindcss.com"></script> -->
+  		<script src="https://cdn.tailwindcss.com"></script>
 
 		<title>Shoot And Slash - Jogo 2D estilo hack and slash</title>
 	</head>
@@ -144,36 +144,29 @@
 					</section>
 				</div> 
 				<section id="hud-screen" class="w-full h-full relative p-5 transition-all duration-500 hidden">
-					<div id="hud-container" class="w-full h-[70px] flex justify-start items-center p-[5px]">
-						<div id="weapon-icon-container" class="relative">
-							<div id="weapon-icon" class="w-16 h-16 border-4 border-black rounded-xl bg-neutral-500/75 flex justify-center items-center">
-								<img id="weapon-icon-img" class="-rotate-45" src="arquivos/assets/null.png">
+					<div id="hud-container" class="w-full flex flex-col justify-start items-start p-[5px]">
+						<div class="w-full flex justify-start items-start">
+							<div id="weapon-icon-container" class="relative">
+								<div id="weapon-icon" class="w-16 h-16 border-4 border-black rounded-xl bg-neutral-500/75 flex justify-center items-center">
+									<img id="weapon-icon-img" class="-rotate-45" src="arquivos/assets/null.png">
+								</div>
 							</div>
-							<p id="weapon-status" class="absolute top-15 w-full text-center font-bold hidden">
-								<span id="bullets-amount">0</span>/<span id="munition-amount">0</span>
-							</p>
+							<div>
+								<div id="health-bar" class="w-[100px] h-[30px] bg-neutral-500 border-4 border-black rounded -translate-x-1 translate-y-1 overflow-hidden transition-all">
+									<div id="health-amount" class="w-full h-full bg-red-700 transition-all duration-500"></div>
+								</div>
+							</div>
 						</div>
-						<div class="flex flex-col justify-start h-full pl-[5px]">
-							<div id="health-container" class="w-[100px] h-[21px] mt-[5px] bg-[#999] border-y-[1.5px] border-black relative">
-								<div id="health-amount" class="w-full h-full bg-red-700 transition-all duration-200"></div>
-								<div id="health-bar" class="flex h-full absolute top-0 left-0">
-									<div class="health-points"></div>
-									<div class="health-points"></div>
-									<div class="health-points"></div>
-									<div class="health-points"></div>
-									<div class="health-points"></div>
-									<div class="health-points"></div>
-									<div class="health-points"></div>
-									<div class="health-points"></div>
-									<div class="health-points"></div>
-									<div class="health-points"></div>
-								</div>
+						<div id="inventory-status" class="pt-[5px]">
+							<div id="weapon-status-container" class="flex items-center hidden">
+								<img class="w-6 drop-shadow" src="arquivos/assets/icons/carregador_ak_icon.png">
+								<p id="weapon-status" class="w-full text-shadow font-bold">
+									<span id="bullets-amount">0</span>/<span id="munition-amount">0</span>
+								</p>
 							</div>
-							<div id="inventory-status" class="pt-[5px]">
-								<div class="flex items-center">
-									<img class="w-6 h-6 drop-shadow" src="arquivos/assets/icons/soul_icon.png">
-									<p id="souls-amount" class="text-shadow font-bold mt-1">0</p>
-								</div>
+							<div class="flex items-center">
+								<img class="w-6 drop-shadow" src="arquivos/assets/icons/soul_icon.png">
+								<p id="souls-amount" class="text-shadow font-bold mt-1">0</p>
 							</div>
 						</div>
 					</div>
