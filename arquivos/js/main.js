@@ -509,6 +509,14 @@ const skill_list = [
 	{name: 'loot', price: 10, level: 1, max_level: 7}
 ]
 
+const skill_list_default = [
+	{name: 'health', price: 5, level: 1, max_level: 20},
+	{name: 'speed', price: 5, level: 1, max_level: 5},
+	{name: 'strength', price: 5, level: 1 ,max_level: 6},
+	{name: 'attackspeed', price: 10, level: 1, max_level: 2},
+	{name: 'loot', price: 10, level: 1, max_level: 7}
+]
+
 function buySkill(event, button){
 	const skill_name = button.dataset.skill
 	const skill = skill_list.find(s => s.name == skill_name)
@@ -516,41 +524,33 @@ function buySkill(event, button){
 	const level_text = button.children[0].children[1]
 	const price_text = button.nextElementSibling
 
-	const isMaxLevel = skill.level >= skill.max_level 
+	const isMaxLevel = () => skill.level >= skill.max_level 
 	const cantBuySKill = player.souls < skill.price
 
-	if(isMaxLevel){
-		level_text.innerHTML = "Max"
-		level_text.style.color = "#f74a4a"
-
-		setTimeout(() => {
-			level_text.style.color = ""
-			level_text.innerHTML = `Lv ${skill.level}`		
-		}, 1000)
-		return
-	}
+	if(isMaxLevel()) return
 
 	if(cantBuySKill){
-		price_text.classList.add("animate__animated", "animate__shakeX")
-		price_text.style.background = "#f74a4a"
-		button.style.border = "2px solid #f74a4a"
-
-		price_text.addEventListener("animationend", () => {
-			price_text.classList.remove("animate__animated", "animate__shakeX")
+		animateUI(price_text, 'animate__shakeX', () => {
 			price_text.style.background = ""
 			button.style.border = ""
 		})
+		price_text.style.background = "#f74a4a"
+		button.style.border = "2px solid #f74a4a"
 		return
 	}
 
-	price_text.classList.add("animate__animated", "animate__jello")
 	price_text.style.background = "green"
 	button.style.border = "2px solid green"
-
-	price_text.addEventListener("animationend", () => {
-		price_text.classList.remove("animate__animated", "animate__jello")
+	animateUI(price_text, 'animate__jello', () => {
 		price_text.style.background = ""
 		button.style.border = ""
+
+		if(isMaxLevel()){
+			level_text.innerHTML = "Max"
+			level_text.style.color = "#f74a4a"
+			price_text.style.opacity = ".5"
+			button.style.opacity = ".5"
+		}		
 	})
 
 	skill.level++
@@ -1043,11 +1043,20 @@ function restart(){
 		}
 	})
 
-	skillsButton.forEach(button => {
-		button.dataset.price = 5
-		button.children[0].children[1].innerHTML = "Lv 1"
-		button.dataset.level = 1
-		button.nextElementSibling.innerHTML = "5 Almas"
+	for(i = 0; i < skill_list.length; i++){
+		skill_list[i].price = skill_list_default[i].price
+		skill_list[i].level = skill_list_default[i].level
+	}
+
+	skillsButton.forEach((button, index) => {
+		const level_text = button.children[0].children[1]
+		const price_text = button.nextElementSibling
+
+		level_text.innerHTML = 'Lv 1'
+		level_text.style.color = ""
+		price_text.style.opacity = "1"
+		price_text.innerHTML = `${skill_list[index].price} Almas`
+		button.style.opacity = "1"
 	})
 
 	health_bar.style.width = 100 + "px"
@@ -1088,11 +1097,20 @@ function destroy(){
 		}
 	})
 
-	skillsButton.forEach(button => {
-		button.dataset.price = 5
-		button.dataset.level = 1
-		button.children[0].children[1].innerHTML = "Lv 1"
-		button.nextElementSibling.innerHTML = "5 Almas"
+	for(i = 0; i < skill_list.length; i++){
+		skill_list[i].price = skill_list_default[i].price
+		skill_list[i].level = skill_list_default[i].level
+	}
+
+	skillsButton.forEach((button, index) => {
+		const level_text = button.children[0].children[1]
+		const price_text = button.nextElementSibling
+
+		level_text.innerHTML = 'Lv 1'
+		level_text.style.color = ""
+		price_text.style.opacity = "1"
+		price_text.innerHTML = `${skill_list[index].price} Almas`
+		button.style.opacity = "1"
 	})
 
 	health_bar.style.width = 100 + "px"
