@@ -55,7 +55,7 @@ class Player extends Entity {
 	receiveLife(received_life){
 		const life_lack = Math.abs(this.health - this.maxHealth)
 		this.health += life_lack < received_life ? life_lack : received_life
-		updateUI("healthbar", this.health)
+		hud('health-amount').updateAmount(this.health)
 	}
 
 	swordAttack(){
@@ -91,7 +91,7 @@ class Player extends Entity {
 	takeHit(damage_taken){
 		this.health -= damage_taken
 		this.receiveDamage = true
-		updateUI("healthbar", this.health)
+		hud('health-amount').updateAmount(this.health)
 	}
 
 	onAnimationEnd(animation){

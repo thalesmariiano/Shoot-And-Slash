@@ -627,7 +627,7 @@ function buyItens(item){
 		player.inventory[0].item = ak47
 		ak47.bulletsAmount = 30
 		ak47.munition = 60
-		updateUI("icon", ak47.name)
+		hud('weapon-icon-img').updateIcon(ak47.sprite.src)
 		weapon_status_container.classList.remove("hidden")
 		bullets_amount.innerHTML = ak47.bulletsAmount
 		munition_amount.innerHTML = ak47.munition
@@ -761,7 +761,7 @@ function selectPlayerSlot(id){
 
 		weapon_icon.classList.add("border-neutral-300")
 		weapon_icon.classList.remove("border-black")
-		updateUI("icon", inventory.item.name)
+		hud('weapon-icon-img').updateIcon(inventory.item.sprite.src)
 	}else{
 		const slot = player.getHoldingItem()
 		if(slot){
@@ -956,7 +956,7 @@ function render(){
 						weapon_status_container.classList.add("hidden")
 						weapon_icon.classList.remove("border-neutral-300")
 						weapon_icon.classList.add("border-black")
-						updateUI("icon", "")
+						hud('weapon-icon-img').updateIcon('')
 					}
 				}
 
@@ -1054,7 +1054,7 @@ function restart(){
 	health_amount.style.width = 100 + "px"
 
 	removeUI("waves-timer-container", "hidden")
-	updateUI("icon", "")
+	hud('weapon-icon-img').updateIcon('')
 
 	enemysKilled = 0
 	bullets_amount.innerHTML = 0
@@ -1099,7 +1099,7 @@ function destroy(){
 	health_amount.style.width = 100 + "px"
 
 	removeUI("waves-timer-container", "hidden")
-	updateUI("icon", "")
+	hud('weapon-icon-img').updateIcon('')
 
 	enemysKilled = 0
 	bullets_amount.innerHTML = 0
