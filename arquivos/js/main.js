@@ -499,61 +499,73 @@ const playebleMapBlocks = []
 generateTerrain(first_MapTiles, playebleMapBlocks)
 
 skillsButton.forEach(button => {
-	button.addEventListener("click", () => {
-		const skillType     = button.dataset.skill
-		const skillPrice    = parseInt(button.dataset.price)
-		const skillLevel    = parseInt(button.dataset.level)
-		const skillLevelMax = parseInt(button.dataset.max)
+	button.addEventListener("click", event => buySkill(event, button))
+})
 
-		const level_text = button.children[0].children[1]
-		const price_text = button.nextElementSibling
+const skills = [
+	{name: 'health', price: 5, level: 1, max_level: 20},
+	{name: 'speed', price: 5, level: 1, max_level: 5},
+	{name: 'strength', price: 5, level: 1 ,max_level: 20},
+	{name: 'attackspeed', price: 10, level: 1, max_level: 2},
+	{name: 'loot', price: 10, level: 1, max_level: 7}
+]
 
-		const isMaxLevel = skillLevel >= skillLevelMax 
+function buySkill(event, button){
+	const skill_name = button.dataset.skill
+	const skill = skills.find(s => s.name == skill_name)
 
-		if(isMaxLevel){
-			level_text.innerHTML = "Max"
-			level_text.style.color = "#f74a4a"
+	// const skillPrice    = parseInt(button.dataset.price)
+	// const skillLevel    = parseInt(button.dataset.level)
+	// const skillLevelMax = parseInt(button.dataset.max)
 
-			setTimeout(() => {
-				level_text.style.color = ""
-				level_text.innerHTML = `Lv ${button.dataset.level}`		
-			}, 1000)
-			return
-		}
+	const level_text = button.children[0].children[1]
+	const price_text = button.nextElementSibling
 
-		if(player.souls < skillPrice){
-			price_text.classList.add("animate__animated", "animate__shakeX")
-			price_text.style.background = "#f74a4a"
-			button.style.border = "2px solid #f74a4a"
+	const isMaxLevel = skill.level >= skill.max_level 
 
-			price_text.addEventListener("animationend", () => {
-				price_text.classList.remove("animate__animated", "animate__shakeX")
-				price_text.style.background = ""
-				button.style.border = ""
-			})
-			return
-		}
-
-		price_text.style.background = "green"
-		button.style.border = "2px solid green"
+	if(isMaxLevel){
+		level_text.innerHTML = "Max"
+		level_text.style.color = "#f74a4a"
 
 		setTimeout(() => {
+			level_text.style.color = ""
+			level_text.innerHTML = `Lv ${skill.level}`		
+		}, 1000)
+		return
+	}
+
+	if(player.souls < skill.price){
+		price_text.classList.add("animate__animated", "animate__shakeX")
+		price_text.style.background = "#f74a4a"
+		button.style.border = "2px solid #f74a4a"
+
+		price_text.addEventListener("animationend", () => {
+			price_text.classList.remove("animate__animated", "animate__shakeX")
 			price_text.style.background = ""
 			button.style.border = ""
-		}, 700)
+		})
+		return
+	}
 
-		player.souls -= skillPrice
-		souls_amount.innerHTML = player.souls
+	price_text.style.background = "green"
+	button.style.border = "2px solid green"
 
-		button.dataset.price = skillPrice + 5
-		price_text.innerHTML = `${button.dataset.price} Almas`
+	setTimeout(() => {
+		price_text.style.background = ""
+		button.style.border = ""
+	}, 700)
 
-		button.dataset.level++
-		level_text.innerHTML = `Lv ${button.dataset.level}`
+	player.souls -= skill.price
+	souls_amount.innerHTML = player.souls
 
-		updateSkill(skillType)
-	})
-})
+	skill.price = skill.price + 5
+	price_text.innerHTML = `${skill.price} Almas`
+
+	skill.level++
+	level_text.innerHTML = `Lv ${skill.level}`
+
+	updateSkill(skill.name)
+}
 
 function updateSkill(skill){
 	switch(skill){
