@@ -26,7 +26,7 @@ class Player extends Entity {
 			x: 170,
 			y: 143
 		}
-		this.attDamage = 5
+		this.attDamage = 15
 		this.attackSprite = 1
 		this.sword = {
 			width: 100,
@@ -89,7 +89,6 @@ class Player extends Entity {
 	}
 
 	takeHit(damage_taken){
-		console.log('Dano: ', damage_taken)
 		this.health -= damage_taken
 		this.receiveDamage = true
 		updateUI("healthbar", this.health)

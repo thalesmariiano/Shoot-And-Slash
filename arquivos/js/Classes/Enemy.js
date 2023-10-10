@@ -61,7 +61,6 @@ class Enemy extends Entity {
 	}
 
 	takeHit(dmg, direction){
-		console.log('dano: ', dmg)
 		this.health += -dmg
 		this.receiveDamage = true
 		if(!this.isFalling && !this.isDead && this.receiveDamage){
@@ -113,7 +112,7 @@ class Enemy extends Entity {
 			this.isChargeAttack = false
 		}
 
-		this.attack(`run_attack_${this.direction}`, 7, 4)
+		this.attack(`run_attack_${this.direction}`, 30, 4)
 	}
 
 	closeAttack(playerDirection){
@@ -145,7 +144,7 @@ class Enemy extends Entity {
 			this.isAttacking = false
 		}
 
-		this.attack(`attack_${this.attackSprite}_${this.direction}`, 2, 4)
+		this.attack(`attack_${this.attackSprite}_${this.direction}`, 5, 4)
 	}
 
 	fallback(playerDirection){

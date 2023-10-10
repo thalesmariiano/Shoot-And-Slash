@@ -33,7 +33,7 @@ class SkeletonSpearman extends Enemy {
 			this.isAttacking = false
 		}
 
-		this.attack(`attack_${this.attackSprite}_${this.direction}`, 2, 3)
+		this.attack(`attack_${this.attackSprite}_${this.direction}`, 5, 3)
 	}
 
 	chargeAttack(direction){
@@ -55,7 +55,7 @@ class SkeletonSpearman extends Enemy {
 			this.isChargeAttack = false
 		}
 
-		this.attack(`run_attack_${this.direction}`, 10, 2)
+		this.attack(`run_attack_${this.direction}`, 35, 2)
 	}
 
 	onAnimationEnd(animation){
