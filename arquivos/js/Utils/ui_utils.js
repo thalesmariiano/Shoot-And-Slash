@@ -36,54 +36,20 @@ function removeUI(id, animation){
 	}
 }
 
-const skills_screen = document.getElementById("skills-screen")
+function hud(id){
+	const element = document.getElementById(id)
 
-function updateUI(ui, value) {
-	switch(ui){
-		case "healthbar":
-			health_amount.style.width = `${value}px`
-			break
-		case "waves":
-			// const wavesContainer = document.getElementById("waves-container")
-			// wavesContainer.classList.remove("hidden")
+	function updateAmount(value){
+		element.style.width = `${value < 0 ? 0 : value}px`
+	}
 
-			const wavesText = document.getElementById("waves-text")
-			wavesText.innerHTML = `Onda ${gameWave}`
+	function updateIcon(imgSrc){
+		const img = imgSrc ? imgSrc : "arquivos/assets/null.png"
+		element.src = img
+	}
 
-			// if(value){
-			// 	showUI("waves-container", "animate__fadeIn")
-			// }else{
-			// 	removeUI("waves-container", "animate__fadeOut")
-			// }
-			break
-		case "skills":
-			// if(value){
-			// 	showUI("skills-screen", "animate__fadeIn")
-			// }else{
-			// 	removeUI("skills-screen", "animate__fadeOut")
-			// }
-			break
-		case "timer":
-			// const wavesTimerContainer = document.getElementById("waves-timer-container")
-			// wavesTimerContainer.classList.remove("hidden")
-
-			// if(value){
-			// 	setTimeout(() => {
-			// 		wavesTimerContainer.classList.remove("opacity-0")
-			// 		wavesTimerContainer.classList.add("opacity-100")				
-			// 	}, 500)
-			// }else{
-			// 	wavesTimerContainer.classList.remove("opacity-100")
-			// 	wavesTimerContainer.classList.add("opacity-0")
-
-			// 	setTimeout(() => {
-			// 		wavesTimerContainer.classList.add("hidden")
-			// 	}, 1000)
-			// }	
-			break
-		case "icon":
-			const img = value ? "arquivos/assets/itens/ak47.png" : "arquivos/assets/null.png"
-			weapon_icon_img.src = img
-			break
+	return {
+		updateAmount,
+		updateIcon
 	}
 }
