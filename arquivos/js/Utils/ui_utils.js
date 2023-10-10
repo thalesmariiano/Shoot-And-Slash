@@ -1,4 +1,16 @@
 
+function animateUI(element, animation, execute){
+	element.classList.add("animate__animated", animation)
+	element.addEventListener("animationend", animationEndListener)
+
+	function animationEndListener(){
+		element.classList.remove("animate__animated", animation)
+		element.removeEventListener("animationend", animationEndListener)
+
+		if(execute) execute()
+	}
+}
+
 function showUI(id, animation){
 	const ui = document.getElementById(id)
 
