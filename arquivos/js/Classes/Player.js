@@ -69,7 +69,6 @@ class Player extends Entity {
 					if(sword_collide && !this.entityAttacked){
 						this.entityAttacked = true
 						enemy.takeHit(this.attDamage)
-						skeleton_hit_sound.play()
 					}else{
 						enemy.receiveDamage = false
 					}
