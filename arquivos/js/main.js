@@ -504,7 +504,7 @@ skillsButton.forEach(button => {
 const skill_list = [
 	{name: 'health', price: 5, level: 1, max_level: 20},
 	{name: 'speed', price: 5, level: 1, max_level: 5},
-	{name: 'strength', price: 5, level: 1 ,max_level: 20},
+	{name: 'strength', price: 5, level: 1 ,max_level: 6},
 	{name: 'attackspeed', price: 10, level: 1, max_level: 2},
 	{name: 'loot', price: 10, level: 1, max_level: 7}
 ]
@@ -576,7 +576,7 @@ function updateSkill(skill){
 			health_amount.style.width = player.maxHealth + "px"
 			break
 		case "strength":
-			player.attDamage += 1
+			player.attDamage += 5
 			break
 		case "attackspeed":
 			player.attackSpeedMax = true
