@@ -26,6 +26,7 @@ const hud_screen      = document.getElementById("hud-screen")
 const weapon_icon     = document.getElementById("weapon-icon")
 const weapon_icon_img = document.getElementById("weapon-icon-img")
 const weapon_status   = document.getElementById("weapon-status")
+const weapon_status_container = document.getElementById("weapon-status-container")
 const munition_amount = document.getElementById("munition-amount")
 const bullets_amount  = document.getElementById("bullets-amount")
 
@@ -34,10 +35,8 @@ const souls_amount    = document.getElementById("souls-amount")
 const close_guide    = document.getElementById("close-guide")
 const guide_checkbox = document.querySelector("input[type=checkbox][name=dontshowguide]")
 
-const health_container = document.getElementById("health-container")
-const health_bar       = document.getElementById("health-bar")
+const health_bar = document.getElementById("health-bar")
 const health_amount    = document.getElementById("health-amount")
-const points           = document.getElementsByClassName("health-points")
 
 const waves_count        = document.getElementById("waves-count")
 const kills_count        = document.getElementById("kills-count")
@@ -573,8 +572,7 @@ function updateSkill(skill){
 		case "health":
 			player.maxHealth += 10
 			player.receiveLife(1000)
-			health_bar.innerHTML += "<div class='health-points'></div>"
-			health_container.style.width = player.maxHealth + "px"
+			health_bar.style.width = player.maxHealth + "px"
 			health_amount.style.width = player.maxHealth + "px"
 			break
 		case "strength":
@@ -630,7 +628,7 @@ function buyItens(item){
 		ak47.bulletsAmount = 30
 		ak47.munition = 60
 		updateUI("icon", ak47.name)
-		weapon_status.classList.remove("hidden")
+		weapon_status_container.classList.remove("hidden")
 		bullets_amount.innerHTML = ak47.bulletsAmount
 		munition_amount.innerHTML = ak47.munition
 		break
@@ -955,7 +953,7 @@ function render(){
 					if(!item.munition){
 						player.inventory[0].item = 0
 						player.inventory[0].isHolding = false
-						weapon_status.classList.add("hidden")
+						weapon_status_container.classList.add("hidden")
 						weapon_icon.classList.remove("border-neutral-300")
 						weapon_icon.classList.add("border-black")
 						updateUI("icon", "")
@@ -1052,18 +1050,8 @@ function restart(){
 		button.nextElementSibling.innerHTML = "5 Almas"
 	})
 
-	health_container.style.width = 100 + "px"
+	health_bar.style.width = 100 + "px"
 	health_amount.style.width = 100 + "px"
-
-	if(points.length > 10){
-		while(i < 10){
-			i++
-
-			if(points.length > 10){
-				points[i].remove()				
-			}
-		}
-	}
 
 	removeUI("waves-timer-container", "hidden")
 	updateUI("icon", "")
@@ -1072,7 +1060,7 @@ function restart(){
 	bullets_amount.innerHTML = 0
 	munition_amount.innerHTML = 0
 	souls_amount.innerHTML = 0
-	weapon_status.classList.add("hidden")
+	weapon_status_container.classList.add("hidden")
 
 	saveArcadeData()
 
@@ -1107,18 +1095,8 @@ function destroy(){
 		button.nextElementSibling.innerHTML = "5 Almas"
 	})
 
-	health_container.style.width = 100 + "px"
+	health_bar.style.width = 100 + "px"
 	health_amount.style.width = 100 + "px"
-
-	if(points.length > 10){
-		while(i < 10){
-			i++
-
-			if(points.length > 10){
-				points[i].remove()				
-			}
-		}
-	}
 
 	removeUI("waves-timer-container", "hidden")
 	updateUI("icon", "")
@@ -1127,7 +1105,7 @@ function destroy(){
 	bullets_amount.innerHTML = 0
 	munition_amount.innerHTML = 0
 	souls_amount.innerHTML = 0
-	weapon_status.classList.add("hidden")
+	weapon_status_container.classList.add("hidden")
 
 	saveArcadeData()
 
