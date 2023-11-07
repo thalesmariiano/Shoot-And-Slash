@@ -239,6 +239,7 @@ class Enemy extends Entity {
 			this.isAttacking = false
 			this.isChargeAttack = false
 			this.isRunning = false
+			this.velocity.x = 0
 		}
 		
 		if(!this.isChargeAttack && !this.isRunning && !this.isDead && !this.isAttacking && !this.receiveDamage){
