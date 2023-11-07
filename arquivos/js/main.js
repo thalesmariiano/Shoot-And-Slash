@@ -501,7 +501,7 @@ skillsButton.forEach(button => {
 	button.addEventListener("click", event => buySkill(event, button))
 })
 
-const skill_list = [
+const skills_list = [
 	{name: 'health', price: 5, level: 1, max_level: 20},
 	{name: 'speed', price: 5, level: 1, max_level: 5},
 	{name: 'strength', price: 5, level: 1 ,max_level: 6},
@@ -509,17 +509,12 @@ const skill_list = [
 	{name: 'loot', price: 10, level: 1, max_level: 7}
 ]
 
-const skill_list_default = [
-	{name: 'health', price: 5, level: 1, max_level: 20},
-	{name: 'speed', price: 5, level: 1, max_level: 5},
-	{name: 'strength', price: 5, level: 1 ,max_level: 6},
-	{name: 'attackspeed', price: 10, level: 1, max_level: 2},
-	{name: 'loot', price: 10, level: 1, max_level: 7}
-]
+// Skill List clone with default values
+const skills_list_default = JSON.parse(JSON.stringify(skills_list))
 
 function buySkill(event, button){
 	const skill_name = button.dataset.skill
-	const skill = skill_list.find(s => s.name == skill_name)
+	const skill = skills_list.find(s => s.name == skill_name)
 
 	const level_text = button.children[0].children[1]
 	const price_text = button.nextElementSibling
@@ -1043,9 +1038,9 @@ function restart(){
 		}
 	})
 
-	for(i = 0; i < skill_list.length; i++){
-		skill_list[i].price = skill_list_default[i].price
-		skill_list[i].level = skill_list_default[i].level
+	for(i = 0; i < skills_list.length; i++){
+		skills_list[i].price = skills_list_default[i].price
+		skills_list[i].level = skills_list_default[i].level
 	}
 
 	skillsButton.forEach((button, index) => {
@@ -1055,7 +1050,7 @@ function restart(){
 		level_text.innerHTML = 'Lv 1'
 		level_text.style.color = ""
 		price_text.style.opacity = "1"
-		price_text.innerHTML = `${skill_list[index].price} Almas`
+		price_text.innerHTML = `${skills_list[index].price} Almas`
 		button.style.opacity = "1"
 	})
 
@@ -1097,9 +1092,9 @@ function destroy(){
 		}
 	})
 
-	for(i = 0; i < skill_list.length; i++){
-		skill_list[i].price = skill_list_default[i].price
-		skill_list[i].level = skill_list_default[i].level
+	for(i = 0; i < skills_list.length; i++){
+		skills_list[i].price = skills_list_default[i].price
+		skills_list[i].level = skills_list_default[i].level
 	}
 
 	skillsButton.forEach((button, index) => {
@@ -1109,7 +1104,7 @@ function destroy(){
 		level_text.innerHTML = 'Lv 1'
 		level_text.style.color = ""
 		price_text.style.opacity = "1"
-		price_text.innerHTML = `${skill_list[index].price} Almas`
+		price_text.innerHTML = `${skills_list[index].price} Almas`
 		button.style.opacity = "1"
 	})
 
