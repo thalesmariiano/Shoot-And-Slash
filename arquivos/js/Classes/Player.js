@@ -61,7 +61,7 @@ class Player extends Entity {
 	swordAttack(){
 		if(this.currentFrames == 4 && this.sprInfo.name == `attack_${this.attackSprite}_${this.direction}`){
 
-			enemys.forEach(enemy => {
+			enemys_near_player.forEach(enemy => {
 				if(!enemy.isDead){
 					const { side } = collide(this.sword, enemy)
 					const sword_collide = side.top || side.bottom || side.left || side.right

@@ -18,6 +18,7 @@ class EnemyWave {
 		this.enemysCount = 3
 		this.enemyHealth = 100
 		enemys.length = 0
+		enemys_near_player.length = 0
 	}
 
 	init(){

@@ -864,6 +864,8 @@ function update(){
 	camera.update()
 }
 
+const enemys_near_player = []
+
 function render(){
 	display.save()
 	display.clearRect(0, 0, canvas.width, canvas.height)
@@ -895,6 +897,17 @@ function render(){
 		if(!enemy.visible){
 			enemys.splice(index, 1)
 			return
+		}
+
+		const is_near = detectInArea(player, enemy, 250)
+		if(is_near.left || is_near.right){
+			if(!enemys_near_player.includes(enemy)){
+				enemys_near_player.push(enemy)
+			}
+		}else{
+			if(enemys_near_player.includes(enemy)){
+				enemys_near_player.splice(index, 1)	
+			}
 		}
 
 		const {top, bottom, left, right} = detectInArea(camera_position, enemy, 300, (canvas.height/2), 300, (canvas.width/2) + 50, (canvas.width/2))
@@ -1024,7 +1037,6 @@ function pause(){
 
 function restart(){
 	arcadeWave.restart()
-	enemys.length = 0
 
 	player.inventory.forEach(slot => {
 		slot.item = null
