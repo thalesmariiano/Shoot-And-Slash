@@ -72,14 +72,11 @@ function keyDownHandler(e){
 		case "Escape":
 			pause()
 			break
-		case "Digit1":
-			selectPlayerSlot(1)
+		case "Digit1":	
 			break
-		case "Digit2":
-			selectPlayerSlot(2)
+		case "Digit2":	
 			break
 		case "Digit3":
-			selectPlayerSlot(3)
 			break
 	}
 }

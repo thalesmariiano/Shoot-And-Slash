@@ -21,14 +21,7 @@ const cv     = document.createElement("canvas")
 const buffer = cv.getContext('2d', {alpha: false})
 
 const screens_container = document.querySelector("#screens-container")
-
 const hud_screen      = document.getElementById("hud-screen")
-const weapon_icon     = document.getElementById("weapon-icon")
-const weapon_icon_img = document.getElementById("weapon-icon-img")
-const weapon_status   = document.getElementById("weapon-status")
-const weapon_status_container = document.getElementById("weapon-status-container")
-const munition_amount = document.getElementById("munition-amount")
-const bullets_amount  = document.getElementById("bullets-amount")
 
 const souls_amount    = document.getElementById("souls-amount")
 
@@ -45,7 +38,6 @@ const waves_hud_timer    = document.getElementById("waves-hud-timer")
 
 const close_skills = document.getElementById("close-skills")
 const skillsButton = document.querySelectorAll("[data-skill]")
-const itensButton  = document.querySelectorAll("[data-item]")
 
 const GRAVITY = 0.6
 
@@ -163,59 +155,21 @@ const player_sprites = [
 ]
 
 const itens_sprites = {
-	ak47: {
-		sprites: [
-			{
-				name: "ak47_right",
-				image: "arquivos/assets/itens/ak47.png",
-				frames: 1
-			},
-			{
-				name: "ak47_left",
-				image: "arquivos/assets/itens/ak47_left.png",
-				frames: 1
-			}
-		],
-		holding_position: {
-			x: 55,
-			y: 30
-		},
-		holding_position_left: {
-			x: 30,
-			y: 30
+	enemy_soul: [
+		{
+			name: "soul",
+			image: "arquivos/assets/itens/enemy_soul.png",
+			frames: 4,
+			hold: 6
 		}
-	},
-	escopeta: {
-		img: "arquivos/assets/itens/escopeta.png",
-		img_invert: "arquivos/assets/itens/escopeta_left.png",
-		holding_position: {
-			x: 55,
-			y: 50
-		},
-		holding_position_left: {
-			x: 30,
-			y: 50
+	],
+	life: [
+		{
+			name: "life",
+			image: "arquivos/assets/itens/life.png",
+			frames: 1
 		}
-	},
-	enemy_soul: {
-		sprites: [
-			{
-				name: "soul",
-				image: "arquivos/assets/itens/enemy_soul.png",
-				frames: 4,
-				hold: 6
-			}
-		],
-	},
-	life: {
-		sprites: [
-			{
-				name: "life",
-				image: "arquivos/assets/itens/life.png",
-				frames: 1,
-			}
-		],
-	}
+	]
 }
 
 const skeleton_warrior_sprites = [
@@ -417,9 +371,8 @@ const skeleton_spearman_sprites = [
 spriteConverter(skeleton_warrior_sprites)
 spriteConverter(skeleton_spearman_sprites)
 spriteConverter(player_sprites)
-spriteConverter(itens_sprites.enemy_soul.sprites)
-spriteConverter(itens_sprites.life.sprites)
-spriteConverter(itens_sprites.ak47.sprites)
+spriteConverter(itens_sprites.enemy_soul)
+spriteConverter(itens_sprites.life)
 
 const enemys = []
 
@@ -434,38 +387,9 @@ const life = new Item({
 		y: 615
 	}
 })
-life.setSprites(itens_sprites.life.sprites)
+life.setSprites(itens_sprites.life)
 
-const ak47 = new Weapon({
-	name: "Ak-47",
-	gunType: "Fuzil",
-	munition: 60,
-	gunLimit: 30,
-	bullets: 30,
-	position: {
-		x: -200,
-		y: 525
-	}
-})
-ak47.setSprites(itens_sprites.ak47.sprites)
-
-// const escopeta = new Weapon({
-// 	imgSrc: "arquivos/assets/itens/escopeta.png",
-// 	name: "Dôze",
-// 	gunType: "Espingarda",
-// 	munition: 20,
-// 	gunLimit: 10,
-// 	position: {
-// 		x: 500,
-// 		y: 530
-// 	}
-// })
-// escopeta.item_sprites = itens_sprites.escopeta
-// escopeta.bulletsAmount = 10
-
-
-const itensArray = []
-itensArray.push(ak47, life)
+const itensArray = [life]
 
 const first_MapTiles = [
 	[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
@@ -582,54 +506,6 @@ function updateSkill(skill){
 	}
 }
 
-itensButton.forEach(button => {
-	button.addEventListener("click", () => {
-		const itemType   = button.dataset.item
-		const skillPrice = parseInt(button.dataset.price)
-		const price_text = button.nextElementSibling
-
-		if(player.souls < skillPrice){
-			price_text.classList.add("animate__animated", "animate__shakeX")
-			price_text.style.background = "#f74a4a"
-			button.style.border = "2px solid #f74a4a"
-
-			price_text.addEventListener("animationend", () => {
-				price_text.classList.remove("animate__animated", "animate__shakeX")
-				price_text.style.background = ""
-				button.style.border = ""
-			})
-			return
-		}
-
-		price_text.style.background = "green"
-		button.style.border = "2px solid green"
-
-		setTimeout(() => {
-			price_text.style.background = ""
-			button.style.border = ""
-		}, 700)
-
-		player.souls -= skillPrice
-		souls_amount.innerHTML = player.souls
-
-		buyItens(itemType)
-	})
-})
-
-function buyItens(item){
-	switch(item){
-		case "ak47":
-		player.inventory[0].item = ak47
-		ak47.bulletsAmount = 30
-		ak47.munition = 60
-		hud('weapon-icon-img').updateIcon(ak47.sprite.src)
-		weapon_status_container.classList.remove("hidden")
-		bullets_amount.innerHTML = ak47.bulletsAmount
-		munition_amount.innerHTML = ak47.munition
-		break
-	}
-}
-
 function playerAnimations(){
 	if(player.isIdle && !player.isDead){
 		player.switchSprite(`idle_${player.direction}`)		
@@ -723,69 +599,9 @@ function playerMovement(){
 
 	// Player atacando
 	if(keyEnter && !player.isDead){
-		const slot = player.getHoldingItem()
-		if(slot){
-			const { item } = slot
-			if(item && item.type === "Weapon"){
-				item.shot()
-				bullets_amount.innerHTML = item.bulletsAmount
-			}
-		}else if(!player.isFalling && !player.isRunning){
+		if(!player.isFalling && !player.isRunning){
 			player.isAttacking = true
 		}
-	}
-
-	// Recarregar Arma
-	if(keyR && !keyEnter){
-		const slot = player.getHoldingItem()
-		if(slot){
-			const { item } = slot
-			if(item && item.type === "Weapon"){
-				item.reload()
-			}
-		}
-	}
-}
-
-function selectPlayerSlot(id){
-	const inventory = player.getInventory(id)
-	
-	if(inventory.item){
-		inventory.item.visible = true
-		inventory.isHolding = true
-
-		weapon_icon.classList.add("border-neutral-300")
-		weapon_icon.classList.remove("border-black")
-		hud('weapon-icon-img').updateIcon(inventory.item.sprite.src)
-	}else{
-		const slot = player.getHoldingItem()
-		if(slot){
-			slot.item.visible = false
-			slot.isHolding = false
-		}
-		
-		weapon_icon.classList.remove("border-neutral-300")
-		weapon_icon.classList.add("border-black")
-	}
-}
-
-function playerHoldItem(){
-	const slot = player.getHoldingItem()
-	if(slot){
-		const item = slot.item
-
-		weapon_status.style.color = ""
-		item.switchSprite(`ak47_${player.direction}`)
-
-		if(player.direction == "left"){
-			item.position.x = player.position.x - 30
-			item.position.y = player.position.y + 30
-		}else if(player.direction == "right"){
-			item.position.x = player.position.x + 55
-			item.position.y = player.position.y + 30
-		}
-	}else{
-		weapon_status.style.color = "#64748b"
 	}
 }
 
@@ -832,7 +648,6 @@ function arcadeMode(){
 }
 
 function update(){
-	playerHoldItem()
 	playerAnimations()
 	playerMovement()
 
@@ -954,40 +769,6 @@ function render(){
 					itensArray.splice(index, 1)
 				}
 			}
-			
-
-			if(item.type == "Weapon"){
-				playebleMapBlocks.forEach(block => {
-					basicCollision(item, block)
-				})
-
-				if(!item.bulletsAmount){
-					if(!item.munition){
-						player.inventory[0].item = 0
-						player.inventory[0].isHolding = false
-						weapon_status_container.classList.add("hidden")
-						weapon_icon.classList.remove("border-neutral-300")
-						weapon_icon.classList.add("border-black")
-						hud('weapon-icon-img').updateIcon('')
-					}
-				}
-
-				item.bulletsFired.forEach(bullet => {
-					if(bullet.visible){
-						bullet.update()
-
-						enemys.forEach(enemy => {
-							if(enemy.visible){
-								projectileCollision(collide(bullet, enemy))
-							}
-						})
-
-						playebleMapBlocks.forEach(block => {
-							projectileCollision(collide(bullet, block))
-						})
-					}
-				})
-			}
 		}
 	})
 
@@ -1038,20 +819,10 @@ function pause(){
 function restart(){
 	arcadeWave.restart()
 
-	player.inventory.forEach(slot => {
-		slot.item = null
-		slot.isHolding = false
-	})
-
 	itensArray.forEach(item => {
-		item.isInInventory = false
 		item.position.x = item.initial_position.x
 		item.position.y = item.initial_position.y
 		item.visible = true
-		if(item.type == "Weapon" && item.gunType == "Fuzil"){
-			item.munition = 60
-			item.bulletsAmount = 30
-		}
 	})
 
 	for(i = 0; i < skills_list.length; i++){
@@ -1074,13 +845,9 @@ function restart(){
 	health_amount.style.width = 100 + "px"
 
 	removeUI("waves-timer-container", "hidden")
-	hud('weapon-icon-img').updateIcon('')
 
 	enemysKilled = 0
-	bullets_amount.innerHTML = 0
-	munition_amount.innerHTML = 0
 	souls_amount.innerHTML = 0
-	weapon_status_container.classList.add("hidden")
 
 	saveArcadeData()
 
@@ -1092,20 +859,10 @@ function destroy(){
 	arcadeWave.restart()
 	gameIsPaused = true
 
-	player.inventory.forEach(slot => {
-		slot.item = null
-		slot.isHolding = false
-	})
-
 	itensArray.forEach(item => {
-		item.isInInventory = false
 		item.position.x = item.initial_position.x
 		item.position.y = item.initial_position.y
 		item.visible = true
-		if(item.type == "Weapon" && item.gunType == "Fuzil"){
-			item.munition = 60
-			item.bulletsAmount = 30
-		}
 	})
 
 	for(i = 0; i < skills_list.length; i++){
@@ -1128,13 +885,9 @@ function destroy(){
 	health_amount.style.width = 100 + "px"
 
 	removeUI("waves-timer-container", "hidden")
-	hud('weapon-icon-img').updateIcon('')
 
 	enemysKilled = 0
-	bullets_amount.innerHTML = 0
-	munition_amount.innerHTML = 0
 	souls_amount.innerHTML = 0
-	weapon_status_container.classList.add("hidden")
 
 	saveArcadeData()
 
