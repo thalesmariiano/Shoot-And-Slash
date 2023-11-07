@@ -837,9 +837,13 @@ function update(){
 	playerMovement()
 
 	if(player.health < 20){
-		hud_screen.style.boxShadow = "inset 0 0 30px rgba(190, 0, 0, .7)"
+		if(!hud_screen.className.includes('low_life_blood_splash')){
+			hud_screen.classList.add('low_life_blood_splash')
+		}
 	}else{
-		hud_screen.style.boxShadow = "none"
+		if(hud_screen.className.includes('low_life_blood_splash')){
+			hud_screen.classList.remove('low_life_blood_splash')
+		}
 	}
 
 	if(player.health <= 0 && !player.isDead){
