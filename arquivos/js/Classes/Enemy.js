@@ -64,19 +64,12 @@ class Enemy extends Entity {
 		this.health += -dmg
 		this.receiveDamage = true
 		skeleton_hit_sound.play()
-		if(!this.isFalling && !this.isDead && this.receiveDamage){
+
+		if(!this.isFalling && !this.isDead){
 			this.velocity.y = -8
+			this.velocity.x = player.direction == 'right' ? 2 : -2
 			this.isFalling = true
 		}
-		
-		if(player.direction == "right") this.velocity.x = Math.floor(Math.random() * 5 - 2) + 1
-		else if(player.direction == "left") this.velocity.x = -Math.floor(Math.random() * 5 - 2) + 1
-
-		this.switchSprite(`take_hit_${this.direction}`)
-		setTimeout(() => {
-			this.velocity.x = 0
-			this.receiveDamage = false
-		}, 700)
 	}
 
 	chasePlayer(playerDirection){
@@ -184,27 +177,27 @@ class Enemy extends Entity {
 		const isTooClose = detectInArea(this, player, this.tooCloseDistX, 0, this.tooCloseDistY, 0, 0)
 
 		// Detectar player longe
-		if(isFarAway.left && !isClose.left && !isTooClose.left && !isTooClose.bottom){
+		if(isFarAway.left && !isClose.left && !isTooClose.left && !isTooClose.bottom && !this.receiveDamage){
 			this.chasePlayer('left')
-		}else if(isFarAway.right && !isClose.right && !isTooClose.right && !isTooClose.bottom){
+		}else if(isFarAway.right && !isClose.right && !isTooClose.right && !isTooClose.bottom && !this.receiveDamage){
 			this.chasePlayer('right')
 		}else{
 			this.chasePlayer(' ')
 		}
 
-		if(closeToCharge.left && !player.isRunning){
+		if(closeToCharge.left && !player.isRunning && !this.receiveDamage){
 			this.chargeAttack('left')
-		}else if(closeToCharge.right && !player.isRunning){
+		}else if(closeToCharge.right && !player.isRunning && !this.receiveDamage){
 			this.chargeAttack('right')
 		}else{
 			this.chargeAttack(' ')
 		}
 
 		// Quando player estever perto, ataque
-		if(isClose.left && !isTooClose.left){
+		if(isClose.left && !isTooClose.left && !this.receiveDamage){
 			this.closeAttack('left')
 			buffer.fillStyle = "green"
-		}else if(isClose.right && !isTooClose.right){
+		}else if(isClose.right && !isTooClose.right && !this.receiveDamage){
 			this.closeAttack('right')
 			buffer.fillStyle = "green"
 		}else{
@@ -212,10 +205,10 @@ class Enemy extends Entity {
 		}
 
 		// Caso player esteja perto demais, recue
-		if(isTooClose.left || isTooClose.bottom){
+		if(isTooClose.left || isTooClose.bottom && !this.receiveDamage){
 			buffer.fillStyle = 'red'
 			this.fallback('left')
-		}else if(isTooClose.right || isTooClose.bottom){
+		}else if(isTooClose.right || isTooClose.bottom && !this.receiveDamage){
 			buffer.fillStyle = 'red'
 			this.fallback('right')
 		}
@@ -239,8 +232,9 @@ class Enemy extends Entity {
 			this.isAttacking = false
 			this.isChargeAttack = false
 			this.isRunning = false
-			this.velocity.x = 0
 		}
+
+		if(player.isDead) this.velocity.x = 0
 		
 		if(!this.isChargeAttack && !this.isRunning && !this.isDead && !this.isAttacking && !this.receiveDamage){
 			this.switchSprite(`idle_${this.direction}`)
@@ -250,7 +244,7 @@ class Enemy extends Entity {
 			this.switchSprite(`run_${this.direction}`)
 		}
 
-		if(this.isChargeAttack && !player.isRunning && !this.isAttacking){
+		if(this.isChargeAttack && !player.isRunning && !this.isAttacking && !this.receiveDamage){
 			this.switchSprite(`run_attack_${this.direction}`)
 		}
 
@@ -258,7 +252,11 @@ class Enemy extends Entity {
 			this.switchSprite(`attack_${this.attackSprite}_${this.direction}`)
 		}
 
-		if(this.sprInfo.name == `run_attack_${this.direction}`){
+		if(this.receiveDamage && !this.isDead){
+			this.switchSprite(`take_hit_${this.direction}`)
+		}
+
+		if(this.sprInfo.name == `run_attack_${this.direction}` && !this.receiveDamage){
 			if(this.currentFrames == 5){
 				this.entityAttacked = false
 			}

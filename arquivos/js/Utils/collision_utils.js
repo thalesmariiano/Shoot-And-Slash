@@ -66,6 +66,10 @@ const basicCollision = (entity, block) => {
 		collider.velocity.y = 0
 		collider.position.y -= parseInt(overlap.y)
 		collider.isFalling = false
+		if(collider.receiveDamage && collider.entityType == 'Enemy'){
+			collider.receiveDamage = false
+			collider.velocity.x = 0
+		}
 	}
 
 	if(side.bottom){
@@ -75,18 +79,10 @@ const basicCollision = (entity, block) => {
 
 	if(side.left){
 		collider.position.x -= overlap.x
-
-		if(collider.entityType == "Enemy"){
-			collider.will_jump = true			
-		}
 	}
 
 	if(side.right){
 		collider.position.x += overlap.x
-		
-		if(collider.entityType == "Enemy"){
-			collider.will_jump = true			
-		}
 	}
 
 }

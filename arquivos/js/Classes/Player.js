@@ -69,8 +69,6 @@ class Player extends Entity {
 					if(sword_collide && !this.entityAttacked){
 						this.entityAttacked = true
 						enemy.takeHit(this.attDamage)
-					}else{
-						enemy.receiveDamage = false
 					}
 				}
 			})
