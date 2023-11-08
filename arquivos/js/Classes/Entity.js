@@ -66,13 +66,14 @@ class Entity {
 	switchSprite(name){
 		const spr = this.entitySprites.find(sprite => sprite.name == name)
 
+		if(spr !== this.sprInfo) this.currentFrames = 0	
+		else return
+
 		this.sprite = spr.image
 		this.spriteFrames = spr.frames
 		this.framesHold = spr.hold ? spr.hold : 5
 		this.frameSizeX = this.sprite.width/this.spriteFrames
 		this.frameSizeY = this.sprite.height
-		
-		if(spr != this.sprInfo) this.currentFrames = 0	
 		this.sprInfo = spr
 	}
 
@@ -81,7 +82,7 @@ class Entity {
 		if(this.framesElapsed % this.framesHold === 0){
 			this.currentFrames++
 			this.callEvent("animation", {animation: this.sprInfo, frame: this.currentFrames, frameHold: this.framesHold, loopFrame: this.framesElapsed})
-			if(this.currentFrames >= this.spriteFrames){
+			if(this.currentFrames >= this.spriteFrames){					
 				this.onAnimationEnd(this.sprInfo)
 				this.callEvent("animationend", this.sprInfo)
 				if(this.stopAnimation) return

@@ -107,26 +107,22 @@ const player_sprites = [
 	{
 		name: "attack_1_right",
 		image: "arquivos/assets/player/attack1.png",
-		frames: 6,
-		hold: 6
+		frames: 6
 	},
 	{
 		name: "attack_1_left",
 		image: "arquivos/assets/player/attack1_left.png",
-		frames: 6,
-		hold: 6
+		frames: 6
 	},
 	{
 		name: "attack_2_right",
 		image: "arquivos/assets/player/attack2.png",
-		frames: 6,
-		hold: 6
+		frames: 6
 	},
 	{
 		name: "attack_2_left",
 		image: "arquivos/assets/player/attack2_left.png",
-		frames: 6,
-		hold: 6
+		frames: 6
 	},
 	{
 		name: "take_hit_right",
@@ -527,7 +523,7 @@ function playerAnimations(){
 		player.switchSprite(`take_hit_${player.direction}`)
 	}
 
-	if(player.isAttacking && !player.isRunning){
+	if(player.isAttacking && !player.isRunning && !player.isDead){
 		player.switchSprite(`attack_${player.attackSprite}_${player.direction}`)
 	}
 
@@ -602,6 +598,8 @@ function playerMovement(){
 		if(!player.isFalling && !player.isRunning){
 			player.isAttacking = true
 		}
+	}else{
+		player.attackSprite = 1
 	}
 }
 
