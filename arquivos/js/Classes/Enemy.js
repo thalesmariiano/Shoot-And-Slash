@@ -55,7 +55,7 @@ class Enemy extends Entity {
 					y: this.position.y + this.height/2
 				}
 			})
-			soul.setSprites(itens_sprites.enemy_soul.sprites)
+			soul.setSprites(itens_sprites.enemy_soul)
 			itensArray.push(soul)
 		}
 	}
