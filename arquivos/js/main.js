@@ -817,7 +817,9 @@ function pause(){
 function restart(){
 	arcadeWave.restart()
 
-	itensArray.forEach(item => {
+	itensArray.forEach((item, index) => {
+		if(item.itemType == 'soul') itensArray.splice(index, 1)
+
 		item.position.x = item.initial_position.x
 		item.position.y = item.initial_position.y
 		item.visible = true
@@ -857,7 +859,9 @@ function destroy(){
 	arcadeWave.restart()
 	gameIsPaused = true
 
-	itensArray.forEach(item => {
+	itensArray.forEach((item, index) => {
+		if(item.itemType == 'soul') itensArray.splice(index, 1)
+
 		item.position.x = item.initial_position.x
 		item.position.y = item.initial_position.y
 		item.visible = true
