@@ -91,6 +91,19 @@ class Player extends Entity {
 		hud('health-amount').updateAmount(this.health)
 	}
 
+	onAnimation({sprite, frame}){
+		if(sprite.name == `attack_1_${this.direction}`){
+			if(frame == 3){
+				sword_whoosh_3.play()
+			}
+		}
+		if(sprite.name == `attack_2_${this.direction}`){
+			if(frame == 3){
+				sword_whoosh_2.play()
+			}
+		}
+	}
+
 	onAnimationEnd(animation){
 		if(animation.name == `attack_1_${this.direction}`){
 			this.attackSprite = 2

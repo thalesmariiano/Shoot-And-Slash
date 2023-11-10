@@ -62,6 +62,10 @@ const parallax_back = new Parallax("arquivos/assets/map/parallax-forest-back.png
 const parallax_middle = new Parallax("arquivos/assets/map/parallax-forest-middle-trees.png", {velocity: 4})
 const parallax_front = new Parallax("arquivos/assets/map/parallax-forest-front-trees.png", {velocity: 2})
 
+const sword_whoosh_3 = new Audio('arquivos/assets/audio/sword_whoosh_3.mp3')
+const sword_whoosh_2 = new Audio('arquivos/assets/audio/sword_whoosh_2.mp3')
+const skeleton_hit = new Audio('arquivos/assets/audio/skeleton_hit_2.mp3')
+
 const player_sprites = [
 	{
 		name: "idle_right",
@@ -531,27 +535,6 @@ function playerAnimations(){
 		player.switchSprite(`death_${player.direction}`)
 	}
 }
-
-/* TESTING PLAYER SOUNDS */
-
-const audio = new Audio('arquivos/assets/audio/sword_whoosh_3.mp3')
-const audio2 = new Audio('arquivos/assets/audio/sword_whoosh_2.mp3')
-const skeleton_hit_sound = new Audio('arquivos/assets/audio/skeleton_hit_2.mp3')
-
-player.on("animation", ({frame, animation}) => {
-	if(animation.name == `attack_1_${player.direction}`){
-		if(frame == 3){
-			audio.play()
-		}
-	}
-	if(animation.name == `attack_2_${player.direction}`){
-		if(frame == 3){
-			audio2.play()
-		}
-	}
-})
-
-/* =============== */
 
 function playerMovement(){
 
