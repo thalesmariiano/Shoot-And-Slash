@@ -63,7 +63,7 @@ class Enemy extends Entity {
 	takeHit(dmg, direction){
 		this.health += -dmg
 		this.receiveDamage = true
-		skeleton_hit_sound.play()
+		skeleton_hit.play()
 
 		if(!this.isFalling && !this.isDead){
 			this.velocity.y = -8
