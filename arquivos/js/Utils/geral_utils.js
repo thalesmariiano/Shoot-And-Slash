@@ -1,23 +1,6 @@
 
 const $ = element => document.querySelector(element)
 
-const setStorage = (storage, value) => localStorage.setItem(storage, value)
-const getStorage = storage => localStorage.getItem(storage)
-
-function createStorages(){
-	if(!getStorage("SaS-Dialog")) setStorage("SaS-Dialog", 1)
-	if(!getStorage("SaS-Arcade")) setStorage("SaS-Arcade", 0)
-	if(!getStorage("SaS-News")) setStorage("SaS-News", 0)
-	if(!getStorage("SaS-Control")) setStorage("SaS-Control", 1)
-}
-
-function deleteStorages(){
-	localStorage.removeItem("SaS-Dialog")
-	localStorage.removeItem("SaS-News")
-	localStorage.removeItem("SaS-Arcade")
-	localStorage.removeItem("SaS-Control")
-}
-
 function gameStorage(){
 	const storages = []
 	const permanentStorage = []
@@ -56,6 +39,7 @@ function gameStorage(){
 		storages.forEach((item, index) => {
 			localStorage.removeItem(item)
 		})
+		storages.length = 0
 	}
 
 	function init(){
@@ -219,12 +203,11 @@ function generateTerrain(mapArray, outputArray){
 }
 
 function saveArcadeData(){
-	if(parseInt(getStorage("SaS-Save"))){
-		if(enemysKilled > parseInt(getStorage("SaS-Arcade"))){
-			setStorage("SaS-Arcade", enemysKilled)
+	if(parseInt(game_storage.readStorage("SaS-Save"))){
+		if(enemysKilled > parseInt(game_storage.readStorage("SaS-Arcade"))){
+			game_storage.updateStorage("SaS-Arcade", enemysKilled)
 
-			const arcade_kills = getStorage("SaS-Arcade") ? getStorage("SaS-Arcade") : 0
-			$("#arcade-record").innerHTML = `Recorde: ${arcade_kills}`
+			$("#arcade-record").innerHTML = `Recorde: ${enemysKilled}`
 		}
 	}
 }

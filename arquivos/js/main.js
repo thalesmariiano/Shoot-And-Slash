@@ -1,16 +1,8 @@
-if(getStorage("SaSdialog")) localStorage.removeItem("SaSdialog")
-if(getStorage("SaSControl")) localStorage.removeItem("SaSControl")
 
-if(!getStorage("SaS-Save")) setStorage("SaS-Save", 1)
+const game_storage = gameStorage()
+game_storage.init()
 
-if(parseInt(getStorage("SaS-Save"))){
-	$("#save-memory").checked = true
-	createStorages()
-}else{
-	$("#save-memory").checked = false
-}
-
-$("#arcade-record").innerHTML = `Recorde: ${getStorage("SaS-Arcade")}`
+$("#arcade-record").innerHTML = `Recorde: ${game_storage.readStorage("SaS-Arcade")}`
 
 var developerMode = false
 

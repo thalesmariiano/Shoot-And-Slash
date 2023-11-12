@@ -6,7 +6,7 @@ const controlKey = {
 	jump_2: "KeyW"
 }
 
-if(getStorage("SaS-Control") && getStorage("SaS-Control") == 2){
+if(game_storage.readStorage("SaS-Control") == 2){
 	$("[data-control='2']").classList.remove("opacity-40", "hover:opacity-75")
 	$("[data-control='1']").classList.add("opacity-40", "hover:opacity-75")
 	controlKey.left   = "ArrowLeft"
@@ -31,7 +31,7 @@ const switchControls = (control, type) => {
 		controlKey.right  = "KeyD"
 		controlKey.jump   = "Space"
 		controlKey.jump_2 = "KeyW"
-		if(getStorage("SaS-Control") == 2) setStorage("SaS-Control", 1)
+		if(game_storage.readStorage("SaS-Control") == 2) game_storage.updateStorage("SaS-Control", 1)
 	}
 
 	if(type == 2){
@@ -41,7 +41,7 @@ const switchControls = (control, type) => {
 		controlKey.right  = "ArrowRight"
 		controlKey.jump   = "ArrowUp"
 		controlKey.jump_2 = "Space"
-		if(getStorage("SaS-Control") == 1) setStorage("SaS-Control", 2)
+		if(game_storage.readStorage("SaS-Control") == 1) game_storage.updateStorage("SaS-Control", 2)
 	}
 }
 
