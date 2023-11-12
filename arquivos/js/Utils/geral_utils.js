@@ -18,6 +18,72 @@ function deleteStorages(){
 	localStorage.removeItem("SaS-Control")
 }
 
+function gameStorage(){
+	const storages = []
+	const permanentStorage = []
+
+	function createStorage(item, value){
+		if(parseInt(localStorage.getItem('SaS-Save'))){
+			if(!storages.includes(item)){
+				storages.push(item)
+				if(!localStorage.getItem(item)){
+					localStorage.setItem(item, value)
+				}
+			}
+		}
+	}
+
+	function readStorage(item){
+		if(localStorage.getItem(item)){
+			return localStorage.getItem(item)
+		}
+	}
+
+	function updateStorage(item, newValue){
+		if(localStorage.getItem(item)){
+			localStorage.setItem(item, newValue)
+		}
+	}
+
+
+	function deleteStorage(item){
+		if(localStorage.getItem(item)){
+			localStorage.removeItem(item)
+		}
+	}
+
+	function clearStorages(){
+		storages.forEach((item, index) => {
+			localStorage.removeItem(item)
+		})
+	}
+
+	function init(){
+		if(readStorage('SaSdialog')) deleteStorage('SaSdialog')
+		if(readStorage('SaSControl')) deleteStorage('SaSControl')
+		if(!readStorage("SaS-Save")) createStorage("SaS-Save", 1)
+
+		if(parseInt(readStorage("SaS-Save"))){
+			$("#save-memory").checked = true
+			createStorage("SaS-Dialog", 1)
+			createStorage("SaS-Arcade", 0)
+			createStorage("SaS-News", 0)
+			createStorage("SaS-Control", 1)
+		}else{
+			$("#save-memory").checked = false
+		}
+	}
+
+	return {
+		createStorage,
+		readStorage,
+		updateStorage,
+		deleteStorage,
+		clearStorages,
+		init,
+	}
+}
+
 function spriteConverter(imgArray){
 	if(Array.isArray(imgArray)){
 		imgArray.forEach(spr => {
