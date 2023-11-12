@@ -16,17 +16,6 @@ class Item extends Entity {
 			this.type = "Item"
 	}
 
-	animation(){
-		this.framesElapsed++
-		if(this.framesElapsed % this.framesHold === 0){
-			this.currentFrames++
-			if(this.currentFrames >= this.spriteFrames){
-				this.currentFrames = 0
-			}
-		}
-		this.imgX = this.frameSizeX*this.currentFrames
-	}
-
 	update(){
 		this.draw()
 		this.animation()
