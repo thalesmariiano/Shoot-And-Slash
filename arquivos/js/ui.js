@@ -74,7 +74,7 @@ close_guide.addEventListener("click", () => {
 
 guide_checkbox.addEventListener("input", () => {
 	const value = guide_checkbox.checked ? 0 : 1
-	if(parseInt(game_storage.readStorage("SaS-Save"))) game_storage.updateStorage("SaS-Dialog", value)
+	if(game_storage.saveAllowed()) game_storage.updateStorage("SaS-Dialog", value)
 })
 
 
@@ -102,7 +102,7 @@ $("#cancel-delete").addEventListener("click", () => {
 })
 
 $("#save-memory").addEventListener("click", e => {
-	if(parseInt(game_storage.readStorage("SaS-Save"))){
+	if(game_storage.saveAllowed()){
 		showUI("save-data-dialog", "animate__fadeIn")
 		$("#save-memory").checked = true
 	}else{
@@ -131,7 +131,7 @@ if(parseFloat(game_storage.readStorage("SaS-News")) != 1.3){
 	$("body").style.overflow = "hidden"
 
 	close_news.addEventListener("click", () => {
-		if(parseInt(game_storage.readStorage("SaS-Save"))) game_storage.updateStorage("SaS-News", 1.3)
+		if(game_storage.saveAllowed()) game_storage.updateStorage("SaS-News", 1.3)
 		removeUI("news-dialog", "animate__bounceOut")
 		$("body").style.overflow = ""
 	})
