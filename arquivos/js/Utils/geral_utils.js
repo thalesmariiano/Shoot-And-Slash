@@ -206,13 +206,3 @@ function generateTerrain(mapArray, outputArray){
 		}
 	}
 }
-
-function saveArcadeData(){
-	if(game_storage.saveAllowed()){
-		if(enemysKilled > parseInt(game_storage.readStorage("SaS-Arcade"))){
-			game_storage.updateStorage("SaS-Arcade", enemysKilled)
-
-			$("#arcade-record").innerHTML = `Recorde: ${enemysKilled}`
-		}
-	}
-}

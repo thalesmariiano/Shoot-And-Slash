@@ -79,10 +79,7 @@ guide_checkbox.addEventListener("input", () => {
 
 
 close_skills.addEventListener("click", () => {
-	removeUI("skills-screen", "animate__fadeOut")
-	showUI("waves-timer-container", "animate__fadeIn")
-	$("#waves-hud-timer").innerHTML = "5s"
-	arcadeWave.waveTimer = 5
+	newArcade.skipTimer()
 })
 
 $("#delete-memory").addEventListener("click", () => {

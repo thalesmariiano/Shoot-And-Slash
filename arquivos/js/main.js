@@ -42,8 +42,6 @@ var keyRight,
 
 var gameIsPaused = true
 
-var enemysKilled = 0
-
 var lockLeft,
     lockRight = false
 
@@ -367,6 +365,7 @@ spriteConverter(itens_sprites.enemy_soul)
 spriteConverter(itens_sprites.life)
 
 const enemys = []
+const enemys_near_player = []
 
 const player = new Player({position: {x: 127, y: 380}})
 player.setSprites(player_sprites)
@@ -578,47 +577,139 @@ function playerMovement(){
 	}
 }
 
-const arcadeWave = new EnemyWave(3, 100)
+function arcade(){
+	let enemysCount = 3
+	let enemyHealth = 100
+	let waveNumber = 1
+	let enemysKilled = 0
+	let intervalID
+	let time = 10
+	let lastFiveSeconds = false
+	let started = false
 
-function arcadeMode(){
-	if(!arcadeWave.waveStarted && !arcadeWave.waveIsPlaying){
-		arcadeWave.waveStarted = true
+	const hud_timer = document.getElementById('waves-hud-timer')
+	const skills_timer = document.getElementById('waves-skills-timer')
+	const waves_text = document.getElementById('waves-text')
 
-		if(arcadeWave.waveTimer >= 5) showUI("skills-screen", "animate__fadeIn")
+	const newWave = () => {
+		generateEnemys(enemysCount, enemyHealth)
+	}
 
-		const timer = setInterval(() => {
-			if(gameIsPaused){
-				clearInterval(timer)
+	const verifyKills = () => {
+		if(!enemys.length){
+			waveNumber += 1
+			enemysCount += 3
+			enemyHealth = 100
+			started = false
+			arcadeTimer()
+		}
+	}
+
+	const switchArcadeUI = () => {
+		if(time !== 5 && !lastFiveSeconds){
+			showUI("skills-screen", "animate__fadeIn")		
+		}else if(time == 5){
+			removeUI("skills-screen", "animate__fadeOut")
+			showUI("waves-timer-container", "animate__fadeIn")
+		}else if(time == 0){
+			removeUI("waves-timer-container", "animate__fadeOut")
+
+			waves_text.innerHTML = `Onda ${waveNumber}`
+			setTimeout(() => showUI("waves-container", "animate__fadeIn"), 500)
+			setTimeout(() => removeUI("waves-container", "animate__fadeOut"), 3000)
+		}
+	}
+
+	const arcadeTimer = () => {
+		intervalID = setInterval(() => {
+			if(time % 5 === 0) switchArcadeUI()
+			if(time == 5) lastFiveSeconds = true
+
+			if(time >= 5) skills_timer.innerHTML = `${time}s`
+			else hud_timer.innerHTML = `${time}s`
+
+			if(time == 0){
+				newWave()
+				started = true
+				lastFiveSeconds = false
+				time = 10
+
+				// timer para não mostrar o reset pro usuario
+				setTimeout(() => {
+					skills_timer.innerHTML = '10s'
+					hud_timer.innerHTML = '5s'
+				}, 1500)
+
+				clearInterval(intervalID)
 				return
 			}
-			arcadeWave.waveTimer--
 
-			$("#waves-skills-timer").innerHTML = `${arcadeWave.waveTimer}s`
-			if(arcadeWave.waveTimer <= 5) $("#waves-hud-timer").innerHTML = `${arcadeWave.waveTimer}s`
-
-			if(arcadeWave.waveTimer == 5){
-				showUI("waves-timer-container", "animate__fadeIn")
-				removeUI("skills-screen", "animate__fadeOut")
-			}
-
-			if(!arcadeWave.waveTimer){
-				arcadeWave.init()
-				arcadeWave.waveIsPlaying = true
-				removeUI("waves-timer-container", "animate__fadeOut")
-				clearInterval(timer)
-			}
+			time--
 		}, 1000)
 	}
 
-	if(!enemys.length && arcadeWave.waveIsPlaying){
-		arcadeWave.waveTimer = 15
-		$("#waves-skills-timer").innerHTML = `${arcadeWave.waveTimer}s`
-		arcadeWave.waveIsPlaying = false
-		arcadeWave.waveStarted = false
-		arcadeWave.waveNumber++
-		arcadeWave.enemysCount += 3
+	const skipTimer = () => {
+		removeUI("skills-screen", "animate__fadeOut")
+		hud_timer.innerHTML = "5s"
+		time = 5
+	}
+
+	const saveData = () => {
+		if(game_storage.saveAllowed()){
+			if(enemysKilled > parseInt(game_storage.readStorage("SaS-Arcade"))){
+				game_storage.updateStorage("SaS-Arcade", enemysKilled)
+
+				$("#arcade-record").innerHTML = `Recorde: ${enemysKilled}`
+			}
+		}
+	}
+
+	const restart = () => {
+		clearInterval(intervalID)
+		removeUI("skills-screen", "hidden")
+		removeUI("waves-timer-container", "hidden")
+		removeUI("waves-container", "hidden")
+
+		skills_timer.innerHTML = '10s'
+		hud_timer.innerHTML = "5s"
+		lastFiveSeconds = false
+		started = false
+		enemyHealth = 100
+		enemysKilled = 0
+		enemysCount = 3
+		waveNumber = 1
+		time = 10
+
+		enemys.length = 0
+		enemys_near_player.length = 0
+	}
+
+	const pause = () => {
+		clearInterval(intervalID)
+	}
+
+	const getWave = () => waveNumber
+
+	const init = () => {
+		if(!started){
+			arcadeTimer()			
+		}
+	}
+
+	return {
+		enemysKilled,
+		verifyKills,
+		waveNumber,
+		skipTimer,
+		saveData,
+		getWave,
+		restart,
+		pause,
+		init
 	}
 }
+
+const newArcade = arcade()
 
 function update(){
 	playerAnimations()
@@ -638,12 +729,12 @@ function update(){
 		player.isDead = true
 		player.velocity.x = 0
 
-		waves_count.innerHTML = `Onda: ${arcadeWave.waveNumber}`
-		kills_count.innerHTML = `Abates: ${enemysKilled}`
+		waves_count.innerHTML = `Onda: ${newArcade.getWave()}`
+		kills_count.innerHTML = `Abates: ${newArcade.enemysKilled}`
 
 		setTimeout(() => {
 			gameIsPaused = true
-			saveArcadeData()
+			newArcade.saveData()
 			showUI("die-screen", "animate__fadeIn")
 			removeUI("hud-screen", "hidden")
 		}, 1500)
@@ -651,8 +742,6 @@ function update(){
 
 	camera.update()
 }
-
-const enemys_near_player = []
 
 function render(){
 	display.save()
@@ -684,6 +773,7 @@ function render(){
 	enemys.forEach((enemy, index) => {
 		if(!enemy.visible){
 			enemys.splice(index, 1)
+			newArcade.verifyKills()
 			return
 		}
 
@@ -712,10 +802,6 @@ function render(){
 			enemys.splice(index, 1)
 		}
 	})
-
-	if(!developerMode){
-		arcadeMode()		
-	}
 
 	playebleMapBlocks.forEach(block => {
 		const {top, bottom, left, right} = detectInArea(camera_position, block, 300, (canvas.height/2), 300, (canvas.width/2) + 50, (canvas.width/2))
@@ -763,6 +849,8 @@ function init(){
 	gameIsPaused = false
 	loop()
 
+	newArcade.init()
+
 	if(developerMode){
 		const enemy1 = new SkeletonSpearman({color: "red", health: 100, position: {x: 700, y: 400}})
 		enemy1.setSprites(skeleton_spearman_sprites)
@@ -774,7 +862,7 @@ function init(){
 
 function continues(){
 	if(gameIsPaused){
-		arcadeWave.waveStarted = false
+		newArcade.init()
 		gameIsPaused = false
 		loop()
 	}
@@ -782,6 +870,7 @@ function continues(){
 
 function pause(){
 	if(!gameIsPaused){
+		newArcade.pause()
 		showUI("pause-screen", "animate__fadeIn")
 		removeUI("hud-screen", "hidden")
 		removeUI("guide-dialog", "hidden")
@@ -790,8 +879,6 @@ function pause(){
 }
 
 function restart(){
-	arcadeWave.restart()
-
 	itensArray.forEach((item, index) => {
 		if(item.itemType == 'soul') itensArray.splice(index, 1)
 
@@ -819,19 +906,17 @@ function restart(){
 	health_bar.style.width = 100 + "px"
 	health_amount.style.width = 100 + "px"
 
-	removeUI("waves-timer-container", "hidden")
-
-	enemysKilled = 0
 	souls_amount.innerHTML = 0
 
-	saveArcadeData()
+	newArcade.restart()
+	newArcade.saveData()
 
 	player.restart()
+
 	init()
 }
 
 function destroy(){
-	arcadeWave.restart()
 	gameIsPaused = true
 
 	itensArray.forEach((item, index) => {
@@ -861,14 +946,13 @@ function destroy(){
 	health_bar.style.width = 100 + "px"
 	health_amount.style.width = 100 + "px"
 
-	removeUI("waves-timer-container", "hidden")
-
-	enemysKilled = 0
 	souls_amount.innerHTML = 0
 
-	saveArcadeData()
+	newArcade.restart()
+	newArcade.saveData()
 
 	player.restart()
+
 	buffer.clearRect(0, 0, canvas.width, canvas.height)
 }
 

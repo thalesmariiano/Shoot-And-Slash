@@ -265,7 +265,7 @@ class Enemy extends Entity {
 		if(this.health <= 0 && !this.isDead){
 			this.isDead = true
 
-			enemysKilled++
+			newArcade.enemysKilled++
 			this.velocity.x = 0
 			this.switchSprite(`dead_${this.direction}`)
 		}
