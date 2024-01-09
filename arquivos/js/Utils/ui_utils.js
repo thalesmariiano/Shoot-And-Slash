@@ -1,22 +1,9 @@
 
-function animateUI(element, animation, execute){
-	element.classList.add("animate__animated", animation)
-	element.addEventListener("animationend", animationEndListener)
+function showUI(selector, animation){
+	const ui = document.getElementById(selector)
 
-	function animationEndListener(){
-		element.classList.remove("animate__animated", animation)
-		element.removeEventListener("animationend", animationEndListener)
-
-		if(execute) execute()
-	}
-}
-
-function showUI(id, animation){
-	const ui = document.getElementById(id)
-
-	if(!animation.split("__").find(e => e == "animate")){
-		if(animation == "show") ui.classList.remove("hidden")			
-		else ui.classList.add(animation)
+	if(animation == 'show'){
+		ui.classList.remove("hidden")
 		return
 	}
 
@@ -30,10 +17,10 @@ function showUI(id, animation){
 	}
 }
 
-function removeUI(id, animation){
-	const ui = document.getElementById(id)
+function removeUI(selector, animation){
+	const ui = document.getElementById(selector)
 
-	if(!animation.split("__").find(e => e == "animate")){
+	if(animation == 'hidden'){
 		ui.classList.add(animation)
 		return
 	}
@@ -45,6 +32,19 @@ function removeUI(id, animation){
 		ui.classList.remove("animate__animated", animation)
 		ui.classList.add("hidden")
 		ui.removeEventListener("animationend", animationEndListener)
+	}
+}
+
+
+function animateUI(element, animation, execute){
+	element.classList.add("animate__animated", animation)
+	element.addEventListener("animationend", animationEndListener)
+
+	function animationEndListener(){
+		element.classList.remove("animate__animated", animation)
+		element.removeEventListener("animationend", animationEndListener)
+
+		if(execute) execute()
 	}
 }
 
