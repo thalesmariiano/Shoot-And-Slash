@@ -55,6 +55,8 @@ const parallax_front = new Parallax("arquivos/assets/map/parallax-forest-front-t
 const sword_whoosh_3 = new Audio('arquivos/assets/audio/sword_whoosh_3.mp3')
 const sword_whoosh_2 = new Audio('arquivos/assets/audio/sword_whoosh_2.mp3')
 const skeleton_hit = new Audio('arquivos/assets/audio/skeleton_hit_2.mp3')
+const walking = new Audio('arquivos/assets/audio/walking.mp3')
+const jump = new Audio('arquivos/assets/audio/jump.mp3')
 
 const player_sprites = [
 	{
@@ -546,6 +548,8 @@ function playerMovement(){
 	if(keyUp && !player.isDead && !player.isFalling){
 		player.velocity.y = player.jump
 		player.isFalling = true
+		
+		jump.play()
 	}
 
 	// Player andando para esquerda ou direita

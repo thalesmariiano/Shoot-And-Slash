@@ -102,6 +102,11 @@ class Player extends Entity {
 				sword_whoosh_2.play()
 			}
 		}
+		if(sprite.name == `run_${this.direction}`){
+			walking.play()
+		}else{
+			walking.pause()
+		}
 	}
 
 	onAnimationEnd(animation){
