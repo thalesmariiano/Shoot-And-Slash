@@ -11,6 +11,7 @@ const close_news                = document.querySelector("#close-news")
 
 arcade_mode_button.addEventListener("click", () => {
 	init()
+	newArcade.init()
 
 	removeUI("uis-container", "animate__fadeOut")
 	showUI("hud-screen", "animate__fadeIn")
