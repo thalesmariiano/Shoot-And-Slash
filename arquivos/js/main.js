@@ -384,7 +384,7 @@ life.setSprites(itens_sprites.life)
 
 const itensArray = [life]
 
-const first_MapTiles = [
+const mapTiles = [
 	[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
 	[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
 	[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
@@ -408,11 +408,11 @@ const first_MapTiles = [
 	[5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5]
 ]
 
-const mapSize = first_MapTiles[0].length*50
-const mapHeight = first_MapTiles.length*50
-const playebleMapBlocks = []
+const mapSize = mapTiles[0].length*50
+const mapHeight = mapTiles.length*50
+const mapBlocks = []
 
-generateTerrain(first_MapTiles, playebleMapBlocks)
+generateTerrain(mapTiles, mapBlocks)
 
 skillsButton.forEach(button => {
 	button.addEventListener("click", event => buySkill(event, button))
@@ -621,7 +621,7 @@ function update(){
 		height: 50
 	}
 
-	playebleMapBlocks.forEach(block => {
+	mapBlocks.forEach(block => {
 		const {top, bottom, left, right} = detectInArea(camera_position, block, 300, (canvas.height/2), 300, (canvas.width/2) + 50, (canvas.width/2))
 		const blockInArea = top || bottom || right || left
 
@@ -660,7 +660,7 @@ function update(){
 		if(isInScreen) enemy.visible = true
 		else enemy.visible = false
 
-		playebleMapBlocks.forEach(block => {
+		mapBlocks.forEach(block => {
 			basicCollision(enemy, block)
 		})
 
@@ -673,7 +673,7 @@ function update(){
 		itemCollision(collide(player, item))
 
 		if(item.itemType == "soul"){
-			playebleMapBlocks.forEach(block => {
+			mapBlocks.forEach(block => {
 				basicCollision(item, block)
 			})
 
@@ -708,7 +708,7 @@ function render(){
 		}
 	})
 
-	playebleMapBlocks.forEach(block => {
+	mapBlocks.forEach(block => {
 		if(block.visible){
 			buffer.drawImage(
 				tilemap,
