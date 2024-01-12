@@ -17,21 +17,13 @@ class Item extends Entity {
 	}
 
 	update(){
-		this.draw()
 		this.animation()
 		this.switchSprite(this.itemType)
 
 		switch(this.itemType){
 			case "life":
 				this.itemValue = 35
-				break
-			case "Bomb":
-				this.itemValue = 45
-				break
-			case "Coin":
-				this.itemValue = 1
-				break
-			
+				break	
 		}
 
 		if(this.itemType == "soul"){

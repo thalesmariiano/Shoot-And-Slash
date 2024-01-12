@@ -621,6 +621,10 @@ function update(){
 		height: 50
 	}
 
+	parallax_back.update()
+	parallax_middle.update()
+	parallax_front.update()		
+
 	mapBlocks.forEach(block => {
 		const {top, bottom, left, right} = detectInArea(camera_position, block, 300, (canvas.height/2), 300, (canvas.width/2) + 50, (canvas.width/2))
 		const blockInArea = top || bottom || right || left
@@ -635,6 +639,7 @@ function update(){
 
 	playerAnimations()
 	playerMovement()
+	player.update()
 
 	enemys.forEach((enemy, index) => {
 		if(!enemy.visible && enemy.isDead){
@@ -681,6 +686,8 @@ function update(){
 				itensArray.splice(index, 1)
 			}
 		}
+
+		item.update()
 	})
 
 	camera.update()
@@ -691,16 +698,16 @@ function render(){
 	buffer.clearRect(0, 0, canvas.width, canvas.height)
 
 	/* PARALLAX */
-	parallax_back.update()
-	parallax_middle.update()
-	parallax_front.update()			
+	parallax_back.draw()
+	parallax_middle.draw()
+	parallax_front.draw()			
 
 	buffer.translate(
 		Math.floor(-camera.x),
 		Math.floor(-camera.y)
 	)
 
-	player.update()
+	player.draw()
 
 	enemys.forEach(enemy => {
 		if(enemy.visible){
@@ -725,7 +732,7 @@ function render(){
 
 	itensArray.forEach(item => {
 		if(item.visible){
-			item.update()
+			item.draw()
 		}
 	})
 

@@ -14,7 +14,7 @@ class Parallax {
 		}
 	}
 
-	drawParallax(){
+	draw(){
 		this.parallax_positions.forEach(position => {
 			buffer.drawImage(this.image, Math.floor(-camera.x)/this.velocity + position, 0, this.width, this.height)
 		})
@@ -29,6 +29,5 @@ class Parallax {
 		this.height = newHeight
 
 		this.generateParallax()
-		this.drawParallax()
 	}
 }
