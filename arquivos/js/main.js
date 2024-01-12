@@ -583,19 +583,19 @@ function playerMovement(){
 
 const newArcade = arcade()
 
-function update(){
-	playerAnimations()
-	playerMovement()
+function lowLifeScreenEffect(){
+	const effectEnabled = hud_screen.className.includes('low_life_blood_splash')
 
-	if(player.health < 20){
-		if(!hud_screen.className.includes('low_life_blood_splash')){
-			hud_screen.classList.add('low_life_blood_splash')
-		}
-	}else{
-		if(hud_screen.className.includes('low_life_blood_splash')){
-			hud_screen.classList.remove('low_life_blood_splash')
-		}
+	if(player.health < 20 && !effectEnabled){
+		hud_screen.classList.add('low_life_blood_splash')
 	}
+	if(player.health > 20 && effectEnabled){
+		hud_screen.classList.remove('low_life_blood_splash')
+	}
+}
+
+function update(){
+	lowLifeScreenEffect()
 
 	if(player.health <= 0 && !player.isDead){
 		player.isDead = true
@@ -612,25 +612,6 @@ function update(){
 		}, 1500)
 	}
 
-	camera.update()
-}
-
-function render(){
-	display.save()
-	display.clearRect(0, 0, canvas.width, canvas.height)
-	buffer.save()
-	buffer.clearRect(0, 0, canvas.width, canvas.height)
-
-	/* PARALLAX */
-	parallax_back.update()
-	parallax_middle.update()
-	parallax_front.update()			
-
-	buffer.translate(
-		Math.floor(-camera.x),
-		Math.floor(-camera.y)
-	)
-
 	const camera_position = {
 		position: {
 			x: camera.x + canvas.width/2,
@@ -640,10 +621,23 @@ function render(){
 		height: 50
 	}
 
-	player.update()
+	playebleMapBlocks.forEach(block => {
+		const {top, bottom, left, right} = detectInArea(camera_position, block, 300, (canvas.height/2), 300, (canvas.width/2) + 50, (canvas.width/2))
+		const blockInArea = top || bottom || right || left
+
+		if(blockInArea){
+			if(!block.visible) block.visible = true
+			basicCollision(player, block)
+			return
+		}
+		if(!block.visible) block.visible = false
+	})
+
+	playerAnimations()
+	playerMovement()
 
 	enemys.forEach((enemy, index) => {
-		if(!enemy.visible){
+		if(!enemy.visible && enemy.isDead){
 			enemys.splice(index, 1)
 			newArcade.verifyKills()
 			return
@@ -663,63 +657,103 @@ function render(){
 		const {top, bottom, left, right} = detectInArea(camera_position, enemy, 300, (canvas.height/2), 300, (canvas.width/2) + 50, (canvas.width/2))
 		const isInScreen = top || bottom || right || left
 
-		if(isInScreen) enemy.draw()
-		enemy.update()
+		if(isInScreen) enemy.visible = true
+		else enemy.visible = false
 
 		playebleMapBlocks.forEach(block => {
 			basicCollision(enemy, block)
 		})
 
-		if(enemy.position.y > mapHeight || enemy.position.x > mapSize){
-			enemys.splice(index, 1)
-		}
-	})
-
-	playebleMapBlocks.forEach(block => {
-		const {top, bottom, left, right} = detectInArea(camera_position, block, 300, (canvas.height/2), 300, (canvas.width/2) + 50, (canvas.width/2))
-		const blockInArea = top || bottom || right || left
-
-		if(blockInArea){
-			buffer.drawImage(tilemap, block.imgX, block.imgY, 32, 32, block.position.x, block.position.y, block.width, block.height)				
-			basicCollision(player, block)
-		}
+		enemy.update()
 	})
 
 	itensArray.forEach((item, index) => {
-		if(item.visible){
-			item.update()
+		if(!item.visible) return
 
-			itemCollision(collide(player, item))
+		itemCollision(collide(player, item))
 
-			if(item.itemType == "soul"){
-				playebleMapBlocks.forEach(block => {
-					basicCollision(item, block)
-				})
+		if(item.itemType == "soul"){
+			playebleMapBlocks.forEach(block => {
+				basicCollision(item, block)
+			})
 
-				if(!item.visible){
-					itensArray.splice(index, 1)
-				}
+			if(!item.visible){
+				itensArray.splice(index, 1)
 			}
 		}
 	})
 
+	camera.update()
+}
+
+function render(){
+	buffer.save()
+	buffer.clearRect(0, 0, canvas.width, canvas.height)
+
+	/* PARALLAX */
+	parallax_back.update()
+	parallax_middle.update()
+	parallax_front.update()			
+
+	buffer.translate(
+		Math.floor(-camera.x),
+		Math.floor(-camera.y)
+	)
+
+	player.update()
+
+	enemys.forEach(enemy => {
+		if(enemy.visible){
+			enemy.draw()
+		}
+	})
+
+	playebleMapBlocks.forEach(block => {
+		if(block.visible){
+			buffer.drawImage(
+				tilemap,
+				block.imgX,
+				block.imgY,
+				32, 32,
+				block.position.x,
+				block.position.y,
+				block.width,
+				block.height
+			)
+		}
+	})
+
+	itensArray.forEach(item => {
+		if(item.visible){
+			item.update()
+		}
+	})
+
 	display.drawImage(cv, 0, 0)
-	display.restore()
 	buffer.restore()
 }
 
-function loop(){
+let lastTime = 0
+let requiredElapsed = 1000/100
+
+function gameLoop(now){
 	if(!gameIsPaused){
-		window.requestAnimationFrame(loop)
+		window.requestAnimationFrame(gameLoop)
 	}
 
-	render()
-	update()
+	if(!lastTime) lastTime = now
+	var elapsed = now - lastTime
+	
+	if(elapsed > requiredElapsed){
+		update()
+		render()
+		lastTime = now
+	}
 }
 
 function init(){
 	gameIsPaused = false
-	loop()
+	gameLoop()
 
 	if(developerMode){
 		const enemy1 = new SkeletonSpearman({color: "red", health: 100, position: {x: 700, y: 400}})
@@ -734,7 +768,7 @@ function continues(){
 	if(gameIsPaused){
 		newArcade.init()
 		gameIsPaused = false
-		loop()
+		gameLoop()
 	}
 }
 
