@@ -9,19 +9,19 @@ var developerMode = false
 const canvas  = document.querySelector("canvas")
 const display = canvas.getContext("2d", {alpha: false})
 
-const cv     = document.createElement("canvas")
+const cv = document.createElement("canvas")
 const buffer = cv.getContext('2d', {alpha: false})
 
 const screens_container = document.querySelector("#screens-container")
-const hud_screen      = document.getElementById("hud-screen")
+const hud_screen = document.getElementById("hud-screen")
 
-const souls_amount    = document.getElementById("souls-amount")
+const souls_amount  = document.getElementById("souls-amount")
 
 const close_guide    = document.getElementById("close-guide")
 const guide_checkbox = document.querySelector("input[type=checkbox][name=dontshowguide]")
 
 const health_bar = document.getElementById("health-bar")
-const health_amount    = document.getElementById("health-amount")
+const health_amount = document.getElementById("health-amount")
 
 const waves_count        = document.getElementById("waves-count")
 const kills_count        = document.getElementById("kills-count")
@@ -373,6 +373,8 @@ const player = new Player({position: {x: 127, y: 380}})
 player.setSprites(player_sprites)
 const camera = new Camera()
 
+const newArcade = arcade()
+
 const life = new Item({
 	itemType: "life",
 	position: {
@@ -579,19 +581,6 @@ function playerMovement(){
 	}
 }
 
-const newArcade = arcade()
-
-function lowLifeScreenEffect(){
-	const effectEnabled = hud_screen.className.includes('low_life_blood_splash')
-
-	if(player.health < 20 && !effectEnabled){
-		hud_screen.classList.add('low_life_blood_splash')
-	}
-	if(player.health > 20 && effectEnabled){
-		hud_screen.classList.remove('low_life_blood_splash')
-	}
-}
-
 function update(){
 	lowLifeScreenEffect()
 
@@ -734,8 +723,9 @@ function render(){
 		}
 	})
 
-	display.drawImage(cv, 0, 0)
 	buffer.restore()
+
+	display.drawImage(cv, 0, 0)
 }
 
 let lastTime = 0

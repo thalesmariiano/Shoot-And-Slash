@@ -65,3 +65,14 @@ function hud(id){
 		updateIcon
 	}
 }
+
+function lowLifeScreenEffect(){
+	const effectEnabled = hud_screen.className.includes('low_life_blood_splash')
+
+	if(player.health < 20 && !effectEnabled){
+		hud_screen.classList.add('low_life_blood_splash')
+	}
+	if(player.health > 20 && effectEnabled){
+		hud_screen.classList.remove('low_life_blood_splash')
+	}
+}
