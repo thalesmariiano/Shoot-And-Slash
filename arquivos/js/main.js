@@ -418,20 +418,20 @@ skillsButton.forEach(button => {
 	button.addEventListener("click", event => buySkill(event, button))
 })
 
-const skills_list = [
-	{name: 'health', price: 5, level: 1, max_level: 20},
-	{name: 'speed', price: 5, level: 1, max_level: 5},
-	{name: 'strength', price: 5, level: 1 ,max_level: 6},
-	{name: 'attackspeed', price: 10, level: 1, max_level: 2},
-	{name: 'loot', price: 10, level: 1, max_level: 7}
-]
+const skills_list = {
+	'health': {price: 5, level: 1, max_level: 20},
+	'speed': {price: 5, level: 1, max_level: 5},
+	'strength': {price: 5, level: 1 ,max_level: 6},
+	'attackspeed': {price: 10, level: 1, max_level: 2},
+	'loot': {price: 10, level: 1, max_level: 7}
+}
 
 // Skill List clone with default values
 const skills_list_default = JSON.parse(JSON.stringify(skills_list))
 
 function buySkill(event, button){
 	const skill_name = button.dataset.skill
-	const skill = skills_list.find(s => s.name == skill_name)
+	const skill = skills_list[skill_name]
 
 	const level_text = button.children[0].children[1]
 	const price_text = button.nextElementSibling
@@ -473,29 +473,27 @@ function buySkill(event, button){
 	souls_amount.innerHTML = player.souls
 	level_text.innerHTML = `Lv ${skill.level}`
 
-	updateSkill(skill.name)
+	updateSkill(skill_name)
 }
 
 function updateSkill(skill){
-	switch(skill){
-		case "speed":
-			player.speed += .3
-			break
-		case "health":
-			player.maxHealth += 10
-			player.receiveLife(1000)
-			health_bar.style.width = player.maxHealth + "px"
-			health_amount.style.width = player.maxHealth + "px"
-			break
-		case "strength":
-			player.attDamage += 5
-			break
-		case "attackspeed":
-			player.attackSpeedMax = true
-			break
-		case "loot":
-			player.dropLuck += 5
-			break
+	if(skill === 'speed'){
+		player.speed += .3
+	}
+	if(skill === 'health'){
+		player.maxHealth += 10
+		player.receiveLife(1000)
+		health_bar.style.width = player.maxHealth + "px"
+		health_amount.style.width = player.maxHealth + "px"
+	}
+	if(skill === 'strength'){
+		player.attDamage += 5
+	}
+	if(skill === 'attackspeed'){
+		player.attackSpeedMax = true
+	}
+	if(skill === 'loot'){
+		player.dropLuck += 5
 	}
 }
 
@@ -790,38 +788,10 @@ function pause(){
 }
 
 function restart(){
-	itensArray.forEach((item, index) => {
-		if(item.itemType == 'soul') itensArray.splice(index, 1)
 
-		item.position.x = item.initial_position.x
-		item.position.y = item.initial_position.y
-		item.visible = true
-	})
-
-	for(i = 0; i < skills_list.length; i++){
-		skills_list[i].price = skills_list_default[i].price
-		skills_list[i].level = skills_list_default[i].level
-	}
-
-	skillsButton.forEach((button, index) => {
-		const level_text = button.children[0].children[1]
-		const price_text = button.nextElementSibling
-
-		level_text.innerHTML = 'Lv 1'
-		level_text.style.color = ""
-		price_text.style.opacity = "1"
-		price_text.innerHTML = `${skills_list[index].price} Almas`
-		button.style.opacity = "1"
-	})
-
-	health_bar.style.width = 100 + "px"
-	health_amount.style.width = 100 + "px"
-
-	souls_amount.innerHTML = 0
-
+	restartGame()
 	newArcade.restart()
 	newArcade.saveData()
-
 	player.restart()
 
 	init()
@@ -830,38 +800,9 @@ function restart(){
 function destroy(){
 	gameIsPaused = true
 
-	itensArray.forEach((item, index) => {
-		if(item.itemType == 'soul') itensArray.splice(index, 1)
-
-		item.position.x = item.initial_position.x
-		item.position.y = item.initial_position.y
-		item.visible = true
-	})
-
-	for(i = 0; i < skills_list.length; i++){
-		skills_list[i].price = skills_list_default[i].price
-		skills_list[i].level = skills_list_default[i].level
-	}
-
-	skillsButton.forEach((button, index) => {
-		const level_text = button.children[0].children[1]
-		const price_text = button.nextElementSibling
-
-		level_text.innerHTML = 'Lv 1'
-		level_text.style.color = ""
-		price_text.style.opacity = "1"
-		price_text.innerHTML = `${skills_list[index].price} Almas`
-		button.style.opacity = "1"
-	})
-
-	health_bar.style.width = 100 + "px"
-	health_amount.style.width = 100 + "px"
-
-	souls_amount.innerHTML = 0
-
+	restartGame()
 	newArcade.restart()
 	newArcade.saveData()
-
 	player.restart()
 
 	buffer.clearRect(0, 0, canvas.width, canvas.height)

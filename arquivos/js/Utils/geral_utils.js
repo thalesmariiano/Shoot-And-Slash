@@ -206,3 +206,33 @@ function generateTerrain(mapArray, outputArray){
 		}
 	}
 }
+
+function restartGame(){
+	itensArray.forEach((item, index) => {
+		if(item.itemType == 'soul') itensArray.splice(index, 1)
+
+		item.position.x = item.initial_position.x
+		item.position.y = item.initial_position.y
+		item.visible = true
+	})
+
+	skillsButton.forEach(button => {
+		const skill_name = button.dataset.skill
+		const level_text = button.children[0].children[1]
+		const price_text = button.nextElementSibling
+
+		skills_list[skill_name].price = skills_list_default[skill_name].price
+		skills_list[skill_name].level = skills_list_default[skill_name].level
+
+		level_text.innerHTML = 'Lv 1'
+		level_text.style.color = ""
+		price_text.style.opacity = "1"
+		price_text.innerHTML = `${skills_list[skill_name].price} Almas`
+		button.style.opacity = "1"
+	})
+
+	health_bar.style.width = 100 + "px"
+	health_amount.style.width = 100 + "px"
+
+	souls_amount.innerHTML = 0
+}
