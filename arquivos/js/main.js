@@ -618,7 +618,7 @@ function update(){
 
 		if(blockInArea){
 			if(!block.visible) block.visible = true
-			basicCollision(player, block)
+			collision(hitBox(player, block))
 			return
 		}
 		if(!block.visible) block.visible = false
@@ -653,7 +653,7 @@ function update(){
 		else enemy.visible = false
 
 		mapBlocks.forEach(block => {
-			basicCollision(enemy, block)
+			collision(hitBox(enemy, block))
 		})
 
 		enemy.update()
@@ -662,11 +662,11 @@ function update(){
 	itensArray.forEach((item, index) => {
 		if(!item.visible) return
 
-		itemCollision(collide(player, item))
+		itemCollision(hitBox(player, item))
 
 		if(item.itemType == "soul"){
 			mapBlocks.forEach(block => {
-				basicCollision(item, block)
+				collision(hitBox(item, block))
 			})
 
 			if(!item.visible){

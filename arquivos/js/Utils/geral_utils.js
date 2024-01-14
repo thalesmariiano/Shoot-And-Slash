@@ -98,7 +98,7 @@ function generateEnemys(amount, health){
 }
 
 function detectInArea(entity, target, areaTotal, topArea, bottomArea, leftArea, rightArea){
-	const {overlap, distance} = collide(target, entity)
+	const {overlap, distance} = hitBox(target, entity)
 
 	const radar = {
 		top: false,
