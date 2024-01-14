@@ -1,8 +1,6 @@
 
-const projectileCollision = collison => {
-	const {side, collider, target} = collison
-
-	if(side.top || side.bottom || side.left || side.right){
+const projectileCollision = ({isColliding, collider, target}) => {
+	if(isColliding){
 		if(target.type == "Block"){
 			collider.velocity.x = 0
 			collider.velocity.y = 0
@@ -15,44 +13,21 @@ const projectileCollision = collison => {
 	}
 }
 
-const itemCollision = ({side, collider, target}) => {
+const itemCollision = ({isColliding, collider, target}) => {
 	const item = target
-	const isColliding = side.top || side.bottom || side.left || side.right
 
-	if(isColliding && collider.entityType == "Player"){
+	if(isColliding){
 		switch(item.itemType){
-			case "Coin":
-				collider.coinNumbers += item.itemValue
-				item.visible = false
-				break
 			case "life":
 				if(collider.health < collider.maxHealth){
 					collider.receiveLife(item.itemValue)
 					item.visible = false
 				}
 				break
-			case "Bomb":
-				collider.takeHit(item.itemValue)
-				item.visible = false
-				break
 			case "soul":
 				player.souls += 1
 				souls_amount.innerHTML = player.souls
 				item.visible = false
-				break
-			default:
-				// if(item.type != "Weapon") return
-
-				// for(i = 0; i < collider.inventory.length; i++){
-				// 	const slot = collider.inventory[i]
-				// 	if(!slot.item){
-				// 		slot.item = item
-				// 		item.visible = false
-				// 		item.isInInventory = true
-				// 		updateUI("icon", item)
-				// 		return
-				// 	}		
-				// }
 				break
 		}
 	}

@@ -63,10 +63,9 @@ class Player extends Entity {
 
 			enemys_near_player.forEach(enemy => {
 				if(!enemy.isDead){
-					const { side } = hitBox(this.sword, enemy)
-					const sword_collide = side.top || side.bottom || side.left || side.right
+					const { isColliding } = hitBox(this.sword, enemy)
 
-					if(sword_collide && !this.entityAttacked){
+					if(isColliding && !this.entityAttacked){
 						this.entityAttacked = true
 						enemy.takeHit(this.attDamage)
 					}

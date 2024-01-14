@@ -155,10 +155,9 @@ class Enemy extends Entity {
 
 	attack(animation, dmg, frame){
 		if(this.currentFrames == frame && this.sprInfo.name == animation){
-			const { side } = hitBox(this.sword, player)
-			const sword_collide = side.top || side.bottom || side.left || side.right
+			const { isColliding } = hitBox(this.sword, player)
 
-			if(sword_collide && !this.entityAttacked){
+			if(isColliding && !this.entityAttacked){
 				this.entityAttacked = true
 				player.takeHit(dmg)
 			}
