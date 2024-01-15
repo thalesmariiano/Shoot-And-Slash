@@ -2,8 +2,7 @@
 const projectileCollision = ({isColliding, collider, target}) => {
 	if(isColliding){
 		if(target.type == "Block"){
-			collider.velocity.x = 0
-			collider.velocity.y = 0
+			collider.visible = false
 		}
 
 		if(target.type == "Entity" && !target.isDead){

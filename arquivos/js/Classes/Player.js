@@ -4,7 +4,7 @@ class Player extends Entity {
 		super({color, position})
 		
 		this.souls = 0
-		this.coinNumbers = 0
+		this.fireBalls = 1
 		this.inventory = [
 			{
 				id: 1,

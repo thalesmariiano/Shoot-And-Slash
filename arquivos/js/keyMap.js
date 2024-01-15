@@ -50,6 +50,7 @@ window.addEventListener("keyup", keyUpHandler)
 
 function keyDownHandler(e){
 	let key = e.code
+
 	switch(key){
 		case controlKey.jump:
 			keyUp = true
@@ -65,6 +66,9 @@ function keyDownHandler(e){
 			break
 		case "Enter":
 			keyEnter = true
+			break
+		case "KeyF":
+			keyF = true
 			break
 		case "KeyR":
 			keyR = true
@@ -100,6 +104,9 @@ function keyUpHandler(e){
 			break
 		case "Enter":
 			keyEnter = false
+			break
+		case "KeyF":
+			keyF = false
 			break
 		case "KeyR":
 			keyR = false

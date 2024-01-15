@@ -33,11 +33,12 @@ const skillsButton = document.querySelectorAll("[data-skill]")
 
 const GRAVITY = 0.6
 
-var keyRight,
-    keyLeft,
-    keyUp,
-    keyDown,
-    keyEnter,
+var keyRight =
+    keyLeft =
+    keyUp =
+    keyDown =
+    keyEnter =
+    keyF =
     keyR = false
 
 var gameIsPaused = true
@@ -160,6 +161,19 @@ const itens_sprites = {
 			name: "life",
 			image: "arquivos/assets/itens/life.png",
 			frames: 1
+		}
+	],
+	fireball: [
+		{
+			name: "fireball_right",
+			image: "arquivos/assets/itens/fireball.png",
+			frames: 60,
+			hold: 0
+		},
+		{
+			name: "fireball_left",
+			image: "arquivos/assets/itens/fireball_left.png",
+			frames: 60
 		}
 	]
 }
@@ -365,9 +379,11 @@ spriteConverter(skeleton_spearman_sprites)
 spriteConverter(player_sprites)
 spriteConverter(itens_sprites.enemy_soul)
 spriteConverter(itens_sprites.life)
+spriteConverter(itens_sprites.fireball)
 
 const enemys = []
 const enemys_near_player = []
+const magicPowers = []
 
 const player = new Player({position: {x: 127, y: 380}})
 player.setSprites(player_sprites)
@@ -579,6 +595,23 @@ function playerMovement(){
 	}else{
 		player.attackSprite = 1
 	}
+
+	if(keyF){
+		if(player.fireBalls){
+			player.fireBalls -= 1
+			const fireball = new Projectile({
+				projectile: 'fireball',
+				position: {
+					x: player.position.x,
+					y: player.position.y + player.height/2 - 20
+				}
+			})
+			fireball.direction = player.direction
+			fireball.setSprites(itens_sprites.fireball)
+			magicPowers.push(fireball)
+		}
+	}
+	
 }
 
 function update(){
@@ -677,6 +710,24 @@ function update(){
 		item.update()
 	})
 
+	magicPowers.forEach(power => {
+		if(power.visible){
+			power.update()
+
+			enemys.forEach(enemy => {
+				if(enemy.visible){
+					projectileCollision(hitBox(power, enemy))					
+				}
+			})
+
+			mapBlocks.forEach(block => {
+				if(block.visible){
+					projectileCollision(hitBox(power, block))					
+				}
+			})
+		}
+	})
+
 	camera.update()
 }
 
@@ -720,6 +771,12 @@ function render(){
 	itensArray.forEach(item => {
 		if(item.visible){
 			item.draw()
+		}
+	})
+
+	magicPowers.forEach(power => {
+		if(power.visible){
+			power.draw()
 		}
 	})
 

@@ -1,35 +1,31 @@
 
-class Projectile {
-	constructor(position, velocity, weapon, direction){
-		this.color = "#f7d092"
-		this.position = position
-		this.width = 4
-		this.height = 3
-		this.velocity = velocity
-		this.dmg = 0
-		this.weapon = weapon
-		this.direction = direction
+class Projectile extends Entity {
+	constructor({color, position, projectile}){
+		super({color, position})
+
+		this.width = this.entitySizeX = 136
+		this.height = this.entitySizeY = 18
+		this.velocity = {
+			x: 0,
+			y: 0
+		}
+		this.dmg = 20
 		//
-		this.visible = true
+		this.projectile = projectile
 		this.type = "Projectile"
 	}
 
-	draw(){
-		buffer.fillStyle = this.color
-		buffer.fillRect(this.position.x, this.position.y, this.width, this.height)
-	}
-
 	update(){
-		this.draw()
-		this.position.x += this.velocity.x
-		this.position.y += this.velocity.y
+		this.animation()
 
-		if(this.weapon.gunType == "Fuzil"){
-			this.dmg = 20
+		if(this.projectile == 'fireball'){
+			this.velocity.x = 12
+			this.switchSprite('fireball_' + this.direction)	
 		}
 
-		// if(this.weapon.gunType == "Espingarda"){
-		// 	this.dmg = 10
-		// }
+		if(this.direction == 'left') this.position.x -= this.velocity.x
+		else this.position.x += this.velocity.x
+
+		this.position.y += this.velocity.y
 	}
 }
