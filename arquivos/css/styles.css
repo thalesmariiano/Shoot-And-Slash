@@ -737,6 +737,10 @@ video {
   height: 24rem;
 }
 
+.h-\[15px\]{
+  height: 15px;
+}
+
 .h-\[27rem\]{
   height: 27rem;
 }
@@ -823,6 +827,10 @@ video {
 
 .w-\[32rem\]{
   width: 32rem;
+}
+
+.w-\[50px\]{
+  width: 50px;
 }
 
 .w-full{
@@ -1055,6 +1063,11 @@ video {
 
 .bg-neutral-900\/75{
   background-color: rgb(23 23 23 / 0.75);
+}
+
+.bg-purple-700{
+  --tw-bg-opacity: 1;
+  background-color: rgb(126 34 206 / var(--tw-bg-opacity));
 }
 
 .bg-red-600{
