@@ -4,7 +4,9 @@ class Player extends Entity {
 		super({color, position})
 		
 		this.souls = 0
-		this.fireBalls = 1
+		this.mana = 50
+		this.maxMana = 50
+		this.blockFire = false
 		this.inventory = [
 			{
 				id: 1,
@@ -127,6 +129,7 @@ class Player extends Entity {
 
 	restart(){
 		this.maxHealth = this.health = 100
+		this.maxMana = this.mana = 50
 		this.receiveLife(1000)
 		this.isDead = false
 		this.framesHold = 5

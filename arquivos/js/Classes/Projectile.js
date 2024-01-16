@@ -9,7 +9,6 @@ class Projectile extends Entity {
 			x: 0,
 			y: 0
 		}
-		this.dmg = 20
 		//
 		this.projectile = projectile
 		this.type = "Projectile"
@@ -20,6 +19,7 @@ class Projectile extends Entity {
 
 		if(this.projectile == 'fireball'){
 			this.velocity.x = 12
+			this.dmg = 50
 			this.switchSprite('fireball_' + this.direction)	
 		}
 

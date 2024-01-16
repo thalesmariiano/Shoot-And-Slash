@@ -231,6 +231,9 @@ function restartGame(){
 		button.style.opacity = "1"
 	})
 
+	mana_bar.style.width = 50 + "px"
+	mana_amount.style.width = 50 + "px"
+
 	health_bar.style.width = 100 + "px"
 	health_amount.style.width = 100 + "px"
 

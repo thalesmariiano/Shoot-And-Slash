@@ -23,6 +23,9 @@ const guide_checkbox = document.querySelector("input[type=checkbox][name=dontsho
 const health_bar = document.getElementById("health-bar")
 const health_amount = document.getElementById("health-amount")
 
+const mana_bar = document.getElementById("mana-bar")
+const mana_amount = document.getElementById("mana-amount")
+
 const waves_count        = document.getElementById("waves-count")
 const kills_count        = document.getElementById("kills-count")
 const waves_skills_timer = document.getElementById("waves-skills-timer")
@@ -440,7 +443,7 @@ const skills_list = {
 	'health': {price: 5, level: 1, max_level: 20},
 	'speed': {price: 5, level: 1, max_level: 5},
 	'strength': {price: 5, level: 1 ,max_level: 6},
-	'attackspeed': {price: 10, level: 1, max_level: 2},
+	'mana': {price: 10, level: 1, max_level: 10},
 	'loot': {price: 10, level: 1, max_level: 7}
 }
 
@@ -507,8 +510,11 @@ function updateSkill(skill){
 	if(skill === 'strength'){
 		player.attDamage += 5
 	}
-	if(skill === 'attackspeed'){
-		player.attackSpeedMax = true
+	if(skill === 'mana'){
+		player.maxMana += 25
+		mana_bar.style.width = player.maxMana + "px"
+		mana_amount.style.width = player.maxMana + "px"
+		player.mana = player.maxMana
 	}
 	if(skill === 'loot'){
 		player.dropLuck += 5
@@ -597,8 +603,11 @@ function playerMovement(){
 	}
 
 	if(keyF){
-		if(player.fireBalls){
-			player.fireBalls -= 1
+		if(player.mana && !player.blockFire){
+			player.mana -= 25
+			player.blockFire = true
+			hud('mana-amount').updateAmount(player.mana)
+
 			const fireball = new Projectile({
 				projectile: 'fireball',
 				position: {
@@ -609,6 +618,10 @@ function playerMovement(){
 			fireball.direction = player.direction
 			fireball.setSprites(itens_sprites.fireball)
 			magicPowers.push(fireball)
+
+			setTimeout(() => {
+				player.blockFire = false
+			}, 300)
 		}
 	}
 	
