@@ -49,6 +49,7 @@ function gameStorage(){
 	function init(){
 		if(readStorage('SaSdialog')) deleteStorage('SaSdialog')
 		if(readStorage('SaSControl')) deleteStorage('SaSControl')
+		if(readStorage('SaS-Control')) deleteStorage('SaS-Control')
 		if(!readStorage("SaS-Save")) createStorage("SaS-Save", 1)
 
 		if(saveAllowed()){
@@ -56,7 +57,6 @@ function gameStorage(){
 			createStorage("SaS-Dialog", 1)
 			createStorage("SaS-Arcade", 0)
 			createStorage("SaS-News", 0)
-			createStorage("SaS-Control", 1)
 		}else{
 			$("#save-memory").checked = false
 		}

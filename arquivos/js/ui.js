@@ -91,7 +91,6 @@ $("#confirm-delete").addEventListener("click", () => {
 	game_storage.updateStorage("SaS-Dialog", 1) // restarting values
 	game_storage.updateStorage("SaS-Arcade", 0) // restarting values
 	game_storage.updateStorage("SaS-News", 0) // restarting values
-	game_storage.updateStorage("SaS-Control", 1) // restarting values
 	removeUI("delete-history-dialog", "animate__fadeOut")
 })
 
@@ -108,7 +107,6 @@ $("#save-memory").addEventListener("click", e => {
 		game_storage.createStorage("SaS-Dialog", 1) 
 		game_storage.createStorage("SaS-Arcade", 0) 
 		game_storage.createStorage("SaS-News", 0) 
-		game_storage.createStorage("SaS-Control", 1)
 		$("#save-memory").checked = true
 	}
 })
