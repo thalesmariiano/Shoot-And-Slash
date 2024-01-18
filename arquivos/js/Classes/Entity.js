@@ -36,6 +36,7 @@ class Entity {
 		this.isFalling = false
 		this.isRunning = false
 		this.isWalking = false
+		this.isJumping = false
 		this.isAttacking = false
 		this.isShooting = false
 		this.isDead = false

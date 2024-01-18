@@ -36,18 +36,7 @@ const skillsButton = document.querySelectorAll("[data-skill]")
 
 const GRAVITY = 0.6
 
-var keyRight =
-    keyLeft =
-    keyUp =
-    keyDown =
-    keyEnter =
-    keyF =
-    keyR = false
-
 var gameIsPaused = true
-
-var lockLeft,
-    lockRight = false
 
 const tilemap = new Image()
 tilemap.src   = "arquivos/assets/map/tilemap.png"
@@ -522,22 +511,22 @@ function updateSkill(skill){
 }
 
 function playerAnimations(){
-	if(player.isIdle && !player.isDead){
+	if(!player.isJumping && !player.isFalling && player.isIdle && !player.isDead){
 		player.switchSprite(`idle_${player.direction}`)		
 	}
 
-	if(keyUp && !player.isDead && !player.isFalling){
+	if(player.isJumping && !player.isDead && !player.isFalling){
 		player.switchSprite(`jump_${player.direction}`)
 	}
-
-	if(player.velocity.y > 0 && !player.isDead){
+	
+	if(player.isFalling && !player.isDead){
 		player.switchSprite(`fall_${player.direction}`)		
 	}
 
-	if(!keyUp && !player.isDead && player.isRunning && !player.isFalling){
+	if(player.isJumping && !player.isDead && player.isRunning && !player.isFalling){
 		player.switchSprite(`run_${player.direction}`)
 	}
-
+	
 	if(player.receiveDamage && !player.isDead && !player.isAttacking){
 		player.switchSprite(`take_hit_${player.direction}`)
 	}
@@ -554,55 +543,64 @@ function playerAnimations(){
 function playerMovement(){
 
 	// Player parado
-	if(!keyUp && !player.isRunning && !player.isAttacking && !player.receiveDamage && !player.isFalling){
+	if(!player.isRunning && !player.isAttacking && !player.receiveDamage && !player.isFalling){
 		player.isIdle = true
-	}else{
-		player.isIdle = false
-	}
+	}else player.isIdle = false
 
 	// Player caindo
 	if(player.velocity.y > 0){
 		player.receiveDamage = false
 		player.isFalling = true
+		player.isJumping = false
 	}
 
-	// Player pulando
-	if(keyUp && !player.isDead && !player.isFalling){
-		player.velocity.y = player.jump
-		player.isFalling = true
-		
-		jump.play()
+	// Player pular
+	if(keyState['ArrowUp'] || keyState['KeyW'] || keyState['Space']){
+		if(!player.isJumping && !player.isFalling && !player.isDead){
+			player.velocity.y = player.jump
+			player.isJumping = true
+			jump.play()
+		}
 	}
 
-	// Player andando para esquerda ou direita
-	if(keyLeft || keyRight){
-		player.receiveDamage = false
-		if(keyLeft && !lockLeft && !player.isDead){
+	// Mover Player para esquerda
+	if(keyState['ArrowLeft'] || keyState['KeyA']){
+		if(!keyState['ArrowRight'] && !keyState['KeyD']){
 			player.velocity.x = -player.speed
 			player.direction = "left"
-			lockRight = true
+			player.isRunning = true
 		}
-		if(keyRight && !lockRight && !player.isDead){
-			player.velocity.x = player.speed
-			player.direction = "right"
-			lockLeft = true
-		}
-		player.isRunning = true
-	}else{
-		player.isRunning = false
-		player.velocity.x = 0
 	}
 
-	// Player atacando
-	if(keyEnter && !player.isDead){
-		if(!player.isFalling && !player.isRunning){
+	// Mover Player para direita
+	if(keyState['ArrowRight'] || keyState['KeyD']){
+		if(!keyState['ArrowLeft'] && !keyState['KeyA']){
+			player.velocity.x = player.speed
+			player.direction = "right"
+			player.isRunning = true
+		}
+	}
+
+	// Parar movimento do Player
+	if(!keyState['ArrowRight'] && !keyState['ArrowLeft']){
+		if(!keyState['KeyA'] && !keyState['KeyD']){
+			player.isRunning = false
+			player.velocity.x = 0
+		}
+	}
+
+	// Player atacar
+	if(keyState['Enter'] && !player.isDead){
+		if(!player.isFalling && !player.isJumping && !player.isRunning){
 			player.isAttacking = true
 		}
 	}else{
 		player.attackSprite = 1
+		player.isAttacking = false
 	}
 
-	if(keyF){
+	// Player disparar fireball
+	if(keyState['KeyF']){
 		if(player.mana && !player.blockFire){
 			player.mana -= 25
 			player.blockFire = true
@@ -877,13 +875,5 @@ const resizeAspectRatio = () => {
 resizeAspectRatio()
 
 window.onresize = () => resizeAspectRatio()
-window.onblur = () => {
-	pause()
-	keyLeft =
-	keyRight =
-	keyUp =
-	keyR =
-	keyEnter =
-	lockLeft =
-	lockRight = false
-}
+window.onblur = () => pause()
+

@@ -116,7 +116,6 @@ class Player extends Entity {
 		}else if(animation.name == `attack_2_${this.direction}`){
 			this.attackSprite = 1
 		}
-		if(!keyEnter) this.isAttacking = false
 
 		if(animation.name == `death_${this.direction}`){
 			this.stopAnimation = true
