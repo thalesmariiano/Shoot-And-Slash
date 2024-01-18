@@ -523,7 +523,7 @@ function playerAnimations(){
 		player.switchSprite(`fall_${player.direction}`)		
 	}
 
-	if(player.isJumping && !player.isDead && player.isRunning && !player.isFalling){
+	if( player.isRunning && !player.isJumping && !player.isDead && !player.isFalling){
 		player.switchSprite(`run_${player.direction}`)
 	}
 	
