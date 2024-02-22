@@ -6,13 +6,15 @@ function gameStorage(){
 	const permanentStorage = []
 
 	function createStorage(item, value){
-		if(parseInt(localStorage.getItem('SaS-Save'))){
+		if(saveAllowed() && localStorage.getItem('SaS-Save') !== null ){
 			if(!storages.includes(item)){
 				storages.push(item)
 				if(!localStorage.getItem(item)){
 					localStorage.setItem(item, value)
 				}
 			}
+		}else{
+			window.localStorage.setItem('SaS-Save', 1)
 		}
 	}
 
@@ -42,9 +44,7 @@ function gameStorage(){
 		storages.length = 0
 	}
 
-	function saveAllowed(){
-		return parseInt(readStorage('SaS-Save'))
-	}
+	const saveAllowed = () => parseInt(readStorage('SaS-Save'))
 
 	function init(){
 		if(readStorage('SaSdialog')) deleteStorage('SaSdialog')
