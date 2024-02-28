@@ -170,10 +170,13 @@ class Enemy extends Entity {
 	}
 
 	detectPlayer(){
-		const isFarAway = detectInArea(this, player, this.farDist)
-		const closeToCharge = detectInArea(this, player, this.chargeDist)
-		const isClose = detectInArea(this, player, this.closeDist)
-		const isTooClose = detectInArea(this, player, this.tooCloseDistX, 0, this.tooCloseDistY, 0, 0)
+		const isFarAway = detectInArea(this, player, {total: this.farDist})
+		const closeToCharge = detectInArea(this, player, {total: this.chargeDist})
+		const isClose = detectInArea(this, player, {total: this.closeDist})
+		const isTooClose = detectInArea(
+			this, player,
+			{top: 0, bottom: this.tooCloseDistY, left: this.tooCloseDistX, right: this.tooCloseDistX}
+		)
 
 		// Detectar player longe
 		if(isFarAway.left && !isClose.left && !isTooClose.left && !isTooClose.bottom && !this.receiveDamage){

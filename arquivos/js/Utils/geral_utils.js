@@ -97,7 +97,7 @@ function generateEnemys(amount, health){
 	}
 }
 
-function detectInArea(entity, target, areaTotal, topArea, bottomArea, leftArea, rightArea){
+function detectInArea(entity, target, area){
 	const {overlap, distance} = hitBox(target, entity)
 
 	const radar = {
@@ -105,40 +105,39 @@ function detectInArea(entity, target, areaTotal, topArea, bottomArea, leftArea, 
 		bottom: false,
 		left: false,
 		right: false,
+		isInArea: false,
 		distance,
-		area_total: areaTotal,
-		area: {
-			top_area: topArea,
-			bottom_area: bottomArea,
-			left_area: leftArea,
-			right_area: rightArea
-		}
+		area
 	}
 
-	const top    = topArea ? topArea : areaTotal
-	const bottom = bottomArea ? bottomArea : areaTotal
-	const left   = leftArea ? leftArea : areaTotal
-	const right  = rightArea ? rightArea : areaTotal
+	const top_area = area.top || area.total 
+	const bottom_area = area.bottom || area.total
+	const left_area = area.left || area.total
+	const right_area = area.right || area.total
 
-	const isInTopArea = Math.abs(distance.y) < top
-	const isInBottomArea = Math.abs(distance.y) < bottom
-
-	const isInLeftArea = Math.abs(distance.x) < left
-	const isInRightArea = Math.abs(distance.x) < right
+	const itsOnTop = Math.abs(distance.y) < top_area
+	const itsOnBottom = Math.abs(distance.y) < bottom_area
+	const itsOnLeft = Math.abs(distance.x) < left_area
+	const itsOnRight = Math.abs(distance.x) < right_area
 
 	if(overlap.x >= overlap.y){
 		if(distance.y > 0){
-			radar.top = isInTopArea
+			radar.top = itsOnTop
 		}else{
-			radar.bottom = isInBottomArea
+			radar.bottom = itsOnBottom
 		}
 	}else{
 		if(distance.x < 0){
-			radar.left = isInLeftArea
+			radar.left = itsOnLeft
 		}else{
-			radar.right = isInRightArea
+			radar.right = itsOnRight
 		}
 	}
+
+	if(radar.top||radar.bottom||radar.left||radar.right){
+		radar.isInArea = true
+	}else radar.isInArea = false
+	
 	return radar
 }
 

@@ -653,19 +653,27 @@ function update(){
 	parallax_front.update()		
 
 	mapBlocks.forEach(block => {
-		const {top, bottom, left, right} = detectInArea(camera_position, block, 300, (canvas.height/2), 300, (canvas.width/2) + 50, (canvas.width/2))
-		const blockInArea = top || bottom || right || left	
+		const isInRenderDistance = {isInArea} = detectInArea(
+			camera_position,
+			block,
+			{ 
+				top: (canvas.height/2),
+				bottom: 300,
+				left: (canvas.width/2) + 50,
+				right: (canvas.width/2)
+			}
+		)
 
 		if(!camera.lockInEntity){
 			collision(hitBox(player, block))
 		}
 
-		if(blockInArea){
+		if(isInRenderDistance){
 			if(!block.visible) block.visible = true
 			collision(hitBox(player, block))
 			return
 		}
-		if(!block.visible) block.visible = false
+		if(block.visible) block.visible = false
 	})
 
 	playerAnimations()
@@ -679,7 +687,7 @@ function update(){
 			return
 		}
 
-		const is_near = detectInArea(player, enemy, 250)
+		const is_near = detectInArea(player, enemy, {total: 250})
 		if(is_near.left || is_near.right){
 			if(!enemys_near_player.includes(enemy)){
 				enemys_near_player.push(enemy)
@@ -690,10 +698,18 @@ function update(){
 			}
 		}
 
-		const {top, bottom, left, right} = detectInArea(camera_position, enemy, 300, (canvas.height/2), 300, (canvas.width/2) + 50, (canvas.width/2))
-		const isInScreen = top || bottom || right || left
+		const isInrenderDistance = {isInArea} = detectInArea(
+			camera_position,
+			enemy,
+			{
+				top: (canvas.height/2),
+				bottom: 300,
+				left: (canvas.width/2) + 50,
+				right: (canvas.width/2)
+			}
+		)
 
-		if(isInScreen) enemy.visible = true
+		if(isInrenderDistance) enemy.visible = true
 		else enemy.visible = false
 
 		mapBlocks.forEach(block => {
