@@ -37,6 +37,7 @@ const collision = ({side, collider, target, overlap}) => {
 		collider.velocity.y = 0
 		collider.position.y -= parseInt(overlap.y)
 		collider.isFalling = false
+		collider.isJumping = false
 		if(collider.receiveDamage && collider.entityType == 'Enemy'){
 			collider.receiveDamage = false
 			collider.velocity.x = 0
