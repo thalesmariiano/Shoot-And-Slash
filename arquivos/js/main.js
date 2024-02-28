@@ -380,6 +380,7 @@ const magicPowers = []
 const player = new Player({position: {x: 127, y: 380}})
 player.setSprites(player_sprites)
 const camera = new Camera()
+camera.appendIn(player)
 
 const newArcade = arcade()
 
@@ -640,8 +641,8 @@ function update(){
 
 	const camera_position = {
 		position: {
-			x: camera.x + canvas.width/2,
-			y: camera.y + canvas.height/2
+			x: camera.position.x + canvas.width/2,
+			y: camera.position.y + canvas.height/2
 		},
 		width: 50,
 		height: 50
@@ -653,7 +654,11 @@ function update(){
 
 	mapBlocks.forEach(block => {
 		const {top, bottom, left, right} = detectInArea(camera_position, block, 300, (canvas.height/2), 300, (canvas.width/2) + 50, (canvas.width/2))
-		const blockInArea = top || bottom || right || left
+		const blockInArea = top || bottom || right || left	
+
+		if(!camera.lockInEntity){
+			collision(hitBox(player, block))
+		}
 
 		if(blockInArea){
 			if(!block.visible) block.visible = true
@@ -747,8 +752,8 @@ function render(){
 	parallax_front.draw()			
 
 	buffer.translate(
-		Math.floor(-camera.x),
-		Math.floor(-camera.y)
+		Math.floor(-camera.position.x),
+		Math.floor(-camera.position.y)
 	)
 
 	player.draw()
