@@ -557,35 +557,31 @@ function playerMovement(){
 	// Player pular
 	if(keyState['ArrowUp'] || keyState['KeyW'] || keyState['Space']){
 		if(!player.isJumping && !player.isFalling && !player.isDead){
-			player.velocity.y = player.jump
-			player.isJumping = true
-			jump.play()
+			player.jumpUp()
 		}
 	}
 
 	// Mover Player para esquerda
 	if(keyState['ArrowLeft'] || keyState['KeyA']){
 		if(!keyState['ArrowRight'] && !keyState['KeyD']){
-			player.velocity.x = -player.speed
-			player.direction = "left"
-			player.isRunning = true
+			player.runLeft()
 		}
 	}
 
 	// Mover Player para direita
 	if(keyState['ArrowRight'] || keyState['KeyD']){
 		if(!keyState['ArrowLeft'] && !keyState['KeyA']){
-			player.velocity.x = player.speed
-			player.direction = "right"
-			player.isRunning = true
+			player.runRight()
 		}
 	}
 
 	// Parar movimento do Player
 	if(!keyState['ArrowRight'] && !keyState['ArrowLeft']){
 		if(!keyState['KeyA'] && !keyState['KeyD']){
-			player.isRunning = false
-			player.velocity.x = 0
+			if(player.velocity.x !== 0){
+				player.isRunning = false
+				player.velocity.x = 0
+			}
 		}
 	}
 
@@ -622,7 +618,6 @@ function playerMovement(){
 			}, 300)
 		}
 	}
-	
 }
 
 function update(){

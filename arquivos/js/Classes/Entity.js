@@ -90,6 +90,24 @@ class Entity {
 	onAnimationEnd(){}
 	onAnimation(){}
 
+	runLeft(){
+		this.velocity.x = -this.speed
+		this.direction = "left"
+		this.isRunning = true
+	}
+
+	runRight(){
+		this.velocity.x = this.speed
+		this.direction = "right"
+		this.isRunning = true
+	}
+
+	jumpUp(){
+		this.velocity.y = this.jump
+		this.isJumping = true
+		jump.play()
+	}
+
 	draw(){
 		buffer.drawImage(this.sprite, this.imgX, this.imgY, this.frameSizeX, this.frameSizeY, this.position.x - this.offest.x, this.position.y - this.offest.y, this.entitySizeX, this.entitySizeY)
 
