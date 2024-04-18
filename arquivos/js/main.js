@@ -4,8 +4,6 @@ game_storage.init()
 
 $("#arcade-record").innerHTML = `Recorde: ${game_storage.readStorage("SaS-Arcade")}`
 
-var developerMode = false
-
 const canvas  = document.querySelector("canvas")
 const display = canvas.getContext("2d", {alpha: false})
 
@@ -858,15 +856,7 @@ function gameLoop(now){
 
 function init(){
 	gameIsPaused = false
-	gameLoop()
-
-	if(developerMode){
-		const enemy1 = new SkeletonSpearman({color: "red", health: 100, position: {x: 600, y: 400}})
-		enemy1.setSprites(skeleton_spearman_sprites)
-		const enemy2 = new SkeletonWarrior({color: "red", health: 100, position: {x: 600, y: 400}})
-		enemy2.setSprites(skeleton_warrior_sprites)
-		enemys.push(enemy1, enemy2)
-	}		
+	gameLoop()	
 }
 
 function continues(){
@@ -917,5 +907,5 @@ const resizeAspectRatio = () => {
 resizeAspectRatio()
 
 window.onresize = () => resizeAspectRatio()
-if(!developerMode) window.onblur = () => pause()
+window.onblur = () => pause()
 

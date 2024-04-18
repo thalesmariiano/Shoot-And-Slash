@@ -77,9 +77,6 @@ class Player extends Entity {
 			else if(this.direction == "left") this.sword.position.x = this.position.x - 150
 
 			this.sword.position.y = this.position.y + 15
-
-			// ctx.fillStyle = "red"
-			// ctx.fillRect(this.sword.position.x, this.sword.position.y, this.sword.width, this.sword.height)
 		}else{
 			this.entityAttacked = false
 		}
