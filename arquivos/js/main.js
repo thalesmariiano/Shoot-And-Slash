@@ -566,6 +566,7 @@ function playerAnimations(){
 }
 
 function playerMovement(){
+	if(player.isDead) return
 
 	// Player parado
 	if(!player.isRunning && !player.isAttacking && !player.receiveDamage && !player.isFalling){
