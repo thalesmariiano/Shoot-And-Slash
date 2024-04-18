@@ -141,6 +141,65 @@ function detectInArea(entity, target, area){
 	return radar
 }
 
+const entityVision = (rect1, rect2, area) => {
+	const distX = (rect1.position.x + rect1.width/2) - (rect2.position.x + rect2.width/2)
+	const distY = (rect1.position.y + rect1.height/2) - (rect2.position.y + rect2.height/2)
+	const offset_bottom = 10
+
+	const areaLeft = area.left || area.total
+	const areaRight = area.right || area.total
+	const areaTop = area.top || area.total
+	const areaBottom = area.bottom || area.total
+
+	const vTop = Math.abs(distY) < areaTop
+	const vBottom = Math.abs(distY) < areaBottom
+	const vLeft = Math.abs(distX) < areaLeft
+	const vRight = Math.abs(distX) < areaRight
+
+	const vision = {
+		top: false,
+		bottom: false,
+		left: false,
+		right: false,
+		saw: false,
+		distance: {
+			x: distX,
+			y: distY
+		},
+		target: rect2,
+	}
+
+	if(!area.total && area.left || area.right && !area.top && !area.bottom){
+		if(rect1.position.y < rect2.position.y + rect2.height &&
+	 	   rect1.position.y + rect1.height - offset_bottom > rect2.position.y)
+	 	{
+			if(distX > 0){
+				vision.left = vLeft
+			}else{
+				vision.right = vRight
+			}
+	 	}
+	 }else{
+	 	if(distX > 0){
+			vision.left = vLeft
+		}else{
+			vision.right = vRight
+		}
+
+		if(distY < 0){
+			vision.top = vTop
+		}else{
+			vision.bottom = vBottom
+		}
+	 }
+	
+
+ 	if(vision.top||vision.bottom||vision.left||vision.right) vision.saw = true
+ 	else vision.saw = false
+
+ 	return vision
+}
+
 function generateTerrain(mapArray, outputArray){
 	const tileSize = 50
 
