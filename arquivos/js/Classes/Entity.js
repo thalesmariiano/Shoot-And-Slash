@@ -29,6 +29,7 @@ class Entity {
 			x: 0,
 			y: 0
 		}
+		this.attackSprite = 1
 		this.entitySizeX = 0
 		this.entitySizeY = 0
 		//
@@ -42,12 +43,14 @@ class Entity {
 		this.isDead = false
 		this.receiveDamage = false
 		this.entityAttacked = false
+		this.isChargeAttack = false
+		this.isProtecting = false
 		//
 		this.health = 100
 		this.maxHealth = 100
 		this.defaultSpeed = 5
-		this.speed = 5
-		this.jump = -13
+		this.runSpeed = 5
+		this.jumpHeight = -13
 		//
 		this.visible = true
 		this.type = "Entity"
@@ -91,33 +94,35 @@ class Entity {
 	onAnimation(){}
 
 	runLeft(){
-		this.velocity.x = -this.speed
+		this.velocity.x = -this.runSpeed
 		this.direction = "left"
 		this.isRunning = true
 	}
 
 	runRight(){
-		this.velocity.x = this.speed
+		this.velocity.x = this.runSpeed
 		this.direction = "right"
 		this.isRunning = true
 	}
 
-	jumpUp(){
-		this.velocity.y = this.jump
+	jump(){
+		this.velocity.y = this.jumpHeight
 		this.isJumping = true
-		jump.play()
+		jumpSound.play()
 	}
 
 	draw(){
-		buffer.drawImage(this.sprite, this.imgX, this.imgY, this.frameSizeX, this.frameSizeY, this.position.x - this.offest.x, this.position.y - this.offest.y, this.entitySizeX, this.entitySizeY)
-
-		if(developerMode){
-			buffer.strokeStyle = "black"
-			buffer.strokeRect(this.position.x, this.position.y, this.width, this.height)
-		}
-			
-		// ctx.fillStyle = this.color
-		// ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
+		buffer.drawImage(
+			this.sprite, 
+			this.imgX, 
+			this.imgY, 
+			this.frameSizeX, 
+			this.frameSizeY, 
+			this.position.x - this.offest.x, 
+			this.position.y - this.offest.y, 
+			this.entitySizeX, 
+			this.entitySizeY
+		)
 	}
 
 	update(){

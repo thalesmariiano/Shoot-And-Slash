@@ -29,7 +29,6 @@ class Player extends Entity {
 			y: 143
 		}
 		this.attDamage = 15
-		this.attackSprite = 1
 		this.sword = {
 			width: 100,
 			height: 50,
@@ -140,7 +139,7 @@ class Player extends Entity {
 		this.position.y = this.initial_position.y
 		this.souls = 0
 		this.dropLuck = 70
-		this.speed = this.defaultSpeed
+		this.runSpeed = this.defaultSpeed
 		this.attackSpeedMax = false
 	}
 

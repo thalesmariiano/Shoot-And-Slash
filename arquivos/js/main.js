@@ -49,7 +49,7 @@ const sword_whoosh_3 = new Audio('arquivos/assets/audio/sword_whoosh_3.mp3')
 const sword_whoosh_2 = new Audio('arquivos/assets/audio/sword_whoosh_2.mp3')
 const skeleton_hit = new Audio('arquivos/assets/audio/skeleton_hit_2.mp3')
 const walking = new Audio('arquivos/assets/audio/walking.mp3')
-const jump = new Audio('arquivos/assets/audio/jump.mp3')
+const jumpSound = new Audio('arquivos/assets/audio/jump.mp3')
 
 const player_sprites = [
 	{
@@ -194,12 +194,14 @@ const skeleton_warrior_sprites = [
 	{
 		name: "walk_right",
 		image: "arquivos/assets/skeleton_warrior/walk_right.png",
-		frames: 7
+		frames: 7,
+		hold: 7
 	},
 	{
 		name: "walk_left",
 		image: "arquivos/assets/skeleton_warrior/walk_left.png",
-		frames: 7
+		frames: 7,
+		hold: 7
 	},
 	{
 		name: "run_attack_right",
@@ -252,6 +254,18 @@ const skeleton_warrior_sprites = [
 		name: "take_hit_left",
 		image: "arquivos/assets/skeleton_warrior/hit_left.png",
 		frames: 2
+	},
+	{
+		name: "protect_left",
+		image: "arquivos/assets/skeleton_warrior/protect_left.png",
+		frames: 2,
+		hold: 20
+	},
+	{
+		name: "protect_right",
+		image: "arquivos/assets/skeleton_warrior/protect_right.png",
+		frames: 2,
+		hold: 20
 	},
 	{
 		name: "dead_right",
@@ -341,6 +355,18 @@ const skeleton_spearman_sprites = [
 		frames: 3
 	},
 	{
+		name: "protect_right",
+		image: "arquivos/assets/skeleton_spearman/protect_right.png",
+		frames: 2,
+		hold: 20
+	},
+	{
+		name: "protect_left",
+		image: "arquivos/assets/skeleton_spearman/protect_left.png",
+		frames: 2,
+		hold: 20
+	},
+	{
 		name: "fall_right",
 		image: "arquivos/assets/skeleton_spearman/fall_right.png",
 		frames: 6,
@@ -406,9 +432,9 @@ const mapTiles = [
 	[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
 	[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
 	[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
-	[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
-	[3,1,1,1,1,1,1,1,1,1,1,1,1,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
-	[5,5,5,5,5,5,5,5,5,5,5,5,5,5,3,1,1,1,1,1,1,1,1,1,1,1,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
+	[4,0,0,0,0,0,0,0,0,0,0,0,,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
+	[3,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
+	[5,5,5,5,5,5,5,5,5,5,5,5,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
 	[5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,3,1,1,1,1,1,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
 	[5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3.5],
 	[5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
@@ -558,7 +584,7 @@ function playerMovement(){
 	// Player pular
 	if(keyState['ArrowUp'] || keyState['KeyW'] || keyState['Space']){
 		if(!player.isJumping && !player.isFalling && !player.isDead){
-			player.jumpUp()
+			player.jump()
 		}
 	}
 
@@ -835,7 +861,7 @@ function init(){
 	gameLoop()
 
 	if(developerMode){
-		const enemy1 = new SkeletonSpearman({color: "red", health: 100, position: {x: 700, y: 400}})
+		const enemy1 = new SkeletonSpearman({color: "red", health: 100, position: {x: 600, y: 400}})
 		enemy1.setSprites(skeleton_spearman_sprites)
 		const enemy2 = new SkeletonWarrior({color: "red", health: 100, position: {x: 600, y: 400}})
 		enemy2.setSprites(skeleton_warrior_sprites)
@@ -891,5 +917,5 @@ const resizeAspectRatio = () => {
 resizeAspectRatio()
 
 window.onresize = () => resizeAspectRatio()
-window.onblur = () => pause()
+if(!developerMode) window.onblur = () => pause()
 
