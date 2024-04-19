@@ -153,7 +153,10 @@ class SkeletonSpearman extends Enemy {
 		if(this.health <= 0 && !this.isDead){
 			this.isDead = true
 
-			newArcade.enemysKilled++
+			if(GAMEMODE){
+				GAMEMODE.enemysKilled++
+			}
+			
 			this.velocity.x = 0
 			this.switchSprite(`fall_${this.direction}`)
 		}

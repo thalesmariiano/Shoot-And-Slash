@@ -36,6 +36,8 @@ const GRAVITY = 0.6
 
 var gameIsPaused = true
 
+let GAMEMODE
+
 const tilemap = new Image()
 tilemap.src   = "arquivos/assets/map/tilemap.png"
 
@@ -406,8 +408,6 @@ player.setSprites(player_sprites)
 const camera = new Camera()
 camera.appendIn(player)
 
-const newArcade = arcade()
-
 const life = new Item({
 	itemType: "life",
 	position: {
@@ -653,12 +653,14 @@ function update(){
 		player.isDead = true
 		player.velocity.x = 0
 
-		waves_count.innerHTML = `Onda: ${newArcade.getWave()}`
-		kills_count.innerHTML = `Abates: ${newArcade.enemysKilled}`
+		waves_count.innerHTML = `Onda: ${GAMEMODE ? GAMEMODE.getWave() : 0}`
+		kills_count.innerHTML = `Abates: ${GAMEMODE ? GAMEMODE.enemysKilled : 0}`
 
 		setTimeout(() => {
 			gameIsPaused = true
-			newArcade.saveData()
+			if(GAMEMODE){
+				GAMEMODE.saveData()			
+			}
 			showUI("die-screen", "animate__fadeIn")
 			removeUI("hud-screen", "hidden")
 		}, 1500)
@@ -708,7 +710,7 @@ function update(){
 	enemys.forEach((enemy, index) => {
 		if(!enemy.visible && enemy.isDead){
 			enemys.splice(index, 1)
-			newArcade.verifyKills()
+			GAMEMODE.verifyKills()
 			return
 		}
 
@@ -862,7 +864,11 @@ function init(){
 
 function continues(){
 	if(gameIsPaused){
-		newArcade.init()
+
+		if(GAMEMODE){
+			GAMEMODE.init()			
+		}
+
 		gameIsPaused = false
 		gameLoop()
 	}
@@ -870,7 +876,11 @@ function continues(){
 
 function pause(){
 	if(!gameIsPaused){
-		newArcade.pause()
+
+		if(GAMEMODE){
+			GAMEMODE.pause()			
+		}
+
 		showUI("pause-screen", "animate__fadeIn")
 		removeUI("hud-screen", "hidden")
 		removeUI("guide-dialog", "hidden")
@@ -881,9 +891,13 @@ function pause(){
 function restart(){
 
 	restartGame()
-	newArcade.restart()
-	newArcade.saveData()
 	player.restart()
+
+	if(GAMEMODE){
+		GAMEMODE.saveData()
+		GAMEMODE.restart()
+		GAMEMODE.init()	
+	}
 
 	init()
 }
@@ -891,9 +905,12 @@ function restart(){
 function destroy(){
 	gameIsPaused = true
 
+	if(GAMEMODE){
+		GAMEMODE.saveData()
+		GAMEMODE.restart()
+	}
+
 	restartGame()
-	newArcade.restart()
-	newArcade.saveData()
 	player.restart()
 
 	buffer.clearRect(0, 0, canvas.width, canvas.height)

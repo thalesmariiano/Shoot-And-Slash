@@ -11,7 +11,8 @@ const close_news                = document.querySelector("#close-news")
 
 arcade_mode_button.addEventListener("click", () => {
 	init()
-	newArcade.init()
+	GAMEMODE = arcade()
+	GAMEMODE.init()
 
 	removeUI("uis-container", "animate__fadeOut")
 	showUI("hud-screen", "animate__fadeIn")
@@ -80,7 +81,9 @@ guide_checkbox.addEventListener("input", () => {
 
 
 close_skills.addEventListener("click", () => {
-	newArcade.skipTimer()
+	if(GAMEMODE){
+		GAMEMODE.skipTimer()		
+	}
 })
 
 $("#delete-memory").addEventListener("click", () => {
