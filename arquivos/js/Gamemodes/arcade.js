@@ -19,7 +19,6 @@ function arcade(){
 
 	const verifyKills = () => {
 		enemysKilled += 1
-		console.log(enemysKilled)
 		if(!enemys.length){
 			waveNumber += 1
 			enemysCount += 3
@@ -105,7 +104,6 @@ function arcade(){
 		time = 10
 
 		enemys.length = 0
-		enemys_near_player.length = 0
 	}
 
 	const pause = () => {

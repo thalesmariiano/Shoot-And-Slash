@@ -410,7 +410,6 @@ spriteConverter(itens_sprites.life)
 spriteConverter(itens_sprites.fireball)
 
 const enemys = []
-const enemys_near_player = []
 const magicPowers = []
 
 const player = new Player({position: {x: 127, y: 380}})
@@ -722,17 +721,6 @@ function update(){
 			enemys.splice(index, 1)
 			GAMEMODE.verifyKills()
 			return
-		}
-
-		const is_near = detectInArea(player, enemy, {total: 250})
-		if(is_near.left || is_near.right){
-			if(!enemys_near_player.includes(enemy)){
-				enemys_near_player.push(enemy)
-			}
-		}else{
-			if(enemys_near_player.includes(enemy)){
-				enemys_near_player.splice(index, 1)	
-			}
 		}
 
 		const isInrenderDistance = {isInArea} = detectInArea(
