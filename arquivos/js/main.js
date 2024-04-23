@@ -1,8 +1,18 @@
 
-const game_storage = gameStorage()
-game_storage.init()
+deleteStorage('SaSdialog')
+deleteStorage('SaSControl')
+deleteStorage('SaS-Control')
+deleteStorage('SaS-Dialog')
 
-$("#arcade-record").innerHTML = `Recorde: ${game_storage.readStorage("SaS-Arcade")}`
+if(!getStorage("SaS-Save")){
+	setStorage("SaS-Save", 1)
+	setStorage("SaS-Arcade", 0)
+	$("#save-data-input").checked = true
+}else if(!parseInt(getStorage('SaS-Save'))){
+	$("#save-data-input").checked = false
+}
+
+$("#arcade-record").innerHTML = `Recorde: ${getStorage("SaS-Arcade")}`
 
 const canvas  = document.querySelector("canvas")
 const display = canvas.getContext("2d", {alpha: false})

@@ -17,7 +17,7 @@ arcade_mode_button.addEventListener("click", () => {
 	removeUI("uis-container", "animate__fadeOut")
 	showUI("hud-screen", "animate__fadeIn")
 
-	if(parseInt(game_storage.readStorage("SaS-Dialog"))){
+	if(!parseInt(getStorage("SaS-Guide"))){
 		showUI("guide-dialog", "animate__slideInLeft")
 	}
 })
@@ -47,7 +47,8 @@ continue_button.addEventListener("click", () => {
 	continues()
 	showUI("hud-screen", "animate__fadeIn")
 	removeUI("pause-screen", "hidden")
-	if(parseInt(game_storage.readStorage("SaS-Dialog"))){
+
+	if(!parseInt(getStorage("SaS-Guide"))){
 		showUI("guide-dialog", "show")
 	}
 })
@@ -75,8 +76,10 @@ close_guide.addEventListener("click", () => {
 })
 
 guide_checkbox.addEventListener("input", () => {
-	const value = guide_checkbox.checked ? 0 : 1
-	if(game_storage.saveAllowed()) game_storage.updateStorage("SaS-Dialog", value)
+	const value = guide_checkbox.checked ? 1 : 0
+	if(parseInt(getStorage('SaS-Save'))){
+		setStorage("SaS-Guide", value)
+	}
 })
 
 
@@ -86,53 +89,54 @@ close_skills.addEventListener("click", () => {
 	}
 })
 
-$("#delete-memory").addEventListener("click", () => {
+$("#delete-data").addEventListener("click", () => {
 	showUI("delete-history-dialog", "animate__fadeIn")
 })
 
-$("#confirm-delete").addEventListener("click", () => {
-	game_storage.updateStorage("SaS-Dialog", 1) // restarting values
-	game_storage.updateStorage("SaS-Arcade", 0) // restarting values
-	game_storage.updateStorage("SaS-News", 0) // restarting values
+$("#confirm-delete-data").addEventListener("click", () => {
+	setStorage("SaS-Guide", 0) // restarting values
+	setStorage("SaS-Arcade", 0) // restarting values
+	setStorage("SaS-News", 0) // restarting values
 	removeUI("delete-history-dialog", "animate__fadeOut")
 })
 
-$("#cancel-delete").addEventListener("click", () => {
+$("#not-delete-data").addEventListener("click", () => {
 	removeUI("delete-history-dialog", "hidden")
 })
 
-$("#save-memory").addEventListener("click", e => {
-	if(game_storage.saveAllowed()){
+$("#save-data-input").addEventListener("click", e => {
+	if(parseInt(getStorage('SaS-Save'))){
 		showUI("save-data-dialog", "animate__fadeIn")
-		$("#save-memory").checked = true
-	}else{
-		game_storage.updateStorage("SaS-Save", 1)
-		game_storage.createStorage("SaS-Dialog", 1) 
-		game_storage.createStorage("SaS-Arcade", 0) 
-		game_storage.createStorage("SaS-News", 0) 
-		$("#save-memory").checked = true
+		$("#save-data-input").checked = true
+		return
 	}
+
+	setStorage("SaS-Save", 1)
+	setStorage("SaS-Arcade", 0)
+	$("#save-data-input").checked = true
 })
 
-$("#confirm-not-save").addEventListener("click", () => {
-	game_storage.updateStorage("SaS-Save", 0)
-	game_storage.clearStorages()
-	$("#save-memory").checked = false
+$("#not-save-data").addEventListener("click", () => {
+	setStorage("SaS-Save", 0)
+	deleteStorage("SaS-Guide") 
+	deleteStorage("SaS-Arcade") 
+	deleteStorage("SaS-News") 
+	$("#save-data-input").checked = false
 	removeUI("save-data-dialog", "animate__fadeOut")
 })
 
-$("#cancel-not-save").addEventListener("click", () => {
+$("#confirm-save-data").addEventListener("click", () => {
 	removeUI("save-data-dialog", "hidden")
 })
 
-if(parseFloat(game_storage.readStorage("SaS-News")) != 1.3){
+if(parseFloat(getStorage("SaS-News")) != 1.3){
 	showUI("news-dialog", "animate__bounceIn")	
-	$("body").style.overflow = "hidden"
 
 	close_news.addEventListener("click", () => {
-		if(game_storage.saveAllowed()) game_storage.updateStorage("SaS-News", 1.3)
+		if(parseInt(getStorage('SaS-Save'))){
+			setStorage("SaS-News", 1.3)
+		}
 		removeUI("news-dialog", "animate__bounceOut")
-		$("body").style.overflow = ""
 	})
 }
 

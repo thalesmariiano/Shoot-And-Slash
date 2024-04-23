@@ -105,20 +105,23 @@
 										<div>
 											<div class="flex items-center">
 												<p class="font-bold font-inter text-lg">Informações</p>
-												<div class="w-4 h-4 bg-neutral-700 flex justify-center items-center rounded-full ml-2 text-zinc-500 text-sm cursor-pointer relative hover:border hover:border-black hover:bg-neutral-900 hover:text-white group">?
+												<div class="w-4 h-4 bg-neutral-700 flex justify-center items-center rounded-full ml-2 mt-0.5 text-zinc-400 text-sm cursor-pointer relative hover:border hover:border-black hover:bg-neutral-900 hover:text-white group">?
 													<div class="absolute -top-24 left-5 w-56 bg-neutral-900 rounded-lg border border-black p-2 shadow-lg hidden group-hover:flex">
 														<p class="text-center text-white leading-5 font-inter">Para uma melhor experiência, precisamos salvar algumas informações. Não se preocupe, nada sai do seu navegador.</p>
 													</div>
 												</div>
 											</div>
-											<label class="text-zinc-300 ml-1 cursor-pointer">
-												<input id="save-memory" class="translate-y-[2px] cursor-pointer" type="checkbox">
+											<label class="group w-full flex gap-x-3 items-center my-3">
+												<input id="save-data-input" class="w-0 h-0" type="checkbox" name="save-data" checked>
+												<div class="min-w-12 h-5 bg-neutral-600 rounded relative flex items-center">
+													<span class="absolute left-0 w-6 h-5 bg-red-700 group-has-[:checked]:bg-green-700 group-has-[:checked]:left-6 rounded transition-all"></span>
+												</div>
 												Salvar Informações
 											</label>
 										</div>
 										<div>
 											<p class="font-bold font-inter text-lg">Histórico do jogo</p>
-											<button id="delete-memory" class="bg-red-800 mt-1 ml-1 text-zinc-300 font-inter px-5 rounded-lg hover:bg-red-900">Deletar</button>
+											<button id="delete-data" class="bg-red-800 m-3 text-zinc-300 font-inter px-5 rounded hover:bg-red-900">Deletar</button>
 										</div>
 									</div>
 								</div>
@@ -340,8 +343,8 @@
 					<p class="mx-1 mt-3 font-inter text-neutral-800 font-semibold leading-5">Tem certeza? Todo o histórico do jogo será reiniciado, e todos os seus recordes salvos serão perdidos!</p>
 				</div>
 				<div>
-					<button id="cancel-delete" class="px-5 py-1 font-bold font-inter bg-green-600 text-white rounded-xl hover:bg-green-700 transition-all">Cancelar</button>
-					<button id="confirm-delete" class="px-4 py-1 font-bold font-inter text-red-600 underline hover:text-red-700 transition-all">Deletar</button>
+					<button id="not-delete-data" class="px-5 py-1 font-bold font-inter bg-green-600 text-white rounded-xl hover:bg-green-700 transition-all">Cancelar</button>
+					<button id="confirm-delete-data" class="px-4 py-1 font-bold font-inter text-red-600 underline hover:text-red-700 transition-all">Deletar</button>
 				</div>
 			</div>
 		</div>
@@ -353,8 +356,8 @@
 					<p class="mx-1 mt-3 font-inter text-neutral-800 font-semibold leading-5">Tem certeza? Todo o seu histórico do jogo será deletado. E qualquer recorde que você tenha não será salvo.</p>
 				</div>
 				<div>
-					<button id="cancel-not-save" class="px-5 py-1 font-bold font-inter bg-green-600 text-white rounded-xl hover:bg-green-700 transition-all">Salvar</button>
-					<button id="confirm-not-save" class="px-4 py-1 font-bold font-inter text-red-600 underline hover:text-red-700 transition-all">Não salvar</button>
+					<button id="confirm-save-data" class="px-5 py-1 font-bold font-inter bg-green-600 text-white rounded-xl hover:bg-green-700 transition-all">Salvar</button>
+					<button id="not-save-data" class="px-4 py-1 font-bold font-inter text-red-600 underline hover:text-red-700 transition-all">Não salvar</button>
 				</div>
 			</div>
 		</div>

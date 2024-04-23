@@ -18,6 +18,8 @@ function arcade(){
 	}
 
 	const verifyKills = () => {
+		enemysKilled += 1
+		console.log(enemysKilled)
 		if(!enemys.length){
 			waveNumber += 1
 			enemysCount += 3
@@ -77,9 +79,9 @@ function arcade(){
 	}
 
 	const saveData = () => {
-		if(game_storage.saveAllowed()){
-			if(enemysKilled > parseInt(game_storage.readStorage("SaS-Arcade"))){
-				game_storage.updateStorage("SaS-Arcade", enemysKilled)
+		if(parseInt(getStorage('SaS-Save'))){
+			if(enemysKilled > parseInt(getStorage("SaS-Arcade"))){
+				setStorage("SaS-Arcade", enemysKilled)
 
 				$("#arcade-record").innerHTML = `Recorde: ${enemysKilled}`
 			}

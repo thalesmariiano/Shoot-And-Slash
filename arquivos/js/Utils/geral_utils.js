@@ -1,77 +1,9 @@
 
 const $ = element => document.querySelector(element)
 
-function gameStorage(){
-	const storages = []
-	const permanentStorage = []
-
-	function createStorage(item, value){
-		if(saveAllowed() && localStorage.getItem('SaS-Save') !== null ){
-			if(!storages.includes(item)){
-				storages.push(item)
-				if(!localStorage.getItem(item)){
-					localStorage.setItem(item, value)
-				}
-			}
-		}else{
-			window.localStorage.setItem('SaS-Save', 1)
-		}
-	}
-
-	function readStorage(item){
-		if(localStorage.getItem(item)){
-			return localStorage.getItem(item)
-		}
-	}
-
-	function updateStorage(item, newValue){
-		if(localStorage.getItem(item)){
-			localStorage.setItem(item, newValue)
-		}
-	}
-
-
-	function deleteStorage(item){
-		if(localStorage.getItem(item)){
-			localStorage.removeItem(item)
-		}
-	}
-
-	function clearStorages(){
-		storages.forEach((item, index) => {
-			localStorage.removeItem(item)
-		})
-		storages.length = 0
-	}
-
-	const saveAllowed = () => parseInt(readStorage('SaS-Save'))
-
-	function init(){
-		if(readStorage('SaSdialog')) deleteStorage('SaSdialog')
-		if(readStorage('SaSControl')) deleteStorage('SaSControl')
-		if(readStorage('SaS-Control')) deleteStorage('SaS-Control')
-		if(!readStorage("SaS-Save")) createStorage("SaS-Save", 1)
-
-		if(saveAllowed()){
-			$("#save-memory").checked = true
-			createStorage("SaS-Dialog", 1)
-			createStorage("SaS-Arcade", 0)
-			createStorage("SaS-News", 0)
-		}else{
-			$("#save-memory").checked = false
-		}
-	}
-
-	return {
-		createStorage,
-		readStorage,
-		updateStorage,
-		deleteStorage,
-		clearStorages,
-		saveAllowed,
-		init
-	}
-}
+const setStorage = (name, value) => localStorage.setItem(name, value)
+const getStorage = name => localStorage.getItem(name)
+const deleteStorage = name => localStorage.removeItem(name)
 
 function spriteConverter(imgArray){
 	if(Array.isArray(imgArray)){
