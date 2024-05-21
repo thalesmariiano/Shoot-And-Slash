@@ -9,6 +9,19 @@ const projectileCollision = ({isColliding, collider, target}) => {
 			target.takeHit(collider.dmg)
 			collider.visible = false
 		}
+
+		if(collider.projectile == 'fireball' /*&& target.type == 'Block'*/){
+			const position = {x: 0, y: 0}
+
+			if(collider.direction == 'left'){
+				position.x = collider.position.x
+				position.y = collider.position.y - collider.height - 5
+			}else if(collider.direction == 'right'){
+				position.x = collider.position.x + collider.width/2
+				position.y = collider.position.y - collider.height - 5
+			}
+			showEffect('fire_hit-wall', position, collider.direction)
+		}
 	}
 }
 

@@ -402,15 +402,30 @@ const skeleton_spearman_sprites = [
 	}
 ]
 
+const effects_sprites = [
+	{
+		name: "fire_hit-wall_left",
+		image: "arquivos/assets/effects/fire_hit_wall.png",
+		frames: 5
+	},
+	{
+		name: "fire_hit-wall_right",
+		image: "arquivos/assets/effects/fire_hit_wall_right.png",
+		frames: 5
+	},
+]
+
 spriteConverter(skeleton_warrior_sprites)
 spriteConverter(skeleton_spearman_sprites)
 spriteConverter(player_sprites)
 spriteConverter(itens_sprites.enemy_soul)
 spriteConverter(itens_sprites.life)
 spriteConverter(itens_sprites.fireball)
+spriteConverter(effects_sprites)
 
 const enemys = []
 const magicPowers = []
+const effects = []
 
 const player = new Player({position: {x: 127, y: 380}})
 player.setSprites(player_sprites)
@@ -439,8 +454,8 @@ const mapTiles = [
 	[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
 	[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
 	[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
-	[4,0,0,0,0,0,0,0,0,0,0,0,,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
-	[3,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
+	[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
+	[3,1,1,1,1,1,1,1,1,1,1,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
 	[5,5,5,5,5,5,5,5,5,5,5,5,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
 	[5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,3,1,1,1,1,1,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
 	[5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3.5],
@@ -780,6 +795,14 @@ function update(){
 		}
 	})
 
+	effects.forEach((fx, index) => {
+		if(fx.visible){
+			fx.update()
+			return
+		}
+		effects.splice(index, 1)
+	})
+
 	camera.update()
 }
 
@@ -831,6 +854,13 @@ function render(){
 			power.draw()
 		}
 	})
+
+	effects.forEach(fx => {
+		if(fx.visible){
+			fx.draw()
+		}
+	})
+	
 
 	buffer.restore()
 

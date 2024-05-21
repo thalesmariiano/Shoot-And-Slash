@@ -19,6 +19,16 @@ function spriteConverter(imgArray){
 	}
 }
 
+function showEffect(effect_name, position, direction){
+	const fx = new Effect({position})
+	fx.effectName = effect_name
+	fx.direction = direction
+	fx.setSprites(effects_sprites)
+	fx.spriteSizeX = 64
+	fx.spriteSizeY = 64
+	effects.push(fx)
+}
+
 function generateEnemys(amount, health){
 	const newMapSize = mapSize - 100
 	for(i = 0; i < amount; i++){
