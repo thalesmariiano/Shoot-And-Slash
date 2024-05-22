@@ -3,8 +3,8 @@ class Sprite {
 		this.sprite = new Image()
 		this.color = color
 		this.position = position
-		this.width = 55
-		this.height = 100
+		this.width = 0
+		this.height = 0
 		this.entitySprites = null
 		this.sprInfo = null
 		this.imgX = 0

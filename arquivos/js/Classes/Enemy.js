@@ -65,6 +65,7 @@ class Enemy extends Entity {
 				}
 			})
 			soul.setSprites(itens_sprites.enemy_soul)
+			soul.hasGravity = true
 			itensArray.push(soul)
 		}
 	}

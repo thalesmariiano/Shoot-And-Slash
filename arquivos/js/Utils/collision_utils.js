@@ -37,7 +37,7 @@ const itemCollision = ({isColliding, collider, target}) => {
 				}
 				break
 			case "soul":
-				player.souls += 1
+				player.souls += item.itemValue
 				souls_amount.innerHTML = player.souls
 				item.visible = false
 				break

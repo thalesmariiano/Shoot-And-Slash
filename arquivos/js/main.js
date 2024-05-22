@@ -440,6 +440,7 @@ const life = new Item({
 	}
 })
 life.setSprites(itens_sprites.life)
+life.itemValue = 35
 
 const itensArray = [life]
 
