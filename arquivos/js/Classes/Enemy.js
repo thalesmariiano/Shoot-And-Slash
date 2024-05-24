@@ -29,6 +29,7 @@ class Enemy extends Entity {
 		this.tooCloseDistX = 80
 		this.tooCloseDistY = 80
 		this.isFallbacking = false
+		this.canFight = false
 	}
 
 	onAnimationEnd(animation){
@@ -87,8 +88,8 @@ class Enemy extends Entity {
 		skeleton_hit.play()
 
 		if(!this.isFalling && !this.isJumping && !this.isDead){
-			this.jump()
 			this.velocity.x = player.direction == 'right' ? 2 : -2
+			this.jump()
 		}
 	}
 
@@ -197,7 +198,18 @@ class Enemy extends Entity {
 
 	sawPlayerWalking(){
 		const sawPlayer = entityVision(this, player, {total: this.viewDist})
+		const hearPlayer = entityVision(this, player, {total: 200})
 		const inactive_conditions = !this.isRunning && !this.isAttacking && !this.receiveDamage && !this.isProtecting
+
+		if(hearPlayer.left && this.direction == 'right' && inactive_conditions){
+			this.runLeft()
+			this.isWalking = false
+		}
+
+		if(hearPlayer.right && this.direction == 'left' && inactive_conditions){
+			this.runRight()
+			this.isWalking = false
+		}
 
 		if(sawPlayer.left && this.direction == 'left' && inactive_conditions){
 			this.runLeft()
@@ -207,6 +219,22 @@ class Enemy extends Entity {
 		if(sawPlayer.right && this.direction == 'right' && inactive_conditions){
 			this.runRight()
 			this.isWalking = false
+		}
+	}
+
+	showExclametion(){
+		const inactive_conditions = !this.isRunning && !this.isAttacking && !this.receiveDamage && !this.isProtecting
+		const hearPlayer = entityVision(this, player, {total: 350})
+
+		buffer.fillStyle = "red"
+		buffer.font = "30px arial"
+
+		if(hearPlayer.left && this.direction == 'right' && inactive_conditions){
+			buffer.fillText("!", this.position.x + this.width/2, this.position.y - 40)
+		}
+
+		if(hearPlayer.right && this.direction == 'left' && inactive_conditions){
+			buffer.fillText("!", this.position.x + this.width/2, this.position.y - 40)
 		}
 	}
 
@@ -255,6 +283,22 @@ class Enemy extends Entity {
 				}
 			}
 		})
+	}
+
+	draw(){
+		buffer.drawImage(
+			this.sprite, 
+			this.imgX, 
+			this.imgY, 
+			this.frameSizeX, 
+			this.frameSizeY, 
+			this.position.x - this.offest.x, 
+			this.position.y - this.offest.y, 
+			this.entitySizeX, 
+			this.entitySizeY
+		)
+
+		this.showExclametion()
 	}
 
 	update(){
