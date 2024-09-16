@@ -88,6 +88,36 @@ class Player extends Entity {
 		hud('health-amount').updateAmount(this.health)
 	}
 
+	animate(){
+		if(!this.isJumping && !this.isFalling && this.isIdle && !this.isDead){
+			this.switchSprite(`idle_${this.direction}`)		
+		}
+	
+		if(this.isJumping && !this.isDead && !this.isFalling){
+			this.switchSprite(`jump_${this.direction}`)
+		}
+		
+		if(this.isFalling && !this.isDead){
+			this.switchSprite(`fall_${this.direction}`)		
+		}
+	
+		if( this.isRunning && !this.isJumping && !this.isDead && !this.isFalling){
+			this.switchSprite(`run_${this.direction}`)
+		}
+		
+		if(this.receiveDamage && !this.isDead && !this.isAttacking){
+			this.switchSprite(`take_hit_${this.direction}`)
+		}
+	
+		if(this.isAttacking && !this.isRunning && !this.isDead){
+			this.switchSprite(`attack_${this.attackSprite}_${this.direction}`)
+		}
+	
+		if(this.isDead){
+			this.switchSprite(`death_${this.direction}`)
+		}
+	}
+
 	onAnimation({sprite, frame}){
 		if(sprite.name == `attack_1_${this.direction}`){
 			if(frame == 3){
@@ -143,6 +173,7 @@ class Player extends Entity {
 	update(){
 		if(!this.stopAnimation) this.animation()
 		this.swordAttack()
+		this.animate()
 
 		this.position.x += this.velocity.x
 		this.position.y += this.velocity.y

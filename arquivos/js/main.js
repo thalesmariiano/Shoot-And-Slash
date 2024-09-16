@@ -560,36 +560,6 @@ function updateSkill(skill){
 	}
 }
 
-function playerAnimations(){
-	if(!player.isJumping && !player.isFalling && player.isIdle && !player.isDead){
-		player.switchSprite(`idle_${player.direction}`)		
-	}
-
-	if(player.isJumping && !player.isDead && !player.isFalling){
-		player.switchSprite(`jump_${player.direction}`)
-	}
-	
-	if(player.isFalling && !player.isDead){
-		player.switchSprite(`fall_${player.direction}`)		
-	}
-
-	if( player.isRunning && !player.isJumping && !player.isDead && !player.isFalling){
-		player.switchSprite(`run_${player.direction}`)
-	}
-	
-	if(player.receiveDamage && !player.isDead && !player.isAttacking){
-		player.switchSprite(`take_hit_${player.direction}`)
-	}
-
-	if(player.isAttacking && !player.isRunning && !player.isDead){
-		player.switchSprite(`attack_${player.attackSprite}_${player.direction}`)
-	}
-
-	if(player.isDead){
-		player.switchSprite(`death_${player.direction}`)
-	}
-}
-
 function playerMovement(){
 	if(player.isDead) return
 
@@ -728,7 +698,6 @@ function update(){
 		if(block.visible) block.visible = false
 	})
 
-	playerAnimations()
 	playerMovement()
 	player.update()
 
