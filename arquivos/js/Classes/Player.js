@@ -82,6 +82,29 @@ class Player extends Entity {
 		}
 	}
 
+	shootFireball(){
+		if(this.mana && !this.blockFire){
+			this.mana -= 25
+			this.blockFire = true
+			hud('mana-amount').updateAmount(this.mana)
+
+			const fireball = new Projectile({
+				projectile: 'fireball',
+				position: {
+					x: this.position.x,
+					y: this.position.y + this.height/2 - 20
+				}
+			})
+			fireball.direction = this.direction
+			fireball.setSprites(itens_sprites.fireball)
+			magicPowers.push(fireball)
+
+			setTimeout(() => {
+				this.blockFire = false
+			}, 300)
+		}
+	}
+
 	takeHit(damage_taken){
 		this.health -= damage_taken
 		this.receiveDamage = true

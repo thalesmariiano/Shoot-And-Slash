@@ -612,26 +612,7 @@ function playerMovement(){
 
 	// Player disparar fireball
 	if(keyState['KeyF']){
-		if(player.mana && !player.blockFire){
-			player.mana -= 25
-			player.blockFire = true
-			hud('mana-amount').updateAmount(player.mana)
-
-			const fireball = new Projectile({
-				projectile: 'fireball',
-				position: {
-					x: player.position.x,
-					y: player.position.y + player.height/2 - 20
-				}
-			})
-			fireball.direction = player.direction
-			fireball.setSprites(itens_sprites.fireball)
-			magicPowers.push(fireball)
-
-			setTimeout(() => {
-				player.blockFire = false
-			}, 300)
-		}
+		player.shootFireball()
 	}
 }
 
