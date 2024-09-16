@@ -111,6 +111,18 @@ class Entity {
 		jumpSound.play()
 	}
 
+	stopRun(){
+		if(this.velocity.x !== 0){
+			this.isRunning = false
+			this.velocity.x = 0
+		}
+	}
+
+	stopAttack(){
+		this.attackSprite = 1
+		this.isAttacking = false
+	}
+
 	draw(){
 		buffer.drawImage(
 			this.sprite, 

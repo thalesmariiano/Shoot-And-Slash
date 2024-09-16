@@ -599,10 +599,7 @@ function playerMovement(){
 	// Parar movimento do Player
 	if(!keyState['ArrowRight'] && !keyState['ArrowLeft']){
 		if(!keyState['KeyA'] && !keyState['KeyD']){
-			if(player.velocity.x !== 0){
-				player.isRunning = false
-				player.velocity.x = 0
-			}
+			player.stopRun()
 		}
 	}
 
@@ -611,10 +608,7 @@ function playerMovement(){
 		if(!player.isFalling && !player.isJumping && !player.isRunning){
 			player.isAttacking = true
 		}
-	}else{
-		player.attackSprite = 1
-		player.isAttacking = false
-	}
+	}else player.stopAttack()
 
 	// Player disparar fireball
 	if(keyState['KeyF']){
