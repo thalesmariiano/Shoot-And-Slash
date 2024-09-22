@@ -1,10 +1,9 @@
 
-function showUI(id, animation){
-	const ui = document.getElementById(id)
+function showUI(selector, animation){
+	const ui = document.getElementById(selector)
 
-	if(!animation.split("__").find(e => e == "animate")){
-		if(animation == "show") ui.classList.remove("hidden")			
-		else ui.classList.add(animation)
+	if(animation == 'show'){
+		ui.classList.remove("hidden")
 		return
 	}
 
@@ -18,10 +17,10 @@ function showUI(id, animation){
 	}
 }
 
-function removeUI(id, animation){
-	const ui = document.getElementById(id)
+function removeUI(selector, animation){
+	const ui = document.getElementById(selector)
 
-	if(!animation.split("__").find(e => e == "animate")){
+	if(animation == 'hidden'){
 		ui.classList.add(animation)
 		return
 	}
@@ -36,54 +35,44 @@ function removeUI(id, animation){
 	}
 }
 
-const skills_screen = document.getElementById("skills-screen")
 
-function updateUI(ui, value) {
-	switch(ui){
-		case "healthbar":
-			health_amount.style.width = `${value}px`
-			break
-		case "waves":
-			// const wavesContainer = document.getElementById("waves-container")
-			// wavesContainer.classList.remove("hidden")
+function animateUI(element, animation, execute){
+	element.classList.add("animate__animated", animation)
+	element.addEventListener("animationend", animationEndListener)
 
-			const wavesText = document.getElementById("waves-text")
-			wavesText.innerHTML = `Onda ${gameWave}`
+	function animationEndListener(){
+		element.classList.remove("animate__animated", animation)
+		element.removeEventListener("animationend", animationEndListener)
 
-			// if(value){
-			// 	showUI("waves-container", "animate__fadeIn")
-			// }else{
-			// 	removeUI("waves-container", "animate__fadeOut")
-			// }
-			break
-		case "skills":
-			// if(value){
-			// 	showUI("skills-screen", "animate__fadeIn")
-			// }else{
-			// 	removeUI("skills-screen", "animate__fadeOut")
-			// }
-			break
-		case "timer":
-			// const wavesTimerContainer = document.getElementById("waves-timer-container")
-			// wavesTimerContainer.classList.remove("hidden")
+		if(execute) execute()
+	}
+}
 
-			// if(value){
-			// 	setTimeout(() => {
-			// 		wavesTimerContainer.classList.remove("opacity-0")
-			// 		wavesTimerContainer.classList.add("opacity-100")				
-			// 	}, 500)
-			// }else{
-			// 	wavesTimerContainer.classList.remove("opacity-100")
-			// 	wavesTimerContainer.classList.add("opacity-0")
+function hud(id){
+	const element = document.getElementById(id)
 
-			// 	setTimeout(() => {
-			// 		wavesTimerContainer.classList.add("hidden")
-			// 	}, 1000)
-			// }	
-			break
-		case "icon":
-			const img = value ? "arquivos/assets/itens/ak47.png" : "arquivos/assets/null.png"
-			weapon_icon_img.src = img
-			break
+	function updateAmount(value){
+		element.style.width = `${value < 0 ? 0 : value}px`
+	}
+
+	function updateIcon(imgSrc){
+		const img = imgSrc ? imgSrc : "arquivos/assets/null.png"
+		element.src = img
+	}
+
+	return {
+		updateAmount,
+		updateIcon
+	}
+}
+
+function lowLifeScreenEffect(){
+	const effectEnabled = hud_screen.className.includes('low_life_blood_splash')
+
+	if(player.health < 20 && !effectEnabled){
+		hud_screen.classList.add('low_life_blood_splash')
+	}
+	if(player.health > 20 && effectEnabled){
+		hud_screen.classList.remove('low_life_blood_splash')
 	}
 }

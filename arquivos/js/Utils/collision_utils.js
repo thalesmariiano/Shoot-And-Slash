@@ -1,71 +1,56 @@
 
-const projectileCollision = collison => {
-	const {side, collider, target} = collison
-
-	if(side.top || side.bottom || side.left || side.right){
+const projectileCollision = ({isColliding, collider, target}) => {
+	if(isColliding){
 		if(target.type == "Block"){
-			collider.velocity.x = 0
-			collider.velocity.y = 0
+			collider.visible = false
 		}
 
 		if(target.type == "Entity" && !target.isDead){
 			target.takeHit(collider.dmg)
 			collider.visible = false
 		}
+
+		if(collider.projectile == 'fireball' /*&& target.type == 'Block'*/){
+			const position = {x: 0, y: 0}
+
+			if(collider.direction == 'left'){
+				position.x = collider.position.x
+				position.y = collider.position.y - collider.height - 5
+			}else if(collider.direction == 'right'){
+				position.x = collider.position.x + collider.width/2
+				position.y = collider.position.y - collider.height - 5
+			}
+			showEffect('fire_hit-wall', position, collider.direction)
+		}
 	}
 }
 
-const itemCollision = collision => {
-	const {side, collider, target} = collision
+const itemCollision = ({isColliding, collider, target}) => {
 	const item = target
-	const isColliding = side.top || side.bottom || side.left || side.right
 
-	if(isColliding && collider.entityType == "Player"){
+	if(isColliding){
 		switch(item.itemType){
-			case "Coin":
-				collider.coinNumbers += item.itemValue
-				item.visible = false
-				break
 			case "life":
 				if(collider.health < collider.maxHealth){
 					collider.receiveLife(item.itemValue)
 					item.visible = false
 				}
 				break
-			case "Bomb":
-				collider.takeHit(item.itemValue)
-				item.visible = false
-				break
 			case "soul":
-				player.souls += 1
+				player.souls += item.itemValue
 				souls_amount.innerHTML = player.souls
 				item.visible = false
-				break
-			default:
-				// if(item.type != "Weapon") return
-
-				// for(i = 0; i < collider.inventory.length; i++){
-				// 	const slot = collider.inventory[i]
-				// 	if(!slot.item){
-				// 		slot.item = item
-				// 		item.visible = false
-				// 		item.isInInventory = true
-				// 		updateUI("icon", item)
-				// 		return
-				// 	}		
-				// }
 				break
 		}
 	}
 }
 
-const basicCollision = (entity, block) => {
-	const {side, collider, target, overlap} = collide(entity, block)
-
+const collision = ({side, collider, target, overlap}) => {
 	if(side.top){
 		collider.velocity.y = 0
 		collider.position.y -= parseInt(overlap.y)
 		collider.isFalling = false
+		collider.isJumping = false
 	}
 
 	if(side.bottom){
@@ -75,20 +60,11 @@ const basicCollision = (entity, block) => {
 
 	if(side.left){
 		collider.position.x -= overlap.x
-
-		if(collider.entityType == "Enemy"){
-			collider.will_jump = true			
-		}
 	}
 
 	if(side.right){
 		collider.position.x += overlap.x
-		
-		if(collider.entityType == "Enemy"){
-			collider.will_jump = true			
-		}
 	}
-
 }
 
 

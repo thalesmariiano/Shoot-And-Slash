@@ -1,52 +1,84 @@
 
 class Camera {
 	constructor(){
-		this.x = 0
-		this.y = 0
-		this.width
-		this.height
+		this.position = {
+			x: 0,
+			y: 0
+		}
+		this.velocity = {
+			x: 0,
+			y: 0
+		}
+		this.displayWidth
+		this.displayHeight
+		this.entity
+		this.lockInEntity = true
 	}
 
-	leftEdge(){
-		return this.x + (this.width/3)
+	leftEdge(){return this.position.x + (this.displayWidth/3)}
+	rightEdge(){return this.position.x + (this.displayWidth/3)}
+	topEdge(){return this.position.y + (this.displayHeight/2)}
+	bottomEdge(){return this.position.y + (this.displayHeight * 0.75)}
+
+	appendIn(entityToFollow){
+		this.entity = entityToFollow
 	}
 
-	rightEdge(){
-		return this.x + (this.width/3)
+	moveLeft(){
+		const entityLeft = this.entity.position.x - (this.displayWidth/3) 
+		this.position.x = entityLeft
 	}
-	topEdge(){
-		return this.y + (this.height/2)
+
+	moveRight(){
+		const entityRight = this.entity.position.x + this.entity.width - (this.displayWidth/3)
+		this.position.x = entityRight
 	}
-	bottomEdge(){
-		return this.y + (this.height * 0.75)
+
+	moveUp(){
+		const entityUp = this.entity.position.y - (this.displayHeight/2)
+		this.position.y = entityUp
+	}
+
+	moveDown(){
+		const entityDown = this.entity.position.y + this.entity.height - (this.displayHeight * 0.75)
+		this.position.y = entityDown
+	}
+
+	followEntity(){
+		if(this.entity.position.x < this.leftEdge()){
+			this.moveLeft()	
+		}
+
+		if(this.entity.position.x + this.entity.width > this.rightEdge()){
+			this.moveRight()
+		}
+
+		if(this.entity.position.y < this.topEdge()){
+			this.moveUp()
+		}
+
+		if(this.entity.position.y + this.entity.height > this.bottomEdge()){
+			this.moveDown()
+		}
 	}
 
 	update(){
-		this.width = canvas.width
-		this.height = canvas.height
+		this.displayWidth = canvas.width
+		this.displayHeight = canvas.height
 
-		if(player.position.x < this.leftEdge()){
-			this.x = player.position.x - (this.width/3)
-		}
-
-		if(player.position.x + player.width > this.rightEdge()){
-			this.x = player.position.x + player.width - (this.width/3)
-		}
-		if(player.position.y < this.topEdge()){
-			this.y = player.position.y - (this.height/2)
+		if(this.lockInEntity){
+			this.followEntity()
 		}
 
-		if(player.position.y + player.height > this.bottomEdge()){
-			this.y = player.position.y + player.height - (this.height * 0.75)
+		if(this.position.x + this.displayWidth > mapSize){
+			this.position.x = mapSize - this.displayWidth
 		}
 
-		// Limites da câmera
-		if(this.x < 0){
-			this.x = 0
+		if(this.position.x < 0){
+			this.position.x = 0
 		}
 
-		if(this.x + this.width > mapSize){
-			this.x = mapSize - this.width
-		}
+		this.position.x += this.velocity.x
+		this.position.y += this.velocity.y
 	}
 }

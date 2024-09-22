@@ -24,11 +24,12 @@ class Entity {
 		this.spriteFrames = 0
 		this.framesElapsed = 0
 		this.framesHold = 5
-		this.endAnimation = false
+		this.stopAnimation = false
 		this.offest = {
 			x: 0,
 			y: 0
 		}
+		this.attackSprite = 1
 		this.entitySizeX = 0
 		this.entitySizeY = 0
 		//
@@ -36,19 +37,24 @@ class Entity {
 		this.isFalling = false
 		this.isRunning = false
 		this.isWalking = false
+		this.isJumping = false
 		this.isAttacking = false
+		this.isShooting = false
 		this.isDead = false
 		this.receiveDamage = false
+		this.entityAttacked = false
+		this.isChargeAttack = false
+		this.isProtecting = false
 		//
 		this.health = 100
 		this.maxHealth = 100
 		this.defaultSpeed = 5
-		this.speed = 5
-		this.jump = -13
+		this.runSpeed = 5
+		this.jumpHeight = -13
 		//
 		this.visible = true
 		this.type = "Entity"
-		this.direction = "RIGHT"
+		this.direction = "right"
 		this.entityType = null
 	}
 
@@ -59,26 +65,76 @@ class Entity {
 	switchSprite(name){
 		const spr = this.entitySprites.find(sprite => sprite.name == name)
 
+		if(spr !== this.sprInfo) this.currentFrames = 0	
+		else return
+
 		this.sprite = spr.image
 		this.spriteFrames = spr.frames
 		this.framesHold = spr.hold ? spr.hold : 5
 		this.frameSizeX = this.sprite.width/this.spriteFrames
 		this.frameSizeY = this.sprite.height
-		
-		if(spr != this.sprInfo) this.currentFrames = 0	
 		this.sprInfo = spr
 	}
 
-	draw(){
-		buffer.drawImage(this.sprite, this.imgX, this.imgY, this.frameSizeX, this.frameSizeY, this.position.x - this.offest.x, this.position.y - this.offest.y, this.entitySizeX, this.entitySizeY)
-
-		if(developerMode){
-			buffer.strokeStyle = "black"
-			buffer.strokeRect(this.position.x, this.position.y, this.width, this.height)
+	animation(){
+		this.framesElapsed++
+		if(this.framesElapsed % this.framesHold === 0){
+			this.currentFrames++
+			this.onAnimation({sprite: this.sprInfo, frame: this.currentFrames, frameHold: this.framesHold, framesElapsed: this.framesElapsed})
+			if(this.currentFrames >= this.spriteFrames){					
+				this.onAnimationEnd(this.sprInfo)
+				if(this.stopAnimation) return
+				this.currentFrames = 0
+			}
 		}
-			
-		// ctx.fillStyle = this.color
-		// ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
+		this.imgX = this.frameSizeX*this.currentFrames
+	}
+
+	onAnimationEnd(){}
+	onAnimation(){}
+
+	runLeft(){
+		this.velocity.x = -this.runSpeed
+		this.direction = "left"
+		this.isRunning = true
+	}
+
+	runRight(){
+		this.velocity.x = this.runSpeed
+		this.direction = "right"
+		this.isRunning = true
+	}
+
+	jump(){
+		this.velocity.y = this.jumpHeight
+		this.isJumping = true
+		jumpSound.play()
+	}
+
+	stopRun(){
+		if(this.velocity.x !== 0){
+			this.isRunning = false
+			this.velocity.x = 0
+		}
+	}
+
+	stopAttack(){
+		this.attackSprite = 1
+		this.isAttacking = false
+	}
+
+	draw(){
+		buffer.drawImage(
+			this.sprite, 
+			this.imgX, 
+			this.imgY, 
+			this.frameSizeX, 
+			this.frameSizeY, 
+			this.position.x - this.offest.x, 
+			this.position.y - this.offest.y, 
+			this.entitySizeX, 
+			this.entitySizeY
+		)
 	}
 
 	update(){

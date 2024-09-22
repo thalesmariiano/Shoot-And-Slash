@@ -11,7 +11,8 @@
   		<!-- TAILWIND CSS -->
   		<link rel="stylesheet" type="text/css" href="./arquivos/css/styles.css">
 
-  		<!-- <script src="https://cdn.tailwindcss.com"></script> -->
+  		<!-- Animate.css -->
+  		<link rel="stylesheet" type="text/css" href="./arquivos/css/animate.min.css">
 
   		<style>
   			.animate__animated.animate__fadeIn {
@@ -19,11 +20,9 @@
 			}
   		</style>
 
-		<!-- Animate CSS -->
-		<link rel="stylesheet" href="http
-		s://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  		<!-- <script src="https://cdn.tailwindcss.com"></script> -->
 
-		<title>Shoot And Slash - Jogo 2D estilo hack and slash</title>
+		<title>Shoot And Slash - Acabe com as ordas de inimigos!</title>
 	</head>
 	<body class="text-white overflow-hidden">
 		<main id="container" class="flex justify-center items-center relative min-h-screen">
@@ -101,41 +100,28 @@
 								<h2 class="font-bold font-righteous text-5xl uppercase underline">Opções</h2>
 							</div>
 							<div class="space-y-5">
-								<div id="switch-controls">
-									<p class="font-bold font-inter text-lg">Controles</p>
-									<div id="controls-visual" class="flex justify-end mt-1">
-										<div class="flex justify-center items-center">
-											<div id="type-1" class="flex justify-center items-center cursor-pointer opacity-40 hover:opacity-75" data-control="1" onclick="switchControls(this, 1)">
-												<img class="w-28" src="arquivos/assets/wasd_icon.png">
-											</div>
-										</div>
-										<div class="flex flex-col justify-center items-center">
-											<div id="type-2" class="flex justify-center items-center cursor-pointer opacity-40 hover:opacity-75" data-control="2" onclick="switchControls(this, 2)">
-												<img class="w-28" src="arquivos/assets/arrows_icon.png">
-											</div>
-										</div>
-									</div>
-								</div>
-								<hr/>
 								<div id="memory">
 									<div class="flex flex-col justify-center items-start gap-y-3">
 										<div>
 											<div class="flex items-center">
 												<p class="font-bold font-inter text-lg">Informações</p>
-												<div class="w-4 h-4 bg-neutral-700 flex justify-center items-center rounded-full ml-2 text-zinc-500 text-sm cursor-pointer relative hover:border hover:border-black hover:bg-neutral-900 hover:text-white group">?
+												<div class="w-4 h-4 bg-neutral-700 flex justify-center items-center rounded-full ml-2 mt-0.5 text-zinc-400 text-sm cursor-pointer relative hover:border hover:border-black hover:bg-neutral-900 hover:text-white group">?
 													<div class="absolute -top-24 left-5 w-56 bg-neutral-900 rounded-lg border border-black p-2 shadow-lg hidden group-hover:flex">
 														<p class="text-center text-white leading-5 font-inter">Para uma melhor experiência, precisamos salvar algumas informações. Não se preocupe, nada sai do seu navegador.</p>
 													</div>
 												</div>
 											</div>
-											<label class="text-zinc-300 ml-1 cursor-pointer">
-												<input id="save-memory" class="translate-y-[2px] cursor-pointer" type="checkbox">
-												Salvar
+											<label class="group w-full flex gap-x-3 items-center my-3">
+												<input id="save-data-input" class="w-0 h-0" type="checkbox" name="save-data" checked>
+												<div class="min-w-12 h-5 bg-neutral-600 rounded relative flex items-center">
+													<span class="absolute left-0 w-6 h-5 bg-red-700 group-has-[:checked]:bg-green-700 group-has-[:checked]:left-6 rounded transition-all"></span>
+												</div>
+												Salvar Informações
 											</label>
 										</div>
 										<div>
 											<p class="font-bold font-inter text-lg">Histórico do jogo</p>
-											<button id="delete-memory" class="bg-red-800 mt-1 ml-1 text-zinc-300 font-inter px-5 rounded-lg hover:bg-red-900">Deletar</button>
+											<button id="delete-data" class="bg-red-800 m-3 text-zinc-300 font-inter px-5 rounded hover:bg-red-900">Deletar</button>
 										</div>
 									</div>
 								</div>
@@ -145,36 +131,26 @@
 					</section>
 				</div> 
 				<section id="hud-screen" class="w-full h-full relative p-5 transition-all duration-500 hidden">
-					<div id="hud-container" class="w-full h-[70px] flex justify-start items-center p-[5px]">
-						<div id="weapon-icon-container" class="relative">
-							<div id="weapon-icon" class="w-16 h-16 border-4 border-black rounded-xl bg-neutral-500/75 flex justify-center items-center">
-								<img id="weapon-icon-img" class="-rotate-45" src="arquivos/assets/null.png">
+					<div id="hud-container" class="w-full flex flex-col justify-start items-start p-[5px]">
+						<div class="w-full flex justify-start items-start">
+							<div id="weapon-icon-container" class="relative">
+								<div id="weapon-icon" class="w-16 h-16 border-4 border-black rounded-xl bg-neutral-500/75 flex justify-center items-center">
+									<img id="weapon-icon-img" class="-rotate-45" src="arquivos/assets/null.png">
+								</div>
 							</div>
-							<p id="weapon-status" class="absolute top-15 w-full text-center font-bold hidden">
-								<span id="bullets-amount">0</span>/<span id="munition-amount">0</span>
-							</p>
+							<div class="flex flex-col justify-start items-start">
+								<div id="health-bar" class="w-[100px] h-[30px] bg-neutral-500 border-4 border-black rounded -translate-x-1 translate-y-1 overflow-hidden transition-all">
+									<div id="health-amount" class="w-full h-full bg-red-700 transition-all duration-200"></div>
+								</div>
+								<div id="mana-bar" class="w-[50px] h-[15px] -translate-x-1 overflow-hidden bg-neutral-500 border-4 rounded border-black transition-all">
+									<div id="mana-amount" class="w-full h-full bg-purple-700 transition-all duration-200"></div>
+								</div>
+							</div>
 						</div>
-						<div class="flex flex-col justify-start h-full pl-[5px]">
-							<div id="health-container" class="w-[100px] h-[21px] mt-[5px] bg-[#999] border-y-[1.5px] border-black relative">
-								<div id="health-amount" class="w-full h-full bg-red-700 transition-all duration-200"></div>
-								<div id="health-bar" class="flex h-full absolute top-0 left-0">
-									<div class="health-points"></div>
-									<div class="health-points"></div>
-									<div class="health-points"></div>
-									<div class="health-points"></div>
-									<div class="health-points"></div>
-									<div class="health-points"></div>
-									<div class="health-points"></div>
-									<div class="health-points"></div>
-									<div class="health-points"></div>
-									<div class="health-points"></div>
-								</div>
-							</div>
-							<div id="inventory-status" class="pt-[5px]">
-								<div class="flex items-center">
-									<img class="w-6 h-6 drop-shadow" src="arquivos/assets/icons/soul_icon.png">
-									<p id="souls-amount" class="text-shadow font-bold mt-1">0</p>
-								</div>
+						<div id="inventory-status" class="pt-[5px]">
+							<div class="flex items-center">
+								<img class="w-6 drop-shadow" src="arquivos/assets/icons/soul_icon.png">
+								<p id="souls-amount" class="text-shadow font-bold mt-1">0</p>
 							</div>
 						</div>
 					</div>
@@ -192,97 +168,64 @@
 					</div>
 					<div id="skills-screen" class="w-full h-full absolute top-0 left-0 hidden">
 						<div id="skills-container" class="w-full h-full flex justify-center items-center bg-neutral-900/75">
-							<div class="w-[32rem] h-[27rem] p-2 relative flex flex-col justify-between bg-neutral-400 border-2 border-white rounded-xl">
+							<div class="w-[32rem] p-2 relative flex flex-col justify-between bg-neutral-400 border-2 border-white rounded-xl">
 								<div class="w-16 absolute -top-0 -right-20 flex justify-center items-center py-1 bg-neutral-400/50 border-[1.5px] border-white rounded-xl">
 									<img class="w-5 h-5 mr-1" src="arquivos/assets/icons/clock_icon.png">
 									<p id="waves-skills-timer" class="font-semibold">15s</p>
 								</div>
 								<div>
 									<p class="uppercase text-2xl text-center text-neutral-800 font-bold">Habilidades</p>
-									<div id="skills" class="mt-1 flex justify-center gap-2">
+									<div id="skills" class="mt-2 flex justify-center gap-2 rounded">
 										<div class="flex flex-col items-center">
-											<button title="Vida" class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="health" data-level="1" data-max="20" data-price="5">
+											<button title="Vida" class="w-20 h-20 p-1 mb-1 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="health">
 												<div class="w-full h-full flex flex-col justify-between">
 													<img class="mx-auto w-10 h-10" src="arquivos/assets/icons/life_icon.png" alt="Vida">
 													<p class="font-bold mx-auto transition-all duration-200">Lv 1</p>
 												</div>
 											</button>
-											<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1">5 Almas</p>
+											<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1 rounded">5 Almas</p>
 										</div>
 										<div class="flex flex-col items-center">
-											<button title="Velocidade" class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="speed" data-level="1" data-max="5" data-price="5">
+											<button title="Velocidade" class="w-20 h-20 p-1 mb-1 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="speed">
 												<div class="w-full h-full flex flex-col justify-between">
-													<img class="mx-auto w-10 h-10" src="arquivos/assets/icons/speed_icon.png" alt="Velocidade">
+													<img class="mx-auto w-10 h-10" src="arquivos/assets/icons/speed-wing-128x.png" alt="Velocidade">
 													<p class="font-bold mx-auto transition-all duration-200">Lv 1</p>
 												</div>
 											</button>
-											<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1">5 Almas</p>
+											<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1 rounded">5 Almas</p>
 										</div>
 										<div class="flex flex-col items-center">
-											<button title="Força" class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="strength" data-level="1" data-max="20" data-price="5">
+											<button title="Força" class="w-20 h-20 p-1 mb-1 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="strength">
 												<div class="w-full h-full flex flex-col justify-between">
-													<img class="mx-auto w-10 h-10" src="arquivos/assets/icons/strength_icon.png" alt="Força">
+													<img class="mx-auto w-10 h-10" src="arquivos/assets/icons/strength-muscle-128x.png" alt="Força">
 													<p class="font-bold mx-auto transition-all duration-200">Lv 1</p>
 												</div>
 											</button>
-											<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1">5 Almas</p>
+											<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1 rounded">5 Almas</p>
 										</div>
 										<div class="flex flex-col items-center">
-											<button title="Velocidade de Ataque" class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="attackspeed" data-level="1" data-max="2" data-price="10">
+											<button title="Poção de Mana" class="w-20 h-20 p-1 mb-1 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="mana">
 												<div class="w-full h-full flex flex-col justify-between">
-													<img class="mx-auto w-10 h-10" src="arquivos/assets/icons/attack_speed_icon.png" alt="Velocidade de Ataque">
+													<img class="mx-auto w-10 h-10" src="arquivos/assets/icons/mana-potion-128x.png" alt="Poção de Mana">
 													<p class="font-bold mx-auto transition-all duration-200">Lv 1</p>
 												</div>
 											</button>
-											<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1">10 Almas</p>
+											<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1 rounded">10 Almas</p>
 										</div>
 										<div class="flex flex-col items-center">
-											<button title="Dropar mais loot" class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="loot" data-level="1" data-max="7" data-price="10">
+											<button title="Dropar mais loot" class="w-20 h-20 p-1 mb-1 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="loot">
 												<div class="w-full h-full flex flex-col justify-between">
-													<img class="mx-auto w-14 h-10" src="arquivos/assets/icons/loot_icon.png" alt="Loot">
+													<img class="mx-auto w-14 h-10" src="arquivos/assets/icons/loot-icon.png" alt="Loot">
 													<p class="font-bold mx-auto transition-all duration-200">Lv 1</p>
 												</div>
 											</button>
-											<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1">10 Almas</p>
-										</div>
-									</div>
-									<div class="mt-5">
-										<p class="uppercase text-2xl text-center text-neutral-800 font-bold">Armas</p>
-										<div id="itens" class="mt-1 flex justify-center gap-2">
-											<div class="flex flex-col items-center">
-												<button title="AK-47" class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-item="ak47" data-price="50">
-													<div class="w-full h-full flex flex-col justify-center">
-														<img class="mx-auto -rotate-45" src="arquivos/assets/itens/ak47.png">
-													</div>
-												</button>
-												<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1">50 Almas</p>
-											</div>
-											<button class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 rounded-xl border-2 border-neutral-300 cursor-not-allowed opacity-50">
-												<div class="w-full h-full flex items-center">
-													
-												</div>
-											</button>
-											<button class="w-20 h-20 p-1 my-2 text-left bg-neutral-500 rounded-xl border-2 border-neutral-300 cursor-not-allowed opacity-50">
-												<div class="w-full h-full flex items-center">
-													
-												</div>
-											</button>
-											<button class="w-20 h-20 p-1 my-2 text-left bg-neutral-500  rounded-xl border-2 border-neutral-300 cursor-not-allowed opacity-50">
-												<div class="w-full h-full flex items-center">
-													
-												</div>
-											</button>
-											<button class="w-20 h-20 p-1 my-2 text-left bg-neutral-500  rounded-xl border-2 border-neutral-300 cursor-not-allowed opacity-50">
-												<div class="w-full h-full flex items-center">
-													
-												</div>
-											</button>
+											<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1 rounded">10 Almas</p>
 										</div>
 									</div>
 								</div>
 
-								<div>
-									<button id="close-skills" class="px-3 py-1 bg-red-800">Fechar</button>
+								<div class="mt-5">
+									<button id="close-skills" class="px-5 py-1 bg-red-800 rounded">Fechar</button>
 								</div>
 							</div>
 						</div>
@@ -326,68 +269,59 @@
 		</main>
 
 		<div id="news-dialog" class="w-full h-screen flex justify-center items-center absolute top-0 left-0 hidden">
-			<div class="w-[32rem] h-[27rem] flex flex-col p-3 bg-neutral-400 border-2 border-white rounded-xl">
+			<div class="w-[32rem] min-h-[27rem] flex flex-col p-3 bg-neutral-400 border-2 border-white rounded-xl">
 				<div>
-					<h1 class="text-center pb-2 font-righteous uppercase font-bold text-2xl text-neutral-800">Atualização - <span class="text-black">Alpha 1.2</span></h1>
+					<h1 class="text-center pb-2 font-righteous uppercase font-bold text-2xl text-neutral-800">Atualização - <span class="text-black">Alpha 1.3</span></h1>
 				</div>
 				<div class="h-full flex flex-col justify-between mt-2">
 					<div >
 						<div>
 							<h2 class="text-black uppercase font-inter font-bold underline text-lg mb-1">Correções</h2>
 							<ul class="list-disc pl-5">
-								<li class="font-inter font-semibold text-neutral-800">Bugs onde o parallax mostrava o fim do sprite horizontal e verticalmente.</li>
-								<li class="font-inter font-semibold text-neutral-800">Otimizações de código.</li>
+								<li class="font-inter font-semibold text-neutral-800">Nem lembro quantas e quais foram. Mas o jogo ta melhor. 👍🏾</li>
+								<li class="font-inter font-semibold text-neutral-800"><span class="text-neutral-700">(Muitas)</span> Otimizações de código.</li>
 							</ul>
 						</div>
 						<div class="mt-3">
 							<h2 class="text-black uppercase font-inter font-bold underline text-lg mb-1">Novidades</h2>
 							<ul class="list-disc pl-5">
-								<li class="font-inter font-semibold text-neutral-800">Tela de novidades <span class="text-neutral-700">(Sim, essa aqui mesmo)</span>.</li>
-								<li class="font-inter font-semibold text-neutral-800">Transições entre telas.</li>
-								<li class="font-inter font-semibold text-neutral-800">Nova tela de modos de jogo.</li>
-								<li class="font-inter font-semibold text-neutral-800">Layouts atualizados.</li>
-								<li class="font-inter font-semibold text-neutral-800">Preparativos para a expanção do jogo.</li>
+								<li class="font-inter font-semibold text-neutral-800">Nova tela de habilidades.</li>
+								<li class="font-inter font-semibold text-neutral-800">Novo HUD</li>
+								<li class="font-inter font-semibold text-neutral-800">AK-47 removida.</li>
+								<li class="font-inter font-semibold text-neutral-800">"Mana" adicionada em habilidades.</li>
+								<li class="font-inter font-semibold text-neutral-800">Atirar bolas de fogo (graças a mana).</li>
+								<li class="font-inter font-semibold text-neutral-800">Efeitos sonoros basicos.</li>
+								<li class="font-inter font-semibold text-neutral-800">Pequenas mudanças e melhorias gerais.</li>
+								<li class="font-inter font-semibold text-neutral-800"><span class="text-neutral-700">(Mais)</span> Preparativos para a expanção do jogo.</li>
 							</ul>
 						</div>
 					</div>
 					<div>
-						<button id="close-news" class="font-inter font-bold px-5 py-1 bg-green-700 rounded-xl hover:bg-green-800">Ai sim!</button>
+						<button id="close-news" class="font-inter font-bold px-5 py-1 mt-5 bg-green-700 rounded-xl hover:bg-green-800">Ai sim!</button>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<div id="guide-dialog" class="absolute top-32 transition-all duration-500 hidden">
+		<div id="guide-dialog" class="absolute top-36 transition-all duration-500 hidden">
 			<div id="dialog" class="w-60 h-96 bg-neutral-700/75 rounded-tr-xl rounded-br-xl p-2 flex flex-col justify-between">
-				<div>
+				<div class="space-y-4">
 					<p class="mb-2 text-center text-xl font-bold text-slate-200">Controles</p>
 					<div class="mb-2">
 						<p class="text-slate-200 font-semibold mb-1">Movimentação</p>
-						<div class="flex">
-							<div class="w-8 h-8 mr-1 flex text-black font-bold text-lg justify-center items-center bg-white rounded-xl shadow-[0_3px_0_0_rgba(120,120,120,1)]">W</div>
-							<div class="w-8 h-8 mr-1 flex text-black font-bold text-lg justify-center items-center bg-white rounded-xl shadow-[0_3px_0_0_rgba(120,120,120,1)]">A</div>
-							<div class="w-8 h-8 mr-1 flex text-black font-bold text-lg justify-center items-center bg-white rounded-xl shadow-[0_3px_0_0_rgba(120,120,120,1)]">S</div>
-							<div class="w-8 h-8 flex text-black font-bold text-lg justify-center items-center bg-white rounded-xl shadow-[0_3px_0_0_rgba(120,120,120,1)]">D</div>
+						<div class="flex justify-between items-center">
+							<img class="w-24" src="arquivos/assets/wasd_icon.png" title="WASD">
+							<span class="font-inter">Ou</span>
+							<img class="w-24" src="arquivos/assets/arrows_icon.png">
 						</div>
 					</div>
 					<div class="mb-2">
-						<p class="text-slate-200 font-semibold mb-1">Trocar de Item/Arma</p>
-						<div class="flex">
-							<div class="w-8 h-8 mr-1 flex text-black font-bold text-lg justify-center items-center bg-white rounded-xl shadow-[0_3px_0_0_rgba(120,120,120,1)]">1</div>
-							<div class="w-8 h-8 mr-1 flex text-black font-bold text-lg justify-center items-center bg-white rounded-xl shadow-[0_3px_0_0_rgba(120,120,120,1)]">2</div>
-							<div class="w-8 h-8 mr-1 flex text-black font-bold text-lg justify-center items-center bg-white rounded-xl shadow-[0_3px_0_0_rgba(120,120,120,1)]">3</div>
-						</div>
-					</div>
-					<div class="mb-2">
-						<p class="text-slate-200 font-semibold mb-1">Atirar/Atacar</p>
-						<div class="w-16 mr-1 text-black font-bold text-lg flex flex-col justify-center items-center bg-white rounded-xl shadow-[0_3px_0_0_rgba(120,120,120,1)]">
-							Enter
-							<img class="w-5 h-5 rotate-90" src="arquivos/assets/icons/arrow-turn-left.svg">
-						</div>
+						<p class="text-slate-200 font-semibold mb-1">Atacar</p>
+						<img class="w-16" src="arquivos/assets/enter_icon.png">
 					</div>
 					<div>
-						<p class="text-slate-200 font-semibold mb-1">Recarregar Arma</p>
-						<div class="w-8 h-8 mr-1 flex text-black font-bold text-lg justify-center items-center bg-white rounded-xl shadow-[0_3px_0_0_rgba(120,120,120,1)]">R</div>
+						<p class="text-slate-200 font-semibold mb-1">Disparar bola de fogo</p>
+						<img class="w-10" src="arquivos/assets/f_icon.png">
 					</div>
 				</div>
 
@@ -396,7 +330,7 @@
 						<p class="text-xs mr-1">Não mostrar novamente</p>
 						<input type="checkbox" name="dontshowguide">
 					</div>
-					<button id="close-guide" class="px-2 bg-red-600 text-lg rounded">Fechar</button>
+					<button id="close-guide" class="px-2 bg-red-800 hover:bg-red-700 text-lg rounded">Fechar</button>
 				</div>
 			</div>
 		</div>
@@ -408,8 +342,8 @@
 					<p class="mx-1 mt-3 font-inter text-neutral-800 font-semibold leading-5">Tem certeza? Todo o histórico do jogo será reiniciado, e todos os seus recordes salvos serão perdidos!</p>
 				</div>
 				<div>
-					<button id="cancel-delete" class="px-5 py-1 font-bold font-inter bg-green-600 text-white rounded-xl hover:bg-green-700 transition-all">Cancelar</button>
-					<button id="confirm-delete" class="px-4 py-1 font-bold font-inter text-red-600 underline hover:text-red-700 transition-all">Deletar</button>
+					<button id="not-delete-data" class="px-5 py-1 font-bold font-inter bg-green-600 text-white rounded-xl hover:bg-green-700 transition-all">Cancelar</button>
+					<button id="confirm-delete-data" class="px-4 py-1 font-bold font-inter text-red-600 underline hover:text-red-700 transition-all">Deletar</button>
 				</div>
 			</div>
 		</div>
@@ -421,29 +355,34 @@
 					<p class="mx-1 mt-3 font-inter text-neutral-800 font-semibold leading-5">Tem certeza? Todo o seu histórico do jogo será deletado. E qualquer recorde que você tenha não será salvo.</p>
 				</div>
 				<div>
-					<button id="cancel-not-save" class="px-5 py-1 font-bold font-inter bg-green-600 text-white rounded-xl hover:bg-green-700 transition-all">Salvar</button>
-					<button id="confirm-not-save" class="px-4 py-1 font-bold font-inter text-red-600 underline hover:text-red-700 transition-all">Não salvar</button>
+					<button id="confirm-save-data" class="px-5 py-1 font-bold font-inter bg-green-600 text-white rounded-xl hover:bg-green-700 transition-all">Salvar</button>
+					<button id="not-save-data" class="px-4 py-1 font-bold font-inter text-red-600 underline hover:text-red-700 transition-all">Não salvar</button>
 				</div>
 			</div>
 		</div>
 
-		<p class="text-zinc-400/50 absolute top-5 right-5 font-bold">alpha 1.2</p>
+		<p class="text-zinc-400/50 absolute top-5 right-5 font-bold">alpha 1.3</p>
 
+		<script src="arquivos/js/Classes/Sprite.js"></script>
 		<script src="arquivos/js/Classes/Entity.js"></script>
 		<script src="arquivos/js/Classes/Player.js"></script>
 		<script src="arquivos/js/Classes/Item.js"></script>
-		<script src="arquivos/js/Classes/Weapon.js"></script>
-		<script src="arquivos/js/Classes/Projectile.js"></script>
 		<script src="arquivos/js/Classes/Enemy.js"></script>
+		<script src="arquivos/js/Classes/SkeletonWarrior.js"></script>
+		<script src="arquivos/js/Classes/SkeletonSpearman.js"></script>
 		<script src="arquivos/js/Classes/Camera.js"></script>
 		<script src="arquivos/js/Classes/Parallax.js"></script>
-		<script src="arquivos/js/collide.js"></script>
+		<script src="arquivos/js/Classes/Projectile.js"></script>
+		<script src="arquivos/js/Classes/Effect.js"></script>
 		<script src="arquivos/js/Utils/collision_utils.js"></script>
 		<script src="arquivos/js/Utils/ui_utils.js"></script>
 		<script src="arquivos/js/Utils/geral_utils.js"></script>
 
-		<script src="arquivos/js/keyMap.js"></script>
+		<script src="arquivos/js/Gamemodes/arcade.js"></script>
+
+		<script src="arquivos/js/hitBox.js"></script>
 		<script src="arquivos/js/main.js"></script>
+		<script src="arquivos/js/keyMap.js"></script>
 		<script src="arquivos/js/ui.js"></script>
 	</body>
 </html>

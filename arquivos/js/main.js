@@ -1,75 +1,38 @@
-if(getStorage("SaSdialog")) localStorage.removeItem("SaSdialog")
-if(getStorage("SaSControl")) localStorage.removeItem("SaSControl")
 
-if(!getStorage("SaS-Save")) setStorage("SaS-Save", 1)
+deleteStorage('SaSdialog')
+deleteStorage('SaSControl')
+deleteStorage('SaS-Control')
+deleteStorage('SaS-Dialog')
 
-if(parseInt(getStorage("SaS-Save"))){
-	$("#save-memory").checked = true
-	createStorages()
-}else{
-	$("#save-memory").checked = false
+if(!getStorage("SaS-Save")){
+	setStorage("SaS-Save", 1)
+	setStorage("SaS-Arcade", 0)
+	$("#save-data-input").checked = true
+}else if(!parseInt(getStorage('SaS-Save'))){
+	$("#save-data-input").checked = false
 }
 
-document.querySelector("#arcade-record").innerHTML = `Recorde: ${getStorage("SaS-Arcade")}`
+$("#arcade-record").innerHTML = `Recorde: ${getStorage("SaS-Arcade")}`
 
-var developerMode = false
-
-const canvas            = document.querySelector("canvas")
+const canvas  = document.querySelector("canvas")
 const display = canvas.getContext("2d", {alpha: false})
 
 const cv = document.createElement("canvas")
 const buffer = cv.getContext('2d', {alpha: false})
 
 const screens_container = document.querySelector("#screens-container")
+const hud_screen = document.getElementById("hud-screen")
 
-const GRAVITY = 0.6
-
-var keyRight,
-    keyLeft,
-    keyUp,
-    keyDown,
-    keyEnter,
-    keyR = false
-
-var gameIsPaused = true
-
-var enemysKilled = 0
-
-var lockLeft,
-    lockRight = false
-
-const tilemap = new Image()
-tilemap.src   = "arquivos/assets/map/tilemap.png"
-
-const parallax_back = new Image()
-parallax_back.src   = "arquivos/assets/map/parallax-forest-back.png"
-
-const parallax_light = new Image()
-parallax_light.src   = "arquivos/assets/map/parallax-forest-lights.png"
-
-const parallax_middle = new Image()
-parallax_middle.src   = "arquivos/assets/map/parallax-forest-middle-trees.png"
-
-const parallax_front = new Image()
-parallax_front.src   = "arquivos/assets/map/parallax-forest-front-trees.png"
-
-
-const hud_screen      = document.getElementById("hud-screen")
-const weapon_icon     = document.getElementById("weapon-icon")
-const weapon_icon_img = document.getElementById("weapon-icon-img")
-const weapon_status   = document.getElementById("weapon-status")
-const munition_amount = document.getElementById("munition-amount")
-const bullets_amount  = document.getElementById("bullets-amount")
-
-const souls_amount    = document.getElementById("souls-amount")
+const souls_amount  = document.getElementById("souls-amount")
 
 const close_guide    = document.getElementById("close-guide")
 const guide_checkbox = document.querySelector("input[type=checkbox][name=dontshowguide]")
 
-const health_container = document.getElementById("health-container")
-const health_bar       = document.getElementById("health-bar")
-const health_amount    = document.getElementById("health-amount")
-const points           = document.getElementsByClassName("health-points")
+const health_bar = document.getElementById("health-bar")
+const health_amount = document.getElementById("health-amount")
+
+const mana_bar = document.getElementById("mana-bar")
+const mana_amount = document.getElementById("mana-amount")
 
 const waves_count        = document.getElementById("waves-count")
 const kills_count        = document.getElementById("kills-count")
@@ -78,7 +41,25 @@ const waves_hud_timer    = document.getElementById("waves-hud-timer")
 
 const close_skills = document.getElementById("close-skills")
 const skillsButton = document.querySelectorAll("[data-skill]")
-const itensButton  = document.querySelectorAll("[data-item]")
+
+const GRAVITY = 0.6
+
+var gameIsPaused = true
+
+let GAMEMODE
+
+const tilemap = new Image()
+tilemap.src   = "arquivos/assets/map/tilemap.png"
+
+const parallax_back = new Parallax("arquivos/assets/map/parallax-forest-back.png", {velocity: 7})
+const parallax_middle = new Parallax("arquivos/assets/map/parallax-forest-middle-trees.png", {velocity: 4})
+const parallax_front = new Parallax("arquivos/assets/map/parallax-forest-front-trees.png", {velocity: 2})
+
+const sword_whoosh_3 = new Audio('arquivos/assets/audio/sword_whoosh_3.mp3')
+const sword_whoosh_2 = new Audio('arquivos/assets/audio/sword_whoosh_2.mp3')
+const skeleton_hit = new Audio('arquivos/assets/audio/skeleton_hit_2.mp3')
+const walking = new Audio('arquivos/assets/audio/walking.mp3')
+const jumpSound = new Audio('arquivos/assets/audio/jump.mp3')
 
 const player_sprites = [
 	{
@@ -125,36 +106,32 @@ const player_sprites = [
 	{
 		name: "attack_1_right",
 		image: "arquivos/assets/player/attack1.png",
-		frames: 6,
-		hold: 6
+		frames: 6
 	},
 	{
 		name: "attack_1_left",
 		image: "arquivos/assets/player/attack1_left.png",
-		frames: 6,
-		hold: 6
+		frames: 6
 	},
 	{
 		name: "attack_2_right",
 		image: "arquivos/assets/player/attack2.png",
-		frames: 6,
-		hold: 6
+		frames: 6
 	},
 	{
 		name: "attack_2_left",
 		image: "arquivos/assets/player/attack2_left.png",
-		frames: 6,
-		hold: 6
+		frames: 6
 	},
 	{
-		name: "take-hit_right",
-		image: "arquivos/assets/player/take-hit.png",
+		name: "take_hit_right",
+		image: "arquivos/assets/player/take_hit.png",
 		frames: 4,
 		hold: 8
 	},
 	{
-		name: "take-hit_left",
-		image: "arquivos/assets/player/take-hit_left.png",
+		name: "take_hit_left",
+		image: "arquivos/assets/player/take_hit_left.png",
 		frames: 4,
 		hold: 8
 	},
@@ -173,169 +150,289 @@ const player_sprites = [
 ]
 
 const itens_sprites = {
-	ak47: {
-		sprites: [
-			{
-				name: "ak47_right",
-				image: "arquivos/assets/itens/ak47.png",
-				frames: 1
-			},
-			{
-				name: "ak47_left",
-				image: "arquivos/assets/itens/ak47_left.png",
-				frames: 1
-			}
-		],
-		holding_position: {
-			x: 55,
-			y: 30
-		},
-		holding_position_left: {
-			x: 30,
-			y: 30
+	enemy_soul: [
+		{
+			name: "soul",
+			image: "arquivos/assets/itens/enemy_soul.png",
+			frames: 4,
+			hold: 6
 		}
-	},
-	escopeta: {
-		img: "arquivos/assets/itens/escopeta.png",
-		img_invert: "arquivos/assets/itens/escopeta_left.png",
-		holding_position: {
-			x: 55,
-			y: 50
-		},
-		holding_position_left: {
-			x: 30,
-			y: 50
+	],
+	life: [
+		{
+			name: "life",
+			image: "arquivos/assets/itens/life.png",
+			frames: 1
 		}
-	},
-	enemy_soul: {
-		sprites: [
-			{
-				name: "soul",
-				image: "arquivos/assets/itens/enemy_soul.png",
-				frames: 4,
-				hold: 6
-			}
-		],
-	},
-	life: {
-		sprites: [
-			{
-				name: "life",
-				image: "arquivos/assets/itens/life.png",
-				frames: 1,
-			}
-		],
-	}
+	],
+	fireball: [
+		{
+			name: "fireball_right",
+			image: "arquivos/assets/itens/fireball.png",
+			frames: 60,
+			hold: 0
+		},
+		{
+			name: "fireball_left",
+			image: "arquivos/assets/itens/fireball_left.png",
+			frames: 60
+		}
+	]
 }
 
-const enemy_sprites = [
+const skeleton_warrior_sprites = [
 	{
 		name: "idle_right",
-		image: "arquivos/assets/enemys/skeleton_idle.png",
+		image: "arquivos/assets/skeleton_warrior/idle_right.png",
 		frames: 7
 	},
 	{
 		name: "idle_left",
-		image: "arquivos/assets/enemys/skeleton_idle_left.png",
+		image: "arquivos/assets/skeleton_warrior/idle_left.png",
 		frames: 7
 	},
 	{
 		name: "run_right",
-		image: "arquivos/assets/enemys/skeleton_run.png",
+		image: "arquivos/assets/skeleton_warrior/run_right.png",
 		frames: 8
 	},
 	{
 		name: "run_left",
-		image: "arquivos/assets/enemys/skeleton_run_left.png",
+		image: "arquivos/assets/skeleton_warrior/run_left.png",
 		frames: 8
 	},
 	{
 		name: "walk_right",
-		image: "arquivos/assets/enemys/skeleton_walk.png",
-		frames: 7
+		image: "arquivos/assets/skeleton_warrior/walk_right.png",
+		frames: 7,
+		hold: 7
 	},
 	{
 		name: "walk_left",
-		image: "arquivos/assets/enemys/skeleton_walk_left.png",
+		image: "arquivos/assets/skeleton_warrior/walk_left.png",
+		frames: 7,
+		hold: 7
+	},
+	{
+		name: "run_attack_right",
+		image: "arquivos/assets/skeleton_warrior/run_attack_right.png",
 		frames: 7
 	},
 	{
-		name: "attack_run_right",
-		image: "arquivos/assets/enemys/skeleton_attack_run.png",
-		frames: 7
-	},
-	{
-		name: "attack_run_left",
-		image: "arquivos/assets/enemys/skeleton_attack_run_left.png",
+		name: "run_attack_left",
+		image: "arquivos/assets/skeleton_warrior/run_attack_left.png",
 		frames: 7
 	},
 	{
 		name: "attack_1_right",
-		image: "arquivos/assets/enemys/skeleton_attack_1.png",
+		image: "arquivos/assets/skeleton_warrior/attack_1_right.png",
 		frames: 5,
 		hold: 6
 	},
 	{
 		name: "attack_1_left",
-		image: "arquivos/assets/enemys/skeleton_attack_1_left.png",
+		image: "arquivos/assets/skeleton_warrior/attack_1_left.png",
 		frames: 5,
 		hold: 6
 	},
 	{
 		name: "attack_2_right",
-		image: "arquivos/assets/enemys/skeleton_attack_2.png",
+		image: "arquivos/assets/skeleton_warrior/attack_2_right.png",
 		frames: 6
 	},
 	{
 		name: "attack_2_left",
-		image: "arquivos/assets/enemys/skeleton_attack_2_left.png",
+		image: "arquivos/assets/skeleton_warrior/attack_2_left.png",
 		frames: 6
 	},
 	{
 		name: "attack_3_right",
-		image: "arquivos/assets/enemys/skeleton_attack_3.png",
+		image: "arquivos/assets/skeleton_warrior/attack_3_right.png",
 		frames: 4
 	},
 	{
 		name: "attack_3_left",
-		image: "arquivos/assets/enemys/skeleton_attack_3_left.png",
+		image: "arquivos/assets/skeleton_warrior/attack_3_left.png",
 		frames: 4
 	},
 	{
 		name: "take_hit_right",
-		image: "arquivos/assets/enemys/skeleton_hit.png",
-		frames: 2
+		image: "arquivos/assets/skeleton_warrior/hit_right.png",
+		frames: 10,
+		hold: 3
 	},
 	{
 		name: "take_hit_left",
-		image: "arquivos/assets/enemys/skeleton_hit_left.png",
-		frames: 2
+		image: "arquivos/assets/skeleton_warrior/hit_left.png",
+		frames: 10,
+		hold: 3
+	},
+	{
+		name: "protect_left",
+		image: "arquivos/assets/skeleton_warrior/protect_left.png",
+		frames: 2,
+		hold: 20
+	},
+	{
+		name: "protect_right",
+		image: "arquivos/assets/skeleton_warrior/protect_right.png",
+		frames: 2,
+		hold: 20
 	},
 	{
 		name: "dead_right",
-		image: "arquivos/assets/enemys/skeleton_dead.png",
+		image: "arquivos/assets/skeleton_warrior/dead_right.png",
 		frames: 4,
 		hold: 6
 	},
 	{
 		name: "dead_left",
-		image: "arquivos/assets/enemys/skeleton_dead_left.png",
+		image: "arquivos/assets/skeleton_warrior/dead_left.png",
 		frames: 4,
 		hold: 6
 	}
 ]
 
-spriteConverter(enemy_sprites)
+const skeleton_spearman_sprites = [
+	{
+		name: "idle_right",
+		image: "arquivos/assets/skeleton_spearman/idle_right.png",
+		frames: 7
+	},
+	{
+		name: "idle_left",
+		image: "arquivos/assets/skeleton_spearman/idle_left.png",
+		frames: 7
+	},
+	{
+		name: "run_right",
+		image: "arquivos/assets/skeleton_spearman/run_right.png",
+		frames: 6
+	},
+	{
+		name: "run_left",
+		image: "arquivos/assets/skeleton_spearman/run_left.png",
+		frames: 6
+	},
+	{
+		name: "walk_right",
+		image: "arquivos/assets/skeleton_spearman/walk_right.png",
+		frames: 7
+	},
+	{
+		name: "walk_left",
+		image: "arquivos/assets/skeleton_spearman/walk_left.png",
+		frames: 7
+	},
+	{
+		name: "run_attack_right",
+		image: "arquivos/assets/skeleton_spearman/run_attack_right.png",
+		frames: 5
+	},
+	{
+		name: "run_attack_left",
+		image: "arquivos/assets/skeleton_spearman/run_attack_left.png",
+		frames: 5
+	},
+	{
+		name: "attack_1_right",
+		image: "arquivos/assets/skeleton_spearman/attack_1_right.png",
+		frames: 4,
+		hold: 6
+	},
+	{
+		name: "attack_1_left",
+		image: "arquivos/assets/skeleton_spearman/attack_1_left.png",
+		frames: 4,
+		hold: 6
+	},
+	{
+		name: "attack_2_right",
+		image: "arquivos/assets/skeleton_spearman/attack_2_right.png",
+		frames: 4
+	},
+	{
+		name: "attack_2_left",
+		image: "arquivos/assets/skeleton_spearman/attack_2_left.png",
+		frames: 4
+	},
+	{
+		name: "take_hit_right",
+		image: "arquivos/assets/skeleton_spearman/hit_right.png",
+		frames: 3
+	},
+	{
+		name: "take_hit_left",
+		image: "arquivos/assets/skeleton_spearman/hit_left.png",
+		frames: 3
+	},
+	{
+		name: "protect_right",
+		image: "arquivos/assets/skeleton_spearman/protect_right.png",
+		frames: 2,
+		hold: 20
+	},
+	{
+		name: "protect_left",
+		image: "arquivos/assets/skeleton_spearman/protect_left.png",
+		frames: 2,
+		hold: 20
+	},
+	{
+		name: "fall_right",
+		image: "arquivos/assets/skeleton_spearman/fall_right.png",
+		frames: 6,
+		hold: 9
+	},
+	{
+		name: "fall_left",
+		image: "arquivos/assets/skeleton_spearman/fall_left.png",
+		frames: 6,
+		hold: 9
+	},
+	{
+		name: "dead_right",
+		image: "arquivos/assets/skeleton_spearman/dead_right.png",
+		frames: 5,
+		hold: 9
+	},
+	{
+		name: "dead_left",
+		image: "arquivos/assets/skeleton_spearman/dead_left.png",
+		frames: 5,
+		hold: 9
+	}
+]
+
+const effects_sprites = [
+	{
+		name: "fire_hit-wall_left",
+		image: "arquivos/assets/effects/fire_hit_wall.png",
+		frames: 5
+	},
+	{
+		name: "fire_hit-wall_right",
+		image: "arquivos/assets/effects/fire_hit_wall_right.png",
+		frames: 5
+	},
+]
+
+spriteConverter(skeleton_warrior_sprites)
+spriteConverter(skeleton_spearman_sprites)
 spriteConverter(player_sprites)
-spriteConverter(itens_sprites.enemy_soul.sprites)
-spriteConverter(itens_sprites.life.sprites)
-spriteConverter(itens_sprites.ak47.sprites)
+spriteConverter(itens_sprites.enemy_soul)
+spriteConverter(itens_sprites.life)
+spriteConverter(itens_sprites.fireball)
+spriteConverter(effects_sprites)
 
 const enemys = []
+const magicPowers = []
+const effects = []
 
 const player = new Player({position: {x: 127, y: 380}})
 player.setSprites(player_sprites)
 const camera = new Camera()
+camera.appendIn(player)
 
 const life = new Item({
 	itemType: "life",
@@ -344,40 +441,12 @@ const life = new Item({
 		y: 615
 	}
 })
-life.setSprites(itens_sprites.life.sprites)
+life.setSprites(itens_sprites.life)
+life.itemValue = 35
 
-const ak47 = new Weapon({
-	name: "Ak-47",
-	gunType: "Fuzil",
-	munition: 60,
-	gunLimit: 30,
-	bullets: 30,
-	position: {
-		x: -200,
-		y: 525
-	}
-})
-ak47.setSprites(itens_sprites.ak47.sprites)
+const itensArray = [life]
 
-// const escopeta = new Weapon({
-// 	imgSrc: "arquivos/assets/itens/escopeta.png",
-// 	name: "Dôze",
-// 	gunType: "Espingarda",
-// 	munition: 20,
-// 	gunLimit: 10,
-// 	position: {
-// 		x: 500,
-// 		y: 530
-// 	}
-// })
-// escopeta.item_sprites = itens_sprites.escopeta
-// escopeta.bulletsAmount = 10
-
-
-const itensArray = []
-itensArray.push(ak47, life)
-
-const first_MapTiles = [
+const mapTiles = [
 	[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
 	[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
 	[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
@@ -389,8 +458,8 @@ const first_MapTiles = [
 	[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
 	[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
 	[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
-	[3,1,1,1,1,1,1,1,1,1,1,1,1,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
-	[5,5,5,5,5,5,5,5,5,5,5,5,5,5,3,1,1,1,1,1,1,1,1,1,1,1,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
+	[3,1,1,1,1,1,1,1,1,1,1,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
+	[5,5,5,5,5,5,5,5,5,5,5,5,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
 	[5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,3,1,1,1,1,1,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4.5],
 	[5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3.5],
 	[5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
@@ -401,538 +470,392 @@ const first_MapTiles = [
 	[5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5]
 ]
 
-const mapSize = first_MapTiles[0].length*50
-const mapHeight = first_MapTiles.length*50
-const playebleMapBlocks = []
+const mapSize = mapTiles[0].length*50
+const mapHeight = mapTiles.length*50
+const mapBlocks = []
 
-generateTerrain(first_MapTiles, playebleMapBlocks)
+generateTerrain(mapTiles, mapBlocks)
 
 skillsButton.forEach(button => {
-	button.addEventListener("click", () => {
-		const skillType     = button.dataset.skill
-		const skillPrice    = parseInt(button.dataset.price)
-		const skillLevel    = parseInt(button.dataset.level)
-		const skillLevelMax = parseInt(button.dataset.max)
+	button.addEventListener("click", event => buySkill(event, button))
+})
 
-		const level_text = button.children[0].children[1]
-		const price_text = button.nextElementSibling
+const skills_list = {
+	'health': {price: 5, level: 1, max_level: 20},
+	'speed': {price: 5, level: 1, max_level: 5},
+	'strength': {price: 5, level: 1 ,max_level: 6},
+	'mana': {price: 10, level: 1, max_level: 10},
+	'loot': {price: 10, level: 1, max_level: 7}
+}
 
-		const isMaxLevel = skillLevel >= skillLevelMax 
+// Skill List clone with default values
+const skills_list_default = JSON.parse(JSON.stringify(skills_list))
 
-		if(isMaxLevel){
+function buySkill(event, button){
+	const skill_name = button.dataset.skill
+	const skill = skills_list[skill_name]
+
+	const level_text = button.children[0].children[1]
+	const price_text = button.nextElementSibling
+
+	const isMaxLevel = () => skill.level >= skill.max_level 
+	const cantBuySKill = player.souls < skill.price
+
+	if(isMaxLevel()) return
+
+	if(cantBuySKill){
+		animateUI(price_text, 'animate__shakeX', () => {
+			price_text.style.background = ""
+			button.style.border = ""
+		})
+		price_text.style.background = "#f74a4a"
+		button.style.border = "2px solid #f74a4a"
+		return
+	}
+
+	price_text.style.background = "green"
+	button.style.border = "2px solid green"
+	animateUI(price_text, 'animate__jello', () => {
+		price_text.style.background = ""
+		button.style.border = ""
+
+		if(isMaxLevel()){
 			level_text.innerHTML = "Max"
 			level_text.style.color = "#f74a4a"
-
-			setTimeout(() => {
-				level_text.style.color = ""
-				level_text.innerHTML = `Lv ${button.dataset.level}`		
-			}, 1000)
-			return
-		}
-
-		if(player.souls < skillPrice){
-			price_text.classList.add("animate__animated", "animate__shakeX")
-			price_text.style.background = "#f74a4a"
-			button.style.border = "2px solid #f74a4a"
-
-			price_text.addEventListener("animationend", () => {
-				price_text.classList.remove("animate__animated", "animate__shakeX")
-				price_text.style.background = ""
-				button.style.border = ""
-			})
-			return
-		}
-
-		price_text.style.background = "green"
-		button.style.border = "2px solid green"
-
-		setTimeout(() => {
-			price_text.style.background = ""
-			button.style.border = ""
-		}, 700)
-
-		player.souls -= skillPrice
-		souls_amount.innerHTML = player.souls
-
-		button.dataset.price = skillPrice + 5
-		price_text.innerHTML = `${button.dataset.price} Almas`
-
-		button.dataset.level++
-		level_text.innerHTML = `Lv ${button.dataset.level}`
-
-		updateSkill(skillType)
+			price_text.style.opacity = ".5"
+			button.style.opacity = ".5"
+		}		
 	})
-})
+
+	skill.level++
+	player.souls -= skill.price
+	skill.price = skill.price + 5
+
+	price_text.innerHTML = `${skill.price} Almas`
+	souls_amount.innerHTML = player.souls
+	level_text.innerHTML = `Lv ${skill.level}`
+
+	updateSkill(skill_name)
+}
 
 function updateSkill(skill){
-	switch(skill){
-		case "speed":
-			player.speed += .3
-			break
-		case "health":
-			player.maxHealth += 10
-			player.receiveLife(1000)
-			health_bar.innerHTML += "<div class='health-points'></div>"
-			health_container.style.width = player.maxHealth + "px"
-			health_amount.style.width = player.maxHealth + "px"
-			break
-		case "strength":
-			player.attDamage += 1
-			break
-		case "attackspeed":
-			player.attackSpeedMax = true
-			break
-		case "loot":
-			player.dropLuck += 5
-			break
+	if(skill === 'speed'){
+		player.speed += .3
+	}
+	if(skill === 'health'){
+		player.maxHealth += 10
+		player.receiveLife(1000)
+		health_bar.style.width = player.maxHealth + "px"
+		health_amount.style.width = player.maxHealth + "px"
+	}
+	if(skill === 'strength'){
+		player.attDamage += 5
+	}
+	if(skill === 'mana'){
+		player.maxMana += 25
+		mana_bar.style.width = player.maxMana + "px"
+		mana_amount.style.width = player.maxMana + "px"
+		player.mana = player.maxMana
+	}
+	if(skill === 'loot'){
+		player.dropLuck += 5
 	}
 }
 
-itensButton.forEach(button => {
-	button.addEventListener("click", () => {
-		const itemType   = button.dataset.item
-		const skillPrice = parseInt(button.dataset.price)
-		const price_text = button.nextElementSibling
-
-		if(player.souls < skillPrice){
-			price_text.classList.add("animate__animated", "animate__shakeX")
-			price_text.style.background = "#f74a4a"
-			button.style.border = "2px solid #f74a4a"
-
-			price_text.addEventListener("animationend", () => {
-				price_text.classList.remove("animate__animated", "animate__shakeX")
-				price_text.style.background = ""
-				button.style.border = ""
-			})
-			return
-		}
-
-		price_text.style.background = "green"
-		button.style.border = "2px solid green"
-
-		setTimeout(() => {
-			price_text.style.background = ""
-			button.style.border = ""
-		}, 700)
-
-		player.souls -= skillPrice
-		souls_amount.innerHTML = player.souls
-
-		buyItens(itemType)
-	})
-})
-
-function buyItens(item){
-	switch(item){
-		case "ak47":
-		player.inventory[0].item = ak47
-		ak47.bulletsAmount = 30
-		ak47.munition = 60
-		updateUI("icon", ak47.name)
-		weapon_status.classList.remove("hidden")
-		bullets_amount.innerHTML = ak47.bulletsAmount
-		munition_amount.innerHTML = ak47.munition
-		break
-	}
-}
-
-function playerActions(){
+function playerMovement(){
+	if(player.isDead) return
 
 	// Player parado
-	if(!keyUp && !player.isRunning && !player.isAttacking && !player.receiveDamage && !player.isFalling){
-		player.switchSprite(`idle_${player.direction.toLowerCase()}`)
+	if(!player.isRunning && !player.isAttacking && !player.receiveDamage && !player.isFalling){
 		player.isIdle = true
-	}else{
-		player.isIdle = false
-	}
+	}else player.isIdle = false
 
 	// Player caindo
 	if(player.velocity.y > 0){
 		player.receiveDamage = false
-		player.switchSprite(`fall_${player.direction.toLowerCase()}`)
 		player.isFalling = true
+		player.isJumping = false
 	}
 
-	// Player pulando
-	if(keyUp){
-		if(!player.isFalling){
-			player.switchSprite(`jump_${player.direction.toLowerCase()}`)
-			player.velocity.y = player.jump
-			player.isFalling = true
+	// Player pular
+	if(keyState['ArrowUp'] || keyState['KeyW'] || keyState['Space']){
+		if(!player.isJumping && !player.isFalling && !player.isDead){
+			player.jump()
 		}
 	}
 
-	// Player andando para esquerda ou direita
-	if(keyLeft || keyRight){
-		player.receiveDamage = false
-		if(keyLeft && !lockLeft){
-			player.velocity.x = -player.speed
-			player.direction = "LEFT"
-			lockRight = true
-			if(!player.isFalling){
-				player.switchSprite(`run_${player.direction.toLowerCase()}`)
-			}
+	// Mover Player para esquerda
+	if(keyState['ArrowLeft'] || keyState['KeyA']){
+		if(!keyState['ArrowRight'] && !keyState['KeyD']){
+			player.runLeft()
 		}
-		if(keyRight && !lockRight){
-			player.velocity.x = player.speed
-			player.direction = "RIGHT"
-			lockLeft = true
-			if(!player.isFalling){
-				player.switchSprite(`run_${player.direction.toLowerCase()}`)
-			}
-		}
-		player.isRunning = true
-	}else{
-		player.isRunning = false
-		player.velocity.x = 0
 	}
 
-	if(player.receiveDamage && !player.isAttacking){
-		player.switchSprite(`take-hit_${player.direction.toLowerCase()}`)
+	// Mover Player para direita
+	if(keyState['ArrowRight'] || keyState['KeyD']){
+		if(!keyState['ArrowLeft'] && !keyState['KeyA']){
+			player.runRight()
+		}
 	}
 
-	// Player atacando
-	if(keyEnter){
-		const slot = player.getHoldingItem()
-		if(slot){
-			const { item } = slot
-			if(item && item.type === "Weapon"){
-				item.shot()
-				bullets_amount.innerHTML = item.bulletsAmount
-			}
-		}else if(!player.isFalling && !player.isRunning){
-			player.switchSprite(`attack_${player.attack}_${player.direction.toLowerCase()}`)
+	// Parar movimento do Player
+	if(!keyState['ArrowRight'] && !keyState['ArrowLeft']){
+		if(!keyState['KeyA'] && !keyState['KeyD']){
+			player.stopRun()
+		}
+	}
+
+	// Player atacar
+	if(keyState['Enter'] && !player.isDead){
+		if(!player.isFalling && !player.isJumping && !player.isRunning){
 			player.isAttacking = true
 		}
-	}
+	}else player.stopAttack()
 
-	if(player.isAttacking && player.sprInfo.name != `attack_${player.attack}_${player.direction.toLowerCase()}`){
-		player.isAttacking = false
-	}
-
-	// Recarregar Arma
-	if(keyR && !keyEnter){
-		const slot = player.getHoldingItem()
-		if(slot){
-			const { item } = slot
-			if(item && item.type === "Weapon"){
-				item.reload()
-			}
-		}
-	}
-
-	if(player.health <= 0){
-		player.isDead = true
-	}
-
-	if(player.isDead){
-		player.switchSprite(`death_${player.direction.toLowerCase()}`)
-
-		player.velocity.x = 0
-
-		waves_count.innerHTML = `Onda: ${arcadeWave.waveNumber}`
-		kills_count.innerHTML = `Abates: ${enemysKilled}`
-
-		setTimeout(() => {
-			gameIsPaused = true
-			saveData()
-			showUI("die-screen", "animate__fadeIn")
-			removeUI("hud-screen", "hidden")
-		}, 1500)
-	}
-}
-
-function selectSlot(id){
-	const inventory = player.getInventory(id)
-	
-	if(inventory.item){
-		inventory.item.visible = true
-		inventory.isHolding = true
-
-		weapon_icon.classList.add("border-neutral-300")
-		weapon_icon.classList.remove("border-black")
-		updateUI("icon", inventory.item.name)
-	}else{
-		const slot = player.getHoldingItem()
-		if(slot){
-			slot.item.visible = false
-			slot.isHolding = false
-		}
-		
-		weapon_icon.classList.remove("border-neutral-300")
-		weapon_icon.classList.add("border-black")
-		// updateUI("icon", "")
-	}
-}
-
-function holdingItem(){
-	const slot = player.getHoldingItem()
-	if(slot){
-		const { item } = slot
-
-		if(item.type == "Weapon"){
-			weapon_status.style.color = ""
-		}
-
-		item.switchSprite(`ak47_${player.direction.toLowerCase()}`)
-		if(player.direction == "LEFT"){
-			item.position.x = player.position.x - itens_sprites.ak47.holding_position_left.x
-			item.position.y = player.position.y + itens_sprites.ak47.holding_position_left.y
-		}else if(player.direction == "RIGHT"){
-			item.position.x = player.position.x + itens_sprites.ak47.holding_position.x
-			item.position.y = player.position.y + itens_sprites.ak47.holding_position.y
-		}
-	}else{
-		weapon_status.style.color = "#64748b"
+	// Player disparar fireball
+	if(keyState['KeyF']){
+		player.shootFireball()
 	}
 }
 
 function update(){
-	holdingItem()
+	lowLifeScreenEffect()
 
-	if(!player.isDead){
-		playerActions()	
-	}
+	if(player.health <= 0 && !player.isDead){
+		player.isDead = true
+		player.velocity.x = 0
 
-	if(player.health < 20){
-		hud_screen.style.boxShadow = "inset 0 0 30px rgba(190, 0, 0, .7)"
-	}else{
-		hud_screen.style.boxShadow = "none"
-	}
+		waves_count.innerHTML = `Onda: ${GAMEMODE ? GAMEMODE.getWave() : 0}`
+		kills_count.innerHTML = `Abates: ${GAMEMODE ? GAMEMODE.enemysKilled : 0}`
 
-	camera.update()
-}
-
-class EnemyWave {
-	constructor(count, health){
-		this.enemys = []
-		this.waveStarted = false
-		this.waveIsPlaying = false
-		this.waveNumber = 1
-		this.waveTimer = 15
-		this.enemysCount = count
-		this.enemyHealth = health
-	}
-
-	restart(){
-		this.waveStarted = false
-		this.waveIsPlaying = false
-		this.waveNumber = 1
-		this.waveTimer = 15
-		this.enemysCount = 3
-		this.enemyHealth = 100
-		enemys.length = 0
-	}
-
-	init(){
-		$("#waves-text").innerHTML = `Onda ${this.waveNumber}`
-		showUI("waves-container", "animate__fadeIn")
-		setTimeout(() => removeUI("waves-container", "animate__fadeOut"), 3000)
-		generateEnemys(this.enemysCount, this.enemyHealth)
-	}
-}
-
-const arcadeWave = new EnemyWave(3, 100)
-
-function arcadeMode(){
-	if(!arcadeWave.waveStarted && !arcadeWave.waveIsPlaying){
-		arcadeWave.waveStarted = true
-
-		if(arcadeWave.waveTimer >= 5) showUI("skills-screen", "animate__fadeIn")
-
-		const timer = setInterval(() => {
-			if(gameIsPaused){
-				clearInterval(timer)
-				return
+		setTimeout(() => {
+			gameIsPaused = true
+			if(GAMEMODE){
+				GAMEMODE.saveData()			
 			}
-			arcadeWave.waveTimer--
-
-			$("#waves-skills-timer").innerHTML = `${arcadeWave.waveTimer}s`
-			if(arcadeWave.waveTimer <= 5) $("#waves-hud-timer").innerHTML = `${arcadeWave.waveTimer}s`
-
-			if(arcadeWave.waveTimer == 5){
-				showUI("waves-timer-container", "animate__fadeIn")
-				removeUI("skills-screen", "animate__fadeOut")
-			}
-
-			if(!arcadeWave.waveTimer){
-				arcadeWave.init()
-				arcadeWave.waveIsPlaying = true
-				removeUI("waves-timer-container", "animate__fadeOut")
-				clearInterval(timer)
-			}
-		}, 1000)
+			showUI("die-screen", "animate__fadeIn")
+			removeUI("hud-screen", "hidden")
+		}, 1500)
 	}
-
-	if(!enemys.length && arcadeWave.waveIsPlaying){
-		arcadeWave.waveTimer = 15
-		$("#waves-skills-timer").innerHTML = `${arcadeWave.waveTimer}s`
-		arcadeWave.waveIsPlaying = false
-		arcadeWave.waveStarted = false
-		arcadeWave.waveNumber++
-		arcadeWave.enemysCount += 3
-	}
-}
-
-function saveData(){
-	if(parseInt(getStorage("SaS-Save"))){
-		if(enemysKilled > parseInt(getStorage("SaS-Arcade"))){
-			setStorage("SaS-Arcade", enemysKilled)
-
-			const arcade_kills = getStorage("SaS-Arcade") ? getStorage("SaS-Arcade") : 0
-			$("#arcade-record").innerHTML = `Recorde: ${arcade_kills}`
-		}
-	}
-	
-}
-
-const back = new Parallax(parallax_back, 7)
-const middle = new Parallax(parallax_middle, 4)
-const front = new Parallax(parallax_front, 2)
-
-function render(){
-	display.save()
-	display.clearRect(0, 0, canvas.width, canvas.height)
-	buffer.save()
-	buffer.clearRect(0, 0, canvas.width, canvas.height)
-
-	/* PARALLAX */
-	back.update()
-	middle.update()
-	front.update()			
-
-	buffer.translate(
-		Math.floor(-camera.x),
-		Math.floor(-camera.y)
-	)
 
 	const camera_position = {
 		position: {
-			x: camera.x + canvas.width/2,
-			y: camera.y + canvas.height/2
+			x: camera.position.x + canvas.width/2,
+			y: camera.position.y + canvas.height/2
 		},
 		width: 50,
 		height: 50
 	}
 
+	parallax_back.update()
+	parallax_middle.update()
+	parallax_front.update()		
+
+	mapBlocks.forEach(block => {
+		const isInRenderDistance = {isInArea} = detectInArea(
+			camera_position,
+			block,
+			{ 
+				top: (canvas.height/2),
+				bottom: 300,
+				left: (canvas.width/2) + 50,
+				right: (canvas.width/2)
+			}
+		)
+
+		if(!camera.lockInEntity){
+			collision(hitBox(player, block))
+		}
+
+		if(isInRenderDistance){
+			if(!block.visible) block.visible = true
+			collision(hitBox(player, block))
+			return
+		}
+		if(block.visible) block.visible = false
+	})
+
+	playerMovement()
 	player.update()
 
 	enemys.forEach((enemy, index) => {
-		if(!enemy.visible){
+		if(!enemy.visible && enemy.isDead){
 			enemys.splice(index, 1)
+			GAMEMODE.verifyKills()
 			return
 		}
 
-		const {top, bottom, left, right} = detectInArea(camera_position, enemy, 300, (canvas.height/2), 300, (canvas.width/2) + 50, (canvas.width/2))
-		const isInScreen = top || bottom || right || left
+		const isInrenderDistance = {isInArea} = detectInArea(
+			camera_position,
+			enemy,
+			{
+				top: (canvas.height/2),
+				bottom: 300,
+				left: (canvas.width/2) + 50,
+				right: (canvas.width/2)
+			}
+		)
 
-		if(isInScreen) enemy.draw()
-		enemy.update()
+		if(isInrenderDistance) enemy.visible = true
+		else enemy.visible = false
 
-		playebleMapBlocks.forEach(block => {
-			basicCollision(enemy, block)
+		mapBlocks.forEach(block => {
+			collision(hitBox(enemy, block))
 		})
 
-		if(enemy.position.y > mapHeight || enemy.position.x > mapSize){
-			enemys.splice(index, 1)
-		}
-	})
-
-	// enemysWaves()
-	arcadeMode()
-
-	playebleMapBlocks.forEach(block => {
-		const {top, bottom, left, right} = detectInArea(camera_position, block, 300, (canvas.height/2), 300, (canvas.width/2) + 50, (canvas.width/2))
-		const blockInArea = top || bottom || right || left
-
-		if(blockInArea){
-			buffer.drawImage(tilemap, block.imgX, block.imgY, 32, 32, block.position.x, block.position.y, block.width, block.height)				
-			basicCollision(player, block)
-		}
+		enemy.update()
 	})
 
 	itensArray.forEach((item, index) => {
-		if(item.visible){
-			item.update()
+		if(!item.visible) return
 
-			itemCollision(collide(player, item))
+		itemCollision(hitBox(player, item))
 
-			if(item.itemType == "soul"){
-				playebleMapBlocks.forEach(block => {
-					basicCollision(item, block)
-				})
+		if(item.itemType == "soul"){
+			mapBlocks.forEach(block => {
+				collision(hitBox(item, block))
+			})
 
-				if(!item.visible){
-					itensArray.splice(index, 1)
-				}
+			if(!item.visible){
+				itensArray.splice(index, 1)
 			}
-			
+		}
 
-			if(item.type == "Weapon"){
-				playebleMapBlocks.forEach(block => {
-					basicCollision(item, block)
-				})
+		item.update()
+	})
 
-				if(!item.bulletsAmount){
-					if(!item.munition){
-						player.inventory[0].item = 0
-						player.inventory[0].isHolding = false
-						weapon_status.classList.add("hidden")
-						weapon_icon.classList.remove("border-neutral-300")
-						weapon_icon.classList.add("border-black")
-						updateUI("icon", "")
-					}
+	magicPowers.forEach(power => {
+		if(power.visible){
+			power.update()
+
+			enemys.forEach(enemy => {
+				if(enemy.visible){
+					projectileCollision(hitBox(power, enemy))					
 				}
+			})
 
-				item.bulletsFired.forEach(bullet => {
-					if(bullet.visible){
-						bullet.update()
-
-						enemys.forEach(enemy => {
-							if(enemy.visible){
-								projectileCollision(collide(bullet, enemy))
-							}
-						})
-
-						playebleMapBlocks.forEach(block => {
-							projectileCollision(collide(bullet, block))
-						})
-					}
-				})
-			}
+			mapBlocks.forEach(block => {
+				if(block.visible){
+					projectileCollision(hitBox(power, block))					
+				}
+			})
 		}
 	})
 
-	display.drawImage(cv, 0, 0)
-	display.restore()
-	buffer.restore()
+	effects.forEach((fx, index) => {
+		if(fx.visible){
+			fx.update()
+			return
+		}
+		effects.splice(index, 1)
+	})
 
+	camera.update()
 }
 
-function loop(){
+function render(){
+	buffer.save()
+	buffer.clearRect(0, 0, canvas.width, canvas.height)
+
+	/* PARALLAX */
+	parallax_back.draw()
+	parallax_middle.draw()
+	parallax_front.draw()			
+
+	buffer.translate(
+		Math.floor(-camera.position.x),
+		Math.floor(-camera.position.y)
+	)
+
+	player.draw()
+
+	enemys.forEach(enemy => {
+		if(enemy.visible){
+			enemy.draw()
+		}
+	})
+
+	mapBlocks.forEach(block => {
+		if(block.visible){
+			buffer.drawImage(
+				tilemap,
+				block.imgX,
+				block.imgY,
+				32, 32,
+				block.position.x,
+				block.position.y,
+				block.width,
+				block.height
+			)
+		}
+	})
+
+	itensArray.forEach(item => {
+		if(item.visible){
+			item.draw()
+		}
+	})
+
+	magicPowers.forEach(power => {
+		if(power.visible){
+			power.draw()
+		}
+	})
+
+	effects.forEach(fx => {
+		if(fx.visible){
+			fx.draw()
+		}
+	})
+	
+
+	buffer.restore()
+
+	display.drawImage(cv, 0, 0)
+}
+
+let lastTime = 0
+let requiredElapsed = 1000/100
+
+function gameLoop(now){
 	if(!gameIsPaused){
-		window.requestAnimationFrame(loop)
+		window.requestAnimationFrame(gameLoop)
 	}
 
-	render()
-	update()
+	if(!lastTime) lastTime = now
+	var elapsed = now - lastTime
+	
+	if(elapsed > requiredElapsed){
+		update()
+		render()
+		lastTime = now
+	}
 }
 
 function init(){
 	gameIsPaused = false
-	loop()		
+	gameLoop()	
 }
 
 function continues(){
 	if(gameIsPaused){
-		arcadeWave.waveStarted = false
+
+		if(GAMEMODE){
+			GAMEMODE.init()			
+		}
+
 		gameIsPaused = false
-		loop()
+		gameLoop()
 	}
 }
 
 function pause(){
 	if(!gameIsPaused){
+
+		if(GAMEMODE){
+			GAMEMODE.pause()			
+		}
+
 		showUI("pause-screen", "animate__fadeIn")
 		removeUI("hud-screen", "hidden")
 		removeUI("guide-dialog", "hidden")
@@ -941,112 +864,30 @@ function pause(){
 }
 
 function restart(){
-	arcadeWave.restart()
-	enemys.length = 0
 
-	player.inventory.forEach(slot => {
-		slot.item = null
-		slot.isHolding = false
-	})
+	restartGame()
+	player.restart()
 
-	itensArray.forEach(item => {
-		item.isInInventory = false
-		item.position.x = item.initial_position.x
-		item.position.y = item.initial_position.y
-		item.visible = true
-		if(item.type == "Weapon" && item.gunType == "Fuzil"){
-			item.munition = 60
-			item.bulletsAmount = 30
-		}
-	})
-
-	skillsButton.forEach(button => {
-		button.dataset.price = 5
-		button.children[0].children[1].innerHTML = "Lv 1"
-		button.dataset.level = 1
-		button.nextElementSibling.innerHTML = "5 Almas"
-	})
-
-	health_container.style.width = 100 + "px"
-	health_amount.style.width = 100 + "px"
-
-	if(points.length > 10){
-		while(i < 10){
-			i++
-
-			if(points.length > 10){
-				points[i].remove()				
-			}
-		}
+	if(GAMEMODE){
+		GAMEMODE.saveData()
+		GAMEMODE.restart()
+		GAMEMODE.init()	
 	}
 
-	removeUI("waves-timer-container", "hidden")
-	updateUI("icon", "")
-
-	enemysKilled = 0
-	bullets_amount.innerHTML = 0
-	munition_amount.innerHTML = 0
-	souls_amount.innerHTML = 0
-	weapon_status.classList.add("hidden")
-
-	saveData()
-
-	player.restart()
 	init()
 }
 
 function destroy(){
-	arcadeWave.restart()
 	gameIsPaused = true
 
-	player.inventory.forEach(slot => {
-		slot.item = null
-		slot.isHolding = false
-	})
-
-	itensArray.forEach(item => {
-		item.isInInventory = false
-		item.position.x = item.initial_position.x
-		item.position.y = item.initial_position.y
-		item.visible = true
-		if(item.type == "Weapon" && item.gunType == "Fuzil"){
-			item.munition = 60
-			item.bulletsAmount = 30
-		}
-	})
-
-	skillsButton.forEach(button => {
-		button.dataset.price = 5
-		button.dataset.level = 1
-		button.children[0].children[1].innerHTML = "Lv 1"
-		button.nextElementSibling.innerHTML = "5 Almas"
-	})
-
-	health_container.style.width = 100 + "px"
-	health_amount.style.width = 100 + "px"
-
-	if(points.length > 10){
-		while(i < 10){
-			i++
-
-			if(points.length > 10){
-				points[i].remove()				
-			}
-		}
+	if(GAMEMODE){
+		GAMEMODE.saveData()
+		GAMEMODE.restart()
 	}
 
-	removeUI("waves-timer-container", "hidden")
-	updateUI("icon", "")
-
-	enemysKilled = 0
-	bullets_amount.innerHTML = 0
-	munition_amount.innerHTML = 0
-	souls_amount.innerHTML = 0
-	weapon_status.classList.add("hidden")
-
-	saveData()
-
+	restartGame()
 	player.restart()
+
 	buffer.clearRect(0, 0, canvas.width, canvas.height)
 }
 
@@ -1059,13 +900,5 @@ const resizeAspectRatio = () => {
 resizeAspectRatio()
 
 window.onresize = () => resizeAspectRatio()
-window.onblur = () => {
-	pause()
-	keyLeft =
-	keyRight =
-	keyUp =
-	keyR =
-	keyEnter =
-	lockLeft =
-	lockRight = false
-}
+window.onblur = () => pause()
+
