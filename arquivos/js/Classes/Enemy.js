@@ -71,11 +71,11 @@ class Enemy extends Entity {
 		}
 	}
 
-	takeHit(dmg, direction){
+	takeHit(dmg){
 		const willProtect = Math.floor(Math.random() * 5)
 
 		if(this.isProtecting) return
-
+		
 		if(willProtect === 2){
 			this.direction == player.direction
 			this.isProtecting = true
@@ -84,13 +84,9 @@ class Enemy extends Entity {
 		}
 		
 		this.health += -dmg
+		this.currentFrames = 0
 		this.receiveDamage = true
 		skeleton_hit.play()
-
-		if(!this.isFalling && !this.isJumping && !this.isDead){
-			this.velocity.x = player.direction == 'right' ? 2 : -2
-			this.jump()
-		}
 	}
 
 	attack(animation, dmg, frame){
@@ -315,6 +311,13 @@ class Enemy extends Entity {
 			this.isAttacking = false
 			this.isChargeAttack = false
 			this.isRunning = false
+		}
+
+		// Knockback ao levar hit
+		if(this.receiveDamage && player.entityAttacked && !this.isFalling && !this.isJumping && !this.isDead){
+			this.velocity.x = player.direction == 'right' ? 2 : -2
+			this.velocity.y = -5
+			this.isJumping = true
 		}
 
 		if(player.isDead) this.velocity.x = 0
