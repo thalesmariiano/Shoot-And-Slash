@@ -258,12 +258,14 @@ const skeleton_warrior_sprites = [
 	{
 		name: "take_hit_right",
 		image: "arquivos/assets/skeleton_warrior/hit_right.png",
-		frames: 2
+		frames: 10,
+		hold: 3
 	},
 	{
 		name: "take_hit_left",
 		image: "arquivos/assets/skeleton_warrior/hit_left.png",
-		frames: 2
+		frames: 10,
+		hold: 3
 	},
 	{
 		name: "protect_left",
