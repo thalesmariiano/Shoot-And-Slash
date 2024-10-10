@@ -129,12 +129,12 @@ $("#confirm-save-data").addEventListener("click", () => {
 	removeUI("save-data-dialog", "hidden")
 })
 
-if(parseFloat(getStorage("SaS-News")) != 1.3){
+if(getStorage("SaS-News") != '1.3.1'){
 	showUI("news-dialog", "animate__bounceIn")	
 
 	close_news.addEventListener("click", () => {
 		if(parseInt(getStorage('SaS-Save'))){
-			setStorage("SaS-News", 1.3)
+			setStorage("SaS-News", '1.3.1')
 		}
 		removeUI("news-dialog", "animate__bounceOut")
 	})

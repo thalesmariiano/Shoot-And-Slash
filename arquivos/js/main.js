@@ -815,21 +815,21 @@ function render(){
 }
 
 let lastTime = 0
-let requiredElapsed = 1000/100
+let fps = 60
+let fpsInterval = 1000/fps
 
-function gameLoop(now){
-	if(!gameIsPaused){
-		window.requestAnimationFrame(gameLoop)
-	}
+function gameLoop(time){
+	let deltaTime = time - lastTime
 
-	if(!lastTime) lastTime = now
-	var elapsed = now - lastTime
-	
-	if(elapsed > requiredElapsed){
+	if(deltaTime > fpsInterval){
+		lastTime = time - (deltaTime % fpsInterval)
+
 		update()
 		render()
-		lastTime = now
 	}
+
+	if(gameIsPaused) return
+	requestAnimationFrame(gameLoop)
 }
 
 function init(){
