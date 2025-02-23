@@ -39,8 +39,8 @@
 
 								<nav>
 									<div class="text-center">
-										<button id="play-button" class="font-inter w-48 py-1.5 mx-5 my-2 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400">Jogar</button>
-										<button id="options-button" class="font-inter w-48 py-1.5 mx-5 my-2 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400">Opções</button>
+										<button id="play-button" class="font-inter w-48 cursor-pointer py-1.5 mx-5 my-2 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400">Jogar</button>
+										<button id="options-button" class="font-inter w-48 cursor-pointer py-1.5 mx-5 my-2 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400">Opções</button>
 									</div>
 								</nav>
 
@@ -91,7 +91,7 @@
 									</div>
 								</div>
 							</div>
-							<button id="backToGm-button" class="font-inter w-48 py-1.5 mx-5 my-2 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400">Voltar</button>
+							<button id="backToGm-button" class="font-inter w-48 cursor-pointer py-1.5 mx-5 my-2 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400">Voltar</button>
 						</div>
 					</section>
 					<section id="options-screen" class="w-full h-full hidden">
@@ -111,7 +111,7 @@
 													</div>
 												</div>
 											</div>
-											<label class="group w-full flex gap-x-3 items-center my-3">
+											<label class="group cursor-pointer w-full flex gap-x-3 items-center my-3">
 												<input id="save-data-input" class="w-0 h-0" type="checkbox" name="save-data" checked>
 												<div class="min-w-12 h-5 bg-neutral-600 rounded relative flex items-center">
 													<span class="absolute left-0 w-6 h-5 bg-red-700 group-has-[:checked]:bg-green-700 group-has-[:checked]:left-6 rounded transition-all"></span>
@@ -121,12 +121,12 @@
 										</div>
 										<div>
 											<p class="font-bold font-inter text-lg">Histórico do jogo</p>
-											<button id="delete-data" class="bg-red-800 m-3 text-zinc-300 font-inter px-5 rounded hover:bg-red-900">Deletar</button>
+											<button id="delete-data" class="bg-red-800 m-3 text-zinc-300 font-inter cursor-pointer px-5 rounded hover:bg-red-900">Deletar</button>
 										</div>
 									</div>
 								</div>
 							</div>
-							<button id="backToMenuOptions-button" class="font-inter w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400">Voltar</button>
+							<button id="backToMenuOptions-button" class="font-inter w-48 cursor-pointer py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400">Voltar</button>
 						</div>
 					</section>
 				</div> 
@@ -177,7 +177,7 @@
 									<p class="uppercase text-2xl text-center text-neutral-800 font-bold">Habilidades</p>
 									<div id="skills" class="mt-2 flex justify-center gap-2 rounded">
 										<div class="flex flex-col items-center">
-											<button title="Vida" class="w-20 h-20 p-1 mb-1 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="health">
+											<button title="Vida" class="cursor-pointer w-20 h-20 p-1 mb-1 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="health">
 												<div class="w-full h-full flex flex-col justify-between">
 													<img class="mx-auto w-10 h-10" src="arquivos/assets/icons/life_icon.png" alt="Vida">
 													<p class="font-bold mx-auto transition-all duration-200">Lv 1</p>
@@ -186,7 +186,7 @@
 											<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1 rounded">5 Almas</p>
 										</div>
 										<div class="flex flex-col items-center">
-											<button title="Velocidade" class="w-20 h-20 p-1 mb-1 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="speed">
+											<button title="Velocidade" class=" cursor-pointer w-20 h-20 p-1 mb-1 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="speed">
 												<div class="w-full h-full flex flex-col justify-between">
 													<img class="mx-auto w-10 h-10" src="arquivos/assets/icons/speed-wing-128x.png" alt="Velocidade">
 													<p class="font-bold mx-auto transition-all duration-200">Lv 1</p>
@@ -195,7 +195,7 @@
 											<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1 rounded">5 Almas</p>
 										</div>
 										<div class="flex flex-col items-center">
-											<button title="Força" class="w-20 h-20 p-1 mb-1 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="strength">
+											<button title="Força" class="cursor-pointer w-20 h-20 p-1 mb-1 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="strength">
 												<div class="w-full h-full flex flex-col justify-between">
 													<img class="mx-auto w-10 h-10" src="arquivos/assets/icons/strength-muscle-128x.png" alt="Força">
 													<p class="font-bold mx-auto transition-all duration-200">Lv 1</p>
@@ -204,7 +204,7 @@
 											<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1 rounded">5 Almas</p>
 										</div>
 										<div class="flex flex-col items-center">
-											<button title="Poção de Mana" class="w-20 h-20 p-1 mb-1 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="mana">
+											<button title="Poção de Mana" class="cursor-pointer w-20 h-20 p-1 mb-1 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="mana">
 												<div class="w-full h-full flex flex-col justify-between">
 													<img class="mx-auto w-10 h-10" src="arquivos/assets/icons/mana-potion-128x.png" alt="Poção de Mana">
 													<p class="font-bold mx-auto transition-all duration-200">Lv 1</p>
@@ -213,7 +213,7 @@
 											<p class="text-sm text-slate-200 font-semibold bg-neutral-500/75 px-1 rounded">10 Almas</p>
 										</div>
 										<div class="flex flex-col items-center">
-											<button title="Dropar mais loot" class="w-20 h-20 p-1 mb-1 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="loot">
+											<button title="Dropar mais loot" class="cursor-pointer w-20 h-20 p-1 mb-1 text-left bg-neutral-500 hover:bg-neutral-600 rounded-xl border-2 border-neutral-300" data-skill="loot">
 												<div class="w-full h-full flex flex-col justify-between">
 													<img class="mx-auto w-14 h-10" src="arquivos/assets/icons/loot-icon.png" alt="Loot">
 													<p class="font-bold mx-auto transition-all duration-200">Lv 1</p>
@@ -225,7 +225,7 @@
 								</div>
 
 								<div class="mt-5">
-									<button id="close-skills" class="px-5 py-1 bg-red-800 rounded">Fechar</button>
+									<button id="close-skills" class="cursor-pointer px-5 py-1 bg-red-800 rounded">Fechar</button>
 								</div>
 							</div>
 						</div>
@@ -244,8 +244,8 @@
 						</div>
 						<nav class="menu mt-1">
 							<div class="menu-container flex flex-col gap-3">
-								<button id="restart-button" class="restart-btns font-inter w-48 py-1.5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400" data-screen="die-screen">Reiniciar</button>
-								<button id="backToMenu-button" class="back-to-menu-btns font-inter w-48 py-1.5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400" data-screen="die-screen">Menu</button>
+								<button id="restart-button" class="restart-btns font-inter w-48 cursor-pointer py-1.5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400" data-screen="die-screen">Reiniciar</button>
+								<button id="backToMenu-button" class="back-to-menu-btns font-inter w-48 cursor-pointer py-1.5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400" data-screen="die-screen">Menu</button>
 							</div>
 						</nav>
 					</div>
@@ -258,9 +258,9 @@
 
 						<nav class="menu mt-10">
 							<div class="menu-container flex flex-col gap-3">
-								<button id="continue-button" class="font-inter w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400">Continuar</button>
-								<button id="restart-button-2" class="restart-btns font-inter w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400" data-screen="pause-screen">Reiniciar</button>
-								<button class="back-to-menu-btns font-inter w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400" data-screen="pause-screen">Menu</button>
+								<button id="continue-button" class="font-inter w-48 cursor-pointer py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400">Continuar</button>
+								<button id="restart-button-2" class="restart-btns font-inter w-48 cursor-pointer py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400" data-screen="pause-screen">Reiniciar</button>
+								<button class="back-to-menu-btns font-inter cursor-pointer w-48 py-1.5 mx-5 text-2xl bg-white text-black font-bold rounded-xl hover:bg-neutral-400" data-screen="pause-screen">Menu</button>
 							</div>
 						</div>
 					</div>
@@ -289,7 +289,7 @@
 						</div>
 					</div>
 					<div>
-						<button id="close-news" class="font-inter font-bold px-5 py-1 mt-5 bg-green-700 rounded-xl hover:bg-green-800">Ai sim!</button>
+						<button id="close-news" class="font-inter cursor-pointer font-bold px-5 py-1 mt-5 bg-green-700 rounded-xl hover:bg-green-800">Ai sim!</button>
 					</div>
 				</div>
 			</div>
@@ -320,9 +320,9 @@
 				<div class="flex justify-between">
 					<div class="flex items-center">
 						<p class="text-xs mr-1">Não mostrar novamente</p>
-						<input type="checkbox" name="dontshowguide">
+						<input class="cursor-pointer" type="checkbox" name="dontshowguide">
 					</div>
-					<button id="close-guide" class="px-2 bg-red-800 hover:bg-red-700 text-lg rounded">Fechar</button>
+					<button id="close-guide" class="cursor-pointer px-2 bg-red-800 hover:bg-red-700 text-lg rounded">Fechar</button>
 				</div>
 			</div>
 		</div>
@@ -334,8 +334,8 @@
 					<p class="mx-1 mt-3 font-inter text-neutral-800 font-semibold leading-5">Tem certeza? Todo o histórico do jogo será reiniciado, e todos os seus recordes salvos serão perdidos!</p>
 				</div>
 				<div>
-					<button id="not-delete-data" class="px-5 py-1 font-bold font-inter bg-green-600 text-white rounded-xl hover:bg-green-700 transition-all">Cancelar</button>
-					<button id="confirm-delete-data" class="px-4 py-1 font-bold font-inter text-red-600 underline hover:text-red-700 transition-all">Deletar</button>
+					<button id="not-delete-data" class="px-5 py-1 font-bold font-inter cursor-pointer bg-green-600 text-white rounded-xl hover:bg-green-700 transition-all">Cancelar</button>
+					<button id="confirm-delete-data" class="px-4 py-1 font-bold font-inter cursor-pointer text-red-600 underline hover:text-red-700 transition-all">Deletar</button>
 				</div>
 			</div>
 		</div>
@@ -347,8 +347,8 @@
 					<p class="mx-1 mt-3 font-inter text-neutral-800 font-semibold leading-5">Tem certeza? Todo o seu histórico do jogo será deletado. E qualquer recorde que você tenha não será salvo.</p>
 				</div>
 				<div>
-					<button id="confirm-save-data" class="px-5 py-1 font-bold font-inter bg-green-600 text-white rounded-xl hover:bg-green-700 transition-all">Salvar</button>
-					<button id="not-save-data" class="px-4 py-1 font-bold font-inter text-red-600 underline hover:text-red-700 transition-all">Não salvar</button>
+					<button id="confirm-save-data" class="px-5 py-1 font-bold font-inter cursor-pointer bg-green-600 text-white rounded-xl hover:bg-green-700 transition-all">Salvar</button>
+					<button id="not-save-data" class="px-4 py-1 font-bold font-inter cursor-pointer text-red-600 underline hover:text-red-700 transition-all">Não salvar</button>
 				</div>
 			</div>
 		</div>
