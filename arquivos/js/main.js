@@ -14,11 +14,8 @@ if(!getStorage("SaS-Save")){
 
 $("#arcade-record").innerHTML = `Recorde: ${getStorage("SaS-Arcade")}`
 
-const canvas  = document.querySelector("canvas")
-const display = canvas.getContext("2d", {alpha: false})
-
-const cv = document.createElement("canvas")
-const buffer = cv.getContext('2d', {alpha: false})
+const engine = new Engine('#canvas')
+const buffer = engine.BUFFER
 
 const screens_container = document.querySelector("#screens-container")
 const hud_screen = document.getElementById("hud-screen")
@@ -43,8 +40,6 @@ const close_skills = document.getElementById("close-skills")
 const skillsButton = document.querySelectorAll("[data-skill]")
 
 const GRAVITY = 0.6
-
-var gameIsPaused = true
 
 let GAMEMODE
 
@@ -562,7 +557,7 @@ function updateSkill(skill){
 	}
 }
 
-function playerMovement(){
+const playerMovement = () => {
 	if(player.isDead) return
 
 	// Player parado
@@ -579,7 +574,7 @@ function playerMovement(){
 
 	// Player pular
 	if(keyState['ArrowUp'] || keyState['KeyW'] || keyState['Space']){
-		if(!player.isJumping && !player.isFalling && !player.isDead){
+		if(!player.isJumping && !player.isFalling){
 			player.jump()
 		}
 	}
@@ -618,7 +613,7 @@ function playerMovement(){
 	}
 }
 
-function update(){
+engine.on('update', () => {
 	lowLifeScreenEffect()
 
 	if(player.health <= 0 && !player.isDead){
@@ -751,12 +746,9 @@ function update(){
 	})
 
 	camera.update()
-}
+})
 
-function render(){
-	buffer.save()
-	buffer.clearRect(0, 0, canvas.width, canvas.height)
-
+engine.on('render', () => {
 	/* PARALLAX */
 	parallax_back.draw()
 	parallax_middle.draw()
@@ -807,64 +799,28 @@ function render(){
 			fx.draw()
 		}
 	})
-	
+})
 
-	buffer.restore()
-
-	display.drawImage(cv, 0, 0)
-}
-
-let lastTime = 0
-let fps = 60
-let fpsInterval = 1000/fps
-
-function gameLoop(time){
-	let deltaTime = time - lastTime
-
-	if(deltaTime > fpsInterval){
-		lastTime = time - (deltaTime % fpsInterval)
-
-		update()
-		render()
-	}
-
-	if(gameIsPaused) return
-	requestAnimationFrame(gameLoop)
-}
-
-function init(){
-	gameIsPaused = false
-	gameLoop()	
-}
-
-function continues(){
-	if(gameIsPaused){
-
-		if(GAMEMODE){
-			GAMEMODE.init()			
-		}
-
-		gameIsPaused = false
-		gameLoop()
+const continues = () => {
+	if(!engine.paused){
+		if(GAMEMODE) GAMEMODE.init()			
+		engine.start()
 	}
 }
 
-function pause(){
-	if(!gameIsPaused){
-
-		if(GAMEMODE){
-			GAMEMODE.pause()			
-		}
+const pause = () => {
+	if(!engine.paused){
+		if(GAMEMODE) GAMEMODE.pause()			
 
 		showUI("pause-screen", "animate__fadeIn")
 		removeUI("hud-screen", "hidden")
 		removeUI("guide-dialog", "hidden")
-		gameIsPaused = true
+
+		engine.paused = true
 	}
 }
 
-function restart(){
-
+const restart = () => {
 	restartGame()
 	player.restart()
 
@@ -874,11 +830,11 @@ function restart(){
 		GAMEMODE.init()	
 	}
 
-	init()
+	engine.start()
 }
 
-function destroy(){
-	gameIsPaused = true
+const destroy = () => {
+	engine.paused = true
 
 	if(GAMEMODE){
 		GAMEMODE.saveData()
@@ -891,14 +847,9 @@ function destroy(){
 	buffer.clearRect(0, 0, canvas.width, canvas.height)
 }
 
-const resizeAspectRatio = () => {
-	display.canvas.width = cv.width = window.innerWidth
-	display.canvas.height = cv.height = window.innerHeight
-	display.imageSmoothingEnabled = false
-	buffer.imageSmoothingEnabled = false
-}
-resizeAspectRatio()
 
-window.onresize = () => resizeAspectRatio()
+engine.resizeAspectRatio()
+
+window.onresize = () => engine.resizeAspectRatio()
 window.onblur = () => pause()
 
