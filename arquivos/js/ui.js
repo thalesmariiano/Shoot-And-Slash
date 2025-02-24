@@ -10,7 +10,7 @@ const back_from_gm_button       = document.getElementById("backToGm-button")
 const close_news                = document.querySelector("#close-news")
 
 arcade_mode_button.addEventListener("click", () => {
-	init()
+	engine.start()
 	GAMEMODE = arcade()
 	GAMEMODE.init()
 
